@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="feathersui-rpc-services" package="feathers.rpc" version="1.0.0" company="Bowler Hat LLC" />
+	<app main="openfl.display.Sprite" path="bin" file="feathersui-rpc-services" />
+	
+	<source path="src" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	<haxelib name="feathersui" />
+
+	<haxeflag name="--macro" value="include('feathers.rpc')"/>
+	<haxeflag name="--macro" value="include('feathers.messaging')"/>
+
+	<template path="templates" if="flash"/>
+</project>

@@ -1,0 +1,14 @@
+{
+  "name": "feathersui-rpc-services",
+  "url": "https://feathersui.com/",
+  "license": "Apache",
+  "tags": ["openfl", "feathersui", "rpc"],
+  "description": "RPC services for Feathers UI",
+  "version": "1.0.0-alpha.1",
+  "classPath": "src",
+  "dependencies": {
+    "openfl": ""
+  },
+  "contributors": ["bowlerhat"],
+  "releasenote": "Initial release"
+}

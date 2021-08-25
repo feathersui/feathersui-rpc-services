@@ -14,3 +14,19 @@ Please review the notes below for an overview of what currently works, doesn't w
 - `HTTPMultiService`: Represents a collection of HTTP operations.
 - ~~`WebService`~~: Not yet implemented
 - ~~`RemoteObject`~~: Not yet implemented
+
+## Installation
+
+This library is not yet available on Haxelib, so you'll need to install it from Github.
+
+```sh
+haxelib git feathersui-rpc-services https://github.com/feathersui/feathersui-rpc-services.git
+```
+
+## Project Configuration
+
+After installing the library above, add it to your OpenFL _project.xml_ file:
+
+```xml
+<haxelib name="feathersui-rpc-services" />
+```

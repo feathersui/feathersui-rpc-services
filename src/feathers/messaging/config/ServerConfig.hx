@@ -17,9 +17,11 @@
 
 package feathers.messaging.config;
 
+import feathers.data.ArrayCollection;
+import feathers.messaging.errors.InvalidChannelError;
 import feathers.messaging.errors.InvalidDestinationError;
 import openfl.Lib;
-import openfl.errors.Error;
+import openfl.errors.ArgumentError;
 
 /**
  *  This class provides access to the server messaging configuration information.
@@ -179,11 +181,44 @@ class ServerConfig {
 	 *  @productversion LCDS 3 
 	 */
 	public static function checkChannelConsistency(destinationA:String, destinationB:String):Void {
-		throw new Error("checkChannelConsistency() not implemented");
-		// var channelIdsA = getChannelIdList(destinationA);
-		// var channelIdsB = getChannelIdList(destinationB);
-		// if (ObjectUtil.compare(channelIdsA, channelIdsB) != 0)
-		// 	throw new ArgumentError("Specified destinations are not channel consistent");
+		var channelIdsA = getChannelIdList(destinationA);
+		var channelIdsB = getChannelIdList(destinationB);
+		if (compareArrays(channelIdsA, channelIdsB) != 0)
+			throw new ArgumentError("Specified destinations are not channel consistent");
+	}
+
+	private static function compareArrays(a:Array<String>, b:Array<String>):Int {
+		if (a == null && b == null)
+			return 0;
+
+		if (a == null)
+			return 1;
+
+		if (b == null)
+			return -1;
+
+		var result:Int = 0;
+
+		if (a.length != b.length) {
+			if (a.length < b.length)
+				result = -1;
+			else
+				result = 1;
+		} else {
+			for (i in 0...a.length) {
+				var ai = a[i];
+				var bi = b[i];
+				if (ai != bi) {
+					if (ai < bi) {
+						return -1;
+					} else {
+						return 1;
+					}
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**
@@ -264,15 +299,23 @@ class ServerConfig {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	public static function getProperties(destinationId:String):Any /*XMLList*/ {
-		// var destination:XMLList = xml..destination.(@id == destinationId);
+	public static function getProperties(destinationId:String):Array<Xml> {
+		var destinations:Array<Xml> = [];
+		for (destination in xml.elementsNamed("destination")) {
+			if (destination.get("id") == destinationId) {
+				destinations.push(destination);
+			}
+		}
 
-		// if (destination.length() > 0)
-		// {
-		// 	return destination.properties;
-		// }
-		// else
-		{
+		if (destinations.length > 0) {
+			var properties:Array<Xml> = [];
+			for (destination in destinations) {
+				for (property in destination.elementsNamed("properties")) {
+					properties.push(property);
+				}
+			}
+			return properties;
+		} else {
 			var message:String = 'Unknown destination \'${destinationId}\'.';
 			throw new InvalidDestinationError(message);
 		}
@@ -297,39 +340,47 @@ class ServerConfig {
 	 *  @productversion LCDS 3 
 	 */
 	private static function channelSetMatchesDestinationConfig(channelSet:ChannelSet, destination:String):Bool {
-		// if (channelSet != null)
-		// {
-		// 	if (ObjectUtil.compare(channelSet.channelIds, getChannelIdList(destination)) == 0)
-		// 		return true;
+		if (channelSet != null) {
+			if (compareArrays(channelSet.channelIds, getChannelIdList(destination)) == 0)
+				return true;
 
-		// 	// if any of the specified channelset channelIds do not match then
-		// 	// we have to move to comparing the uris, as the ids could be null
-		// 	// in the specified channelset.
-		// 	var csUris:Array = [];
-		// 	var csChannels = channelSet.channels;
-		// 	for (i in 0...csChannels.length)
-		// 		csUris.push(csChannels[i].uri);
+			// if any of the specified channelset channelIds do not match then
+			// we have to move to comparing the uris, as the ids could be null
+			// in the specified channelset.
+			var csUris:Array<String> = [];
+			var csChannels = channelSet.channels;
+			for (i in 0...csChannels.length)
+				csUris.push(csChannels[i].uri);
 
-		// 	var ids = getChannelIdList(destination);
-		// 	var dsUris:Array = [];
-		// 	var dsChannels:XMLList;
-		// 	var channelConfig:XML;
-		// 	var endpoint:XML;
-		// 	var dsUri:String;
-		// 	for (j in 0...ids.length)
-		// 	{
-		// 		dsChannels = xml.channels.channel.(@id == ids[j]);
-		// 		channelConfig = dsChannels[0];
-		// 		endpoint = channelConfig.endpoint;
-		// 		// uri might be undefined when client-load-balancing urls are specified.
-		// 		dsUri = endpoint.length() > 0? endpoint[0].attribute(URI_ATTR).toString() : null;
-		// 		if (dsUri != null)
-		// 			dsUris.push(dsUri);
-		// 	}
+			var ids = getChannelIdList(destination);
+			var dsUris:Array<String> = [];
+			for (j in 0...ids.length) {
+				var channelConfig:Xml = null;
+				for (channels in xml.elementsNamed("channels")) {
+					for (channel in channels.elementsNamed("channel")) {
+						if (channel.get("id") == ids[j]) {
+							channelConfig = channel;
+							break;
+						}
+					}
+				}
+				if (channelConfig == null) {
+					continue;
+				}
+				// uri might be undefined when client-load-balancing urls are specified.
+				var dsUri:String = null;
+				for (endpoint in channelConfig.elementsNamed("endpoint")) {
+					if (endpoint.exists(URI_ATTR)) {
+						dsUri = endpoint.get(URI_ATTR);
+						break;
+					}
+				}
+				if (dsUri != null)
+					dsUris.push(dsUri);
+			}
 
-		// 	return ObjectUtil.compare(csUris, dsUris) == 0;
-
-		// }
+			return compareArrays(csUris, dsUris) == 0;
+		}
 		return false;
 	}
 
@@ -384,74 +435,76 @@ class ServerConfig {
 	 *  This method updates the xml with serverConfig object returned from the
 	 *  server during initial client connect
 	 */
-	private static function updateServerConfigData(serverConfig:Any /*ConfigMap*/, endpoint:String = null):Void {
-		// if (serverConfig != null)
-		// {
-		// 	if (endpoint != null)
-		// 	{
-		// 		// Add the endpoint uri to the list of uris whose configuration
-		// 		// has been fetched.
-		// 		if (_configFetchedChannels == null)
-		// 			_configFetchedChannels = {};
+	private static function updateServerConfigData(serverConfig:#if flash ConfigMap #else Any #end, endpoint:String = null):Void {
+		if (serverConfig != null) {
+			if (endpoint != null) {
+				// Add the endpoint uri to the list of uris whose configuration
+				// has been fetched.
+				if (_configFetchedChannels == null)
+					_configFetchedChannels = {};
 
-		// 		_configFetchedChannels[endpoint] = true;
-		// 	}
+				Reflect.setField(_configFetchedChannels, endpoint, true);
+			}
 
-		// 	var newServices:XML = <services></services>;
-		// 	convertToXML(serverConfig, newServices);
+			var newServices = Xml.createElement("services");
+			convertToXML(serverConfig, newServices);
 
-		// 	// Update default-channels of the application.
-		// 	xml["default-channels"] = newServices["default-channels"];
+			// Update default-channels of the application.
+			for (defaultChannels in xml.elementsNamed("default-channels")) {
+				xml.removeChild(defaultChannels);
+			}
+			for (defaultChannels in newServices.elementsNamed("default-channels")) {
+				xml.addChild(defaultChannels);
+			}
 
-		// 	// Update the service destinations.
-		// 	for each (var newService:XML in newServices..service)
-		// 	{
-		// 		var oldServices:XMLList = xml.service.(@id == newService.@id);
-		// 		var oldDestinations:XMLList;
-		// 		var newDestination:XML;
-		// 		// The service already exists, update its destinations.
-		// 		if (oldServices.length() != 0)
-		// 		{
-		// 			var oldService:XML = oldServices[0]; // Service ids are unique.
-		// 			for each (newDestination in newService..destination)
-		// 			{
-		// 				oldDestinations = oldService.destination.(@id == newDestination.@id);
-		// 				if (oldDestinations.length() != 0)
-		// 					delete oldDestinations[0]; // Destination ids are unique.
-		// 				oldService.appendChild(newDestination.copy());
-		// 			}
-		// 		}
-		// 		// The service does not exist which means that this is either a new
-		// 		// service with its destinations, or a proxy service (eg. GatewayService)
-		// 		// with configuration for existing destinations for other services.
-		// 		else
-		// 		{
-		// 			for each (newDestination in newService..destination)
-		// 			{
-		// 				oldDestinations = xml..destination.(@id == newDestination.@id);
-		// 				if (oldDestinations.length() != 0) // Replace the existing destination.
-		// 				{
-		// 					oldDestinations[0] = newDestination[0].copy(); // Destination ids are unique.
-		// 					delete newService..destination.(@id == newDestination.@id)[0];
-		// 				}
-		// 			}
+			// Update the service destinations.
+			for (newService in newServices.elementsNamed("service")) {
+				var hasOldService = false;
+				for (oldService in xml.elementsNamed("service")) {
+					// The service already exists, update its destinations.
+					if (oldService.get("id") == newService.get("id")) {
+						hasOldService = true;
+						for (newDestination in newService.elementsNamed("destination")) {
+							for (oldDestination in oldService.elementsNamed("destination")) {
+								if (oldDestination.get("id") == newDestination.get("id")) {
+									oldService.removeChild(oldDestination);
+								}
+							}
+							oldService.addChild(Xml.parse(newDestination.toString()));
+						}
+					}
+				}
+				if (!hasOldService) {
+					// The service does not exist which means that this is either a new
+					// service with its destinations, or a proxy service (eg. GatewayService)
+					// with configuration for existing destinations for other services.
+					for (newDestination in newService.elementsNamed("destination")) {
+						for (oldDestination in xml.elementsNamed("destination")) {
+							if (oldDestination.get("id") == newDestination.get("id")) {
+								newService.removeChild(newDestination);
+								// Replace the existing destination.
+								xml.removeChild(oldDestination);
+								xml.addChild(newDestination); // Destination ids are unique.
+							}
+						}
+					}
 
-		// 			if (newService.children().length() > 0) // Add the new service.
-		// 				xml.appendChild(newService);
-		// 		}
-		// 	}
+					if (newService.iterator().hasNext()) // Add the new service.
+						xml.addChild(newService);
+				}
+			}
 
-		// 	// Update the channels
-		// 	var newChannels:XMLList = newServices.channels;
-		// 	if (newChannels.length() > 0)
-		// 	{
-		// 		var oldChannels:XML = xml.channels[0];
-		// 		if (oldChannels == null || oldChannels.length() == 0)
-		// 		{
-		// 			xml.appendChild(newChannels);
-		// 		}
-		// 	}
-		// }
+			// Update the channels
+			var newChannelsIterator = newServices.elementsNamed("channels");
+			if (newChannelsIterator.hasNext()) {
+				var oldChannelsIterator = xml.elementsNamed("channels");
+				if (!oldChannelsIterator.hasNext()) {
+					while (newChannelsIterator.hasNext()) {
+						xml.addChild(newChannelsIterator.next());
+					}
+				}
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -478,37 +531,42 @@ class ServerConfig {
 	 *  @productversion LCDS 3 
 	 */
 	private static function createChannel(channelId:String):Channel {
-		throw new Error("createChannel() not implemented");
-		// var message:String;
+		var message:String;
 
-		// var channels:XMLList = xml.channels.channel.(@id == channelId);
-		// if (channels.length() == 0) {
-		// 	message = resourceManager.getString("messaging", "unknownChannelWithId", [channelId]);
-		// 	throw new InvalidChannelError(message);
-		// }
+		var channelConfig:Xml = null;
+		for (channels in xml.elementsNamed("channels")) {
+			for (channel in channels.elementsNamed("channel")) {
+				if (channel.get("id") == channelId) {
+					channelConfig = channel;
+					break;
+				}
+			}
+		}
+		if (channelConfig == null) {
+			message = 'Channel \'$channelId\' does not exist in the configuration.';
+			throw new InvalidChannelError(message);
+		}
 
-		// var channelConfig:XML = channels[0];
-		// var className:String = channelConfig.attribute(CLASS_ATTR).toString();
-		// var endpoint:XMLList = channelConfig.endpoint;
-		// /// uri might be undefined when client-load-balancing urls are specified.
-		// var uri:String = endpoint.length() > 0 ? endpoint[0].attribute(URI_ATTR).toString() : null;
-		// var channel:Channel = null;
-		// try {
-		// 	var channelClass:Class = getDefinitionByName(className)
-		// 	as
-		// 	Class;
-		// 	channel = new channelClass(channelId, uri);
-		// 	channel.applySettings(channelConfig);
+		var channel:Channel = null;
+		var className:String = channelConfig.get(CLASS_ATTR);
+		for (endpoint in channelConfig.elementsNamed("endpoint")) {
+			/// uri might be undefined when client-load-balancing urls are specified.
+			var uri:String = endpoint.get(URI_ATTR);
+			try {
+				var channelClass = Lib.getDefinitionByName(className);
+				channel = Type.createInstance(channelClass, [channelId, uri]);
+				channel.applySettings(channelConfig);
 
-		// 	// If we have an WSRP_ENCODED_CHANNEL in FlashVars,
-		// 	// use that instead of uri configured in the config file
-		// 	if (LoaderConfig.parameters != null && LoaderConfig.parameters.WSRP_ENCODED_CHANNEL != null)
-		// 		channel.url = LoaderConfig.parameters.WSRP_ENCODED_CHANNEL;
-		// } catch (e:ReferenceError) {
-		// 	message = resourceManager.getString("messaging", "unknownChannelClass", [className]);
-		// 	throw new InvalidChannelError(message);
-		// }
-		// return channel;
+				// If we have an WSRP_ENCODED_CHANNEL in FlashVars,
+				// use that instead of uri configured in the config file
+				if (LoaderConfig.parameters != null && LoaderConfig.parameters.WSRP_ENCODED_CHANNEL != null)
+					channel.url = LoaderConfig.parameters.WSRP_ENCODED_CHANNEL;
+			} catch (e) {
+				message = 'The channel class \'$className\' specified was not found.';
+				throw new InvalidChannelError(message);
+			}
+		}
+		return channel;
 	}
 
 	/**
@@ -520,58 +578,47 @@ class ServerConfig {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	private static function convertToXML(config:Any /*ConfigMap*/, configXML:Xml):Void {
-		throw new Error("convertToXML() not implemented");
-		// for (var propertyKey:Object in config)
-		// {
-		// 	var propertyValue:Object = config[propertyKey];
+	private static function convertToXML(config:#if flash ConfigMap #else Any #end, configXML:Xml):Void {
+		for (propertyKey in Reflect.fields(config)) {
+			var propertyValue = Reflect.field(config, propertyKey);
 
-		// 	if ((propertyValue is String))
-		// 	{
-		// 		if (propertyKey == "")
-		// 		{
-		// 			// Add as a value
-		// 			configXML.appendChild(propertyValue);
-		// 		}
-		// 		else
-		// 		{
-		// 			// Add as an attribute
-		// 			configXML.@[propertyKey] = propertyValue;
-		// 		}
-		// 	}
-		// 	else if ((propertyValue is ArrayCollection) || (propertyValue is Array))
-		// 	{
-		// 		var propertyValueList:Array;
-		// 		if ((propertyValue is ArrayCollection))
-		// 			propertyValueList = ArrayCollection(propertyValue).toArray();
-		// 		else
-		// 			propertyValueList = propertyValue as Array;
+			if ((propertyValue is String)) {
+				if (propertyKey == "") {
+					// Add as a value
+					configXML.addChild(Xml.createPCData(Std.string(propertyValue)));
+				} else {
+					// Add as an attribute
+					configXML.set(propertyKey, Std.string(propertyValue));
+				}
+			} else if ((propertyValue is ArrayCollection) || (propertyValue is Array)) {
+				var propertyValueList:Array<Dynamic>;
+				if ((propertyValue is ArrayCollection))
+					propertyValueList = cast(propertyValue, ArrayCollection<Dynamic>).toArray();
+				else
+					propertyValueList = cast(propertyValue, Array<Dynamic>);
 
-		// 		for (var i:Int = 0; i < propertyValueList.length; i++)
-		// 		{
-		// 			var propertyXML1:XML = <{propertyKey}></{propertyKey}>
-		// 			configXML.appendChild(propertyXML1);
-		// 			convertToXML(propertyValueList[i] as ConfigMap, propertyXML1);
-		// 		}
-		// 	}
-		// 	else // assuming that it is ConfigMap
-		// 	{
-		// 		var propertyXML2:XML = <{propertyKey}></{propertyKey}>
-		// 		configXML.appendChild(propertyXML2);
-		// 		convertToXML(propertyValue as ConfigMap, propertyXML2);
-		// 	}
-		// }
+				for (i in 0...propertyValueList.length) {
+					var propertyXML1 = Xml.createElement(propertyKey);
+					configXML.addChild(propertyXML1);
+					convertToXML(#if flash Std.downcast(propertyValueList[i], ConfigMap) #else propertyValueList[i] #end, propertyXML1);
+				}
+			} else // assuming that it is ConfigMap
+			{
+				var propertyXML2 = Xml.createElement(propertyKey);
+				configXML.addChild(propertyXML2);
+				convertToXML(#if flash Std.downcast(propertyValue, ConfigMap) #else propertyValue #end, propertyXML2);
+			}
+		}
 	}
 
 	private static function getChannelIds(destinationConfig:Xml):Array<String> {
-		throw new Error("getChannelIds() not implemented");
-		// var result:Array = [];
-		// var channels:XMLList = destinationConfig.channels.channel;
-		// var n:Int = channels.length();
-		// for (i in 0...n) {
-		// 	result.push(channels[i].@ref.toString() );
-		// }
-		// return result;
+		var result:Array<String> = [];
+		for (channels in destinationConfig.elementsNamed("channels")) {
+			for (channel in channels.elementsNamed("channel")) {
+				result.push(channel.get("ref"));
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -579,14 +626,13 @@ class ServerConfig {
 	 * This method returns a list of default channel ids for the application
 	 */
 	private static function getDefaultChannelIds():Array<String> {
-		throw new Error("getDefaultChannelIds() not implemented");
-		// var result:Array = [];
-		// var channels:XMLList = xml["default-channels"].channel;
-		// var n:Int = channels.length();
-		// for (i in 0...n) {
-		// 	result.push(channels[i].@ref.toString() );
-		// }
-		// return result;
+		var result:Array<String> = [];
+		for (channels in xml.elementsNamed("default-channels")) {
+			for (channel in channels.elementsNamed("channel")) {
+				result.push(channel.get("ref"));
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -600,15 +646,13 @@ class ServerConfig {
 	 *  @productversion LCDS 3 
 	 */
 	private static function getDestinationConfig(destinationId:String):Xml {
-		throw new Error("getDestinationConfig() not implemented");
-		// var destinations:XMLList = xml..destination.(@id == destinationId);
-		// var destinationCount:Int = destinations.length();
-		// if (destinationCount == 0) {
-		// 	return null;
-		// } else {
-		// 	// Destination ids are unique among services
-		// 	return destinations[0];
-		// }
+		for (destination in xml.elementsNamed("destination")) {
+			if (destination.get("id") == destinationId) {
+				// Destination ids are unique among services
+				return destination;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -627,35 +671,47 @@ class ServerConfig {
 	 *  @productversion LCDS 3 
 	 */
 	private static function internalGetChannelSet(destinationConfig:Xml, destinationId:String):ChannelSet {
-		throw new Error("internalGetChannelSet() not implemented");
-		// var channelIds:Array<String>;
-		// var clustered:Bool;
+		var channelIds:Array<String>;
+		var clustered:Bool;
 
-		// if (destinationConfig == null) {
-		// 	channelIds = getDefaultChannelIds();
-		// 	if (channelIds.length == 0) {
-		// 		var message:String = 'Destination \'${destinationId}\' either does not exist or the destination has no channels defined (and the application does not define any default channels.)';
-		// 		throw new InvalidDestinationError(message);
-		// 	}
-		// 	clustered = false;
-		// } else {
-		// 	channelIds = getChannelIds(destinationConfig);
-		// 	clustered = (destinationConfig.properties.network.cluster.length() > 0) ? true : false;
-		// }
+		if (destinationConfig == null) {
+			channelIds = getDefaultChannelIds();
+			if (channelIds.length == 0) {
+				var message:String = 'Destination \'${destinationId}\' either does not exist or the destination has no channels defined (and the application does not define any default channels.)';
+				throw new InvalidDestinationError(message);
+			}
+			clustered = false;
+		} else {
+			channelIds = getChannelIds(destinationConfig);
+			clustered = false;
+			for (properties in destinationConfig.elementsNamed("properties")) {
+				for (network in properties.elementsNamed("network")) {
+					for (cluster in properties.elementsNamed("cluster")) {
+						clustered = true;
+						break;
+					}
+				}
+			}
+		}
 
-		// var channelSetId:String = channelIds.join(",") + ":" + clustered;
+		var channelSetId:String = channelIds.join(",") + ":" + clustered;
 
-		// if (channelSetId in _channelSets) {
-		// 	return _channelSets[channelSetId];
-		// } else {
-		// 	var channelSet:ChannelSet = Type.createInstance(channelSetFactory, [channelIds, clustered]);
-		// 	var heartbeatMillis:Int = serverConfigData["flex-client"]["heartbeat-interval-millis"];
-		// 	if (heartbeatMillis > 0)
-		// 		channelSet.heartbeatInterval = heartbeatMillis;
-		// 	if (clustered)
-		// 		channelSet.initialDestinationId = destinationId;
-		// 	_channelSets[channelSetId] = channelSet;
-		// 	return channelSet;
-		// }
+		if (Reflect.hasField(_channelSets, channelSetId)) {
+			return Reflect.field(_channelSets, channelSetId);
+		} else {
+			var channelSet:ChannelSet = Type.createInstance(channelSetFactory, [channelIds, clustered]);
+			var heartbeatMillis:Int = 0;
+			for (flexClient in serverConfigData.elementsNamed("flex-client")) {
+				for (heartbeatIntervalMillis in flexClient.elementsNamed("heartbeat-interval-millis")) {
+					heartbeatMillis = Std.parseInt(heartbeatIntervalMillis.nodeValue);
+				}
+			}
+			if (heartbeatMillis > 0)
+				channelSet.heartbeatInterval = heartbeatMillis;
+			if (clustered)
+				channelSet.initialDestinationId = destinationId;
+			Reflect.setField(_channelSets, channelSetId, channelSet);
+			return channelSet;
+		}
 	}
 }

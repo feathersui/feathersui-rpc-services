@@ -17,6 +17,8 @@
 
 package feathers.messaging;
 
+import openfl.utils.ByteArray;
+import haxe.crypto.Base64;
 import feathers.data.ArrayCollection;
 import feathers.messaging.channels.PollingChannel;
 import feathers.messaging.config.ServerConfig;
@@ -1101,44 +1103,48 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion LCDS 3
 	 */
 	public function login(username:String, password:String, charset:String = null):AsyncToken {
-		throw new Error("Not implemented");
-		// if (authenticated)
-		// 	throw new IllegalOperationError("ChannelSet is already authenticated.");
+		if (authenticated)
+			throw new IllegalOperationError("ChannelSet is already authenticated.");
 
-		// if ((_authAgent != null) && (_authAgent.state != AuthenticationAgent.LOGGED_OUT_STATE))
-		// 	throw new IllegalOperationError("ChannelSet is in the process of logging in or logging out.");
+		if ((_authAgent != null) && (_authAgent.state != AuthenticationAgent.LOGGED_OUT_STATE))
+			throw new IllegalOperationError("ChannelSet is in the process of logging in or logging out.");
 
-		// if (charset != Base64Encoder.CHARSET_UTF_8)
-		// 	charset = null; // Use legacy charset, ISO-Latin-1.
+		if (charset != "UTF-8")
+			charset = null; // Use legacy charset, ISO-Latin-1.
 
-		// var credentials:String = null;
-		// if (username != null && password != null) {
-		// 	var rawCredentials:String = username + ":" + password;
-		// 	var encoder:Base64Encoder = new Base64Encoder();
-		// 	if (charset == Base64Encoder.CHARSET_UTF_8)
-		// 		encoder.encodeUTFBytes(rawCredentials);
-		// 	else
-		// 		encoder.encode(rawCredentials);
-		// 	credentials = encoder.drain();
-		// }
+		var credentials:String = null;
+		if (username != null && password != null) {
+			var rawCredentials:String = username + ":" + password;
+			var bytes = new ByteArray();
+			if (charset == "UTF-8") {
+				bytes.writeUTFBytes(rawCredentials);
+				credentials = Base64.encode(bytes);
+			} else {
+				for (i in 0...rawCredentials.length) {
+					var charCode = rawCredentials.charCodeAt(i);
+					bytes.writeByte(charCode);
+				}
+				credentials = Base64.encode(bytes);
+			}
+		}
 
-		// var msg:CommandMessage = new CommandMessage();
-		// msg.operation = CommandMessage.LOGIN_OPERATION;
-		// msg.body = credentials;
-		// if (charset != null)
-		// 	msg.headers[CommandMessage.CREDENTIALS_CHARSET_HEADER] = charset;
+		var msg:CommandMessage = new CommandMessage();
+		msg.operation = CommandMessage.LOGIN_OPERATION;
+		msg.body = credentials;
+		if (charset != null)
+			Reflect.setField(msg.headers, CommandMessage.CREDENTIALS_CHARSET_HEADER, charset);
 
-		// // A non-null, non-empty destination is required to send using an agent.
-		// // This value is ignored on the server and the message must be handled by an AuthenticationService.
-		// msg.destination = "auth";
+		// A non-null, non-empty destination is required to send using an agent.
+		// This value is ignored on the server and the message must be handled by an AuthenticationService.
+		msg.destination = "auth";
 
-		// var token:AsyncToken = new AsyncToken(msg);
-		// if (_authAgent == null)
-		// 	_authAgent = new AuthenticationAgent(this);
-		// _authAgent.registerToken(token);
-		// _authAgent.state = AuthenticationAgent.LOGGING_IN_STATE;
-		// send(_authAgent, msg);
-		// return token;
+		var token:AsyncToken = new AsyncToken(msg);
+		if (_authAgent == null)
+			_authAgent = new AuthenticationAgent(this);
+		_authAgent.registerToken(token);
+		_authAgent.state = AuthenticationAgent.LOGGING_IN_STATE;
+		send(_authAgent, msg);
+		return token;
 	}
 
 	/**

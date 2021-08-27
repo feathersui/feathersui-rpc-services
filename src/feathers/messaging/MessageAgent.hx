@@ -17,6 +17,8 @@
 
 package feathers.messaging;
 
+import haxe.crypto.Base64;
+import openfl.utils.ByteArray;
 import feathers.messaging.Channel;
 import feathers.messaging.channels.PollingChannel;
 import feathers.messaging.config.ServerConfig;
@@ -33,8 +35,12 @@ import feathers.messaging.messages.IMessage;
 import feathers.rpc.utils.RPCUIDUtil;
 import openfl.errors.Error;
 import openfl.events.EventDispatcher;
+#if flash
+import feathers.messaging.config.ConfigMap;
+#end
 
 @:access(feathers.messaging.Channel)
+@:access(feathers.messaging.config.ServerConfig)
 class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 	//
@@ -601,16 +607,14 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		// }
 
 		if (configRequested) {
-			throw new Error("Not implemented");
-			// configRequested = false;
-			// ServerConfig.updateServerConfigData(cast(ackMsg.body, ConfigMap));
-			// needsConfig = false;
-			// if (_pendingConnectEvent != null)
-			// 	channelConnectHandler(_pendingConnectEvent);
+			configRequested = false;
+			ServerConfig.updateServerConfigData(#if flash cast(ackMsg.body, ConfigMap) #else ackMsg.body #end);
+			needsConfig = false;
+			if (_pendingConnectEvent != null)
+				channelConnectHandler(_pendingConnectEvent);
 
-			// _pendingConnectEvent = null;
+			_pendingConnectEvent = null;
 		}
-
 		if (clientId == null) {
 			if (ackMsg.clientId != null)
 				setClientId(ackMsg.clientId); // Triggers a call to flush the clientId wait queue.
@@ -842,15 +846,19 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 			_credentials = null;
 			_credentialsCharset = null;
 		} else {
-			throw new Error("Not implemented");
-			// var cred:String = username + ":" + password;
-			// var encoder:Base64Encoder = new Base64Encoder();
-			// if (charset == Base64Encoder.CHARSET_UTF_8)
-			// 	encoder.encodeUTFBytes(cred);
-			// else
-			// 	encoder.encode(cred);
-			// _credentials = encoder.drain();
-			// _credentialsCharset = charset;
+			var cred:String = username + ":" + password;
+			var bytes = new ByteArray();
+			if (charset == "UTF-8") {
+				bytes.writeUTFBytes(cred);
+				_credentials = Base64.encode(bytes);
+			} else {
+				for (i in 0...cred.length) {
+					var charCode = cred.charCodeAt(i);
+					bytes.writeByte(charCode);
+				}
+				_credentials = Base64.encode(bytes);
+			}
+			_credentialsCharset = charset;
 		}
 
 		if (channelSet != null)
@@ -879,15 +887,19 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 			_remoteCredentials = "";
 			_remoteCredentialsCharset = null;
 		} else {
-			throw new Error("Not implemented");
-			// var cred:String = username + ":" + password;
-			// var encoder:Base64Encoder = new Base64Encoder();
-			// if (charset == Base64Encoder.CHARSET_UTF_8)
-			// 	encoder.encodeUTFBytes(cred);
-			// else
-			// 	encoder.encode(cred);
-			// _remoteCredentials = encoder.drain();
-			// _remoteCredentialsCharset = charset;
+			var cred:String = username + ":" + password;
+			var bytes = new ByteArray();
+			if (charset == "UTF-8") {
+				bytes.writeUTFBytes(cred);
+				_remoteCredentials = Base64.encode(bytes);
+			} else {
+				for (i in 0...cred.length) {
+					var charCode = cred.charCodeAt(i);
+					bytes.writeByte(charCode);
+				}
+				_remoteCredentials = Base64.encode(bytes);
+			}
+			_remoteCredentialsCharset = charset;
 		}
 		_sendRemoteCredentials = true;
 	}

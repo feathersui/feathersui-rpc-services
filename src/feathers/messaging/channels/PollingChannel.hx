@@ -550,21 +550,24 @@ class PollingChannel extends Channel {
 	 *  @param settings The Channel settings.
 	 */
 	private function applyPollingSettings(settings:Xml):Void {
-		throw new Error("applyPollingSettings() not implemented");
-		// if (settings.properties.length() == 0)
-		// 	return;
-
-		// var props:XML = settings.properties[0];
-		// if (props[POLLING_ENABLED].length() != 0)
-		// 	internalPollingEnabled = props[POLLING_ENABLED].toString() == TRUE;
-		// if (props[POLLING_INTERVAL_MILLIS].length() != 0)
-		// 	internalPollingInterval = parseInt(props[POLLING_INTERVAL_MILLIS].toString());
-		// else if (props[POLLING_INTERVAL_LEGACY].length() != 0)
-		// 	internalPollingInterval = parseInt(props[POLLING_INTERVAL_LEGACY].toString()) * 1000;
-		// if (props[PIGGYBACKING_ENABLED].length() != 0)
-		// 	internalPiggybackingEnabled = props[PIGGYBACKING_ENABLED].toString() == TRUE;
-		// if (props[LOGIN_AFTER_DISCONNECT].length() != 0)
-		// 	_loginAfterDisconnect = props[LOGIN_AFTER_DISCONNECT].toString() == TRUE;
+		for (props in settings.elementsNamed("properties")) {
+			for (enabled in props.elementsNamed(POLLING_ENABLED)) {
+				internalPollingEnabled = enabled.nodeValue == Channel.TRUE;
+			}
+			for (millis in props.elementsNamed(POLLING_INTERVAL_LEGACY)) {
+				internalPollingInterval = Std.parseInt(Std.string(millis.nodeValue)) * 1000;
+			}
+			for (millis in props.elementsNamed(POLLING_INTERVAL_MILLIS)) {
+				internalPollingInterval = Std.parseInt(Std.string(millis.nodeValue));
+			}
+			for (enabled in props.elementsNamed(PIGGYBACKING_ENABLED)) {
+				internalPiggybackingEnabled = enabled.nodeValue == Channel.TRUE;
+			}
+			for (login in props.elementsNamed(LOGIN_AFTER_DISCONNECT)) {
+				_loginAfterDisconnect = login.nodeValue == Channel.TRUE;
+			}
+			break;
+		}
 	}
 
 	/**

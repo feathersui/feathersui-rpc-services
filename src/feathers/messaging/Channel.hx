@@ -719,26 +719,33 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @param settings XML fragment of the services-config.xml file for this channel.
 	 */
 	public function applySettings(settings:Xml):Void {
-		throw new Error("applySettings() is not implemented");
 		// if (Log.isInfo())
 		// 	_log.info("'{0}' channel settings are:\n{1}", id, settings);
 
-		// if (settings.properties.length() == 0)
-		// 	return;
-
-		// var props:XML = settings.properties[0];
-		// applyClientLoadBalancingSettings(props);
-		// if (props[CONNECT_TIMEOUT_SECONDS].length() != 0)
-		// 	connectTimeout = props[CONNECT_TIMEOUT_SECONDS].toString();
-		// if (props[RECORD_MESSAGE_TIMES].length() != 0)
-		// 	_recordMessageTimes = props[RECORD_MESSAGE_TIMES].toString() == TRUE;
-		// if (props[RECORD_MESSAGE_SIZES].length() != 0)
-		// 	_recordMessageSizes = props[RECORD_MESSAGE_SIZES].toString() == TRUE;
-		// if (props[REQUEST_TIMEOUT_SECONDS].length() != 0)
-		// 	requestTimeout = props[REQUEST_TIMEOUT_SECONDS].toString();
-		// var serializationProps:XMLList = props[SERIALIZATION];
-		// if (serializationProps.length() != 0 && serializationProps[ENABLE_SMALL_MESSAGES].toString() == FALSE)
-		// 	enableSmallMessages = false;
+		for (props in settings.elementsNamed("properties")) {
+			applyClientLoadBalancingSettings(props);
+			for (connect in props.elementsNamed(CONNECT_TIMEOUT_SECONDS)) {
+				connectTimeout = Std.parseInt(Std.string(connect.nodeValue));
+			}
+			for (record in props.elementsNamed(RECORD_MESSAGE_TIMES)) {
+				_recordMessageTimes = record.nodeValue == TRUE;
+			}
+			for (record in props.elementsNamed(RECORD_MESSAGE_SIZES)) {
+				_recordMessageSizes = record.nodeValue == TRUE;
+			}
+			for (timeout in props.elementsNamed(REQUEST_TIMEOUT_SECONDS)) {
+				requestTimeout = Std.parseInt(Std.string(timeout.nodeValue));
+			}
+			for (serializationProps in props.elementsNamed(SERIALIZATION)) {
+				for (enable in serializationProps.elementsNamed(ENABLE_SMALL_MESSAGES)) {
+					if (Std.string(enable.nodeValue) == FALSE) {
+						enableSmallMessages = false;
+					}
+					break;
+				}
+			}
+			break;
+		}
 	}
 
 	/**
@@ -751,31 +758,25 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  file for this channel.
 	 */
 	private function applyClientLoadBalancingSettings(props:Xml):Void {
-		throw new Error("applyClientLoadBalancingSettings() is not impelemented");
-		// var clientLoadBalancingProps:XMLList = props[CLIENT_LOAD_BALANCING];
-		// if (clientLoadBalancingProps.length() == 0)
-		// 	return;
+		// Add urls to an array, so they can be shuffled.
+		var urls:Array<String> = [];
+		for (clientLoadBalancing in props.elementsNamed(CLIENT_LOAD_BALANCING)) {
+			for (url in clientLoadBalancing.elementsNamed("url")) {
+				urls.push(url.nodeValue);
+			}
+		}
 
-		// var urlCount:Int = clientLoadBalancingProps.url.length();
-		// if (urlCount == 0)
-		// 	return;
-
-		// // Add urls to an array, so they can be shuffled.
-		// var urls:Array = [];
-		// for each (var url:XML in clientLoadBalancingProps.url)
-		// 	urls.push(url.toString());
-
-		// shuffle(urls);
+		shuffle(urls);
 
 		// Select the first url as the main url.
 		// if (Log.isInfo())
 		// 	_log.info("'{0}' channel picked {1} as its main url.", id, urls[0]);
-		// this.url = urls[0];
+		this.url = urls[0];
 
 		// Assign the rest of the urls as failoverUris.
-		// var failoverURIs:Array = urls.slice(1);
-		// if (failoverURIs.length > 0)
-		// 	this.failoverURIs = failoverURIs;
+		var failoverURIs:Array<String> = urls.slice(1);
+		if (failoverURIs.length > 0)
+			this.failoverURIs = failoverURIs;
 	}
 
 	/**

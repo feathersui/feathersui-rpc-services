@@ -18,7 +18,6 @@
 package feathers.messaging;
 
 import feathers.data.ArrayCollection;
-import feathers.messaging.channels.NetConnectionChannel;
 import feathers.messaging.channels.PollingChannel;
 import feathers.messaging.config.ServerConfig;
 import feathers.messaging.errors.NoChannelAvailableError;
@@ -40,6 +39,9 @@ import openfl.errors.IllegalOperationError;
 import openfl.events.EventDispatcher;
 import openfl.events.TimerEvent;
 import openfl.utils.Timer;
+#if flash
+import feathers.messaging.channels.NetConnectionChannel;
+#end
 
 /**
  *  The ChannelSet is a set of Channels that are used to send messages to a
@@ -983,6 +985,7 @@ class ChannelSet extends EventDispatcher {
 			if (_shouldHunt && hunt()) {
 				event.reconnecting = true;
 				dispatchEvent(event);
+				#if flash
 				if ((_currentChannel is NetConnectionChannel)) {
 					// Insert slight delay for reconnect to allow NetConnection
 					// based channels to shut down and clean up in preparation
@@ -993,6 +996,7 @@ class ChannelSet extends EventDispatcher {
 						_reconnectTimer.start();
 					}
 				} else // No need to wait with other channel types.
+				#end
 				{
 					connectChannel();
 				}
@@ -1037,6 +1041,7 @@ class ChannelSet extends EventDispatcher {
 				if (hunt()) {
 					event.reconnecting = true;
 					dispatchEvent(event);
+					#if flash
 					if ((_currentChannel is NetConnectionChannel)) {
 						// Insert slight delay for reconnect to allow
 						// NetConnection based channels to shut down and clean
@@ -1047,6 +1052,7 @@ class ChannelSet extends EventDispatcher {
 							_reconnectTimer.start();
 						}
 					} else // No need to wait with other channel types.
+					#end
 					{
 						connectChannel();
 					}
@@ -1268,6 +1274,7 @@ class ChannelSet extends EventDispatcher {
 				if ((_currentChannel == null) || (_currentChannelIndex == -1))
 					hunt();
 
+				#if flash
 				if ((_currentChannel is NetConnectionChannel)) {
 					// Insert a slight delay in case we've hunted to a
 					// NetConnection channel that doesn't allow a reconnect
@@ -1278,6 +1285,7 @@ class ChannelSet extends EventDispatcher {
 						_reconnectTimer.start();
 					}
 				} else // No need to wait with other channel types.
+				#end
 				{
 					connectChannel();
 				}

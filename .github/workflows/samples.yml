@@ -1,0 +1,35 @@
+name: Samples
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-air:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: joshtynjala/setup-adobe-air-action@v1
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.3
+      - name: Set up Haxelib dependencies
+        run: |
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install feathersui --quiet
+          haxelib dev feathersui-rpc-services ${{ github.workspace }} 
+          haxelib run lime config AIR_SDK ${{ env.AIR_HOME }}
+      - name: Build samples/amfphp/Pizza
+        working-directory: samples/amfphp/Pizza
+        run: |
+          haxelib run openfl build air
+      - name: Build samples/amfphp/TypedObjects
+        working-directory: samples/amfphp/TypedObjects
+        run: |
+          haxelib run openfl build air

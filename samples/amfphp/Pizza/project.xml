@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="Amfphp Pizza" package="com.feathersui.samples.rpc.amfphp.Pizza" version="1.0.0" company="Bowler Hat LLC" />
+	<meta title="Amfphp Pizza — Feathers UI RPC Services Samples" if="html5"/>
+	<app main="Main" file="Pizza" />
+
+	<window allow-high-dpi="true"/>
+	<window fps="60"/>
+	<window fps="0" if="html5"/>
+	<window width="985" height="720"/>
+	
+	<source path="src" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	<haxelib name="feathersui" />
+	<haxelib name="feathersui-rpc-services" />
+
+	<icon path="assets/icons/feathersui-icon.svg"/>
+	<assets id="header-background-pizza" path="assets/img/header-background-pizza.png"/>
+</project>

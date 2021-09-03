@@ -6,14 +6,21 @@ A port of the RPC service classes from [Apache Flex](https://flex.apache.org/) (
 
 Please review the notes below for an overview of what currently works, doesn't work, or has changed from the original Flex implementation.
 
+- `RemoteObject`: Load data with the same classes used by a remote application server, encoded with Action Message Format (AMF).
+  - Available on the **flash** and **air** targets only.
+  - Instead of adding `[RemoteClass(alias="com.example.MyClass)]` metadata to your classes, you must call the `flash.net.registerClassAlias()` function. In Haxe, `registerClassAlias()` is not exposed in the standard library, but it may be called like this:
+    ```hx
+    untyped __global__["flash.net.registerClassAlias"]("com.example.MyClass", MyClass);
+    ```
 - `HTTPService`: Load data from a URL as XML, Text, URL variables, or JSON.
   - `resultFormat`
     - The new `RESULT_FORMAT_JSON` is supported on all targets and parses the server response as JSON, returning an [anonymous structure](https://haxe.org/manual/types-anonymous-structure.html).
     - The new `RESULT_FORMAT_HAXE_XML` is supported on all targets and returns an instance of Haxe's [`Xml`](https://api.haxe.org/Xml.html) class.
-    - `RESULT_FORMAT_HAXE_E4X` and `RESULT_FORMAT_XML` are supported only on **flash** and **air** targets. On all other targets, a compile-time deprecation warning will be presented, and a runtime exception will be thrown. Use of the new `RESULT_FORMAT_HAXE_XML` is recommended for all targets.
-- `HTTPMultiService`: Represents a collection of HTTP operations.
-- ~~`WebService`~~: Not yet implemented
-- ~~`RemoteObject`~~: Not yet implemented
+    - `RESULT_FORMAT_HAXE_E4X` and `RESULT_FORMAT_XML` are available only on **flash** and **air** targets. On all other targets, a compile-time deprecation warning will be presented, and a runtime exception will be thrown. Use of the new `RESULT_FORMAT_HAXE_XML` is recommended for all targets.
+- ~~`HTTPMultiService`~~: Represents a collection of HTTP operations.
+  - Ported to Haxe, but not yet tested.
+- ~~`WebService`~~: Provides access to SOAP-based web services on remote servers.
+  - Not yet ported to Haxe.
 
 ## Installation
 

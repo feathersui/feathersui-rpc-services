@@ -32,6 +32,9 @@ import haxe.Constraints.Function;
  *  @playerversion AIR 1.1
  *  @productversion Flex 3
  */
+#if !flash
+@:deprecated("RemoteObject is not available on this target.")
+#end
 @:access(feathers.rpc.AbstractOperation)
 class RemoteObject extends AbstractService {
 	//-------------------------------------------------------------------------

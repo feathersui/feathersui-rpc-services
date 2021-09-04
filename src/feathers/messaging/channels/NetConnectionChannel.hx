@@ -236,6 +236,8 @@ class NetConnectionChannel extends PollingChannel {
 			// }
 			#if flash
 			_nc.connect(url);
+			#else
+			throw new Error("Not implemented");
 			#end
 		} catch (e:Error) {
 			// In some cases, this error does not have the URL in it (if it is a malformed

@@ -17,8 +17,6 @@
 
 package feathers.messaging.channels;
 
-#if flash
-import feathers.messaging.config.ConfigMap;
 import feathers.messaging.messages.IMessage;
 import feathers.messaging.messages.AbstractMessage;
 import feathers.messaging.messages.ErrorMessage;
@@ -26,9 +24,12 @@ import feathers.messaging.events.ChannelFaultEvent;
 import openfl.events.IOErrorEvent;
 import openfl.events.SecurityErrorEvent;
 import openfl.events.NetStatusEvent;
-import flash.net.Responder;
 import feathers.messaging.messages.CommandMessage;
 import feathers.messaging.config.ServerConfig;
+#if flash
+import flash.net.Responder;
+import feathers.messaging.config.ConfigMap;
+#end
 
 /**
  *  The AMFChannel class provides the AMF support for messaging.
@@ -316,7 +317,9 @@ class AMFChannel extends NetConnectionChannel {
 		// Add the FlexClient id header.
 		setFlexClientIdOnMessage(msg);
 
+		#if flash
 		netConnection.call(null, new Responder(resultHandler, faultHandler), msg);
+		#end
 		// if (Log.isDebug())
 		// 	_log.debug("'{0}' pinging endpoint.", id);
 	}
@@ -358,11 +361,15 @@ class AMFChannel extends NetConnectionChannel {
 	 *  timeout but an error (i.e. 404) response from the server returns later.
 	 */
 	override private function shutdownNetConnection():Void {
+		#if flash
 		_nc.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 		_nc.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+		#end
 		// Leave the NetStatusEvent statusHandler registered but set the ignore flag.
 		_ignoreNetStatusEvents = true;
+		#if flash
 		_nc.close();
+		#end
 	}
 
 	/**
@@ -514,7 +521,9 @@ class AMFChannel extends NetConnectionChannel {
 	private function resultHandler(msg:IMessage):Void {
 		// Update the ServerConfig with dynamic configuration
 		if (msg != null) {
+			#if flash
 			ServerConfig.updateServerConfigData(Std.downcast(msg.body, ConfigMap), endpoint);
+			#end
 
 			// Set the server assigned FlexClient Id.
 			if (FlexClient.getInstance().id == null && Reflect.field(msg.headers, AbstractMessage.FLEX_CLIENT_ID_HEADER) != null)
@@ -534,4 +543,3 @@ class AMFChannel extends NetConnectionChannel {
 			setAuthenticated(true);
 	}
 }
-#end

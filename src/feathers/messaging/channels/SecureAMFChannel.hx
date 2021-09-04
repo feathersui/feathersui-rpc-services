@@ -17,7 +17,6 @@
 
 package feathers.messaging.channels;
 
-#if flash
 /**
  *  The SecureAMFChannel class is identical to the AMFChannel class except that it uses a
  *  secure protocol, HTTPS, to send messages to an AMF endpoint.
@@ -71,4 +70,3 @@ class SecureAMFChannel extends AMFChannel {
 		return "https";
 	}
 }
-#end

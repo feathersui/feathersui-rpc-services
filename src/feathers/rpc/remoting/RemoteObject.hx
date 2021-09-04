@@ -17,7 +17,6 @@
 
 package feathers.rpc.remoting;
 
-#if flash
 import feathers.messaging.utils.RpcClassAliasInitializer;
 import feathers.messaging.channels.AMFChannel;
 import feathers.messaging.channels.SecureAMFChannel;
@@ -53,7 +52,9 @@ class RemoteObject extends AbstractService {
 	public function new(destination:String = null) {
 		super(destination);
 
+		#if flash
 		RpcClassAliasInitializer.registerClassAliases();
+		#end
 
 		concurrency = Concurrency.MULTIPLE;
 		makeObjectsBindable = true;
@@ -369,4 +370,3 @@ class RemoteObject extends AbstractService {
 		return s;
 	}
 }
-#end

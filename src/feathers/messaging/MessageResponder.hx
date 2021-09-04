@@ -22,8 +22,9 @@ import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.IMessage;
 import openfl.events.TimerEvent;
 import openfl.utils.Timer;
-
-// import openfl.net.Responder;
+#if flash
+import flash.net.Responder;
+#end
 
 /**
  *  The MessageResponder class handles a successful result or fault from a message
@@ -42,7 +43,7 @@ import openfl.utils.Timer;
  *  @productversion BlazeDS 4
  *  @productversion LCDS 3 
  */
-class MessageResponder #if flash extends flash.net.Responder #end {
+class MessageResponder #if flash extends Responder #end {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor

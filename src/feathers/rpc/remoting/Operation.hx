@@ -17,7 +17,6 @@
 
 package feathers.rpc.remoting;
 
-#if flash
 import feathers.messaging.messages.RemotingMessage;
 import feathers.messaging.messages.AsyncMessage;
 import feathers.messaging.events.MessageEvent;
@@ -296,4 +295,3 @@ class Operation extends AbstractOperation {
 	//--------------------------------------------------------------------------
 	private var remoteObject:RemoteObject;
 }
-#end

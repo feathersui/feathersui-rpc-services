@@ -29,14 +29,15 @@ import openfl.events.ErrorEvent;
 import openfl.events.AsyncErrorEvent;
 import openfl.events.IOErrorEvent;
 import openfl.events.SecurityErrorEvent;
-#if flash
 import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.AcknowledgeMessage;
 import feathers.messaging.messages.AsyncMessage;
 import feathers.messaging.messages.IMessage;
 import openfl.events.TimerEvent;
-import flash.net.NetConnection;
 import openfl.events.NetStatusEvent;
+#if flash
+import flash.net.NetConnection;
+#end
 
 /**
  *  This NetConnectionChannel provides the basic NetConnection support for messaging.
@@ -78,9 +79,11 @@ class NetConnectionChannel extends PollingChannel {
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
 
+		#if flash
 		_nc = new NetConnection();
 		_nc.objectEncoding = ObjectEncoding.AMF3;
 		_nc.client = this;
+		#end
 	}
 
 	//--------------------------------------------------------------------------
@@ -103,6 +106,7 @@ class NetConnectionChannel extends PollingChannel {
 	//  netConnection
 	//----------------------------------
 
+	#if flash
 	/**
 	 *  @private
 	 */
@@ -123,6 +127,7 @@ class NetConnectionChannel extends PollingChannel {
 	private function get_netConnection():NetConnection {
 		return _nc;
 	}
+	#end
 
 	//----------------------------------
 	//  useSmallmessages
@@ -133,9 +138,13 @@ class NetConnectionChannel extends PollingChannel {
 	 * If the ObjectEncoding is set to AMF0 we can't support small messages.
 	 */
 	override private function get_useSmallMessages():Bool {
+		#if flash
 		var ncEncoding:Int = _nc.objectEncoding;
 		var amf3Encoding:Int = ObjectEncoding.AMF3;
 		return (super.useSmallMessages && _nc != null && ncEncoding >= amf3Encoding);
+		#else
+		return false;
+		#end
 	}
 
 	//--------------------------------------------------------------------------
@@ -199,20 +208,24 @@ class NetConnectionChannel extends PollingChannel {
 		// If the NetConnection has a non-null uri the Player will close() it automatically
 		// as part of its connect() processing below. Pre-emptively close the connection while suppressing
 		// NetStatus event handling to avoid spurious events.
+		#if flash
 		if (_nc.uri != null && _nc.uri.length > 0 && _nc.connected) {
 			_nc.removeEventListener(NetStatusEvent.NET_STATUS, statusHandler);
 			_nc.close();
 		}
+		#end
 
 		// Propagate our requestTimeout for those platforms
 		// supporting the httpIdleTimeout property on NetConnection.
 		// if ("httpIdleTimeout" in _nc && requestTimeout > 0)
 		// 	_nc["httpIdleTimeout"] = requestTimeout * 1000;
 
+		#if flash
 		_nc.addEventListener(NetStatusEvent.NET_STATUS, statusHandler);
 		_nc.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 		_nc.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 		_nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
+		#end
 
 		try {
 			// if (NetworkMonitor.isMonitoring()) {
@@ -221,7 +234,9 @@ class NetConnectionChannel extends PollingChannel {
 			// 		url = redirectedUrl;
 			// 	}
 			// }
+			#if flash
 			_nc.connect(url);
+			#end
 		} catch (e:Error) {
 			// In some cases, this error does not have the URL in it (if it is a malformed
 			// URL for example) and in others it does (sandbox violation).  Usually this is
@@ -257,7 +272,9 @@ class NetConnectionChannel extends PollingChannel {
 				message = smallMessage;
 		}
 
+		#if flash
 		_nc.call(null, msgResp, message);
+		#end
 	}
 
 	//--------------------------------------------------------------------------
@@ -333,11 +350,13 @@ class NetConnectionChannel extends PollingChannel {
 	 *  Shuts down the underlying NetConnection for the channel.
 	 */
 	private function shutdownNetConnection():Void {
+		#if flash
 		_nc.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 		_nc.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 		_nc.removeEventListener(NetStatusEvent.NET_STATUS, statusHandler);
 		_nc.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
 		_nc.close();
+		#end
 	}
 
 	/**
@@ -623,4 +642,3 @@ class NetConnectionMessageResponder extends MessageResponder {
 		channel.removeEventListener(ChannelFaultEvent.FAULT, channelFaultHandler);
 	}
 }
-#end

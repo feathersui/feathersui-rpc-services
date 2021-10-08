@@ -26,7 +26,7 @@ import openfl.events.SecurityErrorEvent;
 import openfl.events.NetStatusEvent;
 import feathers.messaging.messages.CommandMessage;
 import feathers.messaging.config.ServerConfig;
-#if (openfl >= "9.2.0" && html5)
+#if (openfl >= "9.2.0")
 import openfl.net.Responder;
 #elseif flash
 import flash.net.Responder;
@@ -321,7 +321,7 @@ class AMFChannel extends NetConnectionChannel {
 		// Add the FlexClient id header.
 		setFlexClientIdOnMessage(msg);
 
-		#if (flash || (openfl >= "9.2.0" && html5))
+		#if (flash || openfl >= "9.2.0")
 		netConnection.call(null, new Responder(resultHandler, faultHandler), msg);
 		#end
 		// if (Log.isDebug())

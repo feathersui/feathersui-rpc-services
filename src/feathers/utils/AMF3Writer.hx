@@ -1,19 +1,15 @@
 package feathers.utils;
 
-import lime.utils.Bytes;
-#if html5
-import Type.ValueType;
-import openfl.utils.ByteArray;
-import openfl.utils.IExternalizable;
-import openfl.net.IDynamicPropertyWriter;
-import openfl.net.IDynamicPropertyOutput;
-import haxe.Constraints.Function;
-import js.lib.ArrayBuffer;
-import js.lib.DataView;
-import js.lib.Uint8Array;
 import openfl.errors.Error;
+import openfl.net.IDynamicPropertyOutput;
+import openfl.net.IDynamicPropertyWriter;
+import openfl.net.ObjectEncoding;
+import openfl.utils.ByteArray;
+import openfl.utils.Endian;
+import openfl.utils.IDataOutput;
+import openfl.utils.IExternalizable;
 
-class AMFContext extends BinaryData implements IDynamicPropertyOutput {
+class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	private static final AMF0_AMF3:Int = 0x11;
 	private static final AMF3_OBJECT_ENCODING:Int = 0x03;
 	private static final AMF3_UNDEFINED:Int = 0x00;
@@ -39,96 +35,74 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 	private static final INT28_MIN_VALUE:Int = -268435456;
 	private static final EMPTY_STRING:String = "";
 
-	private var owner:AMFBinaryData;
+	private static var _xmlClass:Class<Dynamic> = null;
+	private static final nothing:Dynamic = {};
+
+	private static function getAliasByClass(theClass:Dynamic):String {
+		var registeredClassAliases = @:privateAccess openfl.Lib.__registeredClassAliases;
+		for (key => value in registeredClassAliases) {
+			if (value == theClass) {
+				return key;
+			}
+		}
+		return null;
+	}
+
+	public function new(targetReference:ByteArray) {
+		target = targetReference;
+		reset();
+	}
+
+	public var endian(get, set):Endian;
+
+	private function get_endian():Endian {
+		return target.endian;
+	}
+
+	private function set_endian(value:Endian):Endian {
+		target.endian = value;
+		return target.endian;
+	}
+
+	public var objectEncoding:ObjectEncoding;
+
+	private var target:ByteArray;
 
 	public var dynamicPropertyWriter:IDynamicPropertyWriter;
 
-	private var writeBuffer:Array<Dynamic>;
 	private var objects:Array<Dynamic>;
-	private var traits:Dynamic;
-	private var strings:Dynamic;
-	private var stringCount:UInt;
-	private var traitCount:UInt;
-	private var writeMode:Bool = false;
-	private var _numbers:ArrayBuffer;
-	private var _numberView:DataView;
-	private var _numberBytes:Uint8Array;
+	private var traits:Array<Dynamic>;
+	private var strings:Array<Dynamic>;
+	private var _numberBytes:ByteArray;
 
-	private static var _xmlClass:Class<Dynamic> = null;
-	private static var _xmlChecked:Bool;
-
-	private var _error:Error;
-
-	public function getError():Error {
-		var _err:Error = _error;
-		_error = null;
-		return _err;
-	}
-
-	/**
-	 * @royaleignorecoercion Class
-	 */
-	public function new(ownerReference:AMFBinaryData) {
-		owner = ownerReference;
-		reset();
-		if (!_xmlChecked) {
-			_xmlChecked = true;
+	private function getNumberBytes():ByteArray {
+		if (_numberBytes == null) {
+			_numberBytes = new ByteArray(8);
+			_numberBytes.endian = BIG_ENDIAN;
 		}
-		super();
+		_numberBytes.position = 0;
+		return _numberBytes;
 	}
 
 	public function reset():Void {
-		writeBuffer = [];
 		objects = [];
-		traits = {};
-		strings = {};
-		stringCount = 0;
-		traitCount = 0;
+		traits = [];
+		strings = [];
 	}
 
-	public function supportsAMFEncoding(type:UInt):Bool {
-		return type == 3;
+	public function writeByte(byte:Int):Void {
+		target.writeByte(byte);
 	}
 
-	/**
-	 * used internally as an override to return the writeBuffer Array for use to mimic Uint8Array during writing.
-	 * Array is used because it is not usually known what the byte allocation should be in advance,
-	 * and length is not mutable with javascript typed arrays, so 'growing' the buffer with each write is not
-	 * a good strategy for performance.
-	 * The assumption is that, while write access is slower for individual elements, increasing the length of
-	 * the 'buffer' is not, and that using Array will be more performant.
-	 * @royaleignorecoercion Uint8Array
-	 */
-	override private function getTypedArray():Uint8Array {
-		return writeMode ? (writeBuffer : Dynamic) : super.getTypedArray();
+	public function writeShort(short:Int):Void {
+		target.writeShort(short);
 	}
 
-	override private function getDataView():DataView {
-		if (!writeMode)
-			return super.getDataView();
-		// in write mode, return a utility version
-		if (_numberView == null) {
-			_numbers = new ArrayBuffer(8);
-			_numberView = new DataView(_numbers);
-			_numberBytes = new Uint8Array(_numbers);
-		}
-		return _numberView;
-	}
-
-	override private function setBufferSize(newSize:UInt):Void {
-		// writing variation: in this subclass, writing  is always using 'Array' so length is not fixed
-		_len = newSize;
-	}
-
-	override public function writeByte(byte:Int):Void {
-		writeBuffer[_position++] = byte & 255;
-	}
-
-	override public function writeByteAt(idx:UInt, byte:Int):Void {
-		while (idx > _len) {
-			writeBuffer[_len++] = 0;
-		}
-		writeBuffer[idx] = byte & 255;
+	public function writeByteAt(idx:UInt, byte:Int):Void {
+		var savedPos = target.position;
+		target.position = idx;
+		target.writeByte(byte);
+		target.position = savedPos;
 	}
 
 	public function writeUInt29(v:UInt):Void {
@@ -151,88 +125,58 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		}
 	}
 
-	private function addByteSequence(array:Array<Dynamic>):Void {
-		var length:UInt = array.length;
-		if (_position == _len) {
-			writeBuffer = writeBuffer.concat(array);
-			_len = _len + length;
-			/*if (_len != writeBuffer.length) {
-				throw new Error('code review')
-			}*/
-		} else {
-			if (_position + length > _len) {
-				// overwrite beyond
-				// first truncate to _position
-				writeBuffer.resize(_position);
-				// then append the new content
-				writeBuffer = writeBuffer.concat(array);
-				_len = _position + length;
-				if (_len != writeBuffer.length) {
-					throw new Error('code review');
-				}
-			} else {
-				// overwrite within - concatenate left and right slices with the new content between
-				writeBuffer = writeBuffer.slice(0, _position).concat(array).concat(writeBuffer.slice(_position + length));
-
-				if (_len != writeBuffer.length) {
-					throw new Error('code review');
-				}
-			}
-		}
-		_position += length;
+	public function writeBoolean(value:Bool):Void {
+		writeByte(value ? 1 : 0);
 	}
 
-	override public function writeBytes(bytes:ArrayBuffer, offset:UInt = 0, length:UInt = 0):Void {
-		if (length == 0) {
-			length = bytes.byteLength - offset;
-		}
-		if (length == 0) {
-			return;
-		}
-		var src:Uint8Array = new Uint8Array(bytes, offset, offset + length);
-		var srcArray:Array<Dynamic> = Reflect.callMethod(src, Reflect.field([], "slice"), []);
-		addByteSequence(srcArray);
+	public function writeUnsignedInt(val:UInt):Void {
+		writeInt(val);
 	}
 
-	override public function writeUTF(str:String):Void {
-		var utcBytes:Uint8Array = getUTFBytes(str, true);
-		var srcArray:Array<Dynamic> = Reflect.callMethod(utcBytes, Reflect.field([], "slice"), []);
-		addByteSequence(srcArray);
+	public function writeInt(val:Int):Void {
+		target.writeInt(val);
 	}
 
-	override public function writeUTFBytes(str:String):Void {
-		var utcBytes:Uint8Array = getUTFBytes(str, false);
-		var srcArray:Array<Dynamic> = Reflect.callMethod(utcBytes, Reflect.field([], "slice"), []);
-		addByteSequence(srcArray);
+	public function writeBytes(bytes:ByteArray, offset:UInt = 0, length:UInt = 0):Void {
+		target.writeBytes(bytes, offset, length);
 	}
 
-	private function copyNumericBytes(byteCount:UInt):Void {
-		// arr here is actually an Array, not Uint8Array
-		var arr:Uint8Array = getTypedArray();
-		var numbers:Uint8Array = _numberBytes;
-		var idx:UInt = 0;
-		while ((byteCount--) > 0) {
-			arr[_position++] = numbers[idx++];
-		}
+	public function writeUTF(str:String):Void {
+		target.writeUTF(str);
 	}
 
-	override public function writeFloat(val:Float):Void {
+	public function writeUTFBytes(str:String):Void {
+		target.writeUTFBytes(str);
+	}
+
+	public function writeFloat(val:Float):Void {
 		// always big endian
-		getDataView().setFloat32(0, val, false);
-		copyNumericBytes(4);
+		var bytes = getNumberBytes();
+		bytes.writeFloat(val);
+		bytes.position = 0;
+		writeBytes(bytes);
 	}
 
-	override public function writeDouble(val:Float):Void {
+	public function writeDouble(val:Float):Void {
 		// always big endian
-		getDataView().setFloat64(0, val, false);
-		copyNumericBytes(8);
+		var bytes = getNumberBytes();
+		bytes.writeDouble(val);
+		bytes.position = 0;
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
+		writeByte(bytes.readByte());
 	}
 
-	private function writeAMF3_UTF(string:String):Void {
-		var utcBytes:Uint8Array = getUTFBytes(string, false);
-		var srcArray:Array<Dynamic> = Reflect.callMethod(utcBytes, Reflect.field([], "slice"), []);
-		writeUInt29((srcArray.length << 1) | 1);
-		addByteSequence(srcArray);
+	private function writeAMF3_UTF(str:String):Void {
+		var strBytes = new ByteArray();
+		strBytes.writeUTFBytes(str);
+		writeUInt29((strBytes.length << 1) | 1);
+		writeBytes(strBytes);
 	}
 
 	private function writeAMF3StringWithoutType(v:String):Void {
@@ -246,13 +190,12 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 	}
 
 	private function amf3StringByReference(v:String):Bool {
-		final strIndex:Dynamic = Reflect.field(strings, v);
-		final found:Bool = strIndex != null;
+		final ref:Int = strings.indexOf(v);
+		final found:Bool = ref != -1;
 		if (found) {
-			final ref:UInt = strIndex;
 			writeUInt29(ref << 1);
 		} else {
-			Reflect.setField(strings, v, stringCount++);
+			strings.push(v);
 		}
 		return found;
 	}
@@ -272,13 +215,12 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		// @todo review this. Don't think it is necessary to do the long joins with the props
 		// maybe alias alone is enough...?
 		final s:String = alias + "|" + props.join("|");
-		final traitsIndex:Dynamic = Reflect.field(traits, s);
-		final found:Bool = traitsIndex != null;
+		final ref:Int = traits.indexOf(s);
+		final found:Bool = ref != -1;
 		if (found) {
-			final ref:UInt = traitsIndex;
 			writeUInt29((ref << 2) | 1);
 		} else {
-			Reflect.setField(traits, s, traitCount++);
+			traits.push(s);
 		}
 		return found;
 	}
@@ -380,8 +322,6 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		return into;
 	}
 
-	private final nothing:Dynamic = {};
-
 	private function populateSerializableMembers(reflectionInfo:Dynamic, accessChecks:Dynamic, localTraits:AMFTraits):Array<Dynamic> {
 		if (reflectionInfo == null) {
 			return localTraits.props;
@@ -466,38 +406,22 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		return localTraits;
 	}
 
-	public function writeObjectExternal(v:Dynamic, position:UInt, mergeIntoOwner:Function):UInt {
-		writeMode = true;
-		_position = 0;
-		_len = 0;
-		try {
-			if (owner.objectEncoding == AMF0)
-				writeAmf0Object(v);
-			else
-				writeAmf3Object(v);
-		} catch (e:Error) {
-			_error = e;
-		}
-		var output:Uint8Array = new Uint8Array(writeBuffer);
-		reset();
-		writeMode = false;
-		return mergeIntoOwner(position, output);
+	public function writeMultiByte(value:String, charSet:String):Void {
+		throw new Error("writeMultiByte not supported");
 	}
 
 	public function writeObject(v:Dynamic):Void {
-		writeAmf3Object(v);
+		target.objectEncoding = objectEncoding;
+		if (objectEncoding == AMF0)
+			writeAmf0Object(v);
+		else
+			writeAmf3Object(v);
 	}
 
 	public function writeAmf0Object(v:Dynamic):Void {
-		throw new Error('AMF0 support is unimplemented by default, supported via bead');
+		throw new Error("AMF0 not supported");
 	}
 
-	/**
-	 * @royaleignorecoercion Class
-	 * @royaleignorecoercion String
-	 * @royaleignorecoercion Number
-	 * @royaleignorecoercion Array
-	 */
 	public function writeAmf3Object(v:Dynamic):Void {
 		if (v == null) {
 			#if html5
@@ -531,9 +455,13 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 			writeByte((v ? AMF3_BOOLEAN_TRUE : AMF3_BOOLEAN_FALSE));
 		} else if (v is Date) {
 			writeAmf3Date(cast(v, Date));
-			// } else if (_xmlClass && Std.isOfType(v, _xmlClass)) {
-			// 	writeXML(v);
-		} else {
+		}
+		/*
+			else if (_xmlClass && Std.isOfType(v, _xmlClass)) {
+				writeXML(v);
+			}
+		 */
+		else {
 			if ((v is Array)) {
 				writeAmf3Array(cast(v, Array<Dynamic>));
 			} else {
@@ -552,30 +480,14 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		}
 	}
 
-	/**
-	 *
-	 * @royaleignorecoercion BinaryData
-	 * @royaleignorecoercion ArrayBuffer
-	 */
 	private function writeAmf3ObjectVariant(v:Dynamic):Void {
-		if ((v is AMFBinaryData) || (v is BinaryData)) {
-			writeByte(AMF3_BYTEARRAY);
-			if (!this.amf3ObjectByReference(v)) {
-				var binaryData:BinaryData = cast(v, BinaryData);
-				var len:UInt = binaryData.length;
-				this.writeUInt29((len << 1) | 1);
-				var arrayBuffer:ArrayBuffer = binaryData.data;
-				writeBytes(arrayBuffer);
-			}
-			return;
-		} else if (v is ByteArrayData) {
+		if (v is ByteArrayData) {
 			writeByte(AMF3_BYTEARRAY);
 			if (!this.amf3ObjectByReference(v)) {
 				var byteArray:ByteArray = cast(v, ByteArray);
 				var len:UInt = byteArray.length;
 				this.writeUInt29((len << 1) | 1);
-				var arrayBuffer:ArrayBuffer = byteArray;
-				writeBytes(arrayBuffer, 0, len);
+				writeBytes(byteArray, 0, len);
 			}
 			return;
 		}
@@ -623,13 +535,13 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 			var l:UInt = localTraits.count;
 			for (i in 0...l) {
 				// sealed props
-				var val:Dynamic = localTraits.getterSetters[localTraits.props[i]].getValue(v);
+				var val:Dynamic = Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v);
 				if (val == null) {
 					// coerce null values to the 'correct' types
-					val = localTraits.nullValues[localTraits.props[i]];
+					val = Reflect.field(localTraits.nullValues, localTraits.props[i]);
 
 					// handle '*' type which can be undefined or explicitly null
-					if (val == null && localTraits.getterSetters[localTraits.props[i]].getValue(v) == null) {
+					if (val == null && Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v) == null) {
 						val = null;
 					}
 				}
@@ -673,7 +585,6 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 			var comparator:String = _comparator;
 			var checkBase:Array<Dynamic>;
 			if (comparator == null) {
-				// var ff:Function = function f():Void {};
 				checkBase = Reflect.fields(function():Void {});
 				if (checkBase.indexOf('name') != -1) {
 					checkBase.splice(checkBase.indexOf('name'), 1);
@@ -690,10 +601,6 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		return false;
 	}
 
-	/**
-	 *
-	 * @royaleignorecoercion String
-	 */
 	private function writeAmf3Array(v:Array<Dynamic>):Void {
 		writeByte(AMF3_ARRAY);
 		var len:UInt = v.length;
@@ -746,7 +653,7 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 			if (akl > 0) {
 				// name-value pairs of associative keys
 				for (i in 0...akl) {
-					var val:Dynamic = Reflect.field(v, keys[i]);
+					var val:Dynamic = (keys[i] is Int) ? v[keys[i]] : Reflect.field(v, keys[i]);
 					if (isFunctionValue(val)) {
 						continue;
 					}
@@ -764,15 +671,6 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 		}
 	}
 
-	/**
-	 *
-	 * @royaleignorecoercion Array
-	 * @royaleignorecoercion String
-	 * @royaleignorecoercion Boolean
-	 * @royaleignorecoercion Number
-	 * @royaleignorecoercion uint
-	 * @royaleignorecoercion int
-	 */
 	private function writeAmf3Vector(v:Dynamic):Void {
 		// v is a Vector synthType instance
 		var className:String = Type.getClassName(Type.getClass(v));
@@ -832,366 +730,4 @@ class AMFContext extends BinaryData implements IDynamicPropertyOutput {
 			}
 		}
 	}
-
-	private function getAliasByClass(theClass:Dynamic):String {
-		var registeredClassAliases = @:privateAccess openfl.Lib.__registeredClassAliases;
-		for (key => value in registeredClassAliases) {
-			if (value == theClass) {
-				return key;
-			}
-		}
-		return null;
-	}
-
-	public function readUInt29():Int {
-		final read:Function = readUnsignedByte;
-		var b:UInt = read() & 255;
-		if (b < 128) {
-			return b;
-		}
-		var value:UInt = (b & 127) << 7;
-		b = read() & 255;
-		if (b < 128)
-			return (value | b);
-		value = (value | (b & 127)) << 7;
-		b = read() & 255;
-		if (b < 128)
-			return (value | b);
-		value = (value | (b & 127)) << 8;
-		b = read() & 255;
-		return (value | b);
-	}
-
-	/**
-	 *
-	 * @royaleignorecoercion ArrayBuffer
-	 */
-	public function readObjectExternal():Dynamic {
-		if (ba != owner.data) {
-			ba = cast(owner.data, ArrayBuffer);
-			_typedArray = new Uint8Array(ba);
-			_dataView = null;
-		}
-		_position = owner.position;
-		_len = owner.length;
-		var result:Dynamic = null;
-		try {
-			if (owner.objectEncoding == AMF0)
-				result = readAmf0Object();
-			else
-				result = readAmf3Object();
-		} catch (e:Error) {
-			_error = e;
-		}
-		reset();
-		owner.position = _position;
-		return result;
-	}
-
-	public function readObject():Dynamic {
-		return readAmf3Object();
-	}
-
-	public function readAmf0Object():Dynamic {
-		throw new Error('AMF0 support is unimplemented by default, supported via bead');
-	}
-
-	public function readAmf3Object():Dynamic {
-		var amfType:UInt = readUnsignedByte();
-		return readAmf3ObjectValue(amfType);
-	}
-
-	public function readAmf3XML():Dynamic {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0)
-			return getObject(ref >> 1);
-		else {
-			var len:UInt = (ref >> 1);
-			var stringSource:String = readUTFBytes(len);
-			// if (!_xmlClass) {
-			throw new Error("XML class is not linked in, as required for deserialization");
-			// }
-			// var xml:Dynamic = Type.createInstance(_xmlClass, stringSource);
-			// rememberObject(xml);
-			// return xml;
-		}
-	}
-
-	public function readAmf3String():String {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0) {
-			return getString(ref >> 1);
-		} else {
-			var len:UInt = (ref >> 1);
-			if (len == 0) {
-				return EMPTY_STRING;
-			}
-			var str:String = readUTFBytes(len);
-			rememberString(str);
-			return str;
-		}
-	}
-
-	private function rememberString(v:String):Void {
-		strings[stringCount++] = v;
-	}
-
-	private function getString(v:UInt):String {
-		return strings[v];
-	}
-
-	private function getObject(v:UInt):Dynamic {
-		return objects[v];
-	}
-
-	private function getTraits(v:UInt):AMFTraits {
-		return traits[v];
-	}
-
-	private function rememberTraits(v:AMFTraits):Void {
-		traits[traitCount++] = v;
-	}
-
-	private function rememberObject(v:Dynamic):Void {
-		objects.push(v);
-	}
-
-	private function readTraits(ref:UInt):AMFTraits {
-		var ti:AMFTraits;
-		if ((ref & 3) == 1) {
-			ti = getTraits(ref >> 2);
-			return ti;
-		} else {
-			ti = new AMFTraits();
-			ti.externalizable = ((ref & 4) == 4);
-			ti.isDynamic = ((ref & 8) == 8);
-			ti.count = (ref >> 4);
-			var className:String = readAmf3String();
-			if (className != null && className != "") {
-				ti.alias = className;
-			}
-
-			for (i in 0...ti.count) {
-				ti.props.push(readAmf3String());
-			}
-
-			rememberTraits(ti);
-			return ti;
-		}
-	}
-
-	private function readScriptObject():Dynamic {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0) {
-			// retrieve object from object reference table
-			return getObject(ref >> 1);
-		} else {
-			var decodedTraits:AMFTraits = readTraits(ref);
-			var obj:Dynamic;
-			var localTraits:AMFTraits = null;
-			if (decodedTraits.alias != null && decodedTraits.alias.length > 0) {
-				var c:Class<Dynamic> = openfl.Lib.getClassByAlias(decodedTraits.alias);
-				if (c != null) {
-					obj = Type.createInstance(c, []);
-					localTraits = getLocalTraitsInfo(obj);
-				} else {
-					obj = {};
-				}
-			} else {
-				obj = {};
-			}
-			rememberObject(obj);
-			if (decodedTraits.externalizable) {
-				obj.readExternal(this);
-			} else {
-				final l:UInt = decodedTraits.props.length;
-				var hasProp:Bool;
-				for (i in 0...l) {
-					var fieldValue:Dynamic = readObject();
-					var prop:String = decodedTraits.props[i];
-					hasProp = localTraits != null && (localTraits.hasProp(prop) || localTraits.isDynamic || localTraits.isTransient(prop));
-					if (hasProp) {
-						Reflect.field(localTraits.getterSetters, prop).setValue(obj, fieldValue);
-					} else {
-						if (localTraits == null) {
-							Reflect.setField(obj, prop, fieldValue);
-						} else {
-							// @todo add debug-only logging for error checks (e.g. ReferenceError: Error #1074: Illegal write to read-only property)
-							#if debug
-							trace('ReferenceError: Error #1056: Cannot create property ' + prop + ' on ' + localTraits.qName);
-							#end
-						}
-					}
-				}
-				if (decodedTraits.isDynamic) {
-					while (true) {
-						var name:String = readAmf3String();
-						if (name == null || name.length == 0) {
-							break;
-						}
-						Reflect.setField(obj, name, readObject());
-					}
-				}
-			}
-			return obj;
-		}
-	}
-
-	/**
-	 * @royaleignorecoercion Array
-	 */
-	public function readAmf3Array():Array<Dynamic> {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0)
-			return getObject(ref >> 1);
-		var denseLength:UInt = (ref >> 1);
-		var array:Array<Dynamic> = [];
-		rememberObject(array);
-		while (true) {
-			var name:String = readAmf3String();
-			if (name == null || name.length == 0)
-				break;
-			// associative keys first
-			Reflect.setField(array, name, readObject());
-		}
-		// then dense array keys
-		for (i in 0...denseLength) {
-			array[i] = readObject();
-		}
-		return array;
-	}
-
-	/**
-	 * @royaleignorecoercion Array
-	 */
-	public function readAmf3Date():Date {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0)
-			return getObject(ref >> 1);
-		var time:Float = readDouble();
-		var date:Date = Date.fromTime(time);
-		rememberObject(date);
-		return date;
-	}
-
-	public function readByteArray():ByteArray {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0)
-			return getObject(ref >> 1);
-		else {
-			var len:UInt = (ref >> 1);
-			var bytes:Uint8Array = new Uint8Array(len);
-			bytes.set(new Uint8Array(this.ba, _position, len));
-			_position += len;
-			var binaryData:AMFBinaryData = new AMFBinaryData(bytes.buffer);
-			var ba = binaryData.toByteArray();
-			rememberObject(ba);
-			return ba;
-		}
-	}
-
-	/**
-	 *
-	 * @royaleignorecoercion Array
-	 */
-	private function readAmf3Vector(amfType:UInt):Dynamic {
-		var ref:UInt = readUInt29();
-		if ((ref & 1) == 0)
-			return getObject(ref >> 1);
-		var len:UInt = (ref >> 1);
-		var fixed:Bool = readBoolean();
-		/*var vector:Array = toVector(amfType, [], readBoolean());*/
-		var vector:openfl.Vector<Dynamic> = null;
-		var i:UInt;
-		if (amfType == AMF3_VECTOR_OBJECT) {
-			var className:String = readAmf3String(); // className
-			if (className == '') {
-				className = 'Object';
-			} else {
-				try {
-					className = openfl.Lib.getQualifiedClassName(openfl.Lib.getClassByAlias(className));
-				} catch (e:Error) {
-					className = 'Object';
-				}
-			}
-			vector = new openfl.Vector<Dynamic>(len, fixed);
-			for (i in 0...len)
-				vector[i] = readObject();
-		} else if (amfType == AMF3_VECTOR_INT) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
-			for (i in 0...len)
-				vector[i] = readInt();
-		} else if (amfType == AMF3_VECTOR_UINT) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
-			for (i in 0...len)
-				vector[i] = readUnsignedInt();
-		} else if (amfType == AMF3_VECTOR_DOUBLE) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
-			for (i in 0...len)
-				vector[i] = readDouble();
-		} else {
-			throw new Error("Unknown vector type: " + amfType);
-		}
-		rememberObject(vector);
-		return vector;
-	}
-
-	private function readAmf3ObjectValue(amfType:UInt):Dynamic {
-		var value:Dynamic = null;
-		var u:UInt;
-
-		switch (amfType) {
-			case AMF3_STRING:
-				value = readAmf3String();
-			case AMF3_OBJECT:
-				try {
-					value = readScriptObject();
-				} catch (e:Error) {
-					// if (goog.DEBUG) {
-					// 	var err:Error = (e.message.indexOf("Failed to deserialize") == -1) ? new Error("Failed to deserialize: " + e.message + ' '
-					// 		+ e.stack.split('\n')[1]) : e;
-					// 	throw err;
-					// } else
-					throw new Error("Failed to deserialize: " + e.message);
-				}
-			case AMF3_ARRAY:
-				value = readAmf3Array();
-			case AMF3_BOOLEAN_FALSE:
-				value = false;
-			case AMF3_BOOLEAN_TRUE:
-				value = true;
-			case AMF3_INTEGER:
-				u = readUInt29();
-				// Symmetric with writing an integer to fix sign bits for
-				// negative values...
-				value = (u << 3) >> 3;
-			case AMF3_DOUBLE:
-				value = readDouble();
-			case AMF3_UNDEFINED:
-				#if html5
-				value = js.Lib.undefined;
-				#else
-				value = null;
-				#end
-			case AMF3_NULL:
-			// null is already assigned by default
-			case AMF3_DATE:
-				value = readAmf3Date();
-			case AMF3_BYTEARRAY:
-				value = readByteArray();
-			case AMF3_XML:
-				value = readAmf3XML();
-			case AMF3_VECTOR_INT:
-			case AMF3_VECTOR_UINT:
-			case AMF3_VECTOR_DOUBLE:
-			case AMF3_VECTOR_OBJECT:
-				value = readAmf3Vector(amfType);
-			case AMF0_AMF3:
-				value = readObject();
-			default:
-				throw new Error("Unsupported AMF type: " + amfType);
-		}
-		return value;
-	}
 }
-#end

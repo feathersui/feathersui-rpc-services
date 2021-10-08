@@ -19,24 +19,26 @@
 
 package feathers.net;
 
-import openfl.utils.ByteArray;
 import feathers.messaging.messages.ActionMessage;
 import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.MessageBody;
 import feathers.messaging.messages.MessageHeader;
-import feathers.utils.AMFBinaryData;
-import js.lib.ArrayBuffer;
+import feathers.utils.AMF3Reader;
+import feathers.utils.AMF3Writer;
 import openfl.Lib;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
 import openfl.events.HTTPStatusEvent;
 import openfl.events.IOErrorEvent;
-import openfl.events.ProgressEvent;
 import openfl.events.SecurityErrorEvent;
 import openfl.net.Responder;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
 import openfl.net.URLRequestMethod;
+import openfl.utils.ByteArray;
+#if (!flash && !html5)
+import openfl.net.URLRequestHeader;
+#end
 
 class AMFNetConnection {
 	//--------------------------------------------------------------------------
@@ -152,6 +154,12 @@ class AMFNetConnection {
 		var responder:Responder = call.item.responder;
 		var args:Array<Dynamic> = call.item.args;
 		var urlRequest:URLRequest = new URLRequest(url);
+
+		#if (!flash && !html5)
+		for (name => value in cookies) {
+			urlRequest.requestHeaders.push(new URLRequestHeader("Cookie", '$name=$value'));
+		}
+		#end
 		urlRequest.method = URLRequestMethod.POST;
 		urlRequest.contentType = "application/x-amf";
 		xhr.dataFormat = BINARY;
@@ -162,12 +170,13 @@ class AMFNetConnection {
 		messageBody.responseURI = "/" + Std.string(sequence);
 		messageBody.data = args;
 		actionMessage.bodies = [messageBody];
-		var binaryData:AMFBinaryData = new AMFBinaryData();
-		binaryData.endian = BIG_ENDIAN;
-		binaryData.objectEncoding = AMF3;
-		writeMessage(binaryData, actionMessage);
-		binaryData.position = 0;
-		var byteArray:ByteArray = binaryData.toByteArray();
+		var byteArray = new ByteArray();
+		byteArray.endian = BIG_ENDIAN;
+		byteArray.objectEncoding = AMF3;
+		var writer:AMF3Writer = new AMF3Writer(byteArray);
+		writer.endian = BIG_ENDIAN;
+		writer.objectEncoding = AMF3;
+		writeMessage(writer, actionMessage);
 		urlRequest.data = byteArray;
 		xhr.load(urlRequest);
 	}
@@ -226,14 +235,16 @@ class AMFNetConnection {
 			var body:MessageBody;
 			_relinquishCall(call);
 			var bytes = cast(xhr.data, ByteArray);
-			var arrayBuffer:ArrayBuffer = bytes;
-			var deserializer:AMFBinaryData = new AMFBinaryData(arrayBuffer);
-			deserializer.endian = BIG_ENDIAN;
-			deserializer.objectEncoding = AMF3;
+			bytes.endian = BIG_ENDIAN;
+			bytes.objectEncoding = AMF3;
+			var reader = new AMF3Reader(bytes);
+			reader.endian = BIG_ENDIAN;
+			reader.objectEncoding = AMF3;
 			try {
-				message = Std.downcast(readMessage(deserializer), ActionMessage);
+				message = Std.downcast(readMessage(reader), ActionMessage);
 			} catch (e) {
 				trace(e);
+				// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 				var error = new ErrorMessage();
 				error.faultCode = "-1001";
 				error.faultString = "Failed decoding the response.";
@@ -267,6 +278,8 @@ class AMFNetConnection {
 			_processQueue();
 	}
 
+	private var cookies:Map<String, String> = [];
+
 	private function handleStatus(event:HTTPStatusEvent, call:CallPoolItem):Void {
 		var xhr:URLLoader = call.xhr;
 		var responder:Responder = call.item.responder;
@@ -280,6 +293,20 @@ class AMFNetConnection {
 			error.extendedData = null;
 			@:privateAccess responder.__status(error);
 		}
+		#if (!flash && !html5)
+		if (event.responseHeaders != null) {
+			for (header in event.responseHeaders) {
+				if (header.name == "Set-Cookie") {
+					var setCookieParts = header.value.split(";");
+					var cookieString = setCookieParts[0];
+					var cookieStringParts = cookieString.split("=");
+					if (cookieStringParts.length == 2) {
+						cookies.set(cookieStringParts[0], cookieStringParts[1]);
+					}
+				}
+			}
+		}
+		#end
 	}
 
 	private function handleError(event:ErrorEvent, call:CallPoolItem):Void {
@@ -296,7 +323,7 @@ class AMFNetConnection {
 		@:privateAccess responder.__status(error);
 	}
 
-	private function writeMessage(writer:AMFBinaryData, message:ActionMessage):Void {
+	private function writeMessage(writer:AMF3Writer, message:ActionMessage):Void {
 		try {
 			writer.writeShort(message.version);
 			var l = message.headers.length;
@@ -311,10 +338,11 @@ class AMFNetConnection {
 			}
 		} catch (e) {
 			trace(e);
+			// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 		}
 	}
 
-	private function writeHeader(writer:AMFBinaryData, header:MessageHeader):Void {
+	private function writeHeader(writer:AMF3Writer, header:MessageHeader):Void {
 		writer.writeUTF(header.name);
 		writer.writeBoolean(header.mustUnderstand);
 		writer.writeInt(UNKNOWN_CONTENT_LENGTH);
@@ -324,7 +352,7 @@ class AMFNetConnection {
 		writer.writeBoolean(true);
 	}
 
-	private function writeBody(writer:AMFBinaryData, body:MessageBody):Void {
+	private function writeBody(writer:AMF3Writer, body:MessageBody):Void {
 		if (body.targetURI == null) {
 			writer.writeUTF(NULL_STRING);
 		} else {
@@ -341,7 +369,7 @@ class AMFNetConnection {
 		writer.writeObject(body.data);
 	}
 
-	private function readMessage(reader:AMFBinaryData):ActionMessage {
+	private function readMessage(reader:AMF3Reader):ActionMessage {
 		var message:ActionMessage = new ActionMessage();
 		message.version = reader.readUnsignedShort();
 		reader.objectEncoding = message.version;
@@ -356,7 +384,7 @@ class AMFNetConnection {
 		return message;
 	}
 
-	private function readHeader(reader:AMFBinaryData):MessageHeader {
+	private function readHeader(reader:AMF3Reader):MessageHeader {
 		var header:MessageHeader = new MessageHeader();
 		header.name = reader.readUTF();
 		header.mustUnderstand = reader.readBoolean();
@@ -373,7 +401,7 @@ class AMFNetConnection {
 		return header;
 	}
 
-	private function readBody(reader:AMFBinaryData):MessageBody {
+	private function readBody(reader:AMF3Reader):MessageBody {
 		var body:MessageBody = new MessageBody();
 		body.targetURI = reader.readUTF();
 		body.responseURI = reader.readUTF();

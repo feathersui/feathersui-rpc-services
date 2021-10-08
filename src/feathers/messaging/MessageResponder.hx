@@ -22,7 +22,9 @@ import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.IMessage;
 import openfl.events.TimerEvent;
 import openfl.utils.Timer;
-#if flash
+#if (openfl >= "9.2.0")
+import openfl.net.Responder;
+#elseif flash
 import flash.net.Responder;
 #end
 
@@ -43,7 +45,7 @@ import flash.net.Responder;
  *  @productversion BlazeDS 4
  *  @productversion LCDS 3 
  */
-class MessageResponder #if flash extends Responder #end {
+class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
@@ -67,7 +69,7 @@ class MessageResponder #if flash extends Responder #end {
 	 *  @productversion LCDS 3 
 	 */
 	public function new(agent:MessageAgent, message:IMessage, channel:Channel = null) {
-		#if flash
+		#if (flash || openfl >= "9.2.0")
 		super(result, status);
 		#end
 

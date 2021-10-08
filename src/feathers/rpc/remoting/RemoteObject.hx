@@ -55,9 +55,7 @@ class RemoteObject extends AbstractService {
 	public function new(destination:String = null) {
 		super(destination);
 
-		#if flash
 		RpcClassAliasInitializer.registerClassAliases();
-		#end
 
 		concurrency = Concurrency.MULTIPLE;
 		makeObjectsBindable = true;

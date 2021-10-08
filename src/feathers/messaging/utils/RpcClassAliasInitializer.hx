@@ -1,6 +1,5 @@
 package feathers.messaging.utils;
 
-#if flash
 import feathers.messaging.messages.RemotingMessage;
 import feathers.messaging.messages.MessagePerformanceInfo;
 import feathers.messaging.messages.HTTPRequestMessage;
@@ -34,6 +33,26 @@ class RpcClassAliasInitializer {
 	 *  @productversion Flex 4.5
 	 */
 	public static function registerClassAliases():Void {
+		#if (openfl >= "9.2.0")
+		// Flex classes
+		openfl.Lib.registerClassAlias("flex.messaging.io.ArrayCollection", ArrayCollection);
+		// openfl.Lib.registerClassAlias("flex.messaging.io.ArrayList", ArrayList);
+		// openfl.Lib.registerClassAlias("flex.messaging.io.ObjectProxy", ObjectProxy);
+
+		// rpc classes
+		openfl.Lib.registerClassAlias("flex.messaging.messages.AcknowledgeMessage", AcknowledgeMessage);
+		openfl.Lib.registerClassAlias("DSK", AcknowledgeMessageExt);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.AsyncMessage", AsyncMessage);
+		openfl.Lib.registerClassAlias("DSA", AsyncMessageExt);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.CommandMessage", CommandMessage);
+		openfl.Lib.registerClassAlias("DSC", CommandMessageExt);
+		// openfl.Lib.registerClassAlias("flex.messaging.config.ConfigMap", ConfigMap);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.ErrorMessage", ErrorMessage);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.HTTPMessage", HTTPRequestMessage);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.MessagePerformanceInfo", MessagePerformanceInfo);
+		openfl.Lib.registerClassAlias("flex.messaging.messages.RemotingMessage", RemotingMessage);
+		// openfl.Lib.registerClassAlias("flex.messaging.messages.SOAPMessage", SOAPMessage);
+		#elseif flash
 		// Flex classes
 		untyped __global__["flash.net.registerClassAlias"]("flex.messaging.io.ArrayCollection", ArrayCollection);
 		// untyped __global__["flash.net.registerClassAlias"]("flex.messaging.io.ArrayList", ArrayList);
@@ -63,6 +82,6 @@ class RpcClassAliasInitializer {
 		// untyped __global__["flash.net.registerClassAlias"]("flex.management.jmx.MBeanParameterInfo", MBeanParameterInfo);
 		// untyped __global__["flash.net.registerClassAlias"]("flex.management.jmx.ObjectInstance", ObjectInstance);
 		// untyped __global__["flash.net.registerClassAlias"]("flex.management.jmx.ObjectName", ObjectName);
+		#end
 	}
 }
-#end

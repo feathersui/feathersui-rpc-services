@@ -22,8 +22,13 @@ class Main extends Application {
 	override private function initialize():Void {
 		super.initialize();
 
+		#if (openfl >= "9.2.0")
+		openfl.Lib.registerClassAlias("UserVo1", UserVo1);
+		openfl.Lib.registerClassAlias("UserVo2", UserVo2);
+		#else
 		untyped __global__["flash.net.registerClassAlias"]("UserVo1", UserVo1);
 		untyped __global__["flash.net.registerClassAlias"]("UserVo2", UserVo2);
+		#end
 
 		this._myConnection = new RemoteObject();
 		this._myConnection.destination = "amfphpExamplesGateway";

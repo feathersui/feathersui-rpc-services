@@ -1,5 +1,25 @@
+/*
+	Licensed to the Apache Software Foundation (ASF) under one or more
+	contributor license agreements.  See the NOTICE file distributed with
+	this work for additional information regarding copyright ownership.
+	The ASF licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License.  You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ */
+
 package feathers.messaging.utils;
 
+import feathers.messaging.messages.ActionMessage;
+import feathers.messaging.messages.MessageBody;
+import feathers.messaging.messages.MessageHeader;
 import feathers.messaging.messages.RemotingMessage;
 import feathers.messaging.messages.MessagePerformanceInfo;
 import feathers.messaging.messages.HTTPRequestMessage;
@@ -34,6 +54,12 @@ class RpcClassAliasInitializer {
 	 */
 	public static function registerClassAliases():Void {
 		#if (openfl >= "9.2.0")
+		#if !flash
+		openfl.Lib.registerClassAlias("flex.messaging.io.amf.MessageHeader", MessageHeader);
+		openfl.Lib.registerClassAlias("flex.messaging.io.amf.MessageBody", MessageBody);
+		openfl.Lib.registerClassAlias("flex.messaging.io.amf.ActionMessage", ActionMessage);
+		#end
+
 		// Flex classes
 		openfl.Lib.registerClassAlias("flex.messaging.io.ArrayCollection", ArrayCollection);
 		// openfl.Lib.registerClassAlias("flex.messaging.io.ArrayList", ArrayList);

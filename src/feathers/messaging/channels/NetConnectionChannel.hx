@@ -37,6 +37,8 @@ import openfl.events.TimerEvent;
 import openfl.events.NetStatusEvent;
 #if flash
 import flash.net.NetConnection;
+#elseif (openfl >= "9.2.0" && html5)
+import feathers.net.AMFNetConnection;
 #end
 
 /**
@@ -83,6 +85,8 @@ class NetConnectionChannel extends PollingChannel {
 		_nc = new NetConnection();
 		_nc.objectEncoding = ObjectEncoding.AMF3;
 		_nc.client = this;
+		#elseif (openfl >= "9.2.0" && html5)
+		_nc = new AMFNetConnection();
 		#end
 	}
 
@@ -125,6 +129,28 @@ class NetConnectionChannel extends PollingChannel {
 	public var netConnection(get, never):NetConnection;
 
 	private function get_netConnection():NetConnection {
+		return _nc;
+	}
+
+	#elseif (openfl >= "9.2.0" && html5)
+	/**
+	 *  @private
+	 */
+	private var _nc:AMFNetConnection;
+
+	/**
+	 *  Provides access to the associated NetConnection for this Channel.
+	 *  
+	 *  @langversion 3.0
+	 *  @playerversion Flash 9
+	 *  @playerversion AIR 1.1
+	 *  @productversion BlazeDS 4
+	 *  @productversion LCDS 3 
+	 */
+	@:flash.property
+	public var netConnection(get, never):AMFNetConnection;
+
+	private function get_netConnection():AMFNetConnection {
 		return _nc;
 	}
 	#end
@@ -234,7 +260,7 @@ class NetConnectionChannel extends PollingChannel {
 			// 		url = redirectedUrl;
 			// 	}
 			// }
-			#if flash
+			#if (flash || (openfl >= "9.2.0" && html5))
 			_nc.connect(url);
 			#else
 			throw new Error("Not implemented");
@@ -274,7 +300,7 @@ class NetConnectionChannel extends PollingChannel {
 				message = smallMessage;
 		}
 
-		#if flash
+		#if (flash || (openfl >= "9.2.0" && html5))
 		_nc.call(null, msgResp, message);
 		#end
 	}

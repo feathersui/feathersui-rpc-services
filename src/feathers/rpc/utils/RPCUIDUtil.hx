@@ -42,7 +42,11 @@ class RPCUIDUtil {
 	private static final ALPHA_CHAR_CODES:Array<Int> = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70];
 
 	private static final DASH:Int = 45; // dash ascii
-	private static final UIDBuffer:ByteArray = new ByteArray(); // static ByteArray used for UID generation to save memory allocation cost
+	private static final UIDBuffer:ByteArray = {
+		var bytes = new ByteArray(); // static ByteArray used for UID generation to save memory allocation cost
+		bytes.endian = BIG_ENDIAN;
+		bytes;
+	}
 
 	//--------------------------------------------------------------------------
 	//
@@ -190,6 +194,7 @@ class RPCUIDUtil {
 	public static function toByteArray(uid:String):ByteArray {
 		if (isUID(uid)) {
 			var result:ByteArray = new ByteArray();
+			result.endian = BIG_ENDIAN;
 
 			var i = 0;
 			while (i < uid.length) {

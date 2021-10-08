@@ -1110,6 +1110,7 @@ class ChannelSet extends EventDispatcher {
 		if (username != null && password != null) {
 			var rawCredentials:String = username + ":" + password;
 			var bytes = new ByteArray();
+			bytes.endian = BIG_ENDIAN;
 			if (charset == "UTF-8") {
 				bytes.writeUTFBytes(rawCredentials);
 				credentials = Base64.encode(bytes);

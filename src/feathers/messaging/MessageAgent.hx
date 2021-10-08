@@ -848,6 +848,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		} else {
 			var cred:String = username + ":" + password;
 			var bytes = new ByteArray();
+			bytes.endian = BIG_ENDIAN;
 			if (charset == "UTF-8") {
 				bytes.writeUTFBytes(cred);
 				_credentials = Base64.encode(bytes);
@@ -889,6 +890,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		} else {
 			var cred:String = username + ":" + password;
 			var bytes = new ByteArray();
+			bytes.endian = BIG_ENDIAN;
 			if (charset == "UTF-8") {
 				bytes.writeUTFBytes(cred);
 				_remoteCredentials = Base64.encode(bytes);

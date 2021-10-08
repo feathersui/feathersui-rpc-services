@@ -22,6 +22,12 @@ Please review the notes below for an overview of what currently works, doesn't w
 - ~~`WebService`~~: Provides access to SOAP-based web services on remote servers.
   - Not yet ported to Haxe.
 
+## Requirements
+
+- Haxe 4.2
+- OpenFL 9.2
+- Feathers UI 1.0.0-beta.6
+
 ## Installation
 
 This library is not yet available on Haxelib, so you'll need to install it from Github.

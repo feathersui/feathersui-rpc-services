@@ -75,6 +75,8 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	private var strings:Array<Dynamic>;
 	private var _numberBytes:ByteArray;
 
+	private var _writingExternal:Bool = false;
+
 	private function getNumberBytes():ByteArray {
 		if (_numberBytes == null) {
 			_numberBytes = new ByteArray(8);
@@ -402,11 +404,18 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	}
 
 	public function writeObject(v:Dynamic):Void {
+		if (!this._writingExternal) {
+			reset();
+		}
 		target.objectEncoding = objectEncoding;
-		if (objectEncoding == AMF0)
+		if (objectEncoding == AMF0) {
 			writeAmf0Object(v);
-		else
+		} else {
 			writeAmf3Object(v);
+		}
+		if (!this._writingExternal) {
+			reset();
+		}
 	}
 
 	public function writeAmf0Object(v:Dynamic):Void {
@@ -521,7 +530,10 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		}
 
 		if (localTraits.externalizable) {
+			var oldWritingExternal = this._writingExternal;
+			this._writingExternal = true;
 			v.writeExternal(this);
+			this._writingExternal = oldWritingExternal;
 		} else {
 			var l:UInt = localTraits.count;
 			for (i in 0...l) {

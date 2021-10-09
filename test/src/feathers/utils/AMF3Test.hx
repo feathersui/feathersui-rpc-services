@@ -213,6 +213,21 @@ class AMF3Test extends Test {
 		]));
 	}
 
+	public function testDuplicateStructure():Void {
+		var obj = {test: true};
+		writer.writeObject([obj, obj]);
+		ba.position = 0;
+		Assert.isTrue(bytesMatchExpectedData(ba, [9, 5, 1, 10, 11, 1, 9, 116, 101, 115, 116, 3, 1, 10, 2]));
+	}
+
+	public function testDuplicateStructureWithSeparateWriteObjectCalls():Void {
+		var obj = {test: true};
+		writer.writeObject(obj);
+		writer.writeObject(obj);
+		ba.position = 0;
+		Assert.isTrue(bytesMatchExpectedData(ba, [10, 11, 1, 9, 116, 101, 115, 116, 3, 1, 10, 11, 1, 9, 116, 101, 115, 116, 3, 1]));
+	}
+
 	public function testFunction():Void {
 		// functions are always encoded as undefined
 		var instance = function():Void {};

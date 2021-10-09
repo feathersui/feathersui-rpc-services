@@ -9,7 +9,7 @@ import openfl.utils.IExternalizable;
 import utest.Assert;
 import utest.Test;
 
-class AMF3Test extends Test {
+class AMF0Test extends Test {
 	// util check functions
 	private static function bytesMatchExpectedData(bytes:ByteArray, expected:Array<UInt>, offset:Int = 0):Bool {
 		var len = expected.length;
@@ -42,23 +42,21 @@ class AMF3Test extends Test {
 
 	public function setup():Void {
 		ba = new ByteArray();
-		ba.objectEncoding = AMF3;
+		ba.objectEncoding = AMF0;
 		ba.endian = BIG_ENDIAN;
 		writer = new AMFWriter(ba);
-		writer.objectEncoding = AMF3;
+		writer.objectEncoding = AMF0;
 		writer.endian = BIG_ENDIAN;
 		reader = new AMFReader(ba);
-		reader.objectEncoding = AMF3;
+		reader.objectEncoding = AMF0;
 		reader.endian = BIG_ENDIAN;
 	}
 
 	public function testEmptyString():Void {
 		var testString = "";
-
 		writer.writeObject(testString);
-
-		Assert.equals(2, ba.length);
-		Assert.equals(2, ba.position);
+		Assert.equals(3, ba.length);
+		Assert.equals(3, ba.position);
 
 		ba.position = 0;
 		Assert.equals(testString, reader.readObject());
@@ -71,8 +69,8 @@ class AMF3Test extends Test {
 
 		writer.writeObject(testString);
 
-		Assert.equals(12, ba.length);
-		Assert.equals(12, ba.position);
+		Assert.equals(13, ba.length);
+		Assert.equals(13, ba.position);
 
 		ba.position = 0;
 		Assert.equals(testString, reader.readObject());
@@ -80,11 +78,37 @@ class AMF3Test extends Test {
 		Assert.equals(0, ba.bytesAvailable);
 	}
 
+	public function testLongString():Void {
+		var baseString:String = "";
+		var l = 100;
+		while (l > 0) {
+			baseString += String.fromCharCode(32 + 100 - l);
+			l--;
+		}
+		var buffer:Array<String> = [];
+		while (l < 65536) {
+			buffer.push(baseString);
+			l += 100;
+		}
+		baseString = buffer.join("");
+
+		writer.writeObject(baseString);
+
+		Assert.equals(68229, ba.length);
+		Assert.equals(68229, ba.position);
+
+		ba.position = 0;
+		var result = reader.readObject();
+		Assert.equals(baseString, result);
+
+		Assert.equals(0, ba.bytesAvailable);
+	}
+
 	public function testBooleanTrue():Void {
 		writer.writeObject(true);
 
-		Assert.equals(1, ba.length);
-		Assert.equals(1, ba.position);
+		Assert.equals(2, ba.length);
+		Assert.equals(2, ba.position);
 
 		ba.position = 0;
 		Assert.equals(true, reader.readObject());
@@ -95,10 +119,10 @@ class AMF3Test extends Test {
 	public function testBooleanFalse():Void {
 		writer.writeObject(false);
 
-		Assert.equals(1, ba.length);
-		Assert.equals(1, ba.position);
-
+		Assert.equals(2, ba.length);
+		Assert.equals(2, ba.position);
 		ba.position = 0;
+
 		Assert.equals(false, reader.readObject());
 
 		Assert.equals(0, ba.bytesAvailable);
@@ -114,8 +138,8 @@ class AMF3Test extends Test {
 		writer.writeObject(Math.POSITIVE_INFINITY);
 		writer.writeObject(Math.NEGATIVE_INFINITY);
 
-		Assert.equals(58, ba.length);
-		Assert.equals(58, ba.position);
+		Assert.equals(72, ba.length);
+		Assert.equals(72, ba.position);
 
 		ba.position = 0;
 		var num = reader.readObject();
@@ -185,8 +209,8 @@ class AMF3Test extends Test {
 		var instance:Array<Dynamic> = [];
 		writer.writeObject(instance);
 
-		Assert.equals(3, ba.length);
-		Assert.equals(3, ba.position);
+		Assert.equals(8, ba.length);
+		Assert.equals(8, ba.position);
 
 		ba.position = 0;
 		var val:Array<Dynamic> = reader.readObject();
@@ -199,7 +223,9 @@ class AMF3Test extends Test {
 	public function testArrayInstance():Void {
 		var instance:Array<Dynamic> = [99];
 		writer.writeObject(instance);
-		Assert.isTrue(bytesMatchExpectedData(ba, [9, 3, 1, 4, 99]));
+		Assert.isTrue(bytesMatchExpectedData(ba, [
+			0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x30, 0x00, 0x40, 0x58, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09
+		]));
 
 		ba.position = 0;
 		instance = reader.readObject();
@@ -232,16 +258,20 @@ class AMF3Test extends Test {
 
 		ba.position = 0;
 		Assert.isTrue(bytesMatchExpectedData(ba, [
-			9, 7, 1, 10, 11, 1, 9, 116, 101, 115, 116, 3, 1, 10, 1, 0, 6, 11, 109, 97, 121, 98, 101, 1, 10, 1, 0, 3, 1
+			0x08, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x30, 0x03, 0x00, 0x04, 0x74, 0x65, 0x73, 0x74, 0x01, 0x01, 0x00, 0x00, 0x09, 0x00, 0x01, 0x31, 0x03,
+			0x00, 0x04, 0x74, 0x65, 0x73, 0x74, 0x02, 0x00, 0x05, 0x6d, 0x61, 0x79, 0x62, 0x65, 0x00, 0x00, 0x09, 0x00, 0x01, 0x32, 0x03, 0x00, 0x04, 0x74,
+			0x65, 0x73, 0x74, 0x01, 0x01, 0x00, 0x00, 0x09, 0x00, 0x00, 0x09
 		]));
 	}
 
 	public function testDuplicateStructure():Void {
 		var obj = {test: true};
 		writer.writeObject([obj, obj]);
-		Assert.equals(15, ba.length);
-		Assert.equals(15, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [9, 5, 1, 10, 11, 1, 9, 116, 101, 115, 116, 3, 1, 10, 2]));
+		Assert.equals(29, ba.length);
+		Assert.equals(29, ba.position);
+		Assert.isTrue(bytesMatchExpectedData(ba, [
+			8, 0, 0, 0, 2, 0, 1, 48, 3, 0, 4, 116, 101, 115, 116, 1, 1, 0, 0, 9, 0, 1, 49, 7, 0, 1, 0, 0, 9
+		]));
 
 		ba.position = 0;
 		var result:Array<Any> = reader.readObject();
@@ -261,9 +291,11 @@ class AMF3Test extends Test {
 		var obj = {test: true};
 		writer.writeObject(obj);
 		writer.writeObject(obj);
-		Assert.equals(20, ba.length);
-		Assert.equals(20, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [10, 11, 1, 9, 116, 101, 115, 116, 3, 1, 10, 11, 1, 9, 116, 101, 115, 116, 3, 1]));
+		Assert.equals(24, ba.length);
+		Assert.equals(24, ba.position);
+		Assert.isTrue(bytesMatchExpectedData(ba, [
+			3, 0, 4, 116, 101, 115, 116, 1, 1, 0, 0, 9, 3, 0, 4, 116, 101, 115, 116, 1, 1, 0, 0, 9
+		]));
 
 		ba.position = 0;
 		var result1 = reader.readObject();
@@ -283,7 +315,7 @@ class AMF3Test extends Test {
 
 		Assert.equals(1, ba.length);
 		Assert.equals(1, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [0]));
+		Assert.isTrue(bytesMatchExpectedData(ba, [0x06]));
 
 		ba.position = 0;
 		instance = reader.readObject();
@@ -301,7 +333,7 @@ class AMF3Test extends Test {
 
 		Assert.equals(4, ba.length);
 		Assert.equals(4, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [10, 11, 1, 1]));
+		Assert.isTrue(bytesMatchExpectedData(ba, [0x03, 0x00, 0x00, 0x09]));
 
 		ba.position = 0;
 		var obj = reader.readObject();
@@ -315,10 +347,12 @@ class AMF3Test extends Test {
 		var instance = new TestClass1();
 		writer.writeObject(instance);
 
-		Assert.equals(16, ba.length);
-		Assert.equals(16, ba.position);
+		Assert.equals(19, ba.length);
+		Assert.equals(19, ba.position);
 
-		Assert.isTrue(bytesMatchExpectedData(ba, [10, 19, 1, 21, 116, 101, 115, 116, 70, 105, 101, 108, 100, 49, 6, 1]));
+		Assert.isTrue(bytesMatchExpectedData(ba, [
+			0x03, 0x00, 0x0a, 0x74, 0x65, 0x73, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x31, 0x02, 0x00, 0x00, 0x00, 0x00, 0x09
+		]));
 
 		ba.position = 0;
 		var anonObject = reader.readObject();
@@ -335,10 +369,12 @@ class AMF3Test extends Test {
 		var multipleDifferentInstances:Array<Dynamic> = [obj1, obj2];
 		writer.writeObject(multipleDifferentInstances);
 
-		Assert.equals(24, ba.length);
-		Assert.equals(24, ba.position);
+		Assert.equals(51, ba.length);
+		Assert.equals(51, ba.position);
 		Assert.isTrue(bytesMatchExpectedData(ba, [
-			9, 5, 1, 10, 19, 1, 21, 116, 101, 115, 116, 70, 105, 101, 108, 100, 49, 6, 1, 10, 19, 1, 0, 3
+			0x08, 0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0x30, 0x03, 0x00, 0x0a, 0x74, 0x65, 0x73, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x31, 0x02, 0x00, 0x00,
+			0x00, 0x00, 0x09, 0x00, 0x01, 0x31, 0x03, 0x00, 0x0a, 0x74, 0x65, 0x73, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x31, 0x01, 0x01, 0x00, 0x00, 0x09,
+			0x00, 0x00, 0x09
 		]));
 
 		ba.position = 0;
@@ -356,96 +392,6 @@ class AMF3Test extends Test {
 
 		Assert.equals(0, ba.bytesAvailable);
 	}
-
-	public function testByteArray():Void {
-		var source = new ByteArray();
-
-		for (i in 0...26) {
-			source.writeByte(i);
-		}
-		var holder = [source, source];
-
-		writer.writeObject(holder);
-		Assert.equals(33, ba.length);
-		Assert.equals(33, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [
-			9, 5, 1, 12, 53, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 12, 2
-		]));
-
-		ba.position = 0;
-		var result:Array<Any> = reader.readObject();
-		Assert.isOfType(result, Array);
-		Assert.equals(2, result.length);
-		Assert.notEquals(source, result[0]);
-		Assert.notEquals(source, result[1]);
-		Assert.equals(result[0], result[1]);
-		Assert.isTrue(bytesMatchExpectedData(result[0], [
-			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25
-		]));
-
-		Assert.equals(0, ba.bytesAvailable);
-	}
-
-	public function testExternalizableWithoutRegisterClassAlias():Void {
-		var test3 = new TestClass3a();
-		// TestClass3 is externalizable and does not have an alias, this is an error in flash
-
-		var err:Error = null;
-		try {
-			writer.writeObject(test3);
-		} catch (e:Error) {
-			err = e;
-		}
-
-		Assert.notNull(err);
-		Assert.equals(1, ba.length);
-		Assert.equals(1, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [10]));
-	}
-
-	public function testExternalizable():Void {
-		var test3 = new TestClass3b();
-		// register an alias
-		openfl.Lib.registerClassAlias("TestClass3", TestClass3b);
-		writer.writeObject(test3);
-		Assert.equals(18, ba.length);
-		Assert.equals(18, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [10, 7, 21, 84, 101, 115, 116, 67, 108, 97, 115, 115, 51, 9, 3, 1, 6, 0]));
-
-		ba.position = 0;
-		var result = reader.readObject();
-		Assert.isOfType(result, TestClass3b);
-		Assert.notEquals(test3, result);
-		Assert.notEquals(test3.content, result.content);
-		Assert.equals(test3.content[0], result.content[0]);
-
-		Assert.equals(0, ba.bytesAvailable);
-	}
-
-	public function testExternalizable2():Void {
-		var test3 = new TestClass3c();
-		// register an alias
-		openfl.Lib.registerClassAlias("TestClass3", TestClass3c);
-		var chars = (test3.content[0]).split("");
-		chars.reverse();
-		test3.content[0] = chars.join("");
-		writer.writeObject(test3);
-		Assert.equals(28, ba.length);
-		Assert.equals(28, ba.position);
-		Assert.isTrue(bytesMatchExpectedData(ba, [
-			10, 7, 21, 84, 101, 115, 116, 67, 108, 97, 115, 115, 51, 9, 3, 1, 6, 21, 51, 115, 115, 97, 108, 67, 116, 115, 101, 84
-		]));
-
-		ba.position = 0;
-		var result = reader.readObject();
-		// proof that it created a new instance, and that the reversed content string content is present in the new instance
-		Assert.isOfType(result, TestClass3c);
-		Assert.notEquals(test3, result);
-		Assert.notEquals(test3.content, result.content);
-		Assert.equals(test3.content[0], result.content[0]);
-
-		Assert.equals(0, ba.bytesAvailable);
-	}
 }
 
 private class TestClass1 {
@@ -460,55 +406,4 @@ private class TestClass2 {
 	public function new() {}
 
 	public var testField1:Bool = true;
-}
-
-private class TestClass3a implements IExternalizable {
-	public function new() {}
-
-	public var content:Array<String> = ["TestClass3"];
-
-	public function readExternal(input:IDataInput):Void {
-		var content:Array<String> = (input.readObject() : Array<String>);
-		this.content = content;
-	}
-
-	public function writeExternal(output:IDataOutput):Void {
-		output.writeObject(content);
-	}
-}
-
-private class TestClass3b implements IExternalizable {
-	public function new() {}
-
-	public var content:Array<String> = ["TestClass3"];
-
-	public function readExternal(input:IDataInput):Void {
-		var content:Array<String> = (input.readObject() : Array<String>);
-		this.content = content;
-	}
-
-	public function writeExternal(output:IDataOutput):Void {
-		output.writeObject(content);
-	}
-}
-
-private class TestClass3c implements IExternalizable {
-	public function new() {}
-
-	public var content:Array<String> = ["TestClass3"];
-
-	public function readExternal(input:IDataInput):Void {
-		var content:Array<String> = (input.readObject() : Array<String>);
-		this.content = content;
-	}
-
-	public function writeExternal(output:IDataOutput):Void {
-		output.writeObject(content);
-	}
-}
-
-private class TestClass4 {
-	public function new() {}
-
-	public var testField1:Function;
 }

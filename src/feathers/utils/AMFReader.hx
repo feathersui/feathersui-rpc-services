@@ -7,28 +7,45 @@ import openfl.utils.Endian;
 import openfl.utils.IDataInput;
 import openfl.utils.IExternalizable;
 
-class AMF3Reader implements IDataInput {
-	private static final AMF0_AMF3:Int = 0x11;
-	private static final AMF3_OBJECT_ENCODING:Int = 0x03;
-	private static final AMF3_UNDEFINED:Int = 0x00;
-	private static final AMF3_NULL:Int = 0x01;
-	private static final AMF3_BOOLEAN_FALSE:Int = 0x02;
-	private static final AMF3_BOOLEAN_TRUE:Int = 0x03;
-	private static final AMF3_INTEGER:Int = 0x04;
-	private static final AMF3_DOUBLE:Int = 0x05;
-	private static final AMF3_STRING:Int = 0x06;
-	private static final AMF3_XMLDOCUMENT:Int = 0x07;
-	private static final AMF3_DATE:Int = 0x08;
-	private static final AMF3_ARRAY:Int = 0x09;
-	private static final AMF3_OBJECT:Int = 0x0A;
-	private static final AMF3_XML:Int = 0x0B;
-	private static final AMF3_BYTEARRAY:Int = 0x0C;
-	private static final AMF3_VECTOR_INT:Int = 0x0D;
-	private static final AMF3_VECTOR_UINT:Int = 0x0E;
-	private static final AMF3_VECTOR_DOUBLE:Int = 0x0F;
-	private static final AMF3_VECTOR_OBJECT:Int = 0x10;
-	private static final AMF3_DICTIONARY:Int = 0x11;
-	private static final UINT29_MASK:Int = 0x1FFFFFFF;
+class AMFReader implements IDataInput {
+	private static final AMF0_AMF3:UInt = 0x11;
+	private static final AMF0_NUMBER:UInt = 0x0;
+	private static final AMF0_BOOLEAN:UInt = 0x1;
+	private static final AMF0_STRING:UInt = 0x2;
+	private static final AMF0_OBJECT:UInt = 0x3;
+	/*private static final AMF0_MOVIECLIP:UInt =  0x4; NOT USED */
+	private static final AMF0_NULL:UInt = 0x05;
+	private static final AMF0_UNDEFINED:UInt = 0x06;
+	private static final AMF0_REFERENCE:UInt = 0x07;
+	private static final AMF0_ECMA_ARRAY:UInt = 0x08; // includes non-numeric keys
+	private static final AMF0_OBJECT_END:UInt = 0x09;
+	private static final AMF0_STRICT_ARRAY:UInt = 0x0A; // only numeric keys (this does not seem to be used for client-side serialization)
+	private static final AMF0_DATE:UInt = 0x0B;
+	private static final AMF0_LONG_STRING:UInt = 0x0C;
+	private static final AMF0_UNSUPPORTED:UInt = 0x0D;
+	/*private static final AMF0_RECORDSET:UInt = 0x0E; NOT USED */
+	private static final AMF0_XMLDOCUMENT:UInt = 0x0F;
+	private static final AMF0_TYPED_OBJECT:UInt = 0x10;
+	private static final AMF3_OBJECT_ENCODING:UInt = 0x03;
+	private static final AMF3_UNDEFINED:UInt = 0x00;
+	private static final AMF3_NULL:UInt = 0x01;
+	private static final AMF3_BOOLEAN_FALSE:UInt = 0x02;
+	private static final AMF3_BOOLEAN_TRUE:UInt = 0x03;
+	private static final AMF3_INTEGER:UInt = 0x04;
+	private static final AMF3_DOUBLE:UInt = 0x05;
+	private static final AMF3_STRING:UInt = 0x06;
+	private static final AMF3_XMLDOCUMENT:UInt = 0x07;
+	private static final AMF3_DATE:UInt = 0x08;
+	private static final AMF3_ARRAY:UInt = 0x09;
+	private static final AMF3_OBJECT:UInt = 0x0A;
+	private static final AMF3_XML:UInt = 0x0B;
+	private static final AMF3_BYTEARRAY:UInt = 0x0C;
+	private static final AMF3_VECTOR_INT:UInt = 0x0D;
+	private static final AMF3_VECTOR_UINT:UInt = 0x0E;
+	private static final AMF3_VECTOR_DOUBLE:UInt = 0x0F;
+	private static final AMF3_VECTOR_OBJECT:UInt = 0x10;
+	private static final AMF3_DICTIONARY:UInt = 0x11;
+	private static final UINT29_MASK:UInt = 0x1FFFFFFF;
 	private static final INT28_MAX_VALUE:Int = 268435455;
 	private static final INT28_MIN_VALUE:Int = -268435456;
 	private static final EMPTY_STRING:String = "";
@@ -47,6 +64,8 @@ class AMF3Reader implements IDataInput {
 		target = targetReference;
 		reset();
 	}
+
+	private var switchedToAMF3:Bool = false;
 
 	private var objects:Array<Dynamic>;
 	private var traits:Array<Dynamic>;
@@ -77,6 +96,7 @@ class AMF3Reader implements IDataInput {
 		objects = [];
 		traits = [];
 		strings = [];
+		switchedToAMF3 = false;
 	}
 
 	public function readByte():Int {
@@ -136,10 +156,11 @@ class AMF3Reader implements IDataInput {
 
 	public function readObject():Dynamic {
 		target.objectEncoding = objectEncoding;
-		if (objectEncoding == AMF0)
+		if (objectEncoding == AMF0) {
 			return readAmf0Object();
-		else
+		} else {
 			return readAmf3Object();
+		}
 	}
 
 	public function readUTF():String {
@@ -159,7 +180,17 @@ class AMF3Reader implements IDataInput {
 	}
 
 	public function readAmf0Object():Dynamic {
-		throw new Error("AMF0 support not supported");
+		if (switchedToAMF3) {
+			return readAmf3Object();
+		} else {
+			var amfType:UInt = readUnsignedByte();
+			if (amfType == AMF0_AMF3) {
+				switchedToAMF3 = true;
+				return readAmf3Object();
+			} else {
+				return readAmf0ObjectValue(amfType);
+			}
+		}
 	}
 
 	public function readAmf3Object():Dynamic {
@@ -315,7 +346,7 @@ class AMF3Reader implements IDataInput {
 			if (alias != null)
 				localTraits.alias = alias;
 			else
-				localTraits.alias = '';
+				localTraits.alias = "";
 			localTraits.qName = Type.getClassName(instanceClass);
 			localTraits.isDynamic = false;
 			localTraits.externalizable = (instance is IExternalizable);
@@ -323,7 +354,7 @@ class AMF3Reader implements IDataInput {
 			if (localTraits.externalizable) {
 				localTraits.count = 0;
 			} else {
-				var props:Array<Dynamic> = [];
+				var props:Array<String> = [];
 				for (instanceField in Type.getInstanceFields(instanceClass)) {
 					if (Type.typeof(Reflect.field(instance, instanceField)) == TFunction) {
 						if (StringTools.startsWith(instanceField, "get_")) {
@@ -431,7 +462,7 @@ class AMF3Reader implements IDataInput {
 		var i:UInt;
 		if (amfType == AMF3_VECTOR_OBJECT) {
 			var className:String = readAmf3String(); // className
-			if (className == '') {
+			if (className == "") {
 				className = 'Object';
 			} else {
 				try {
@@ -473,7 +504,7 @@ class AMF3Reader implements IDataInput {
 				try {
 					value = readScriptObject();
 				} catch (e) {
-					trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
+					// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 					throw new Error("Failed to deserialize: " + e);
 				}
 			case AMF3_ARRAY:
@@ -514,5 +545,132 @@ class AMF3Reader implements IDataInput {
 				throw new Error("Unsupported AMF type: " + amfType);
 		}
 		return value;
+	}
+
+	private function readAmf0ObjectValue(amfType:UInt):Dynamic {
+		var value:Dynamic = null;
+
+		switch (amfType) {
+			case AMF0_NUMBER:
+				value = readDouble();
+			case AMF0_BOOLEAN:
+				value = readUnsignedByte() == 1 ? true : false;
+			case AMF0_STRING:
+				// readUTF reads the unsigned short (U16) length as well
+				value = readUTF();
+			case AMF0_OBJECT:
+				value = readAMF0ScriptObject(null);
+			case AMF0_NULL:
+				value = null;
+			case AMF0_UNDEFINED:
+				#if html5
+				value = js.Lib.undefined;
+				#else
+				value = null;
+				#end
+			case AMF0_REFERENCE:
+				value = getObject(readUnsignedShort());
+			case AMF0_ECMA_ARRAY:
+				value = readAMF0Array(true);
+			case AMF0_OBJECT_END:
+				throw new Error('unexpected'); // this should already be encountered during Object deserialization
+			case AMF0_STRICT_ARRAY:
+				value = readAMF0Array(false);
+			case AMF0_DATE:
+				value = readAMF0Date();
+			case AMF0_LONG_STRING:
+				var len:UInt = readUnsignedInt();
+				value = readUTFBytes(len);
+			case AMF0_XMLDOCUMENT:
+				throw new Error('unimplemented'); // should we provide an option to deserialize as as3 XML ?
+			case AMF0_TYPED_OBJECT:
+				var className:String = readUTF();
+				value = readAMF0ScriptObject(className);
+			default:
+				throw new Error("Unsupported AMF type: " + amfType);
+		}
+		return value;
+	}
+
+	private function readAMF0ScriptObject(alias:String):Dynamic {
+		var obj:Dynamic = null;
+		var localTraits:AMFTraits = null;
+		if (alias != null && alias.length > 0) {
+			var c:Class<Dynamic> = openfl.Lib.getClassByAlias(alias);
+			if (c != null) {
+				obj = Type.createInstance(c, []);
+				localTraits = getLocalTraitsInfo(obj);
+			}
+		}
+		if (obj == null) {
+			obj = {};
+			localTraits = AMFTraits.getBaseObjectTraits();
+		}
+
+		rememberObject(obj);
+		var more:Bool = true;
+		while (more) {
+			var key:String = readUTF();
+			if (key == "") {
+				more = false;
+			} else {
+				var fieldValue:Dynamic = readAmf0Object();
+				var hasProp = localTraits != null && (localTraits.hasProp(key) || localTraits.isTransient(key));
+				if (hasProp) {
+					Reflect.field(localTraits.getterSetters, key).setValue(obj, fieldValue);
+				} else if (localTraits.isDynamic) {
+					Reflect.setField(obj, key, fieldValue);
+				} else {
+					// @todo
+					trace('unknown field ', key);
+					#if debug
+					trace('ReferenceError: Error #1056: Cannot create property ' + key + ' on ' + localTraits.qName);
+					#end
+				}
+			}
+		}
+
+		var check:UInt = readUnsignedByte();
+		if (check != AMF0_OBJECT_END) {
+			throw new Error('unexpected. should be AMF0_OBJECT_END');
+		}
+		return obj;
+	}
+
+	private function readAMF0Array(ecma:Bool):Array<Dynamic> {
+		var array:Array<Dynamic> = [];
+		rememberObject(array);
+		var len:UInt = readUnsignedInt();
+		var i:UInt = 0;
+		if (ecma) {
+			array.resize(len);
+			var more:Bool = true;
+			while (more) {
+				var key:String = readUTF();
+				if (key == "") {
+					more = false;
+				} else {
+					array[Std.parseInt(key)] = readAmf0Object();
+				}
+			}
+			var byte:UInt = readUnsignedByte();
+			if (byte != AMF0_OBJECT_END)
+				throw new Error('unexpected. should be AMF0_OBJECT_END');
+		} else {
+			while (i < len) {
+				array[i] = readAmf0Object();
+				i++;
+			}
+		}
+		return array;
+	}
+
+	private function readAMF0Date():Date {
+		var time:Float = readDouble();
+		var date:Date = Date.fromTime(time);
+		rememberObject(date);
+		// skip the S16 timezone data (not used)
+		readShort();
+		return date;
 	}
 }

@@ -9,28 +9,45 @@ import openfl.utils.Endian;
 import openfl.utils.IDataOutput;
 import openfl.utils.IExternalizable;
 
-class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
-	private static final AMF0_AMF3:Int = 0x11;
-	private static final AMF3_OBJECT_ENCODING:Int = 0x03;
-	private static final AMF3_UNDEFINED:Int = 0x00;
-	private static final AMF3_NULL:Int = 0x01;
-	private static final AMF3_BOOLEAN_FALSE:Int = 0x02;
-	private static final AMF3_BOOLEAN_TRUE:Int = 0x03;
-	private static final AMF3_INTEGER:Int = 0x04;
-	private static final AMF3_DOUBLE:Int = 0x05;
-	private static final AMF3_STRING:Int = 0x06;
-	private static final AMF3_XMLDOCUMENT:Int = 0x07;
-	private static final AMF3_DATE:Int = 0x08;
-	private static final AMF3_ARRAY:Int = 0x09;
-	private static final AMF3_OBJECT:Int = 0x0A;
-	private static final AMF3_XML:Int = 0x0B;
-	private static final AMF3_BYTEARRAY:Int = 0x0C;
-	private static final AMF3_VECTOR_INT:Int = 0x0D;
-	private static final AMF3_VECTOR_UINT:Int = 0x0E;
-	private static final AMF3_VECTOR_DOUBLE:Int = 0x0F;
-	private static final AMF3_VECTOR_OBJECT:Int = 0x10;
-	private static final AMF3_DICTIONARY:Int = 0x11;
-	private static final UINT29_MASK:Int = 0x1FFFFFFF;
+class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
+	private static final AMF0_AMF3:UInt = 0x11;
+	private static final AMF0_NUMBER:UInt = 0x0;
+	private static final AMF0_BOOLEAN:UInt = 0x1;
+	private static final AMF0_STRING:UInt = 0x2;
+	private static final AMF0_OBJECT:UInt = 0x3;
+	/*private static final AMF0_MOVIECLIP:UInt =  0x4; NOT USED */
+	private static final AMF0_NULL:UInt = 0x05;
+	private static final AMF0_UNDEFINED:UInt = 0x06;
+	private static final AMF0_REFERENCE:UInt = 0x07;
+	private static final AMF0_ECMA_ARRAY:UInt = 0x08; // includes non-numeric keys
+	private static final AMF0_OBJECT_END:UInt = 0x09;
+	private static final AMF0_STRICT_ARRAY:UInt = 0x0A; // only numeric keys (this does not seem to be used for client-side serialization)
+	private static final AMF0_DATE:UInt = 0x0B;
+	private static final AMF0_LONG_STRING:UInt = 0x0C;
+	private static final AMF0_UNSUPPORTED:UInt = 0x0D;
+	/*private static final AMF0_RECORDSET:UInt = 0x0E; NOT USED */
+	private static final AMF0_XMLDOCUMENT:UInt = 0x0F;
+	private static final AMF0_TYPED_OBJECT:UInt = 0x10;
+	private static final AMF3_OBJECT_ENCODING:UInt = 0x03;
+	private static final AMF3_UNDEFINED:UInt = 0x00;
+	private static final AMF3_NULL:UInt = 0x01;
+	private static final AMF3_BOOLEAN_FALSE:UInt = 0x02;
+	private static final AMF3_BOOLEAN_TRUE:UInt = 0x03;
+	private static final AMF3_INTEGER:UInt = 0x04;
+	private static final AMF3_DOUBLE:UInt = 0x05;
+	private static final AMF3_STRING:UInt = 0x06;
+	private static final AMF3_XMLDOCUMENT:UInt = 0x07;
+	private static final AMF3_DATE:UInt = 0x08;
+	private static final AMF3_ARRAY:UInt = 0x09;
+	private static final AMF3_OBJECT:UInt = 0x0A;
+	private static final AMF3_XML:UInt = 0x0B;
+	private static final AMF3_BYTEARRAY:UInt = 0x0C;
+	private static final AMF3_VECTOR_INT:UInt = 0x0D;
+	private static final AMF3_VECTOR_UINT:UInt = 0x0E;
+	private static final AMF3_VECTOR_DOUBLE:UInt = 0x0F;
+	private static final AMF3_VECTOR_OBJECT:UInt = 0x10;
+	private static final AMF3_DICTIONARY:UInt = 0x11;
+	private static final UINT29_MASK:UInt = 0x1FFFFFFF;
 	private static final INT28_MAX_VALUE:Int = 268435455;
 	private static final INT28_MIN_VALUE:Int = -268435456;
 	private static final EMPTY_STRING:String = "";
@@ -52,6 +69,8 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		target = targetReference;
 		reset();
 	}
+
+	private var switchedToAMF3:Bool = false;
 
 	public var endian(get, set):Endian;
 
@@ -90,6 +109,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		objects = [];
 		traits = [];
 		strings = [];
+		switchedToAMF3 = false;
 	}
 
 	public function writeByte(byte:Int):Void {
@@ -338,7 +358,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 			if (alias != null)
 				localTraits.alias = alias;
 			else
-				localTraits.alias = '';
+				localTraits.alias = "";
 			localTraits.qName = Type.getClassName(instanceClass);
 			localTraits.isDynamic = false;
 			localTraits.externalizable = (instance is IExternalizable);
@@ -346,7 +366,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 			if (localTraits.externalizable) {
 				localTraits.count = 0;
 			} else {
-				var props:Array<Dynamic> = [];
+				var props:Array<String> = [];
 				for (instanceField in Type.getInstanceFields(instanceClass)) {
 					if (Type.typeof(Reflect.field(instance, instanceField)) == TFunction) {
 						if (StringTools.startsWith(instanceField, "get_")) {
@@ -419,7 +439,61 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	}
 
 	public function writeAmf0Object(v:Dynamic):Void {
-		throw new Error("AMF0 not supported");
+		if (v == null) {
+			#if html5
+			if (v == js.Lib.undefined) {
+				writeByte(AMF0_UNDEFINED);
+			} else {
+				writeByte(AMF0_NULL);
+			}
+			#else
+			writeByte(AMF0_NULL);
+			#end
+			return;
+		}
+		if (isFunctionValue(v)) {
+			// output function value as undefined
+			writeByte(AMF0_UNDEFINED);
+			return;
+		}
+		if ((v is String)) {
+			var str:String = (v : String);
+			if (str == "") {
+				writeByte(AMF0_STRING);
+				writeByte(0);
+				writeByte(0);
+			} else {
+				var bytes = new ByteArray();
+				bytes.writeUTFBytes(str);
+				if (bytes.length < 65536) {
+					writeByte(AMF0_STRING);
+					writeShort(bytes.length);
+				} else {
+					writeByte(AMF0_LONG_STRING);
+					writeUnsignedInt(bytes.length);
+				}
+				writeBytes(bytes);
+			}
+		} else if ((v is Float)) {
+			var n:Float = v;
+			writeByte(AMF0_NUMBER);
+			writeDouble(n);
+		} else if ((v is Bool)) {
+			writeByte(AMF0_BOOLEAN);
+			writeByte(v == true ? 1 : 0);
+		} else if ((v is Date)) {
+			writeAMF0Date((v : Date));
+		}
+		/*else if (_xmlClass != null && Std.isOfType(v, _xmlClass)) {
+			writeAMF0XML(v);
+		}*/
+		else {
+			if ((v is Array)) {
+				writeAMF0Array(cast(v, Array<Dynamic>));
+			} else {
+				writeAMF0ObjectVariant(v);
+			}
+		}
 	}
 
 	public function writeAmf3Object(v:Dynamic):Void {
@@ -442,7 +516,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		}
 		if ((v is String)) {
 			writeByte(AMF3_STRING);
-			writeAMF3StringWithoutType(Std.string(v));
+			writeAMF3StringWithoutType((v : String));
 		} else if ((v is Float)) {
 			var n:Float = v;
 			if (n == Math.abs(n) && n == Std.int(n)) {
@@ -452,9 +526,9 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 				writeDouble(n);
 			}
 		} else if ((v is Bool)) {
-			writeByte((v ? AMF3_BOOLEAN_TRUE : AMF3_BOOLEAN_FALSE));
+			writeByte((v == true ? AMF3_BOOLEAN_TRUE : AMF3_BOOLEAN_FALSE));
 		} else if (v is Date) {
-			writeAmf3Date(cast(v, Date));
+			writeAmf3Date((v : Date));
 		}
 		/*
 			else if (_xmlClass && Std.isOfType(v, _xmlClass)) {
@@ -499,7 +573,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 				// in flash player if you try to write an object with no alias that is externalizable it does this:
 				throw new Error("ArgumentError: Error #2004: One of the parameters is invalid.");
 			}
-			writeTypedObject(v, localTraits);
+			writeAMF3TypedObject(v, localTraits);
 		}
 	}
 
@@ -514,7 +588,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		this.writeAmf3Object(value);
 	}
 
-	private function writeTypedObject(v:Dynamic, localTraits:AMFTraits):Void {
+	private function writeAMF3TypedObject(v:Dynamic, localTraits:AMFTraits):Void {
 		var encodedName:String = (localTraits.alias != null && localTraits.alias.length > 0) ? localTraits.alias : ']:' + localTraits.qName + ":[";
 
 		if (!traitsByReference(localTraits.props, encodedName)) {
@@ -544,9 +618,11 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 					val = Reflect.field(localTraits.nullValues, localTraits.props[i]);
 
 					// handle '*' type which can be undefined or explicitly null
-					if (val == null && Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v) == null) {
+					#if html5
+					if (val == js.Lib.undefined && Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v) == null) {
 						val = null;
 					}
+					#end
 				}
 				this.writeAmf3Object(val);
 			}
@@ -607,7 +683,6 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	private function writeAmf3Array(v:Array<Dynamic>):Void {
 		writeByte(AMF3_ARRAY);
 		var len:UInt = v.length;
-		var i:UInt = 0;
 		var akl:UInt = 0; // associative keys length
 		if (!this.amf3ObjectByReference(v)) {
 			var denseLength:UInt = len;
@@ -638,13 +713,13 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 
 					// find denseLength
 					for (i in 0...len) {
-						if (keys[i] != "" + i)
+						denseLength = i;
+						if (keys[i] != Std.string(i))
 							break;
 						// also seems to be true in avm:
 						if (isFunctionValue(v[i]))
 							break;
 					}
-					denseLength = i;
 					// remove dense keys,
 					// leaving only associative keys (which may include valid integer keys outside the dense part)
 					keys.splice(0, denseLength);
@@ -656,7 +731,13 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 			if (akl > 0) {
 				// name-value pairs of associative keys
 				for (i in 0...akl) {
-					var val:Dynamic = (keys[i] is Int) ? v[keys[i]] : Reflect.field(v, keys[i]);
+					var key:Any = keys[i];
+					var val:Any = null;
+					if ((key is Int)) {
+						val = v[(key : Int)];
+					} else {
+						val = Reflect.field(v, Std.string(key));
+					}
 					if (isFunctionValue(val)) {
 						continue;
 					}
@@ -677,7 +758,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	private function writeAmf3Vector(v:Dynamic):Void {
 		// v is a Vector synthType instance
 		var className:String = Type.getClassName(Type.getClass(v));
-		var content:Array<Dynamic> = cast(Reflect.field(v, 'value'), Array<Dynamic>);
+		var content:Array<Dynamic> = cast(Reflect.field(v, "value"), Array<Dynamic>);
 		var amfType:UInt;
 		if (className == 'openfl.Vector<Int>')
 			amfType = AMF3_VECTOR_INT;
@@ -693,25 +774,25 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		var len:UInt = v.length;
 		if (!this.amf3ObjectByReference(v)) {
 			this.writeUInt29((len << 1) | 1);
-			this.writeBoolean(Reflect.field(v, 'fixed') == true);
+			this.writeBoolean(Reflect.field(v, "fixed") == true);
 			if (amfType == AMF3_VECTOR_OBJECT) {
 				// note this is available as a specific field, but not yet readily accessible in terms of field name
 				className = className.substring(8, className.length - 1); // strip leading 'Vector.<' and trailing '>'
-				if (className == '*') {
-					className = '';
+				if (className == "*") {
+					className = "";
 				} else {
 					try {
 						className = getAliasByClass(openfl.Lib.getDefinitionByName(className));
 						if (className == null) {
-							className = '';
+							className = "";
 						}
 					} catch (e:Error) {
-						className = '';
+						className = "";
 					}
 				}
 
 				/*if (className == 'Boolean' || className == 'String' || className == 'Class' || className == 'Array' || className=='Object' || className=='*') {
-						className = ''; // this will be a Vector.<Object> on read (even for '*' it seems, contrary to spec)
+						className = ""; // this will be a Vector.<Object> on read (even for '*' it seems, contrary to spec)
 					} else {
 				}*/
 				this.writeAMF3StringWithoutType(className);
@@ -732,5 +813,159 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 				}
 			}
 		}
+	}
+
+	private function writeAMF0Date(v:Date):Void {
+		if (!amf0ObjectByReference(v)) {
+			writeByte(AMF0_DATE);
+			writeDouble(v.getTime());
+			// timezone offset is mandatory but never used
+			// it is a S16 in spec, but because it is always zero, cheat:
+			writeByte(0);
+			writeByte(0);
+		}
+	}
+
+	private function writeAMF0Vector(v:Dynamic):Void {
+		throw new Error("AMF0 Vector not supported");
+	}
+
+	private function writeAMF0Array(v:Array<Any>):Void {
+		// is it strict or associative
+		if (!this.amf0ObjectByReference(v)) {
+			var len:UInt = v.length;
+			var keys:Array<Dynamic> = [];
+			for (key => value in v.keyValueIterator()) {
+				keys.push(key);
+			}
+			// profile the array
+			// es6 specifies a generalized traversal order we can rely upon going forward
+			// testing in IE11 shows the same order applies in that es5 Array implementation, so we assume it here:
+			/*
+				Property keys are traversed in the following order:
+				First, the keys that are integer indices, in ascending numeric order.
+				note non-integers: '02' round-tripping results in the different string '2'.
+					'3.141' is not an integer index, because 3.141 is not an integer.
+				Then, all other string keys, in the order in which they were added to the object.
+				Lastly, all symbol keys, in the order in which they were added to the object.
+				We don't need to worry about Symbols here
+			 */
+			var kl:UInt = keys.length;
+			// Assumption - based on the above,
+			// if the last key in the keys is an integer index, and length matches the array.length then it is a pure strict array
+			// if not, it is non-strict
+			// discriminate between strict and ecma by any inclusion or not of non-ordinal keys only. dense vs. non-dense is not a factor
+			if ((Std.string((keys[kl - 1]) >> 0) != keys[kl - 1])) {
+				// ecma
+				writeByte(AMF0_ECMA_ARRAY);
+				writeUnsignedInt(len);
+				len = keys.length;
+				for (i in 0...len) {
+					var key:String = keys[i];
+					var val:Dynamic = Reflect.field(v, key);
+					if (!isFunctionValue(val)) {
+						writeUTF(key);
+						writeAmf0Object(val);
+					}
+				}
+				// end of object
+				writeByte(0);
+				writeByte(0);
+				writeByte(AMF0_OBJECT_END);
+			} else {
+				// strict
+				// encode as ecma anyway... because player seems to do that
+				writeByte(AMF0_ECMA_ARRAY);
+				writeUnsignedInt(len); // array length
+				len = keys.length; // now keys length
+				for (i in 0...len) {
+					var key:Any = keys[i];
+					var val:Any = null;
+					if ((key is Int)) {
+						val = v[(key : Int)];
+					} else {
+						val = Reflect.field(v, Std.string(key));
+					}
+					if (!isFunctionValue(val)) {
+						writeUTF(Std.string(key));
+						writeAmf0Object(val);
+					}
+				}
+				writeByte(0);
+				writeByte(0);
+				writeByte(AMF0_OBJECT_END);
+			}
+		}
+	}
+
+	public function amf0ObjectByReference(v:Dynamic):Bool {
+		final ref = objects.indexOf(v);
+		final found:Bool = ref != -1;
+		if (found) {
+			writeByte(AMF0_REFERENCE);
+			writeShort(ref);
+		} else {
+			objects.push(v);
+		}
+		return found;
+	}
+
+	private function writeAMF0ObjectVariant(v:Dynamic):Void {
+		if (!this.amf0ObjectByReference(v)) {
+			final localTraits:AMFTraits = getLocalTraitsInfo(v);
+			writeAMF0TypedObject(v, localTraits);
+		}
+	}
+
+	private function writeAMF0TypedObject(v:Dynamic, localTraits:AMFTraits):Void {
+		if (localTraits.alias == null || localTraits.alias.length == 0) {
+			writeByte(AMF0_OBJECT);
+		} else {
+			writeByte(AMF0_TYPED_OBJECT);
+			writeUTF(localTraits.alias);
+		}
+		var l:UInt = localTraits.count;
+		for (i in 0...l) {
+			// sealed props
+			var val:Dynamic = Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v);
+			if (val == null) {
+				// coerce null values to the 'correct' types
+				val = Reflect.field(localTraits.nullValues, localTraits.props[i]);
+
+				// handle '*' type which can be undefined or explicitly null
+				#if html5
+				if (val == js.Lib.undefined && Reflect.field(localTraits.getterSetters, localTraits.props[i]).getValue(v) == null) {
+					val = null;
+				}
+				#end
+			}
+			this.writeUTF(localTraits.props[i]);
+			this.writeAmf0Object(val);
+		}
+
+		if (localTraits.isDynamic) {
+			// default implementation
+			var dynFields:Array<String> = Reflect.fields(v);
+			l = dynFields.length;
+			for (i in 0...l) {
+				var val:Dynamic = Reflect.field(v, dynFields[i]);
+				if (isFunctionValue(val)) {
+					// skip this name-value pair, don't even write it out as undefined (match flash)
+					continue;
+				}
+				this.writeUTF(dynFields[i]);
+				this.writeAmf0Object(val);
+			}
+		}
+
+		writeByte(0);
+		writeByte(0);
+		writeByte(AMF0_OBJECT_END);
+	}
+
+	private function writeAMF0XML(v:Dynamic):Void {
+		// e4x XML does not exist in AMF0.
+		// so send to 'Object'
+		writeAMF0ObjectVariant(v);
 	}
 }

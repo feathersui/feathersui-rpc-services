@@ -23,8 +23,8 @@ import feathers.messaging.messages.ActionMessage;
 import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.MessageBody;
 import feathers.messaging.messages.MessageHeader;
-import feathers.utils.AMF3Reader;
-import feathers.utils.AMF3Writer;
+import feathers.utils.AMFReader;
+import feathers.utils.AMFWriter;
 import openfl.Lib;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
@@ -173,7 +173,7 @@ class AMFNetConnection {
 		var byteArray = new ByteArray();
 		byteArray.endian = BIG_ENDIAN;
 		byteArray.objectEncoding = AMF3;
-		var writer:AMF3Writer = new AMF3Writer(byteArray);
+		var writer:AMFWriter = new AMFWriter(byteArray);
 		writer.endian = BIG_ENDIAN;
 		writer.objectEncoding = AMF3;
 		writeMessage(writer, actionMessage);
@@ -237,7 +237,7 @@ class AMFNetConnection {
 			var bytes = cast(xhr.data, ByteArray);
 			bytes.endian = BIG_ENDIAN;
 			bytes.objectEncoding = AMF3;
-			var reader = new AMF3Reader(bytes);
+			var reader = new AMFReader(bytes);
 			reader.endian = BIG_ENDIAN;
 			reader.objectEncoding = AMF3;
 			try {
@@ -323,7 +323,7 @@ class AMFNetConnection {
 		@:privateAccess responder.__status(error);
 	}
 
-	private function writeMessage(writer:AMF3Writer, message:ActionMessage):Void {
+	private function writeMessage(writer:AMFWriter, message:ActionMessage):Void {
 		try {
 			writer.writeShort(message.version);
 			var l = message.headers.length;
@@ -342,7 +342,7 @@ class AMFNetConnection {
 		}
 	}
 
-	private function writeHeader(writer:AMF3Writer, header:MessageHeader):Void {
+	private function writeHeader(writer:AMFWriter, header:MessageHeader):Void {
 		writer.writeUTF(header.name);
 		writer.writeBoolean(header.mustUnderstand);
 		writer.writeInt(UNKNOWN_CONTENT_LENGTH);
@@ -352,7 +352,7 @@ class AMFNetConnection {
 		writer.writeBoolean(true);
 	}
 
-	private function writeBody(writer:AMF3Writer, body:MessageBody):Void {
+	private function writeBody(writer:AMFWriter, body:MessageBody):Void {
 		if (body.targetURI == null) {
 			writer.writeUTF(NULL_STRING);
 		} else {
@@ -369,7 +369,7 @@ class AMFNetConnection {
 		writer.writeObject(body.data);
 	}
 
-	private function readMessage(reader:AMF3Reader):ActionMessage {
+	private function readMessage(reader:AMFReader):ActionMessage {
 		var message:ActionMessage = new ActionMessage();
 		message.version = reader.readUnsignedShort();
 		reader.objectEncoding = message.version;
@@ -384,7 +384,7 @@ class AMFNetConnection {
 		return message;
 	}
 
-	private function readHeader(reader:AMF3Reader):MessageHeader {
+	private function readHeader(reader:AMFReader):MessageHeader {
 		var header:MessageHeader = new MessageHeader();
 		header.name = reader.readUTF();
 		header.mustUnderstand = reader.readBoolean();
@@ -401,7 +401,7 @@ class AMFNetConnection {
 		return header;
 	}
 
-	private function readBody(reader:AMF3Reader):MessageBody {
+	private function readBody(reader:AMFReader):MessageBody {
 		var body:MessageBody = new MessageBody();
 		body.targetURI = reader.readUTF();
 		body.responseURI = reader.readUTF();

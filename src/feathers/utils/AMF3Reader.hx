@@ -65,7 +65,7 @@ class AMF3Reader implements IDataInput {
 		return target.endian;
 	}
 
-	public var objectEncoding:ObjectEncoding;
+	public var objectEncoding:ObjectEncoding = AMF3;
 
 	public var bytesAvailable(get, never):Int;
 

@@ -148,8 +148,10 @@ class AMF3Test extends Test {
 		Assert.equals(0, ba.bytesAvailable);
 	}
 
+	#if html5
+	// other targets have only null, not undefined
+	// so there's nothing to test
 	public function testUndefined():Void {
-		#if html5
 		writer.writeObject(js.Lib.undefined);
 
 		ba.position = 0;
@@ -158,10 +160,8 @@ class AMF3Test extends Test {
 		Assert.equals(js.Lib.undefined, val);
 		Assert.isNull(val);
 		Assert.equals(0, ba.bytesAvailable);
-		#else
-		Assert.pass();
-		#end
 	}
+	#end
 
 	public function testEmptyArray():Void {
 		var instance:Array<Dynamic> = [];

@@ -64,7 +64,7 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 		return target.endian;
 	}
 
-	public var objectEncoding:ObjectEncoding;
+	public var objectEncoding:ObjectEncoding = AMF3;
 
 	private var target:ByteArray;
 
@@ -96,13 +96,6 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 
 	public function writeShort(short:Int):Void {
 		target.writeShort(short);
-	}
-
-	public function writeByteAt(idx:UInt, byte:Int):Void {
-		var savedPos = target.position;
-		target.position = idx;
-		target.writeByte(byte);
-		target.position = savedPos;
 	}
 
 	public function writeUInt29(v:UInt):Void {
@@ -334,8 +327,6 @@ class AMF3Writer implements IDataOutput implements IDynamicPropertyOutput {
 	}
 
 	private function getLocalTraitsInfo(instance:Dynamic):AMFTraits {
-		// var classInfo:Dynamic = instance.ROYALE_CLASS_INFO;
-		// var originalClassInfo:Dynamic;
 		var localTraits:AMFTraits;
 		var instanceClass = Type.getClass(instance);
 

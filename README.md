@@ -7,7 +7,6 @@ A port of the RPC service classes from [Apache Flex](https://flex.apache.org/) (
 Please review the notes below for an overview of what currently works, doesn't work, or has changed from the original Flex implementation.
 
 - `RemoteObject`: Load data with the same classes used by a remote application server, encoded with Action Message Format (AMF).
-  - Available on the **html5**, **flash**, and **air** targets only.
   - Instead of adding `[RemoteClass(alias="com.example.MyClass)]` metadata to your classes, you must call the `openfl.Lib.registerClassAlias()` function.
 - `HTTPService`: Load data from a URL as XML, Text, URL variables, or JSON.
   - `resultFormat`

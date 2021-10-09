@@ -706,7 +706,7 @@ class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
 			// Assumption - based on the above,
 			// if the last key in the keys is an integer index, and length matches the array.length then it is a pure strict array
 			// if not, it is non-strict
-			if (kl != len || (Std.string((keys[kl - 1]) >> 0) != keys[kl - 1]) || Lambda.exists(v, isFunctionValue)) {
+			if (kl != len || (kl > 0 && (Std.parseInt(Std.string(keys[kl - 1])) != keys[kl - 1])) || Lambda.exists(v, isFunctionValue)) {
 				// Array is not strict
 				if (len > 0) {
 					// the array has at least some integer keys
@@ -855,7 +855,7 @@ class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
 			// if the last key in the keys is an integer index, and length matches the array.length then it is a pure strict array
 			// if not, it is non-strict
 			// discriminate between strict and ecma by any inclusion or not of non-ordinal keys only. dense vs. non-dense is not a factor
-			if ((Std.string((keys[kl - 1]) >> 0) != keys[kl - 1])) {
+			if (kl > 0 && Std.parseInt(Std.string((keys[kl - 1]))) != keys[kl - 1]) {
 				// ecma
 				writeByte(AMF0_ECMA_ARRAY);
 				writeUnsignedInt(len);

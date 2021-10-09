@@ -270,8 +270,7 @@ class NetConnectionChannel extends PollingChannel {
 			// URL for example) and in others it does (sandbox violation).  Usually this is
 			// a URL problem, so add it all of the time even though this means we'll see it
 			// twice for the sandbox violation.
-			e.message += "  url: '" + url + "'";
-			throw e;
+			throw new Error(e.message + "  url: '" + url + "'", e.errorID);
 		}
 	}
 

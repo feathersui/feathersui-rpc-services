@@ -245,17 +245,6 @@ class AMF3Test extends Test {
 		Assert.isTrue(dynamicKeyCountMatches(obj, 0));
 	}
 
-	public function testClassWithFunctionField():Void {
-		var tc4 = new TestClass4();
-		tc4.testField1 = function():Void {};
-
-		writer.writeObject(tc4);
-		Assert.equals(15, ba.length);
-		Assert.equals(15, ba.position);
-
-		Assert.isTrue(bytesMatchExpectedData(ba, [10, 19, 1, 21, 116, 101, 115, 116, 70, 105, 101, 108, 100, 49, 0]));
-	}
-
 	public function testBasicClassInstance():Void {
 		var instance = new TestClass1();
 		writer.writeObject(instance);

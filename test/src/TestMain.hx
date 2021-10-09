@@ -1,4 +1,4 @@
-import feathers.utils.AMFBinaryDataTest;
+import feathers.utils.AMF3Test;
 import openfl.display.Sprite;
 import utest.Runner;
 import utest.ui.Report;
@@ -8,7 +8,7 @@ class TestMain extends Sprite {
 		super();
 
 		var runner = new Runner();
-		runner.addCase(new AMFBinaryDataTest());
+		runner.addCase(new AMF3Test());
 
 		// a report prints the final results after all tests have run
 		Report.create(runner);

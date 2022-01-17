@@ -14,4 +14,18 @@
 	<haxeflag name="--macro" value="include('feathers.messaging')"/>
 
 	<template path="templates" if="flash"/>
+
+	<section if="flash">
+		<source path="build_macros/flash"/>
+		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.messaging')"/>
+		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.net')"/>
+		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.rpc')"/>
+	</section>
+
+	<section if="find_missing_docs">
+		<source path="build_macros/docs"/>
+		<haxeflag name="--macro" value="FindMissingDocs.find('feathers.messaging')"/>
+		<haxeflag name="--macro" value="FindMissingDocs.find('feathers.net')"/>
+		<haxeflag name="--macro" value="FindMissingDocs.find('feathers.rpc')"/>
+	</section>
 </project>

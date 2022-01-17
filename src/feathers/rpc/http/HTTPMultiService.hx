@@ -172,7 +172,6 @@ class HTTPMultiService extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -198,7 +197,6 @@ class HTTPMultiService extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -307,7 +305,6 @@ class HTTPMultiService extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -390,7 +387,6 @@ class HTTPMultiService extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -425,7 +421,6 @@ class HTTPMultiService extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var operationList(get, set):Array<AbstractOperation>;
 
 	private function get_operationList():Array<AbstractOperation> {

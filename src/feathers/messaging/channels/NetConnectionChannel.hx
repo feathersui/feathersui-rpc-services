@@ -125,7 +125,6 @@ class NetConnectionChannel extends PollingChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var netConnection(get, never):NetConnection;
 
 	private function get_netConnection():NetConnection {
@@ -147,7 +146,6 @@ class NetConnectionChannel extends PollingChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var netConnection(get, never):AMFNetConnection;
 
 	private function get_netConnection():AMFNetConnection {

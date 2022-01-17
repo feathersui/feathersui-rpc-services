@@ -140,7 +140,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var totalTime(get, never):Float;
 
 	private function get_totalTime():Float {
@@ -163,7 +162,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverProcessingTime(get, never):Float;
 
 	private function get_serverProcessingTime():Float {
@@ -186,7 +184,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverPrePushTime(get, never):Float;
 
 	private function get_serverPrePushTime():Float {
@@ -211,7 +208,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverAdapterTime(get, never):Float;
 
 	private function get_serverAdapterTime():Float {
@@ -245,7 +241,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverAdapterExternalTime(get, never):Float;
 
 	private function get_serverAdapterExternalTime():Float {
@@ -276,7 +271,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverPollDelay(get, never):Float;
 
 	private function get_serverPollDelay():Float {
@@ -297,7 +291,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverNonAdapterTime(get, never):Float;
 
 	private function get_serverNonAdapterTime():Float {
@@ -316,7 +309,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var networkRTT(get, never):Float;
 
 	private function get_networkRTT():Float {
@@ -338,7 +330,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var serverSendTime(get, never):Float;
 
 	private function get_serverSendTime():Float {
@@ -357,7 +348,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var clientReceiveTime(get, never):Float;
 
 	private function get_clientReceiveTime():Float {
@@ -370,7 +360,6 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Message size in Bytes
 	 */
-	@:flash.property
 	public var messageSize(get, never):Int;
 
 	private function get_messageSize():Int {
@@ -392,7 +381,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var responseMessageSize(get, never):Int;
 
 	private function get_responseMessageSize():Int {
@@ -412,7 +400,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var pushedMessageFlag(get, never):Bool;
 
 	private function get_pushedMessageFlag():Bool {
@@ -432,7 +419,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var totalPushTime(get, never):Float;
 
 	private function get_totalPushTime():Float {
@@ -452,7 +438,6 @@ class MessagePerformanceUtils {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var pushOneWayTime(get, never):Float;
 
 	private function get_pushOneWayTime():Float {
@@ -471,7 +456,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var originatingMessageSentTime(get, never):Float;
 
 	private function get_originatingMessageSentTime():Float {
@@ -490,7 +474,6 @@ class MessagePerformanceUtils {
 	 * @productversion BlazeDS 4
 	 * @productversion LCDS 3          
 	 */
-	@:flash.property
 	public var originatingMessageSize(get, never):Float;
 
 	private function get_originatingMessageSize():Float {
@@ -559,7 +542,6 @@ class MessagePerformanceUtils {
 	 * 
 	 * Overhead time in milliseconds for processing of the push causer message
 	 */
-	@:flash.property
 	private var pushedOverheadTime(get, never):Float;
 
 	private function get_pushedOverheadTime():Float {

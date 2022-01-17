@@ -125,7 +125,6 @@ class FlexClient extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var id(get, set):String;
 
 	private function get_id():String {
@@ -162,7 +161,6 @@ class FlexClient extends EventDispatcher {
 	 *  The initial Channel connect process must be serialized.
 	 *  Once a FlexClient Id is set further Channel connects and disconnects do not require synchronization.
 	 */
-	@:flash.property
 	private var waitForFlexClientId(get, set):Bool;
 
 	private function get_waitForFlexClientId():Bool {

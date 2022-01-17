@@ -187,7 +187,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Indicates if this MessageAgent is using an authenticated connection to
 	 *  its destination.
 	 */
-	@:flash.property
 	public var authenticated(get, never):Bool;
 
 	private function get_authenticated():Bool {
@@ -231,7 +230,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3           
 	 */
-	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -297,7 +295,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3           
 	 */
-	@:flash.property
 	public var clientId(get, never):String;
 
 	private function get_clientId():String {
@@ -345,7 +342,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3      
 	 */
-	@:flash.property
 	public var connected(get, never):Bool;
 
 	private function get_connected():Bool {
@@ -389,7 +385,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3      
 	 */
-	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -437,7 +432,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @private
 	 *  The id of this agent.
 	 */
-	@:flash.property
 	public var id(get, set):String;
 
 	private function get_id():String {
@@ -479,7 +473,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3           
 	 */
-	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -512,7 +505,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 */
 	private var _channelSetMode:Int = AUTO_CONFIGURED_CHANNELSET;
 
-	@:flash.property
 	private var channelSetMode(get, never):Int;
 
 	private function get_channelSetMode():Int {
@@ -542,7 +534,6 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Indicates if this MessageAgent needs to request configuration from the
 	 *  server.
 	 */
-	@:flash.property
 	private var needsConfig(get, set):Bool;
 
 	private function get_needsConfig():Bool {

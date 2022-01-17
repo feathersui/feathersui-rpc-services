@@ -46,7 +46,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var body(get, set):Any;
 
 	//----------------------------------
@@ -62,7 +61,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var clientId(get, set):String;
 
 	//----------------------------------
@@ -78,7 +76,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var destination(get, set):String;
 
 	//----------------------------------
@@ -98,7 +95,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var headers(get, set):Any;
 
 	//----------------------------------
@@ -116,7 +112,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var messageId(get, set):String;
 
 	//----------------------------------
@@ -138,7 +133,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var timestamp(get, set):Float;
 
 	//----------------------------------
@@ -162,7 +156,6 @@ interface IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	var timeToLive(get, set):Float;
 
 	//--------------------------------------------------------------------------

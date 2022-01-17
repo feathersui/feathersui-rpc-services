@@ -114,7 +114,6 @@ class AbstractOperation extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var name(get, set):String;
 
 	private function get_name():String {
@@ -140,7 +139,6 @@ class AbstractOperation extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var service(get, never):AbstractService;
 
 	private function get_service():AbstractService {

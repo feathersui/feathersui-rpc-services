@@ -296,7 +296,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -328,7 +327,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var contentType(get, set):String;
 
 	private function get_contentType():String {
@@ -359,7 +357,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -387,7 +384,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -436,7 +432,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var headers(get, set):Dynamic;
 
 	private function get_headers():Dynamic {
@@ -463,7 +458,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {
@@ -489,7 +483,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var request(get, set):Dynamic;
 
 	private function get_request():Dynamic {
@@ -536,7 +529,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -565,7 +557,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var rootURL(get, set):String;
 
 	private function get_rootURL():String {
@@ -591,7 +582,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -619,7 +609,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var serializationFilter(get, set):SerializationFilter;
 
 	private function get_serializationFilter():SerializationFilter {
@@ -642,7 +631,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var url(get, set):String;
 
 	private function get_url():String {
@@ -669,7 +657,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -725,7 +712,6 @@ class HTTPService extends AbstractInvoker {
 		*  @playerversion AIR 1.1
 		*  @productversion Flex 3
 	 */
-	@:flash.property
 	#if !flash
 	@:deprecated("xmlDecode is not available on this target.")
 	#end
@@ -785,7 +771,6 @@ class HTTPService extends AbstractInvoker {
 		*  @playerversion AIR 1.1
 		*  @productversion Flex 3
 	 */
-	@:flash.property
 	#if !flash
 	@:deprecated("xmlEncode is not available on this target.")
 	#end
@@ -840,7 +825,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {

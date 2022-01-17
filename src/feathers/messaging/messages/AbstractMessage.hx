@@ -212,7 +212,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var body(get, set):Any;
 
 	private function get_body():Any {
@@ -250,7 +249,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var clientId(get, set):String;
 
 	private function get_clientId():String {
@@ -284,7 +282,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -322,7 +319,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var headers(get, set):Any;
 
 	private function get_headers():Any {
@@ -363,7 +359,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var messageId(get, set):String;
 
 	private function get_messageId():String {
@@ -406,7 +401,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var timestamp(get, set):Float;
 
 	private function get_timestamp():Float {
@@ -447,7 +441,6 @@ class AbstractMessage implements IMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var timeToLive(get, set):Float;
 
 	private function get_timeToLive():Float {

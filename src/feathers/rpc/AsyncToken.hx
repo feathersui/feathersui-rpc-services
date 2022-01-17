@@ -74,7 +74,6 @@ class AsyncToken extends EventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var message(get, never):IMessage;
 
 	private function get_message():IMessage {
@@ -110,7 +109,6 @@ class AsyncToken extends EventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var responders(get, never):Array<IResponder>;
 
 	private function get_responders():Array<IResponder> {
@@ -135,7 +133,6 @@ class AsyncToken extends EventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var result(get, never):Dynamic;
 
 	private function get_result():Dynamic {

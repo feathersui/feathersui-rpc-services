@@ -253,7 +253,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {
@@ -284,7 +283,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -320,7 +318,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3           
 	 */
-	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -376,7 +373,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -476,7 +472,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var url(get, set):String;
 
 	private function get_url():String {
@@ -515,7 +510,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -679,7 +673,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var contentType(get, set):String;
 
 	private function get_contentType():String {
@@ -705,7 +698,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -739,7 +731,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var rootURL(get, set):String;
 
 	private function get_rootURL():String {

@@ -106,7 +106,6 @@ class RemoteObject extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -142,7 +141,6 @@ class RemoteObject extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var endpoint(get, set):String;
 
 	private function get_endpoint():String {
@@ -172,7 +170,6 @@ class RemoteObject extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var makeObjectsBindable(get, set):Bool;
 
 	private function get_makeObjectsBindable():Bool {
@@ -198,7 +195,6 @@ class RemoteObject extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -225,7 +221,6 @@ class RemoteObject extends AbstractService {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var source(get, set):String;
 
 	private function get_source():String {

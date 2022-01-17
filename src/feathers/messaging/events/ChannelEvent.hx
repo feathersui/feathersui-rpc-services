@@ -254,7 +254,6 @@ class ChannelEvent extends Event {
 	/**
 	 * @private
 	 */
-	@:flash.property
 	public var channelId(get, never):String;
 
 	private function get_channelId():String {

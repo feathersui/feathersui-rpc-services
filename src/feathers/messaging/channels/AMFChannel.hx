@@ -146,7 +146,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var piggybackingEnabled(get, set):Bool;
 
 	private function get_piggybackingEnabled():Bool {
@@ -174,7 +173,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var pollingEnabled(get, set):Bool;
 
 	private function get_pollingEnabled():Bool {
@@ -208,7 +206,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var pollingInterval(get, set):Float;
 
 	private function get_pollingInterval():Float {
@@ -236,7 +233,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var polling(get, never):Bool;
 
 	private function get_polling():Bool {

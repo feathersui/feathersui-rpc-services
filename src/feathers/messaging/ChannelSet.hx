@@ -258,7 +258,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var authenticated(get, never):Bool;
 
 	private function get_authenticated():Bool {
@@ -313,7 +312,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var channels(get, set):Array<Channel>;
 
 	private function get_channels():Array<Channel> {
@@ -365,7 +363,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var channelIds(get, never):Array<String>;
 
 	private function get_channelIds():Array<String> {
@@ -402,7 +399,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var currentChannel(get, never):Channel;
 
 	private function get_currentChannel():Channel {
@@ -424,7 +420,6 @@ class ChannelSet extends EventDispatcher {
 	 *  This property is assigned to by the ClusterMessageResponder in order to update the
 	 *  member Channels with their failoverURIs.
 	 */
-	@:flash.property
 	private var channelFailoverURIs(get, set):Map<String, Array<String>>;
 
 	private function get_channelFailoverURIs():Map<String, Array<String>> {
@@ -468,7 +463,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	private var configured(get, never):Bool;
 
 	private function get_configured():Bool {
@@ -489,7 +483,6 @@ class ChannelSet extends EventDispatcher {
 	/**
 	 *  Indicates whether the ChannelSet is connected.
 	 */
-	@:flash.property
 	public var connected(get, never):Bool;
 
 	private function get_connected():Bool {
@@ -540,7 +533,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var clustered(get, set):Bool;
 
 	private function get_clustered():Bool {
@@ -607,7 +599,6 @@ class ChannelSet extends EventDispatcher {
 	 *  the remote host, heartbeats are suppressed because the periodic poll
 	 *  requests effectively take their place.</p>
 	 */
-	@:flash.property
 	public var heartbeatInterval(get, set):Int;
 
 	private function get_heartbeatInterval():Int {
@@ -649,7 +640,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var initialDestinationId(get, set):String;
 
 	private function get_initialDestinationId():String {
@@ -682,7 +672,6 @@ class ChannelSet extends EventDispatcher {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var messageAgents(get, never):Array<MessageAgent>;
 
 	private function get_messageAgents():Array<MessageAgent> {
@@ -1807,7 +1796,6 @@ class AuthenticationAgent extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3
 	 */
-	@:flash.property
 	public var state(get, set):Int;
 
 	private function get_state():Int {

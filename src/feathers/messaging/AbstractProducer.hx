@@ -114,7 +114,6 @@ class AbstractProducer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var autoConnect(get, set):Bool;
 
 	private function get_autoConnect():Bool {
@@ -156,7 +155,6 @@ class AbstractProducer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var defaultHeaders(get, set):Dynamic;
 
 	private function get_defaultHeaders():Dynamic {
@@ -198,7 +196,6 @@ class AbstractProducer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var priority(get, set):Int;
 
 	private function get_priority():Int {
@@ -251,7 +248,6 @@ class AbstractProducer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var reconnectAttempts(get, set):Int;
 
 	private function get_reconnectAttempts():Int {
@@ -308,7 +304,6 @@ class AbstractProducer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var reconnectInterval(get, set):Int;
 
 	private function get_reconnectInterval():Int {

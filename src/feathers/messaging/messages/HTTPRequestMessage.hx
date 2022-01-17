@@ -172,7 +172,6 @@ class HTTPRequestMessage extends AbstractMessage {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {

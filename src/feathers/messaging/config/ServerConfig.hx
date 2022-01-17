@@ -124,7 +124,6 @@ class ServerConfig {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public static var xml(get, set):Xml;
 
 	private static function get_xml():Xml {

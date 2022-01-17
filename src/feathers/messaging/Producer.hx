@@ -125,7 +125,6 @@ class Producer extends AbstractProducer {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var subtopic(get, set):String;
 
 	private function get_subtopic():String {

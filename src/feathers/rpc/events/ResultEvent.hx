@@ -115,7 +115,6 @@ class ResultEvent extends AbstractEvent {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var headers(get, set):Any;
 
 	private function get_headers():Any {
@@ -135,7 +134,6 @@ class ResultEvent extends AbstractEvent {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var result(get, never):Dynamic;
 
 	private function get_result():Dynamic {
@@ -152,7 +150,6 @@ class ResultEvent extends AbstractEvent {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var statusCode(get, never):Int;
 
 	private function get_statusCode():Int {

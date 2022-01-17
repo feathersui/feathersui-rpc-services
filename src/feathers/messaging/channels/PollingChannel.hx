@@ -180,7 +180,6 @@ class PollingChannel extends Channel {
 	 */
 	private var _loginAfterDisconnect:Bool;
 
-	@:flash.property
 	private var loginAfterDisconnect(get, never):Bool;
 
 	private function get_loginAfterDisconnect():Bool {
@@ -199,7 +198,6 @@ class PollingChannel extends Channel {
 	/**
 	 *  @private
 	 */
-	@:flash.property
 	private var internalPiggybackingEnabled(get, set):Bool;
 
 	private function get_internalPiggybackingEnabled():Bool {
@@ -226,7 +224,6 @@ class PollingChannel extends Channel {
 	/**
 	 *  @private
 	 */
-	@:flash.property
 	private var internalPollingEnabled(get, set):Bool;
 
 	private function get_internalPollingEnabled():Bool {
@@ -257,7 +254,6 @@ class PollingChannel extends Channel {
 	/**
 	 *  @private
 	 */
-	@:flash.property
 	private var internalPollingInterval(get, set):Float;
 
 	private function get_internalPollingInterval():Float {
@@ -315,7 +311,6 @@ class PollingChannel extends Channel {
 	/**
 	 *  @private
 	 */
-	@:flash.property
 	private var timerRunning(get, never):Bool;
 
 	private function get_timerRunning():Bool {

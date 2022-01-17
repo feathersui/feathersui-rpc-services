@@ -201,7 +201,6 @@ class AbstractConsumer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var maxFrequency(get, set):UInt;
 
 	private function get_maxFrequency():UInt {
@@ -251,7 +250,6 @@ class AbstractConsumer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var resubscribeAttempts(get, set):Int;
 
 	private function get_resubscribeAttempts():Int {
@@ -309,7 +307,6 @@ class AbstractConsumer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var resubscribeInterval(get, set):Int;
 
 	private function get_resubscribeInterval():Int {
@@ -358,7 +355,6 @@ class AbstractConsumer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var subscribed(get, never):Bool;
 
 	private function get_subscribed():Bool {
@@ -418,7 +414,6 @@ class AbstractConsumer extends MessageAgent {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var timestamp(get, set):Float;
 
 	private function get_timestamp():Float {

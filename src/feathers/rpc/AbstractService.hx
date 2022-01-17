@@ -92,7 +92,6 @@ class AbstractService implements IEventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -123,7 +122,6 @@ class AbstractService implements IEventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -153,7 +151,6 @@ class AbstractService implements IEventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var managers(get, set):Array<Dynamic>;
 
 	private function get_managers():Array<Dynamic> {
@@ -192,7 +189,6 @@ class AbstractService implements IEventDispatcher {
 	 * @private
 	 * This is required by data binding.
 	 */
-	@:flash.property
 	public var operations(get, set):Dynamic;
 
 	private function get_operations():Dynamic {
@@ -237,7 +233,6 @@ class AbstractService implements IEventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -275,7 +270,6 @@ class AbstractService implements IEventDispatcher {
 	 *  @playerversion AIR 3
 	 *  @productversion Flex 4.11
 	 */
-	@:flash.property
 	public var keepLastResult(get, set):Bool;
 
 	private function get_keepLastResult():Bool {

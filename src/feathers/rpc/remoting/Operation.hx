@@ -76,7 +76,6 @@ class Operation extends AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -130,7 +129,6 @@ class Operation extends AbstractOperation {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {

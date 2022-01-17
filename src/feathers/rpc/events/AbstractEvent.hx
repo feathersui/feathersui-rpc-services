@@ -45,7 +45,6 @@ class AbstractEvent extends MessageEvent {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var token(get, never):AsyncToken;
 
 	public function get_token():AsyncToken {

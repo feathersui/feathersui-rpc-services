@@ -81,7 +81,6 @@ class AbstractInvoker extends EventDispatcher {
 	 *  @playerversion AIR 3
 	 *  @productversion Flex 4.11
 	 */
-	@:flash.property
 	public var keepLastResult(get, never):Bool;
 
 	private function get_keepLastResult():Bool {
@@ -113,7 +112,6 @@ class AbstractInvoker extends EventDispatcher {
 	 *  @playerversion AIR 1.1
 	 *  @productversion Flex 3
 	 */
-	@:flash.property
 	public var lastResult(get, never):Dynamic;
 
 	private function get_lastResult():Dynamic {
@@ -424,7 +422,6 @@ class AbstractInvoker extends EventDispatcher {
 		return true;
 	}
 
-	@:flash.property
 	private var asyncRequest(get, set):AsyncRequest;
 
 	private function get_asyncRequest():AsyncRequest {

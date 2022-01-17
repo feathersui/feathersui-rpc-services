@@ -173,7 +173,6 @@ class MessageFaultEvent extends Event {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var faultCode(get, never):String;
 
 	private function get_faultCode():String {
@@ -199,7 +198,6 @@ class MessageFaultEvent extends Event {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var faultDetail(get, never):String;
 
 	private function get_faultDetail():String {
@@ -222,7 +220,6 @@ class MessageFaultEvent extends Event {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var faultString(get, never):String;
 
 	private function get_faultString():String {
@@ -248,7 +245,6 @@ class MessageFaultEvent extends Event {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var rootCause(get, never):Dynamic;
 
 	private function get_rootCause():Dynamic {

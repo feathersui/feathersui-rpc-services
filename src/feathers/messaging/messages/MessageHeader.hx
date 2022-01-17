@@ -98,7 +98,6 @@ class MessageHeader {
 	 *  @productversion BlazeDS 4
 	 *  @productversion LCDS 3 
 	 */
-	@:flash.property
 	public var data(get, set):Dynamic;
 
 	private function get_data():Dynamic {

@@ -23,12 +23,6 @@ import feathers.messaging.messages.ErrorMessage;
  *  This error indicates a problem serializing a message within a channel.
  *  It provides a fault property which corresponds to an ErrorMessage generated
  *  when this error is thrown.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessageSerializationError extends MessagingError {
 	//--------------------------------------------------------------------------
@@ -45,11 +39,6 @@ class MessageSerializationError extends MessagingError {
 	 *  @param fault Provides specific information about the fault that occured
 	 *  and for which message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(msg:String, fault:ErrorMessage) {
 		super(msg);
@@ -66,11 +55,6 @@ class MessageSerializationError extends MessagingError {
 	 *  Provides specific information about the fault that occurred and for
 	 *  which message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var fault:ErrorMessage;
 }

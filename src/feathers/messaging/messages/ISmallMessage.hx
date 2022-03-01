@@ -20,12 +20,6 @@ package feathers.messaging.messages;
 /**
  * A marker interface that is used to indicate that an IMessage has an
  * alternative smaller form for serialization.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 interface ISmallMessage extends IMessage {
 	//--------------------------------------------------------------------------
@@ -44,11 +38,6 @@ interface ISmallMessage extends IMessage {
 	 * flex.messaging.messages.IMessage so that the serialized form
 	 * is smaller than the regular message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	function getSmallMessage():IMessage;
 }

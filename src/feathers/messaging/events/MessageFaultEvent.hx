@@ -22,12 +22,6 @@ import openfl.events.Event;
 
 /**
  * The MessageFaultEvent class is used to propagate fault messages within the messaging system.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessageFaultEvent extends Event {
 	//--------------------------------------------------------------------------
@@ -38,9 +32,11 @@ class MessageFaultEvent extends Event {
 
 	/**
 	 *  The FAULT event type; dispatched for a message fault.
-	 *  <p>The value of this constant is <code>"fault"</code>.</p>
+	 *
+	 *  The value of this constant is <code>"fault"</code>.
 	 * 
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -65,11 +61,6 @@ class MessageFaultEvent extends Event {
 	 *  </table>
 	 *  @eventType fault
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final FAULT:String = "fault";
 
@@ -87,11 +78,6 @@ class MessageFaultEvent extends Event {
 	 * 
 	 *  @return New MessageFaultEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function createEvent(msg:ErrorMessage):MessageFaultEvent {
 		return new MessageFaultEvent(MessageFaultEvent.FAULT, false, false, msg);
@@ -117,11 +103,6 @@ class MessageFaultEvent extends Event {
 	 * 
 	 *  @param message The ErrorMessage associated with the fault.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, message:ErrorMessage = null) {
 		super(type, bubbles, cancelable);
@@ -138,11 +119,6 @@ class MessageFaultEvent extends Event {
 	/**
 	 *  The ErrorMessage for this event.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var message:ErrorMessage;
 
@@ -157,21 +133,16 @@ class MessageFaultEvent extends Event {
 
 	/**
 	 *  Provides access to the destination specific failure code.
-	 *  For more specific details see <code>faultString</code> and
-	 *  <code>faultDetails</code> properties.
+	 *  For more specific details see `faultString` and
+	 *  `faultDetails` properties.
 	 *
-	 *  <p>The format of the fault codes are provided by the remote destination,
-	 *  but, will typically have the following form: <i>host.operation.error</i>
-	 *  For example, <code>"Server.Connect.Failed"</code></p>
+	 *  The format of the fault codes are provided by the remote destination,
+	 *  but, will typically have the following form: _host.operation.error_
+	 *  For example, `"Server.Connect.Failed"`
 	 *
 	 *  @see #faultString
 	 *  @see #faultDetail
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var faultCode(get, never):String;
 
@@ -186,17 +157,12 @@ class MessageFaultEvent extends Event {
 	/**
 	 *  Provides destination specific details of the failure.
 	 *
-	 *  <p>Typically fault details are a stack trace of an exception thrown at
-	 *  the remote destination.</p>
+	 *  Typically fault details are a stack trace of an exception thrown at
+	 *  the remote destination.
 	 *
 	 *  @see #faultString
 	 *  @see #faultCode
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var faultDetail(get, never):String;
 
@@ -214,11 +180,6 @@ class MessageFaultEvent extends Event {
 	 *  @see #faultCode
 	 *  @see #faultDetail
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var faultString(get, never):String;
 
@@ -239,11 +200,6 @@ class MessageFaultEvent extends Event {
 	 *
 	 *  @see MessageFaultEvent#rootCause
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var rootCause(get, never):Dynamic;
 
@@ -262,11 +218,6 @@ class MessageFaultEvent extends Event {
 	 *
 	 *  @return Copy of this MessageFaultEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function clone():Event {
 		return new MessageFaultEvent(type, bubbles, cancelable, message);
@@ -277,11 +228,6 @@ class MessageFaultEvent extends Event {
 	 *
 	 *  @return String representation of the MessageFaultEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function toString():String {
 		#if flash

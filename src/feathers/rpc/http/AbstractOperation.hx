@@ -51,13 +51,8 @@ import flash.xml.XMLNodeType;
  * property of the operation with the parameters sent.  An Object is created which uses the
  * argumentNames[i] as the key and the corresponding parameter as the value.
  * 
- * <p>The exact way in which the HTTP operation arguments is put into the HTTP body is determined
- * by the serializationFilter used.</p>
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
+ * The exact way in which the HTTP operation arguments is put into the HTTP body is determined
+ * by the serializationFilter used.
  */
 @:access(feathers.rpc.http.SerializationFilter)
 class AbstractOperation extends feathers.rpc.AbstractOperation {
@@ -66,24 +61,18 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//---------------------------------
 
 	/**
-		*  Creates a new Operation. 
-		* 
-		*  @param service The object defining the type of service, such as 
-		*  HTTPMultiService, WebService, or RemoteObject.
-		*
-		*  @param name The name of the service.
-		*  
-		*  @langversion 3.0
-		*  @playerversion Flash 9
-		*  @playerversion AIR 1.1
-		*  @productversion Flex 3
-
-		*  Creates a new Operation. 
-		*
-		*  @param service The object defining the type of service, such as 
-		*  HTTPMultiService, WebService, or RemoteObject.
-		*
-		*  @param name The name of the service.
+	 *  Creates a new Operation. 
+	 * 
+	 *  @param service The object defining the type of service, such as 
+	 *  HTTPMultiService, WebService, or RemoteObject.
+	 *
+	 *  @param name The name of the service.
+	 *  Creates a new Operation. 
+	 *
+	 *  @param service The object defining the type of service, such as 
+	 *  HTTPMultiService, WebService, or RemoteObject.
+	 *
+	 *  @param name The name of the service.
 	 */
 	public function new(service:AbstractService = null, name:String = null) {
 		super(service, name);
@@ -95,32 +84,17 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 
 	/**
 	 *  The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_E4X:String = "e4x";
 
 	/**
 	 *  The result format "flashvars" specifies that the value returned is text containing name=value pairs
 	 *  separated by ampersands, which is parsed into an ActionScript object.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_FLASHVARS:String = "flashvars";
 
 	/**
 	 *  The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_OBJECT:String = "object";
 
@@ -128,32 +102,17 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  The result format "array" is similar to "object" however the value returned is always an Array such
 	 *  that if the result returned from result format "object" is not an Array already the item will be
 	 *  added as the first item to a new Array.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_ARRAY:String = "array";
 
 	/**
 	 *  The result format "text" specifies that the HTTPService result text should be an unprocessed String.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_TEXT:String = "text";
 
 	/**
 	 *  The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
 	 *  the first child of the parent flash.xml.XMLDocument.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final RESULT_FORMAT_XML:String = "xml";
 
@@ -171,21 +130,11 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 
 	/**
 	 *  Indicates that the data being sent by the HTTP service is encoded as application/xml.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final CONTENT_TYPE_XML:String = "application/xml";
 
 	/**
 	 *  Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final CONTENT_TYPE_FORM:String = "application/x-www-form-urlencoded";
 
@@ -193,32 +142,17 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 
 	/**
 	 *  Indicates that the useProxy property was set to false but a url was not provided.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final ERROR_URL_REQUIRED:String = "Client.URLRequired";
 
 	/**
 	 *  Indicates that an XML formatted result could not be parsed into an XML instance
 	 *  or decoded into an Object.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final ERROR_DECODING:String = "Client.CouldNotDecode";
 
 	/**
 	 *  Indicates that an input parameter could not be encoded as XML.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final ERROR_ENCODING:String = "Client.CouldNotEncode";
 
@@ -230,11 +164,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 * An ordered list of the names of the arguments to pass to a method invocation.  Since the arguments object is
 	 * a hashmap with no guaranteed ordering, this array helps put everything together correctly.
 	 * It will be set automatically by the MXML compiler, if necessary, when the Operation is used in tag form.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var argumentNames:Array<String>;
 
@@ -247,11 +176,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
 	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
 	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var method(get, set):String;
 
@@ -277,11 +201,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 * multiple requests generate a fault.</li>
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var concurrency(get, set):String;
 
@@ -311,12 +230,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  If an acknowledgement, response or fault is not received from the
 	 *  remote destination before the timeout is reached the message is faulted
 	 *  on the client. A value less than or equal to zero prevents request timeout.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3           
 	 */
 	public var requestTimeout(get, set):Int;
 
@@ -343,35 +256,28 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	/**
 	 *  Value that indicates how you want to deserialize the result
 	 *  returned by the HTTP call. The value for this is based on the following:
-	 *  <ul>
-	 *  <li>Whether you are returning XML or name/value pairs.</li>
-	 *  <li>How you want to access the results; you can access results as an object,
-	 *    text, or XML.</li>
-	 *  </ul>
+	 *
+	 *  - Whether you are returning XML or name/value pairs.
+	 *  - How you want to access the results; you can access results as an object,
+	 *    text, or XML.
 	 * 
-	 *  <p>The default value is <code>object</code>. The following values are permitted:</p>
-	 *  <ul>
-	 *  <li><code>object</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects. This is the default.</li>
-	 *  <li><code>array</code> The value returned is XML and is parsed as a tree of ActionScript
+	 *  The default value is <code>object</code>. The following values are permitted:
+	 *
+	 *  - <code>object</code> The value returned is XML and is parsed as a tree of ActionScript
+	 *    objects. This is the default.
+	 *  - <code>array</code> The value returned is XML and is parsed as a tree of ActionScript
 	 *    objects however if the top level object is not an Array, a new Array is created and the result
 	 *    set as the first item. If makeObjectsBindable is true then the Array 
-	 *    will be wrapped in an ArrayCollection.</li>
-	 *  <li><code>xml</code> The value returned is XML and is returned as literal XML in an
-	 *    ActionScript XMLnode object.</li>
-	 *  <li><code>flashvars</code> The value returned is text containing 
+	 *    will be wrapped in an ArrayCollection.<
+	 *  - <code>xml</code> The value returned is XML and is returned as literal XML in an
+	 *    ActionScript XMLnode object.
+	 *  - <code>flashvars</code> The value returned is text containing 
 	 *    name=value pairs separated by ampersands, which
-	 *  is parsed into an ActionScript object.</li>
-	 *  <li><code>text</code> The value returned is text, and is left raw.</li>
-	 *  <li><code>e4x</code> The value returned is XML and is returned as literal XML 
+	 *  is parsed into an ActionScript object.
+	 *  - <code>text</code> The value returned is text, and is left raw.
+	 *  - <code>e4x</code> The value returned is XML and is returned as literal XML 
 	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
-	 *    XML (E4X) expressions.</li>
-	 *  </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
+	 *    XML (E4X) expressions.
 	 */
 	public var resultFormat(get, set):String;
 
@@ -417,11 +323,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 * of the HTTP request.  It also controls how the results are converted into ActionScript
 	 * objects.  It can be set either explicitly using this property or indirectly using the
 	 * resultFormat property.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var serializationFilter:SerializationFilter;
 
@@ -444,11 +345,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	/**
 	 *  Object of name-value pairs used as parameters to the URL. If
 	 *  the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var request:Dynamic = {};
 
@@ -466,11 +362,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	/**
 	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
 	 *  your destination in the services-config.xml file must allow the specified URL.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var url(get, set):String;
 
@@ -504,11 +395,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  <code>useProxy</code> property is set to <code>false</code>.
 	 *
 	 *  @default false    
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var useProxy(get, set):Bool;
 
@@ -540,50 +426,39 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-		*  ActionScript function used to decode a service result from XML.
-		*  When the <code>resultFormat</code> is an object and the <code>xmlDecode</code> property is set,
-		*  Flex uses the XML that the HTTPService returns to create an
-		*  Object. If it is not defined the default XMLDecoder is used
-		*  to do the work.
-		*  <p>The function referenced by the <code>xmlDecode</code> property must
-		*  take a flash.xml.XMLNode object as a parameter and should return
-		*  an Object. It can return any type of object, but it must return
-		*  something. Returning <code>null</code> or <code>undefined</code> causes a fault.</p>
+		ActionScript function used to decode a service result from XML.
+		When the <code>resultFormat</code> is an object and the <code>xmlDecode</code> property is set,
+		Flex uses the XML that the HTTPService returns to create an
+		Object. If it is not defined the default XMLDecoder is used
+		to do the work.
+
+		The function referenced by the <code>xmlDecode</code> property must
+		take a flash.xml.XMLNode object as a parameter and should return
+		an Object. It can return any type of object, but it must return
+		something. Returning <code>null</code> or <code>undefined</code> causes a fault.
 
 		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlDecode function:
 
-		<pre>
+		```xml
 		&lt;mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
 			&lt;mx:request&gt;&lt;source/&gt;
 				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
 			&lt;/mx:request&gt;
 		&lt;/mx:HTTPService&gt;
-		</pre>
-
+		```
 
 		The following example shows an xmlDecoder function:
-		<pre>
-		function xmlDecoder (myXML)
-		{
-		// Simplified decoding logic.
-		var myObj = {};
-		myObj.name = myXML.firstChild.nodeValue;
-		myObj.honorific = myXML.firstChild.attributes.honorific;
-		return myObj;
+
+		```haxe
+		function xmlDecoder(myXML) {
+			// Simplified decoding logic.
+			var myObj = {};
+			myObj.name = myXML.firstChild.nodeValue;
+			myObj.honorific = myXML.firstChild.attributes.honorific;
+			return myObj;
 		}
-		</pre>
-
-		*  
-
-		*  @langversion 3.0
-
-		*  @playerversion Flash 9
-
-		*  @playerversion AIR 1.1
-
-		*  @productversion Flex 3
-
-	 */
+		```
+	**/
 	public var xmlDecode:(#if flash XMLNode #else Dynamic #end) -> Dynamic;
 
 	//----------------------------------
@@ -592,50 +467,37 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-		*  ActionScript function used to encode a service request as XML.
-		*  When the <code>contentType</code> of a request is <code>application/xml</code> and the
-		*  request object passed in is an Object, Flex attempts to use
-		*  the function specified in the <code>xmlEncode</code> property to turn it
-		*  into a flash.xml.XMLNode object If the <code>xmlEncode</code> property is not set, 
-		*  Flex uses the default
-		*  XMLEncoder to turn the object graph into a flash.xml.XMLNode object.
-		* 
-		*  <p>The <code>xmlEncode</code> property takes an Object and should return
-		*  a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
-		*  which is a subclass of XMLNode, or the first child of the
-		*  flash.xml.XML object, which is what you get from an <code>&lt;mx:XML&gt;</code> tag.
-		*  Returning the wrong type of object causes a fault.
-		*  The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:</p>
+		ActionScript function used to encode a service request as XML.
+		When the <code>contentType</code> of a request is <code>application/xml</code> and the
+		request object passed in is an Object, Flex attempts to use
+		the function specified in the <code>xmlEncode</code> property to turn it
+		into a flash.xml.XMLNode object If the <code>xmlEncode</code> property is not set, 
+		Flex uses the default
+		XMLEncoder to turn the object graph into a flash.xml.XMLNode object.
 
-		<pre>
+		The <code>xmlEncode</code> property takes an Object and should return
+		a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
+		which is a subclass of XMLNode, or the first child of the
+		flash.xml.XML object, which is what you get from an <code>&lt;mx:XML&gt;</code> tag.
+		Returning the wrong type of object causes a fault.
+		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:
+
+		```xml
 		&lt;mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
 			&lt;mx:request&gt;&lt;source/&gt;
 				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
 			&lt;/mx:request&gt;
 		&lt;/mx:HTTPService&gt;
-		</pre>
-
+		```
 
 		The following example shows an xmlEncoder function:
-		<pre>
-		function xmlEncoder (myObj)
-		{
-		return new XML("<userencoded><attrib0>MyObj.test</attrib0>
-		<attrib1>MyObj.anotherTest</attrib1></userencoded>");
+
+		```haxe
+		function xmlEncoder(myObj) {
+			return new XML("<userencoded><attrib0>MyObj.test</attrib0><attrib1>MyObj.anotherTest</attrib1></userencoded>");
 		}
-		</pre>
-
-		*  
-
-		*  @langversion 3.0
-
-		*  @playerversion Flash 9
-
-		*  @playerversion AIR 1.1
-
-		*  @productversion Flex 3
-
-	 */
+		```
+	**/
 	public var xmlEncode:(Dynamic) -> #if flash XMLNode #else Dynamic #end;
 
 	//----------------------------------
@@ -646,11 +508,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	/**
 	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
 	 *  be sent with the same name the value should be specified as an Array.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var headers:Dynamic = {};
 
@@ -667,11 +524,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  The default is <code>application/x-www-form-urlencoded</code> which sends requests
 	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
 	 *  requests as XML.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var contentType(get, set):String;
 
@@ -692,11 +544,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	/**
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var showBusyCursor(get, set):Bool;
 
@@ -725,11 +572,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  based on the location of the SWF running this application.
 	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
 	 *  mx.messaging.config.LoaderConfig.url.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var rootURL(get, set):String;
 
@@ -918,11 +760,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  the retrieval of the HTTP request headers. 
 	 *
 	 *  @return The HTTP request headers.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private function getHeaders():Dynamic {
 		return headers;

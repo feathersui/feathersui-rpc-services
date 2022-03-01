@@ -22,12 +22,6 @@ import openfl.events.Event;
 
 /**
  *  The ChannelEvent is used to propagate channel events within the messaging system.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class ChannelEvent extends Event {
 	//--------------------------------------------------------------------------
@@ -39,9 +33,11 @@ class ChannelEvent extends Event {
 	/**
 	 *  The CONNECT event type; indicates that the Channel connected to its
 	 *  endpoint.
-	 *  <p>The value of this constant is <code>"channelConnect"</code>.</p>
 	 *
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The value of this constant is <code>"channelConnect"</code>.
+	 *
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -64,20 +60,17 @@ class ChannelEvent extends Event {
 	 *  </table>
 	 *  @eventType channelConnect 
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final CONNECT:String = "channelConnect";
 
 	/**
 	 *  The DISCONNECT event type; indicates that the Channel disconnected from its
 	 *  endpoint.
-	 *  <p>The value of this constant is <code>"channelDisconnect"</code>.</p>
 	 *
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The value of this constant is <code>"channelDisconnect"</code>.
+	 *
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -100,11 +93,6 @@ class ChannelEvent extends Event {
 	 *  </table>
 	 *  @eventType channelDisconnect
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final DISCONNECT:String = "channelDisconnect";
 
@@ -133,11 +121,6 @@ class ChannelEvent extends Event {
 	 * 
 	 *  @return New ChannelEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function createEvent(type:String, channel:Channel = null, reconnecting:Bool = false, rejected:Bool = false,
 			connected:Bool = false):ChannelEvent {
@@ -173,11 +156,6 @@ class ChannelEvent extends Event {
 	 *  @param connected Indicates whether the Channel that generated this event 
 	 *  is already connected.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, channel:Channel = null, reconnecting:Bool = false, rejected:Bool = false,
 			connected:Bool = false) {
@@ -198,33 +176,18 @@ class ChannelEvent extends Event {
 	/**
 	 *  The Channel that generated this event.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var channel:Channel;
 
 	/**
 	 * Indicates whether the Channel that generated this event is already connected.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var connected:Bool;
 
 	/**
 	 *  Indicates whether the Channel that generated this event is reconnecting.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var reconnecting:Bool;
 
@@ -234,11 +197,6 @@ class ChannelEvent extends Event {
 	 *  disconnected due to inactivity and should not attempt to failover or
 	 *  connect on an alternate channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var rejected:Bool;
 
@@ -274,11 +232,6 @@ class ChannelEvent extends Event {
 	 *
 	 *  @return Copy of this ChannelEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function clone():Event {
 		return new ChannelEvent(type, bubbles, cancelable, channel, reconnecting, rejected, connected);
@@ -289,11 +242,6 @@ class ChannelEvent extends Event {
 	 *
 	 *  @return String representation of the ChannelEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function toString():String {
 		#if flash

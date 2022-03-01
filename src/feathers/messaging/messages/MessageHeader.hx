@@ -19,14 +19,6 @@ package feathers.messaging.messages;
 
 /**
  *  The MessageHeader for an ActionMessage
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
- * 
- *  @royalesuppresspublicvarwarning
  */
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.MessageHeader"))
 class MessageHeader {
@@ -39,11 +31,6 @@ class MessageHeader {
 	/**
 	 *  Constructs an instance of a MessageHeader
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {}
 
@@ -56,22 +43,12 @@ class MessageHeader {
 	/**
 	 *  The header name.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var name:String = "";
 
 	/**
 	 *  Whether the receipient must understand the header
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var mustUnderstand:Bool = false;
 
@@ -92,11 +69,6 @@ class MessageHeader {
 	/**
 	 *  The data to be sent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var data(get, set):Dynamic;
 

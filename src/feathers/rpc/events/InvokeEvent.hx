@@ -22,17 +22,13 @@ import openfl.events.Event;
 
 /**
  * The event that indicates an RPC operation has been invoked.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class InvokeEvent extends AbstractEvent {
 	/**
 	 * The INVOKE event type.
 	 * 
-	 * <p>The properties of the event object have the following values:</p>
+	 * The properties of the event object have the following values:
+	 *
 	 * <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -50,11 +46,6 @@ class InvokeEvent extends AbstractEvent {
 	 *       Object listening for the event.</td></tr>
 	 *  </table>
 	 *  @eventType invoke 
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final INVOKE:String = "invoke";
 
@@ -66,11 +57,6 @@ class InvokeEvent extends AbstractEvent {
 	 * @param token Token that represents the call to the method. Used in the asynchronous 
 	 *     completion token pattern.
 	 * @param message Source Message of the request.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, token:AsyncToken = null, message:IMessage = null) {
 		super(type, bubbles, cancelable, token, message);
@@ -97,11 +83,6 @@ class InvokeEvent extends AbstractEvent {
 	 * Returns a string representation of the InvokeEvent.
 	 *
 	 * @return String representation of the InvokeEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function toString():String {
 		return formatToString("InvokeEvent", "messageId", "type", "bubbles", "cancelable", "eventPhase");

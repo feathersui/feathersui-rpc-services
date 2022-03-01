@@ -21,12 +21,6 @@ package feathers.messaging.messages;
  *  HTTP requests are sent to the HTTP endpoint using this message type.
  *  An HTTPRequestMessage encapsulates content and header information normally
  *  found in HTTP requests made by a browser.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:meta(RemoteClass(alias = "flex.messaging.messages.HTTPMessage"))
 class HTTPRequestMessage extends AbstractMessage {
@@ -39,11 +33,6 @@ class HTTPRequestMessage extends AbstractMessage {
 	/**
 	 *  Constructs an uninitialized HTTP request.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {
 		super();
@@ -57,34 +46,24 @@ class HTTPRequestMessage extends AbstractMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Indicates the content type of this message.
-	 *  This value must be understood by the destination this request is sent to.
-	 *
-	 *  <p>The following example sets the <code>contentType</code> property:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates the content type of this message.
+		This value must be understood by the destination this request is sent to.
+
+		The following example sets the `contentType` property:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public var contentType:String;
 
 	/**
 	 *  Contains specific HTTP headers that should be placed on the request made
 	 *  to the destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var httpHeaders:Any;
 
@@ -93,35 +72,25 @@ class HTTPRequestMessage extends AbstractMessage {
 	 * send back the request and response headers it used.  Defaults to false.
 	 * Currently only set when using the NetworkMonitor.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var recordHeaders:Bool;
 
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Contains the final destination for this request.
-	 *  This is the URL that the content of this message, found in the
-	 *  <code>body</code> property, will be sent to, using the method specified.
-	 *
-	 *  <p>The following example sets the <code>url</code> property:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Contains the final destination for this request.
+		This is the URL that the content of this message, found in the
+		`body` property, will be sent to, using the method specified.
+
+		The following example sets the `url` property:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public var url:String;
 
 	/**
@@ -146,32 +115,26 @@ class HTTPRequestMessage extends AbstractMessage {
 	// [Inspectable(category="General")]
 
 	/**
-	 *  Indicates what method should be used for the request.
-	 *  The only values allowed are:
-	 *  <ul>
-	 *    <li><code>HTTPRequestMessage.DELETE_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.GET_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.HEAD_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.POST_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.OPTIONS_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.PUT_METHOD</code></li>
-	 *    <li><code>HTTPRequestMessage.TRACE_METHOD</code></li>
-	 *  </ul>
-	 *
-	 *  <p>The following example sets the <code>method</code> property:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates what method should be used for the request.
+		The only values allowed are:
+
+		- <code>HTTPRequestMessage.DELETE_METHOD</code>
+		- <code>HTTPRequestMessage.GET_METHOD</code>
+		- <code>HTTPRequestMessage.HEAD_METHOD</code>
+		- <code>HTTPRequestMessage.POST_METHOD</code>
+		- <code>HTTPRequestMessage.OPTIONS_METHOD</code>
+		- <code>HTTPRequestMessage.PUT_METHOD</code>
+		- <code>HTTPRequestMessage.TRACE_METHOD</code>
+
+		The following example sets the `method` property:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public var method(get, set):String;
 
 	private function get_method():String {
@@ -202,194 +165,144 @@ class HTTPRequestMessage extends AbstractMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Indicates that the content of this message is XML.
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_XML;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the content of this message is XML.
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_XML;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final CONTENT_TYPE_XML:String = "application/xml";
 
 	/**
-	 *  Indicates that the content of this message is a form.
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the content of this message is a form.
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final CONTENT_TYPE_FORM:String = "application/x-www-form-urlencoded";
 
 	/**
-	 *  Indicates that the content of this message is XML meant for a SOAP
-	 *  request.
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_SOAP_XML;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the content of this message is XML meant for a SOAP
+		request.
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_SOAP_XML;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final CONTENT_TYPE_SOAP_XML:String = "text/xml; charset=utf-8";
 
 	/**
-	 *  Indicates that the method used for this request should be "post".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.POST_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "post".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.POST_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final POST_METHOD:String = "POST";
 
 	/**
-	 *  Indicates that the method used for this request should be "get".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.GET_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "get".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.GET_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final GET_METHOD:String = "GET";
 
 	/**
-	 *  Indicates that the method used for this request should be "put".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.PUT_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "put".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.PUT_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final PUT_METHOD:String = "PUT";
 
 	/**
-	 *  Indicates that the method used for this request should be "head".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.HEAD_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "head".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.HEAD_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final HEAD_METHOD:String = "HEAD";
 
 	/**
-	 *  Indicates that the method used for this request should be "delete".
-	 *  
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.DELETE_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "delete".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.DELETE_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final DELETE_METHOD:String = "DELETE";
 
 	/**
-	 *  Indicates that the method used for this request should be "options".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.OPTIONS_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "options".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.OPTIONS_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final OPTIONS_METHOD:String = "OPTIONS";
 
 	/**
-	 *  Indicates that the method used for this request should be "trace".
-	 *
-	 *  <p>The following example uses this constant:</p>
-	 *    <pre>
-	 *      var msg:HTTPRequestMessage = new HTTPRequestMessage();
-	 *      msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
-	 *      msg.method = HTTPRequestMessage.TRACE_METHOD;
-	 *      msg.url = "http://my.company.com/login";
-	 *    </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Indicates that the method used for this request should be "trace".
+
+		The following example uses this constant:
+
+		```haxe
+		var msg = new HTTPRequestMessage();
+		msg.contentType = HTTPRequestMessage.CONTENT_TYPE_FORM;
+		msg.method = HTTPRequestMessage.TRACE_METHOD;
+		msg.url = "http://my.company.com/login";
+		```
+	**/
 	public static final TRACE_METHOD:String = "TRACE";
 
 	private static final VALID_METHODS:String = "POST,PUT,GET,HEAD,DELETE,OPTIONS,TRACE";

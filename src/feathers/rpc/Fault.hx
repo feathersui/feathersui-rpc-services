@@ -22,11 +22,6 @@ import openfl.errors.Error;
 /**
  * The Fault class represents a fault in a remote procedure call (RPC) service
  * invocation.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class Fault extends Error {
 	/**
@@ -36,11 +31,6 @@ class Fault extends Error {
 	 * @param faultString Text description of the fault.
 	 * @param faultDetail Additional details describing the fault.
 	 * 
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(faultCode:String, faultString:String, faultDetail:String = null) {
 		super("faultCode:" + faultCode + " faultString:'" + faultString + "' faultDetail:'" + faultDetail + "'");
@@ -59,22 +49,12 @@ class Fault extends Error {
 	/**
 	 * The raw content of the fault (if available), such as an HTTP response
 	 * body.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var content:Dynamic;
 
 	/**
 	 * The cause of the fault. The value will be null if the cause is
 	 * unknown or whether this fault represents the root itself.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var rootCause:Dynamic;
 
@@ -86,11 +66,6 @@ class Fault extends Error {
 
 	/**
 	 * A simple code describing the fault.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var faultCode(get, never):String;
 
@@ -100,11 +75,6 @@ class Fault extends Error {
 
 	/**
 	 * Any extra details of the fault.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var faultDetail(get, never):String;
 
@@ -114,11 +84,6 @@ class Fault extends Error {
 
 	/**
 	 * Text description of the fault.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var faultString(get, never):String;
 
@@ -136,11 +101,6 @@ class Fault extends Error {
 	 * Returns the string representation of a Fault object.
 	 *
 	 * @return Returns the string representation of a Fault object.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	#if !flash override #end public function toString():String {
 		var s:String = "[RPC Fault";

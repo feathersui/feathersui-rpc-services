@@ -20,11 +20,6 @@ package feathers.rpc;
 /**
  *  This class provides a default implementation of 
  *  the mx.rpc.IResponder interface.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class Responder implements IResponder {
 	/**
@@ -34,11 +29,6 @@ class Responder implements IResponder {
 	 *           completed successfully.
 	 *  @param  fault Function that should be called when the request has
 	 *          completed with errors.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(result:Dynamic->Void, fault:Dynamic->Void) {
 		_resultHandler = result;

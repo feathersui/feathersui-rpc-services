@@ -18,21 +18,14 @@
 package feathers.messaging.errors;
 
 /**
- *  This error is thrown when a Channel can't be accessed
- *  or is not valid for the current destination.
- *  This error is thrown by the following methods/properties
- *  within the framework:
- *  <ul>
- *    <li><code>ServerConfig.getChannel()</code> if the channel
- *    can't be found based on channel id.</li>
- *  </ul>
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
- */
+	This error is thrown when a Channel can't be accessed
+	or is not valid for the current destination.
+	This error is thrown by the following methods/properties
+	within the framework:
+
+	- <code>ServerConfig.getChannel()</code> if the channel
+		can't be found based on channel id.
+**/
 class InvalidChannelError extends ChannelError {
 	//--------------------------------------------------------------------------
 	//
@@ -45,11 +38,6 @@ class InvalidChannelError extends ChannelError {
 	 *
 	 *  @param msg String that contains the message that describes this InvalidChannelError.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(msg:String) {
 		super(msg);

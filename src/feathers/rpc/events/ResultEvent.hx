@@ -24,11 +24,6 @@ import openfl.events.EventType;
 
 /**
  * The event that indicates an RPC operation has successfully returned a result.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class ResultEvent extends AbstractEvent {
 	//--------------------------------------------------------------------------
@@ -40,7 +35,8 @@ class ResultEvent extends AbstractEvent {
 	/**
 	 * The RESULT event type.
 	 *
-	 * <p>The properties of the event object have the following values:</p>
+	 * The properties of the event object have the following values:
+	 *
 	 * <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -62,11 +58,6 @@ class ResultEvent extends AbstractEvent {
 	 *  </table>
 	 *     
 	 *  @eventType result      
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final RESULT:EventType<ResultEvent> = "result";
 
@@ -84,11 +75,6 @@ class ResultEvent extends AbstractEvent {
 	 * @param result Object that holds the actual result of the call.
 	 * @param token Token that represents the call to the method. Used in the asynchronous completion token pattern.
 	 * @param message Source Message of the result.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = true, result:Dynamic = null, token:AsyncToken = null, message:IMessage = null) {
 		super(type, bubbles, cancelable, token, message);
@@ -109,11 +95,6 @@ class ResultEvent extends AbstractEvent {
 	/**
 	 * In certain circumstances, headers may also be returned with a result to
 	 * provide further context.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var headers(get, set):Any;
 
@@ -128,11 +109,6 @@ class ResultEvent extends AbstractEvent {
 
 	/**
 	 * Result that the RPC call returns.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var result(get, never):Dynamic;
 
@@ -144,11 +120,6 @@ class ResultEvent extends AbstractEvent {
 	 * If the source message was sent via HTTP, this property provides access
 	 * to the HTTP response status code (if available), otherwise the value is
 	 * 0.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var statusCode(get, never):Int;
 
@@ -179,11 +150,6 @@ class ResultEvent extends AbstractEvent {
 	 * Returns a string representation of the ResultEvent.
 	 *
 	 * @return String representation of the ResultEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function toString():String {
 		return formatToString("ResultEvent", "messageId", "type", "bubbles", "cancelable", "eventPhase");

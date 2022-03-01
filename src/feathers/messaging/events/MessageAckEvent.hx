@@ -23,12 +23,6 @@ import openfl.events.Event;
 
 /**
  *  The MessageAckEvent class is used to propagate acknowledge messages within the messaging system.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessageAckEvent extends MessageEvent {
 	//--------------------------------------------------------------------------
@@ -39,9 +33,11 @@ class MessageAckEvent extends MessageEvent {
 
 	/**
 	 *  The ACKNOWLEDGE event type; dispatched upon receipt of an acknowledgement.
-	 *  <p>The value of this constant is <code>"acknowledge"</code>.</p>
 	 *
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The value of this constant is <code>"acknowledge"</code>.
+	 *
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>acknowledgeMessage</code></td><td> Utility property to get
@@ -63,11 +59,6 @@ class MessageAckEvent extends MessageEvent {
 	 *  @eventType acknowledge    
 	 *
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final ACKNOWLEDGE:String = "acknowledge";
 
@@ -87,11 +78,6 @@ class MessageAckEvent extends MessageEvent {
 	 * 
 	 *  @return New MessageAckEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function createEvent(ack:AcknowledgeMessage = null, correlation:IMessage = null):MessageAckEvent {
 		return new MessageAckEvent(MessageAckEvent.ACKNOWLEDGE, false, false, ack, correlation);
@@ -119,11 +105,6 @@ class MessageAckEvent extends MessageEvent {
 	 *  
 	 *  @param correlation The message correlated with this acknowledgement.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, ack:AcknowledgeMessage = null, correlation:IMessage = null) {
 		super(type, bubbles, cancelable, ack);
@@ -140,11 +121,6 @@ class MessageAckEvent extends MessageEvent {
 	/**
 	 *  The original Message correlated with this acknowledgement.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var correlation:IMessage;
 
@@ -160,11 +136,6 @@ class MessageAckEvent extends MessageEvent {
 	/**
 	 *  Utility property to get the message property from the MessageEvent as an AcknowledgeMessage.  
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var acknowledgeMessage(get, never):AcknowledgeMessage;
 
@@ -199,11 +170,6 @@ class MessageAckEvent extends MessageEvent {
 	 *
 	 *  @return Copy of this MessageAckEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function clone():Event {
 		return new MessageAckEvent(type, bubbles, cancelable, Std.downcast(message, AcknowledgeMessage), correlation);
@@ -214,11 +180,6 @@ class MessageAckEvent extends MessageEvent {
 	 *
 	 *  @return String representation of the MessageAckEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function toString():String {
 		#if flash

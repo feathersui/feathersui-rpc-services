@@ -34,11 +34,6 @@ import openfl.events.EventDispatcher;
 /**
  * An invoker is an object that actually executes a remote procedure call (RPC).
  * For example, RemoteObject, HTTPService, and WebService objects are invokers.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 @:access(feathers.rpc.AsyncToken)
 @:access(feathers.rpc.events.AbstractEvent)
@@ -66,21 +61,22 @@ class AbstractInvoker extends EventDispatcher {
 	private var _keepLastResult:Bool = true;
 	private var _keepLastResultSet:Bool = false;
 
-	/**  Flag indicating whether the operation should keep its last call result for later access.
-	 * <p> If set to true, the last call result will be accessible through <code>lastResult</code> bindable property. </p>
-	 * <p> If set to false, the last call result will be cleared after the call,
-	 * and must be processed in the operation's result handler.
-	 * This will allow the result object to be garbage collected,
-	 * which is especially useful if the operation is only called a few times and returns a large result. </p>
-	 * <p>If not set, will use the <code>keepLastResult</code> value of its owning Service, if any, or the default value.</p>
-	 *  @see #lastResult
-	 *  @see mx.rpc.AbstractService#keepLastResult
-	 *   @default true
-	 *
-	 *  @playerversion Flash 10
-	 *  @playerversion AIR 3
-	 *  @productversion Flex 4.11
-	 */
+	/**
+		Flag indicating whether the operation should keep its last call result for later access.
+
+		If set to true, the last call result will be accessible through <code>lastResult</code> bindable property.
+
+		If set to false, the last call result will be cleared after the call,
+		and must be processed in the operation's result handler.
+		This will allow the result object to be garbage collected,
+		which is especially useful if the operation is only called a few times and returns a large result.
+
+		If not set, will use the <code>keepLastResult</code> value of its owning Service, if any, or the default value.
+
+		@see #lastResult
+		@see mx.rpc.AbstractService#keepLastResult
+		@default true
+	**/
 	public var keepLastResult(get, never):Bool;
 
 	private function get_keepLastResult():Bool {
@@ -106,11 +102,6 @@ class AbstractInvoker extends EventDispatcher {
 
 	/**
 	 *  The result of the last invocation.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var lastResult(get, never):Dynamic;
 
@@ -122,11 +113,6 @@ class AbstractInvoker extends EventDispatcher {
 
 	/**
 	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var makeObjectsBindable(get, set):Bool;
 
@@ -152,11 +138,6 @@ class AbstractInvoker extends EventDispatcher {
 	 * of the result.  Typically the called function will at some point clear this
 	 * property temporarily, then invoke the operation again actually sending it to 
 	 * the server this time.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var operationManager:Function;
 
@@ -164,11 +145,6 @@ class AbstractInvoker extends EventDispatcher {
 	 * Specifies an optional return type for the operation.  Used in situations where 
 	 * you want to coerce the over-the-wire information into a specific ActionScript class
 	 * or to provide metadata for other services as to the return type of this operation.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var resultType:Class<Dynamic>;
 
@@ -179,22 +155,12 @@ class AbstractInvoker extends EventDispatcher {
 	 * array or array collection.   When you set resultElementType, you do not have to set 
 	 * resultType.  In that case, the operation returns an Array if makeObjectsbindable is
 	 * false and an ArrayCollection otherwise.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var resultElementType:Class<Dynamic>;
 
 	/**
 	 *  Event dispatched for binding when the <code>result</code> property
 	 *  changes.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static final BINDING_RESULT:String = "resultForBinding";
 
@@ -213,11 +179,6 @@ class AbstractInvoker extends EventDispatcher {
 	 *         last service invocation is canceled.
 	 *  
 	 *  @return The AsyncToken associated with the call that is cancelled or null if no call was cancelled.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function cancel(id:String = null):AsyncToken {
 		if (id != null)
@@ -235,11 +196,6 @@ class AbstractInvoker extends EventDispatcher {
 	 *  bound to the result to update. Otherwise, set to
 	 *  <code>false</code>.
 	 *  The default value is <code>true</code>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function clearResult(fireBindingEvent:Bool = true):Void {
 		if (fireBindingEvent)
@@ -256,11 +212,6 @@ class AbstractInvoker extends EventDispatcher {
 	 *  the service returns a new copy of the same object.  
 	 *
 	 *  @param result The new value for the lastResult property.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function setResult(result:Any):Void {
 		_result = result;
@@ -288,11 +239,6 @@ class AbstractInvoker extends EventDispatcher {
 
 	/**
 	 * Monitor an rpc event that is being dispatched
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private function monitorRpcEvent(event:AbstractEvent):Void {
 		// if (NetworkMonitor.isMonitoring()) {

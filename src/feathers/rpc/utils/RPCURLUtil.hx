@@ -24,11 +24,6 @@ import feathers.messaging.config.LoaderConfig;
  *  full and relative URLs within Flex.
  *  
  *  @see mx.managers.BrowserManager
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class RPCURLUtil {
 	//--------------------------------------------------------------------------
@@ -57,11 +52,6 @@ class RPCURLUtil {
 	 *  
 	 *  @param url The URL to analyze.
 	 *  @return The server name and port of the specified URL.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function getServerNameWithPort(url:String):String {
 		// Find first slash; second is +1, start 1 after.
@@ -75,11 +65,6 @@ class RPCURLUtil {
 	 *  
 	 *  @param url The URL to analyze.
 	 *  @return The server name of the specified URL.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function getServerName(url:String):String {
 		var sp:String = getServerNameWithPort(url);
@@ -98,11 +83,6 @@ class RPCURLUtil {
 	 *  
 	 *  @param url The URL to analyze.
 	 *  @return The port number of the specified URL.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function getPort(url:String):UInt {
 		var sp:String = getServerNameWithPort(url);
@@ -130,11 +110,6 @@ class RPCURLUtil {
 	 *  @param url URL to convert.
 	 *
 	 *  @return Fully-qualified URL.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function getFullURL(rootURL:String, url:String):String {
 		if (url != null && !RPCURLUtil.isHttpURL(url)) {
@@ -172,11 +147,6 @@ class RPCURLUtil {
 	 *  @param url The URL to analyze.
 	 * 
 	 *  @return <code>true</code> if the URL starts with "http://", "https://", or "rtmp://".
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function isHttpURL(url:String):Bool {
 		return url != null && (url.indexOf("http://") == 0 || url.indexOf("https://") == 0);
@@ -188,36 +158,27 @@ class RPCURLUtil {
 	 *  @param url The URL to analyze.
 	 * 
 	 *  @return <code>true</code> if the URL starts with "https://".
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function isHttpsURL(url:String):Bool {
 		return url != null && url.indexOf("https://") == 0;
 	}
 
 	/**
-	 *  Returns the protocol section of the specified URL.
-	 *  The following examples show what is returned based on different URLs:
-	 *  
-	 *  <pre>
-	 *  getProtocol("https://localhost:2700/") returns "https"
-	 *  getProtocol("rtmp://www.myCompany.com/myMainDirectory/groupChatApp/HelpDesk") returns "rtmp"
-	 *  getProtocol("rtmpt:/sharedWhiteboardApp/June2002") returns "rtmpt"
-	 *  getProtocol("rtmp::1234/chatApp/room_name") returns "rtmp"
-	 *  </pre>
-	 *
-	 *  @param url String containing the URL to parse.
-	 *
-	 *  @return The protocol or an empty String if no protocol is specified.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
-	 */
+		Returns the protocol section of the specified URL.
+
+		The following examples show what is returned based on different URLs:
+
+		```
+		getProtocol("https://localhost:2700/") returns "https"
+		getProtocol("rtmp://www.myCompany.com/myMainDirectory/groupChatApp/HelpDesk") returns "rtmp"
+		getProtocol("rtmpt:/sharedWhiteboardApp/June2002") returns "rtmpt"
+		getProtocol("rtmp::1234/chatApp/room_name") returns "rtmp"
+		```
+
+		@param url String containing the URL to parse.
+
+		@return The protocol or an empty String if no protocol is specified.
+	**/
 	public static function getProtocol(url:String):String {
 		var slash:Int = url.indexOf("/");
 		var indx:Int = url.indexOf(":/");
@@ -243,11 +204,6 @@ class RPCURLUtil {
 	 *
 	 *  @return The URI with the protocol replaced,
 	 *  or an empty String if the URI does not contain a protocol.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function replaceProtocol(uri:String, newProtocol:String):String {
 		var oldProtocol = getProtocol(uri);
@@ -267,11 +223,6 @@ class RPCURLUtil {
 	 *  @param newPort uint containing the new port to subsitute.
 	 *
 	 *  @return The URI with the new port.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function replacePort(uri:String, newPort:UInt):String {
 		var result:String = "";
@@ -322,11 +273,6 @@ class RPCURLUtil {
 	 *  which should be replaced by the port and server from the application.
 	 *
 	 *  @return The URI with the port and server replaced.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function replaceTokens(url:String):String {
 		var loaderURL:String = LoaderConfig.url == null ? "" : LoaderConfig.url;
@@ -374,11 +320,6 @@ class RPCURLUtil {
 	 *  @param url A url string. 
 	 * 
 	 *  @return <code>true</code> if the url contains server.name and server.port tokens.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 10
-	 *  @playerversion AIR 1.5
-	 *  @productversion Flex 4
 	 */
 	public static function hasTokens(url:String):Bool {
 		if (url == null || url == "")
@@ -395,11 +336,6 @@ class RPCURLUtil {
 	 * replace the server name and port properties properly.
 	 * 
 	 * @return <code>true</code> if the <code>LoaderConfig.url</code> property is not available. Otherwise, <code>false</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function hasUnresolvableTokens():Bool {
 		return LoaderConfig.url != null;
@@ -426,22 +362,12 @@ class RPCURLUtil {
 	/**
 	 *  The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
 	 *  is replaced by the application's server name.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final SERVER_NAME_TOKEN:String = "{server.name}";
 
 	/**
 	 *  The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
 	 *  is replaced by the application's port.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final SERVER_PORT_TOKEN:String = "{server.port}";
 

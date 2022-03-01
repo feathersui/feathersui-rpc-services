@@ -22,12 +22,6 @@ import openfl.events.EventDispatcher;
 /**
  *  Singleton class that stores the global Id for this Player instance that is 
  *  server assigned when the client makes its initial connection to the server.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class FlexClient extends EventDispatcher {
 	//--------------------------------------------------------------------------
@@ -68,11 +62,6 @@ class FlexClient extends EventDispatcher {
 	 	*  @return Returns the sole instance of this singleton class,
 	 *  creating it if it does not already exist.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function getInstance():FlexClient {
 		if (_instance == null)
@@ -119,11 +108,6 @@ class FlexClient extends EventDispatcher {
 	 *  Once set, it will not change for the duration of the Player instance's lifespan.
 	 *  If no Channel has connected to a server this value is null.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var id(get, set):String;
 

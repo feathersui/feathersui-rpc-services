@@ -41,29 +41,22 @@ import openfl.utils.Timer;
  *  The Channel class is the base message channel class that all channels in the messaging
  *  system must extend.
  *
- *  <p>Channels are specific protocol-based conduits for messages sent between 
+ *  Channels are specific protocol-based conduits for messages sent between 
  *  MessageAgents and remote destinations.
  *  Preconfigured channels are obtained within the framework using the
  *  <code>ServerConfig.getChannel()</code> method.
  *  You can create a Channel directly using the <code>new</code> operator and
- *  add it to a ChannelSet directly.</p>
+ *  add it to a ChannelSet directly.
  * 
- *  <p>
  *  Channels represent a physical connection to a remote endpoint.
  *  Channels are shared across destinations by default.
  *  This means that a client targetting different destinations may use
  *  the same Channel to communicate with these destinations.
- *  </p>
  *
- *  <p><b>Note:</b> This class is for advanced use only.
+ *  **Note:** This class is for advanced use only.
  *  Use this class for creating custom channels like the existing RTMPChannel,
- *  AMFChannel, and HTTPChannel.</p>
+ *  AMFChannel, and HTTPChannel.
  *
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:access(feathers.messaging.ChannelSet)
 @:access(feathers.messaging.FlexClient)
@@ -101,19 +94,13 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Constructs an instance of a generic Channel that connects to the
 	 *  specified endpoint URI.
 	 *
-	 *  <b>Note</b>: The Channel type should not be constructed directly. Instead
+	 *  **Note:** The Channel type should not be constructed directly. Instead
 	 *  create instances of protocol specific subclasses such as RTMPChannel or
 	 *  AMFChannel.
 	 *
 	 *  @param id The id of this channel.
 	 * 
 	 *  @param uri The endpoint URI for this channel.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3      
 	 */
 	public function new(id:String = null, uri:String = null) {
 		super();
@@ -248,11 +235,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 *  Provides access to the ChannelSets connected to the Channel.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var channelSets(get, never):Array<ChannelSet>;
 
@@ -274,12 +256,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 *  Indicates whether this channel has established a connection to the 
 	 *  remote destination.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3      
 	 */
 	public var connected(get, never):Bool;
 
@@ -321,11 +297,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  It is not reset for each failover URI that the channel may attempt 
 	 *  to connect to.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var connectTimeout(get, set):Int;
 
@@ -376,11 +347,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * Channel property determines the level of performance information injection - whether
 	 * we inject timestamps or not. 
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var recordMessageTimes(get, never):Bool;
 
@@ -400,11 +366,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 * Channel property determines the level of performance information injection - whether
 	 * we inject message sizes or not.
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3      
 	 */
 	public var recordMessageSizes(get, never):Bool;
 
@@ -454,8 +415,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Provides access to the set of endpoint URIs that this channel can
 	 *  attempt to failover to if the endpoint is clustered.
 	 *
-	 *  <p>This property is automatically populated when clustering is enabled.
-	 *  If you don't use clustering, you can set your own values.</p>
+	 *  This property is automatically populated when clustering is enabled.
+	 *  If you don't use clustering, you can set your own values.
 	 */
 	public var failoverURIs(get, set):Array<String>;
 
@@ -536,10 +497,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 *  Provides access to the protocol that the channel uses.
 	 *
-	 *  <p><b>Note:</b> Subclasses of Channel must override this method and return 
+	 *  **Note:** Subclasses of Channel must override this method and return 
 	 *  a string that represents their supported protocol.
 	 *  Examples of supported protocol strings are "rtmp", "http" or "https".
-	 * </p>
 	 */
 	public var protocol(get, never):String;
 
@@ -574,8 +534,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Provides access to the default request timeout in seconds for the 
 	 *  channel. A value of 0 or below indicates that outbound requests will 
 	 *  never be timed out on the client.
-	 *  <p>Request timeouts are most useful for RPC style messaging that 
-	 *  requires a response from the remote destination.</p>
+	 *  
+	 *  Request timeouts are most useful for RPC style messaging that 
+	 *  requires a response from the remote destination.
 	 */
 	public var requestTimeout(get, set):Int;
 
@@ -830,10 +791,10 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  to its endpoint and it has no more connected ChannelSets it will 
 	 *  internally disconnect.
 	 *
-	 *  <p>Channel subclasses need to override the 
+	 *  Channel subclasses need to override the 
 	 *  <code>internalDisconnect()</code> method, and call the
 	 *  <code>disconnectSuccess()</code> method when the underlying connection
-	 *  has been terminated.</p>
+	 *  has been terminated.
 	 * 
 	 *  @param channelSet The ChannelSet to disconnect from the Channel.
 	 */

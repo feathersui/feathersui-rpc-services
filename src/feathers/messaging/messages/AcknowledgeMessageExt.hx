@@ -45,11 +45,6 @@ class AcknowledgeMessageExt extends AcknowledgeMessage implements IExternalizabl
 	/**
 	 *  The unique id for the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override private function get_messageId():String {
 		/* If we are wrapping another message, use its messageId */

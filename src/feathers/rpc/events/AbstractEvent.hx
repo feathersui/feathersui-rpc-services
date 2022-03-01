@@ -22,11 +22,6 @@ import feathers.messaging.messages.IMessage;
 
 /**
  * The base class for events that RPC services dispatch.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class AbstractEvent extends MessageEvent {
 	private var _token:AsyncToken;
@@ -39,11 +34,6 @@ class AbstractEvent extends MessageEvent {
 
 	/**
 	 * The token that represents the call to the method. Used in the asynchronous completion token pattern.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var token(get, never):AsyncToken;
 
@@ -57,11 +47,6 @@ class AbstractEvent extends MessageEvent {
 
 	/**
 	 * Does nothing by default.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private function callTokenResponders():Void {}
 }

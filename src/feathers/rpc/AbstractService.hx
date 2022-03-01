@@ -31,11 +31,6 @@ import flash.utils.QName;
  * The AbstractService class is the base class for the HTTPMultiService, WebService, 
  * and RemoteObject classes. This class does the work of creating Operations
  * which do the actual execution of remote procedure calls.
- *
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 @:access(feathers.rpc.AbstractOperation)
 class AbstractService implements IEventDispatcher {
@@ -49,11 +44,6 @@ class AbstractService implements IEventDispatcher {
 	 *  Constructor.
 	 *  
 	 *  @param destination The destination of the service.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(destination:String = null) {
 		eventDispatcher = new EventDispatcher(this);
@@ -86,11 +76,6 @@ class AbstractService implements IEventDispatcher {
 	 *  ChannelSet can be manually constructed and assigned, or it will be 
 	 *  dynamically created to use the configured Channels for the
 	 *  <code>destination</code> for this service.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var channelSet(get, set):ChannelSet;
 
@@ -116,11 +101,6 @@ class AbstractService implements IEventDispatcher {
 	/**
 	 * The destination of the service. This value should match a destination
 	 * entry in the services-config.xml file.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var destination(get, set):String;
 
@@ -145,11 +125,6 @@ class AbstractService implements IEventDispatcher {
 	 * if the managers have a property called "service" that property is set to 
 	 * the value of this service.  When this service is initialized, we also call
 	 * the initialize method on any manager components.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var managers(get, set):Array<Dynamic>;
 
@@ -198,11 +173,6 @@ class AbstractService implements IEventDispatcher {
 	/**
 	 * The Operations array is usually only set by the MXML compiler if you
 	 * create a service using an MXML tag.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private function set_operations(ops:Dynamic):Dynamic {
 		var op:AbstractOperation;
@@ -227,11 +197,6 @@ class AbstractService implements IEventDispatcher {
 	/**
 	 *  Provides access to the request timeout in seconds for sent messages. 
 	 *  A value less than or equal to zero prevents request timeout.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var requestTimeout(get, set):Int;
 
@@ -256,20 +221,21 @@ class AbstractService implements IEventDispatcher {
 
 	// [Inspectable(defaultValue="true", category="General")]
 
-	/**  Flag indicating whether the service's operations should keep their last call result for later access.
-	 * <p>Setting this flag at the service level will set <code>keepLastResult</code> for each operation, unless explicitly  set in the operation.</p>
-	 * <p> If set to true or not set, each operation's last call result will be accessible through its <code>lastResult</code> bindable property. </p>
-	 * <p> If set to false, each operation's last call result will be cleared after the call,
-	 * and must be processed in the operation's result handler.
-	 * This will allow the result object to be garbage collected,
-	 * which is especially useful if the operation is only called a few times and returns a large result. </p>
-	 *  @see mx.rpc.AbstractInvoker#keepLastResult
-	 *   @default true
-	 *
-	 *  @playerversion Flash 10
-	 *  @playerversion AIR 3
-	 *  @productversion Flex 4.11
-	 */
+	/**
+		Flag indicating whether the service's operations should keep their last call result for later access.
+
+		Setting this flag at the service level will set <code>keepLastResult</code> for each operation, unless explicitly  set in the operation.
+
+		If set to true or not set, each operation's last call result will be accessible through its <code>lastResult</code> bindable property.
+
+		If set to false, each operation's last call result will be cleared after the call,
+		and must be processed in the operation's result handler.
+		This will allow the result object to be garbage collected,
+		which is especially useful if the operation is only called a few times and returns a large result.
+
+		@see mx.rpc.AbstractInvoker#keepLastResult
+		@default true
+	**/
 	public var keepLastResult(get, set):Bool;
 
 	private function get_keepLastResult():Bool {
@@ -327,11 +293,6 @@ class AbstractService implements IEventDispatcher {
 
 	/**
 	 *  Called to initialize the service.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function initialize():Void {
 		if (!_initialized && _managers != null) {
@@ -428,11 +389,6 @@ class AbstractService implements IEventDispatcher {
 	 * Operation instead.
 	 * @param name Name of the Operation.
 	 * @return Operation that executes for this name.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function getOperation(name:String):AbstractOperation {
 		var o:Dynamic = Reflect.field(_operations, name);
@@ -444,11 +400,6 @@ class AbstractService implements IEventDispatcher {
 	 *  Disconnects the service's network connection and removes any pending
 	 *  request responders.
 	 *  This method does not wait for outstanding network operations to complete.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function disconnect():Void {
 		asyncRequest.disconnect();
@@ -465,11 +416,6 @@ class AbstractService implements IEventDispatcher {
 	 * @param charset The character set encoding to use while encoding the
 	 * credentials. The default is null, which implies the legacy charset of
 	 * ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function setCredentials(username:String, password:String, charset:String = null):Void {
 		asyncRequest.setCredentials(username, password, charset);
@@ -483,15 +429,10 @@ class AbstractService implements IEventDispatcher {
 	 * of your RPC components, anything that was connected over the same
 	 * ChannelSet is logged out.
 	 *
-	 *  <p><b>Note:</b> Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
-	 *  rather than this method. </p>
+	 *  **Note:** Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
+	 *  rather than this method.
 	 *
 	 *  @see mx.messaging.ChannelSet#logout()   
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function logout():Void {
 		asyncRequest.logout();
@@ -507,11 +448,6 @@ class AbstractService implements IEventDispatcher {
 	 * @param charset The character set encoding to use while encoding the
 	 * remote credentials. The default is null, which implies the legacy charset
 	 * of ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		asyncRequest.setRemoteCredentials(remoteUsername, remotePassword, charset);

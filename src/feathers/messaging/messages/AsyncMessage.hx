@@ -24,12 +24,6 @@ import openfl.utils.IDataOutput;
 
 /**
  *  AsyncMessage is the base class for all asynchronous messages.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:meta(RemoteClass(alias = "flex.messaging.messages.AsyncMessage"))
 class AsyncMessage extends AbstractMessage implements ISmallMessage {
@@ -43,11 +37,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	 *  Messages sent by a MessageAgent with a defined <code>subtopic</code>
 	 *  property indicate their target subtopic in this header.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final SUBTOPIC_HEADER:String = "DSSubtopic";
 
@@ -78,11 +67,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	 * 
 	 *  @param headers The optional headers to assign to the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(body:Any = null, headers:Any = null) {
 		super();
@@ -122,11 +106,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	 *
 	 *  @see mx.messaging.messages.AbstractMessage#messageId
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var correlationId(get, set):String;
 

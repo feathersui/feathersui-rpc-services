@@ -38,12 +38,6 @@ import flash.net.Responder;
  *  successful result or an error, the MessageResponder should invoke 
  *  <code>acknowledge()</code> on its agent. If the response was a fault, the
  *  MessageResponder should also invoke <code>fault()</code> on its agent.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
@@ -62,11 +56,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 * 
 	 *  @param channel The Channel used to send. 
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(agent:MessageAgent, message:IMessage, channel:Channel = null) {
 		#if (flash || openfl >= "9.2.0")
@@ -118,11 +107,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	/**
 	 *  Provides access to the MessageAgent that sent the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var agent(get, never):MessageAgent;
 
@@ -142,11 +126,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	/**
 	 *  Provides access to the Channel used to send the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var channel(get, never):Channel;
 
@@ -166,11 +145,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	/**
 	 *  Provides access to the sent Message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var message(get, set):IMessage;
 
@@ -214,11 +188,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *
 	 *  @param message The result Message returned by the destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	final public function result(message:IMessage):Void {
 		// Ignore any response after the request has timed out.
@@ -240,11 +209,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 * 
 	 *  @param message The fault Message returned by the destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	final public function status(message:IMessage):Void {
 		// Ignore any response after the request has timed out.
@@ -270,11 +234,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *  @return Returns an ErrorMessage that can be passed to the associated
 	 *  MessageAgent's callbacks upon a request timeout.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function createRequestTimeoutErrorMessage():ErrorMessage {
 		var errorMsg:ErrorMessage = new ErrorMessage();
@@ -292,11 +251,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 * 
 	 *  @param message The result Message returned by the destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function resultHandler(message:IMessage):Void {}
 
@@ -304,11 +258,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *  Subclasses must override this method to handle a request timeout and 
 	 *  invoke the proper callbacks on the associated MessageAgent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function requestTimedOut():Void {}
 
@@ -319,11 +268,6 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 * 
 	 *  @param message The fault Message returned by the destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function statusHandler(message:IMessage):Void {}
 

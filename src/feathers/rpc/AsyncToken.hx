@@ -28,11 +28,6 @@ import openfl.events.EventDispatcher;
  *  for an individual call.
  *  The AsyncToken can be referenced in <code>ResultEvent</code> and 
  *  <code>FaultEvent</code> from the <code>token</code> property.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class AsyncToken extends EventDispatcher {
 	//--------------------------------------------------------------------------
@@ -45,11 +40,6 @@ class AsyncToken extends EventDispatcher {
 	 * Constructs an instance of the token with the specified message.
 	 *
 	 * @param message The message with which the token is associated.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(message:IMessage = null) {
 		super();
@@ -68,11 +58,6 @@ class AsyncToken extends EventDispatcher {
 
 	/**
 	 *  Provides access to the associated message.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var message(get, never):IMessage;
 
@@ -95,7 +80,7 @@ class AsyncToken extends EventDispatcher {
 	 * 
 	 * Eaxh responder assigned to the token will have its  <code>result</code>
 	 * or <code>fault</code> function called passing in the
-	 * matching event <i>before</i> the operation or service dispatches the 
+	 * matching event _before_ the operation or service dispatches the 
 	 * event itself.
 	 * 
 	 * A developer can prevent the service from subsequently dispatching the 
@@ -103,11 +88,6 @@ class AsyncToken extends EventDispatcher {
 	 * 
 	 * Note that this will not prevent the service or operation's 
 	 * <code>result</code> property from being assigned.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var responders(get, never):Array<IResponder>;
 
@@ -127,11 +107,6 @@ class AsyncToken extends EventDispatcher {
 	 * Once the result property on the token has been assigned
 	 * it will be strictly equal to the result property on the associated
 	 * ResultEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var result(get, never):Dynamic;
 
@@ -153,11 +128,6 @@ class AsyncToken extends EventDispatcher {
 	 *  @param responder A handler which will be called when the asynchronous request completes.
 	 * 
 	 *  @see mx.rpc.IResponder
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function addResponder(responder:IResponder):Void {
 		if (_responders == null)
@@ -169,11 +139,6 @@ class AsyncToken extends EventDispatcher {
 	/**
 	 * Determines if this token has at least one <code>mx.rpc.IResponder</code> registered.
 	 * @return true if at least one responder has been added to this token. 
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function hasResponder():Bool {
 		return (_responders != null && _responders.length > 0);

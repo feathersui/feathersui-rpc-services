@@ -22,12 +22,6 @@ import openfl.errors.Error;
 /**
  *  This is the base class for any messaging related error.
  *  It allows for less granular catch code.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessagingError extends Error {
 	//--------------------------------------------------------------------------
@@ -42,11 +36,6 @@ class MessagingError extends Error {
 	 *
 	 *  @param msg String that contains the message that describes the error.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(msg:String) {
 		super(msg);
@@ -63,11 +52,6 @@ class MessagingError extends Error {
 	 * 
 	 *  @return String representation of the MessagingError.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	#if !flash override #end public function toString():String {
 		var value:String = "[MessagingError";

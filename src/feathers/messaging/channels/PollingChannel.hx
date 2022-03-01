@@ -32,12 +32,6 @@ import openfl.utils.Timer;
 /**
  *  The PollingChannel class provides the polling behavior that all polling channels in the messaging
  *  system require.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
@@ -68,19 +62,14 @@ class PollingChannel extends Channel {
 	 *  connected and begins polling, it will issue a poll request once every three seconds
 	 *  by default.
 	 *
-	 *  <p><b>Note</b>: The PollingChannel type should not be constructed directly. Instead
+	 *  **Note:** The PollingChannel type should not be constructed directly. Instead
 	 *  create instances of protocol specific subclasses such as HTTPChannel or
-	 *  AMFChannel that extend it.</p>
+	 *  AMFChannel that extend it.
 	 *
 	 *  @param id The id of this Channel.
 	 *  
 	 *  @param uri The uri for this Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
@@ -337,11 +326,6 @@ class PollingChannel extends Channel {
 	 *  @throws mx.messaging.errors.InvalidDestinationError If neither the MessageAgent nor the
 	 *                                  message specify a destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function send(agent:MessageAgent, message:IMessage):Void {
 		var piggyback:Bool = false;
@@ -444,14 +428,10 @@ class PollingChannel extends Channel {
 	 *  Enables polling based on the number of times <code>enablePolling()</code>
 	 *  and <code>disablePolling()</code> have been invoked. If the net result is to enable
 	 *  polling the channel will poll the server on behalf of connected MessageAgents.
-	 *  <p>Invoked automatically based upon subscribing or unsubscribing from a remote
-	 *  destination over a PollingChannel.</p>
+	 *
+	 *  Invoked automatically based upon subscribing or unsubscribing from a remote
+	 *  destination over a PollingChannel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function enablePolling():Void {
 		_pollingRef++;
@@ -463,14 +443,9 @@ class PollingChannel extends Channel {
 	 *  Disables polling based on the number of times <code>enablePolling()</code>
 	 *  and <code>disablePolling()</code> have been invoked. If the net result is to disable
 	 *  polling the channel stops polling.
-	 *  <p>Invoked automatically based upon subscribing or unsubscribing from a remote
-	 *  destination over a PollingChannel.</p>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
+	 *
+	 *  Invoked automatically based upon subscribing or unsubscribing from a remote
+	 *  destination over a PollingChannel.
 	 */
 	public function disablePolling():Void {
 		_pollingRef--;
@@ -484,11 +459,6 @@ class PollingChannel extends Channel {
 	 *
 	 *  Note that this method will not start a new poll if one is currently in progress.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function poll():Void {
 		internalPoll();
@@ -644,11 +614,6 @@ class PollingChannel extends Channel {
 	/**
 	 * Define the default Polling Interval as 3000ms
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static final DEFAULT_POLLING_INTERVAL:Int = 3000;
 }

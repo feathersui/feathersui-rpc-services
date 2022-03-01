@@ -26,7 +26,7 @@ import openfl.errors.ArgumentError;
  * serialiation format such as XML, JSON, etc.  The SerializationFilter mechanism
  * allows you to add a new resultFormat as well.
  * 
- * <p> An instance of this class can manage formatting HTTP requests, responses, and
+ * An instance of this class can manage formatting HTTP requests, responses, and
  * converting their parameters.  When you use HTTPService or HTTPMultiService, you 
  * are usually talking to a server which expects the data to be provided in a specific
  * format - for example, URL encoded values for a type HTML form, XML values or another
@@ -36,30 +36,23 @@ import openfl.errors.ArgumentError;
  * the return value of the operation.  Framework developers can introduce a new serialization
  * format to the system by providing a new implementation of the SerializationFilter and
  * use these components and all of the frameworks and tools built on these components
- * without having to know the details of the format itself. </p>
+ * without having to know the details of the format itself.
  * 
- * <p>The first thing you do is to extend the SerializationFilter and override one or more
+ * The first thing you do is to extend the SerializationFilter and override one or more
  * of the conversion methods.   The filter allows you to turn the ordered list of parameters
  * into a request body, modify the request body, modify the content type used in the
  * request, modify the actual URL used in the request, and convert the response data into
- * the result object returned in the result event of the service.</p>
+ * the result object returned in the result event of the service.
  * 
- * <p>There are two ways to specify the SerializationFilter for a particular HTTPService,
+ * There are two ways to specify the SerializationFilter for a particular HTTPService,
  * or HTTPMultiService.  You can either set the serializationFilter property on the service
  * or you can statically register a SerializationFilter for a new result format.  If you
  * use this approach, simply by specifying the resultFormat you can use a pre-registered
  * SerializationFilter.  So for example, you might register a SerializationFilter for the
- * "json" type and can then use that filter by setting resultFormat="json".</p>
+ * "json" type and can then use that filter by setting resultFormat="json".
  *
- * <p>
  * Note that HTTPService only provides methods which directly take the request body
  * and so does not use the "serializeParameters" method.
- * </p>
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class SerializationFilter {
 	// replaces/returns previous with that name or null
@@ -75,11 +68,6 @@ class SerializationFilter {
 	 * @param resultFormat A custom resultFormat name to be associated with the supplied
 	 * SerializationFilter.  
 	 * @param filter The SerializationFilter to register.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function registerFilterForResultFormat(resultFormat:String, filter:SerializationFilter):SerializationFilter {
 		var old:SerializationFilter = Reflect.field(filterForResultFormatTable, resultFormat);
@@ -94,21 +82,15 @@ class SerializationFilter {
 	 * resultElementType properties of the AbstractOperation provided so your code can 
 	 * dynamically map the incoming request to the type configured in ActionScript as
 	 * the return type.
-	 * <p>
+	 *
 	 * Note also that AbstractOperation has a "properties" map which you
 	 * can use to store additional properties as part of the service invocation
 	 * in ActionScript to handle the deserialization of a particular type.
-	 * </p>
 	 * 
 	 * @param operation The AbstractOperation which is being invoked.  
 	 * @param result the raw result as returned from the server.  
 	 * @return the converted result which will then be supplied in the result event
 	 * for the service.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function deserializeResult(operation:AbstractOperation, result:Dynamic):Dynamic {
 		return result;
@@ -127,11 +109,6 @@ class SerializationFilter {
 	 * @param obj the body of the HTTP request being serialized
 	 * @param contentType the contentType configured for the operation
 	 * @return the content type to use for this HTTP request.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function getRequestContentType(operation:AbstractOperation, obj:Dynamic, contentType:String):String {
 		return contentType;
@@ -146,18 +123,13 @@ class SerializationFilter {
 	 * When using the default implementation, you must set argumentNames to have the same number
 	 * of elements as the parameters array.
 	 * 
-	 * <p>Note that this method is not used if you invoke the HTTP operation using the sendBody
+	 * Note that this method is not used if you invoke the HTTP operation using the sendBody
 	 * method which just takes a single object.  In that case, this step is skipped and only
-	 * the serializeBody method is called.</p>
+	 * the serializeBody method is called.
 	 *
 	 * @param operation The AbstractOperation being invoked.
 	 * @param params the list of parameters passed to the send method
 	 * @return the body to be used in the HTTP request
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function serializeParameters(operation:AbstractOperation, params:Array<Dynamic>):Dynamic {
 		var argNames = operation.argumentNames;
@@ -189,11 +161,6 @@ class SerializationFilter {
 	 * @param obj the initial body of the HTTP request, either the return value of serializeParameters or the parameter to the sendBody method
 	 * or the send method of HTTPService.
 	 * @return the potentially converted body to use in the request.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function serializeBody(operation:AbstractOperation, obj:Dynamic):Dynamic {
 		return obj;
@@ -207,11 +174,6 @@ class SerializationFilter {
 	 * @param operation The AbstractOperation being invoked
 	 * @param url the URL set on the service or operation
 	 * @return the potentially modified URL to use for this request.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function serializeURL(operation:AbstractOperation, obj:Dynamic, url:String):String {
 		return url;

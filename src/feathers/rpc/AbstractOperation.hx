@@ -29,11 +29,6 @@ import openfl.errors.Error;
  * @see mx.rpc.AbstractService
  * @see mx.rpc.remoting.RemoteObject
  * @see mx.rpc.soap.WebService
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 @:access(feathers.rpc.events.AbstractEvent)
 class AbstractOperation extends AbstractInvoker {
@@ -52,11 +47,6 @@ class AbstractOperation extends AbstractInvoker {
 	 *  @param service The service on which the Operation is being invoked.
 	 *  
 	 *  @param name The name of the new Operation.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(service:AbstractService = null, name:String = null) {
 		super();
@@ -80,22 +70,12 @@ class AbstractOperation extends AbstractInvoker {
 	 * parameters are used instead of whatever is stored in this property.
 	 * For RemoteObject Operations the associated argumentNames array determines
 	 * the order of the arguments passed.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var arguments:Dynamic;
 
 	/**
 	 * This is a hook primarily for framework developers to register additional user 
 	 * specified properties for your operation.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var properties:Dynamic;
 
@@ -108,11 +88,6 @@ class AbstractOperation extends AbstractInvoker {
 	/**
 	 * The name of this Operation. This is how the Operation is accessed off the
 	 * service. It can only be set once.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var name(get, set):String;
 
@@ -133,11 +108,6 @@ class AbstractOperation extends AbstractInvoker {
 	 * Provides convenient access to the service on which the Operation
 	 * is being invoked. Note that the service cannot be changed after
 	 * the Operation is constructed.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var service(get, never):AbstractService;
 
@@ -175,11 +145,6 @@ class AbstractOperation extends AbstractInvoker {
 	 * The same object is available in the <code>result</code> and
 	 * <code>fault</code> events from the <code>token</code> property.
 	 *
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	/* abstract */
 	public function send(...args:Dynamic):AsyncToken {

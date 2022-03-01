@@ -22,12 +22,6 @@ import openfl.events.Event;
 
 /**
  *  The MessageEvent class is used to propagate messages within the messaging system.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
@@ -38,9 +32,11 @@ class MessageEvent extends Event {
 
 	/**
 	 *  The MESSAGE event type; dispatched upon receipt of a message.
-	 *  <p>The value of this constant is <code>"message"</code>.</p>
 	 *
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The value of this constant is <code>"message"</code>.
+	 *
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -57,20 +53,17 @@ class MessageEvent extends Event {
 	 *  </table>
 	 *  @eventType message
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final MESSAGE:String = "message";
 
 	/**
 	 *  The RESULT event type; dispatched when an RPC agent receives a result from
 	 *  a remote service destination.
-	 *  <p>The value of this constant is <code>"result"</code>.</p>
 	 *
-	 *  <p>The properties of the event object have the following values:</p>
+	 *  The value of this constant is <code>"result"</code>.
+	 *
+	 *  The properties of the event object have the following values:
+	 *
 	 *  <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -87,11 +80,6 @@ class MessageEvent extends Event {
 	 *  </table>
 	 *  @eventType result
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final RESULT:String = "result";
 
@@ -111,11 +99,6 @@ class MessageEvent extends Event {
 	 * 
 	 *  @return New MessageEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function createEvent(type:String, msg:IMessage):MessageEvent {
 		return new MessageEvent(type, false, false, msg);
@@ -141,11 +124,6 @@ class MessageEvent extends Event {
 	 * 
 	 *  @param message The associated message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, message:IMessage = null) {
 		super(type, bubbles, cancelable);
@@ -162,11 +140,6 @@ class MessageEvent extends Event {
 	/**
 	 *  The Message associated with this event.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var message:IMessage;
 
@@ -198,11 +171,6 @@ class MessageEvent extends Event {
 	 *
 	 *  @return Copy of this MessageEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function clone():Event {
 		return new MessageEvent(type, bubbles, cancelable, message);
@@ -213,11 +181,6 @@ class MessageEvent extends Event {
 	 *
 	 *  @return String representation of the MessageEvent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function toString():String {
 		return formatToString("MessageEvent", "messageId", "type", "bubbles", "cancelable", "eventPhase");

@@ -26,20 +26,10 @@ import flash.errors.Error;
 /**
  *  The RPCObjectUtil class is a subset of ObjectUtil, removing methods
  *  that create dependency issues when RPC messages are in a bootstrap loader.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class RPCObjectUtil {
 	/**
 	 *  Array of properties to exclude from debugging output.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	private static var defaultToStringExcludes:Array<String> = ["password", "credentials"];
 
@@ -50,15 +40,10 @@ class RPCObjectUtil {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Change deault set of strings to exclude.
-	 * 
-	 *  @param excludes The array of strings to exclude.
-	 * 
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion ApacheFlex 4.10
-	 */
+		Change default set of strings to exclude.
+
+		@param excludes The array of strings to exclude.
+	**/
 	public static function setToStringExcludes(excludes:Array<String>):Void {
 		defaultToStringExcludes = excludes;
 	}
@@ -66,22 +51,16 @@ class RPCObjectUtil {
 	private static var _externalToString:(Any, Array<String>, Array<String>) -> String = null;
 
 	/**
-	 *  Assign an static external toString method rather than use the internal one.
-	 * 
-	 *  <p>The function passed in needs to have the same signature as toString.
-	 *  <code>
-	 *     public static function externalToString(value:Object, 
-	 *                              namespaceURIs:Array = null, 
-	 *                              exclude:Array = null):String
-	 *  </code></p>
-	 * 
-	 *  @param externalToString The function to call instead of internalToString.
-	 * 
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion ApacheFlex 4.10
-	 */
+		Assign an static external toString method rather than use the internal one.
+
+		The function passed in needs to have the same signature as `toString`.
+
+		```haxe
+		public static function externalToString(value:Any, namespaceURIs:Array = null, exclude:Array = null):String
+		```
+
+		@param externalToString The function to call instead of internalToString.
+	**/
 	public static function externalToString(value:(Any, Array<String>, Array<String>) -> String):Void {
 		_externalToString = value;
 	}
@@ -96,18 +75,18 @@ class RPCObjectUtil {
 	 *  <pre>
 	 *  (mx.messaging.messages::AsyncMessage)#2.</pre>
 	 *
-	 *  <p>This id is used to indicate when a circular reference occurs.
+	 *  This id is used to indicate when a circular reference occurs.
 	 *  Properties of an object that are of the <code>Class</code> type will
 	 *  appear only as the assigned type.
-	 *  For example a custom definition like the following:</p>
+	 *  For example a custom definition like the following:
 	 *
 	 *  <pre>
 	 *    public class MyCustomClass {
 	 *      public var clazz:Class;
 	 *    }</pre>
 	 * 
-	 *  <p>With the <code>clazz</code> property assigned to <code>Date</code>
-	 *  will display as shown below:</p>
+	 *  With the <code>clazz</code> property assigned to <code>Date</code>
+	 *  will display as shown below:
 	 * 
 	 *  <pre>
 	 *   (somepackage::MyCustomClass)#0
@@ -226,11 +205,6 @@ class RPCObjectUtil {
 	 *          yetDeeper = (Object)#0
 	 *  </pre>
 	 *
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function toString(value:Any, namespaceURIs:Array<String> = null, exclude:Array<String> = null):String {
 		if (exclude == null) {
@@ -315,11 +289,6 @@ class RPCObjectUtil {
 	 *    <li><code>name</code>: String containing the name of the class;</li>
 	 *    <li><code>properties</code>: Sorted list of the property names of the specified object.</li>
 	 *  </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function getClassInfo(obj:Dynamic, excludes:Array<String> = null, options:Dynamic = null):Dynamic {
 		var length:Int = 0;

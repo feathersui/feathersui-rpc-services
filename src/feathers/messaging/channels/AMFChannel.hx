@@ -42,27 +42,20 @@ import feathers.messaging.config.ConfigMap;
  *  You can also use this Channel with polling disabled to send RPC messages
  *  to remote destinations to invoke their methods.
  *
- *  <p>
  *  The AMFChannel relies on network services native to Flash Player and AIR,
  *  and exposed to ActionScript by the NetConnection class.
  *  This channel uses NetConnection exclusively, and creates a new NetConnection
  *  per instance.
- *  </p>
  *
- *  <p>
  *  Channels are created within the framework using the
  *  <code>ServerConfig.getChannel()</code> method. Channels can be constructed
  *  directly and assigned to a ChannelSet if desired.
- *  </p>
  *
- *  <p>
  *  Channels represent a physical connection to a remote endpoint.
  *  Channels are shared across destinations by default.
  *  This means that a client targetting different destinations may use
  *  the same Channel to communicate with these destinations.
- *  </p>
  *
- *  <p>
  *  When used in polling mode, this Channel polls the server for new messages
  *  based on the <code>polling-interval-seconds</code> property in the configuration file,
  *  and this can be changed by setting the <code>pollingInterval</code> property.
@@ -70,13 +63,6 @@ import feathers.messaging.config.ConfigMap;
  *  To enable polling, the channel must be connected and the <code>polling-enabled</code>
  *  property in the configuration file must be set to <code>true</code>, or the
  *  <code>pollingEnabled</code> property of the Channel must be set to <code>true</code>.
- *  </p>
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:access(feathers.messaging.config.ServerConfig)
 class AMFChannel extends NetConnectionChannel {
@@ -93,11 +79,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *
 	 *  @param uri The uri for this Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
@@ -140,11 +121,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  progress. This allows the server to piggyback data for the client
 	 *  along with its response to client's message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var piggybackingEnabled(get, set):Bool;
 
@@ -167,11 +143,6 @@ class AMFChannel extends NetConnectionChannel {
 	/**
 	 *  Indicates whether this channel is enabled to poll.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var pollingEnabled(get, set):Bool;
 
@@ -200,11 +171,6 @@ class AMFChannel extends NetConnectionChannel {
 	 *  @throws ArgumentError If the pollingInterval is assigned a value of 0 or
 	 *                        less.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var pollingInterval(get, set):Float;
 
@@ -227,11 +193,6 @@ class AMFChannel extends NetConnectionChannel {
 	/**
 	 *  Reports whether the channel is actively polling.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var polling(get, never):Bool;
 
@@ -246,11 +207,6 @@ class AMFChannel extends NetConnectionChannel {
 	/**
 	 *  Returns the protocol for this channel (http).
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override private function get_protocol():String {
 		return "http";

@@ -29,34 +29,29 @@ import openfl.errors.ArgumentError;
  *  collection of http operations.  Each one has a URL, method, parameters and
  *  return type.  
  *
- *  <p>You can set attributes such as the URL and method on the
+ *  You can set attributes such as the URL and method on the
  *  HTTPMultiService tag to act as defaults for values set on each individual
  *  operation tag.  The URL of the HTTPMultiService serves as the base url (meaning the prefix)
  *  for any relative urls set on the http operation tags.
  *  Each http operation has a <code>send()</code> method, which makes an HTTP request to the
- *  specified URL, and an HTTP response is returned. </p>
+ *  specified URL, and an HTTP response is returned.
  *
- *  <p>You can pass parameters to the specified URL which are used to put data into the HTTP request. 
+ *  You can pass parameters to the specified URL which are used to put data into the HTTP request. 
  *  The contentType property specifies a mime-type which is used to determine the over-the-wire
- *  data format (such as HTTP form encoding or XML).  </p>
+ *  data format (such as HTTP form encoding or XML).
  *
- *  <p>You can also use a serialization filter to
+ *  You can also use a serialization filter to
  *  implement a custom resultFormat such as JSON.   
  *  When you do not go through the server-based
  *  proxy service, you can use only HTTP GET or POST methods. However, when you set
  *  the <code>useProxy </code> property to true and you use the server-based proxy service, you
- *  can also use the HTTP HEAD, OPTIONS, TRACE, and DELETE methods.</p>
+ *  can also use the HTTP HEAD, OPTIONS, TRACE, and DELETE methods.
  *
- *  <p><b>Note:</b> Unlike the HTTPService class, the HTTPMultiService class does not 
- *  define a <code>request</code> property.</p>
+ *  **Note:** Unlike the HTTPService class, the HTTPMultiService class does not 
+ *  define a <code>request</code> property.
  *
- *  <p><b>Note:</b> Due to a software limitation, like HTTPService, the HTTPMultiService does 
- *  not generate user-friendly error messages when using GET and not using a proxy.</p>
- * 
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
+ *  **Note:** Due to a software limitation, like HTTPService, the HTTPMultiService does 
+ *  not generate user-friendly error messages when using GET and not using a proxy.
  * 
  *  @see mx.rpc.http.HTTPService
  */
@@ -76,11 +71,6 @@ class HTTPMultiService extends AbstractService {
 	 *  would be <code>Application.application.url</code>).
 	 *
 	 *  @param baseURL The URL the HTTPService should use when computing relative URLS.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(baseURL:String = null, destination:String = null) {
 		super();
@@ -166,11 +156,6 @@ class HTTPMultiService extends AbstractService {
 	 * multiple requests generate a fault.</li>
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var concurrency(get, set):String;
 
@@ -191,11 +176,6 @@ class HTTPMultiService extends AbstractService {
 	/**
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var showBusyCursor(get, set):Bool;
 
@@ -217,11 +197,6 @@ class HTTPMultiService extends AbstractService {
 	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
 	 *  be sent with the same name the value should be specified as an Array.  These headers are sent
 	 *  to all operations.  You can also set headers at the operation level.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var headers:Dynamic = {};
 
@@ -235,11 +210,6 @@ class HTTPMultiService extends AbstractService {
 	 *  That means  they send PropertyChangeEvents when their property values are being changed.  
 	 *  This is the default value for any operations whose makeObjectsBindable property 
 	 *  is not set explicitly.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var makeObjectsBindable:Bool = true;
 
@@ -253,11 +223,6 @@ class HTTPMultiService extends AbstractService {
 	 *  Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
 	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
 	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var method:String = HTTPRequestMessage.GET_METHOD;
 
@@ -275,35 +240,28 @@ class HTTPMultiService extends AbstractService {
 	/**
 	 *  Value that indicates how you want to deserialize the result
 	 *  returned by the HTTP call. The value for this is based on the following:
-	 *  <ul>
-	 *  <li>Whether you are returning XML or name/value pairs.</li>
-	 *  <li>How you want to access the results; you can access results as an object,
-	 *    text, or XML.</li>
-	 *  </ul>
+	 *  
+	 *  - Whether you are returning XML or name/value pairs.
+	 *  - How you want to access the results; you can access results as an object,
+	 *    text, or XML.
 	 * 
-	 *  <p>The default value is <code>object</code>. The following values are permitted:</p>
-	 *  <ul>
-	 *  <li><code>object</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects. This is the default.</li>
-	 *  <li><code>array</code> The value returned is XML and is parsed as a tree of ActionScript
+	 *  The default value is <code>object</code>. The following values are permitted:
+	 *
+	 *  - <code>object</code> The value returned is XML and is parsed as a tree of ActionScript
+	 *    objects. This is the default.
+	 *  - <code>array</code> The value returned is XML and is parsed as a tree of ActionScript
 	 *    objects however if the top level object is not an Array, a new Array is created and the result
 	 *    set as the first item. If makeObjectsBindable is true then the Array 
-	 *    will be wrapped in an ArrayCollection.</li>
-	 *  <li><code>xml</code> The value returned is XML and is returned as literal XML in an
-	 *    ActionScript XMLnode object.</li>
-	 *  <li><code>flashvars</code> The value returned is text containing 
+	 *    will be wrapped in an ArrayCollection.
+	 *  - <code>xml</code> The value returned is XML and is returned as literal XML in an
+	 *    ActionScript XMLnode object.
+	 *  - <code>flashvars</code> The value returned is text containing 
 	 *    name=value pairs separated by ampersands, which
-	 *  is parsed into an ActionScript object.</li>
-	 *  <li><code>text</code> The value returned is text, and is left raw.</li>
-	 *  <li><code>e4x</code> The value returned is XML and is returned as literal XML 
+	 *  is parsed into an ActionScript object.
+	 *  - <code>text</code> The value returned is text, and is left raw.
+	 *  - <code>e4x</code> The value returned is XML and is returned as literal XML 
 	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
-	 *    XML (E4X) expressions.</li>
-	 *  </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
+	 *    XML (E4X) expressions.
 	 */
 	public var resultFormat(get, set):String;
 
@@ -350,11 +308,6 @@ class HTTPMultiService extends AbstractService {
 	 *  This contains a prefix which is prepended onto any URLs when it is set.
 	 *  It defaults to null in which case the URL for the SWF is used to compute
 	 *  relative URLs.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var baseURL:String;
 
@@ -381,11 +334,6 @@ class HTTPMultiService extends AbstractService {
 	 *  <code>useProxy</code> property is set to <code>false</code>.
 	 *
 	 *  @default false    
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var useProxy(get, set):Bool;
 
@@ -415,11 +363,6 @@ class HTTPMultiService extends AbstractService {
 	 * This serves as the default property for this instance so that we can
 	 * define a set of operations as direct children of the HTTPMultiService
 	 * tag in MXML.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var operationList(get, set):Array<AbstractOperation>;
 

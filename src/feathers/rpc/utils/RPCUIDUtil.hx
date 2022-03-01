@@ -22,11 +22,6 @@ import openfl.utils.ByteArray;
 /**
  *  The RPCUIDUtil class is a copy of UIDUtil without some functions that
  *  cause dependency problems when RPC messages are put in a bootstrap loader.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class RPCUIDUtil {
 	//--------------------------------------------------------------------------
@@ -58,19 +53,14 @@ class RPCUIDUtil {
 	 *  Generates a UID (unique identifier) based on ActionScript's
 	 *  pseudo-random number generator and the current time.
 	 *
-	 *  <p>The UID has the form
-	 *  <code>"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"</code>
-	 *  where X is a hexadecimal digit (0-9, A-F).</p>
+	 *  The UID has the form
+	 *  `"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"`
+	 *  where X is a hexadecimal digit (0-9, A-F).
 	 *
-	 *  <p>This UID will not be truly globally unique; but it is the best
-	 *  we can do without player support for UID generation.</p>
+	 *  This UID will not be truly globally unique; but it is the best
+	 *  we can do without player support for UID generation.
 	 *
 	 *  @return The newly-generated UID.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function createUID():String {
 		UIDBuffer.position = 0;
@@ -114,11 +104,6 @@ class RPCUIDUtil {
 	 * 
 	 * @return String representation of the UID, or null if an invalid
 	 * ByteArray is provided.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function fromByteArray(ba:ByteArray):String {
 		if (ba != null && ba.length >= 16 && ba.bytesAvailable >= 16) {
@@ -148,11 +133,6 @@ class RPCUIDUtil {
 	 * @param uid The value to test whether it is formatted as a UID.
 	 * 
 	 * @return Returns true if the value is formatted as a UID.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function isUID(uid:String):Bool {
 		if (uid != null && uid.length == 36) {
@@ -185,11 +165,6 @@ class RPCUIDUtil {
 	 * 
 	 * @return ByteArray 16 bytes in length representing the 128-bits of the
 	 * UID or null if the uid could not be converted.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function toByteArray(uid:String):ByteArray {
 		if (isUID(uid)) {

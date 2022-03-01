@@ -24,12 +24,6 @@ import openfl.utils.IDataOutput;
  *  The CommandMessage class provides a mechanism for sending commands to the
  *  server infrastructure, such as commands related to publish/subscribe 
  *  messaging scenarios, ping operations, and cluster operations.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:meta(RemoteClass(alias = "flex.messaging.messages.CommandMessage"))
 class CommandMessage extends AsyncMessage {
@@ -42,22 +36,12 @@ class CommandMessage extends AsyncMessage {
 	/**
 	 *  This operation is used to subscribe to a remote destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final SUBSCRIBE_OPERATION:UInt = 0;
 
 	/**
 	 *  This operation is used to unsubscribe from a remote destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final UNSUBSCRIBE_OPERATION:UInt = 1;
 
@@ -65,11 +49,6 @@ class CommandMessage extends AsyncMessage {
 	 *  This operation is used to poll a remote destination for pending,
 	 *  undelivered messages.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final POLL_OPERATION:UInt = 2;
 
@@ -77,11 +56,6 @@ class CommandMessage extends AsyncMessage {
 	 *  This operation is used by a remote destination to sync missed or cached messages 
 	 *  back to a client as a result of a client issued poll command.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final CLIENT_SYNC_OPERATION:UInt = 4;
 
@@ -89,11 +63,6 @@ class CommandMessage extends AsyncMessage {
 	 *  This operation is used to test connectivity over the current channel to
 	 *  the remote endpoint.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final CLIENT_PING_OPERATION:UInt = 5;
 
@@ -101,11 +70,6 @@ class CommandMessage extends AsyncMessage {
 	 *  This operation is used to request a list of failover endpoint URIs
 	 *  for the remote destination based on cluster membership.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final CLUSTER_REQUEST_OPERATION:UInt = 7;
 
@@ -115,11 +79,6 @@ class CommandMessage extends AsyncMessage {
 	 * The credentials need to be Base64 encoded and stored in the <code>body</code>
 	 * of the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final LOGIN_OPERATION:UInt = 8;
 
@@ -127,11 +86,6 @@ class CommandMessage extends AsyncMessage {
 	 * This operation is used to log the user out of the current channel, and 
 	 * will invalidate the server session if the channel is HTTP based.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final LOGOUT_OPERATION:UInt = 9;
 
@@ -140,11 +94,6 @@ class CommandMessage extends AsyncMessage {
 	 * latest version of messaging they are capable of during the handshake of
 	 * the initial ping CommandMessage.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final MESSAGING_VERSION:String = "DSMessagingVersion";
 
@@ -152,11 +101,6 @@ class CommandMessage extends AsyncMessage {
 	 * This operation is used to indicate that the client's subscription with a
 	 * remote destination has timed out.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final SUBSCRIPTION_INVALIDATE_OPERATION:UInt = 10;
 
@@ -164,55 +108,30 @@ class CommandMessage extends AsyncMessage {
 	 * Used by the MultiTopicConsumer to subscribe/unsubscribe for more
 	 * than one topic in the same message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final MULTI_SUBSCRIBE_OPERATION:UInt = 11;
 
 	/**
 	 *  This operation is used to indicate that a channel has disconnected.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final DISCONNECT_OPERATION:UInt = 12;
 
 	/**
 	 *  This operation is used to trigger a ChannelSet to connect.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final TRIGGER_CONNECT_OPERATION:UInt = 13;
 
 	/**
 	 *  This is the default operation for new CommandMessage instances.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final UNKNOWN_OPERATION:UInt = 10000;
 
 	/**
 	 *  The server message type for authentication commands.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final AUTHENTICATION_MESSAGE_REF_TYPE:String = "flex.messaging.messages.AuthenticationMessage";
 
@@ -220,11 +139,6 @@ class CommandMessage extends AsyncMessage {
 	 *  Subscribe commands issued by a Consumer pass the Consumer's <code>selector</code>
 	 *  expression in this header.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final SELECTOR_HEADER:String = "DSSelector";
 
@@ -232,11 +146,6 @@ class CommandMessage extends AsyncMessage {
 	 *  Durable JMS subscriptions are preserved when an unsubscribe message
 	 *  has this parameter set to true in its header.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final PRESERVE_DURABLE_HEADER:String = "DSPreserveDurable";
 
@@ -244,11 +153,6 @@ class CommandMessage extends AsyncMessage {
 	 * Header to indicate that the Channel needs the configuration from the
 	 * server.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final NEEDS_CONFIG_HEADER:String = "DSNeedsConfig";
 
@@ -256,22 +160,12 @@ class CommandMessage extends AsyncMessage {
 	 * Header used in a MULTI_SUBSCRIBE message to specify an Array of subtopic/selector
 	 * pairs to add to the existing set of subscriptions.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final ADD_SUBSCRIPTIONS:String = "DSAddSub";
 
 	/**
 	 * Like the above, but specifies the subtopic/selector array of to remove
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final REMOVE_SUBSCRIPTIONS:String = "DSRemSub";
 
@@ -279,22 +173,12 @@ class CommandMessage extends AsyncMessage {
 	 * The separator string used for separating subtopic and selectors in the 
 	 * add and remove subscription headers.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final SUBTOPIC_SEPARATOR:String = "_;_";
 
 	/**
 	 * Header to drive an idle wait time before the next client poll request.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final POLL_WAIT_HEADER:String = "DSPollWait";
 
@@ -305,11 +189,6 @@ class CommandMessage extends AsyncMessage {
 	 * no-op and the next poll will not be scheduled. Without this, a subsequent poll 
 	 * will put the channel and endpoint into a busy polling cycle.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final NO_OP_POLL_HEADER:String = "DSNoOpPoll";
 
@@ -317,11 +196,6 @@ class CommandMessage extends AsyncMessage {
 	 * Header to specify which character set encoding was used while encoding
 	 * login credentials. 
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final CREDENTIALS_CHARSET_HEADER:String = "DSCredentialsCharset";
 
@@ -329,11 +203,6 @@ class CommandMessage extends AsyncMessage {
 	 * Header to indicate the maximum number of messages a Consumer wants to 
 	 * receive per second.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final MAX_FREQUENCY_HEADER:String = "DSMaxFrequency";
 
@@ -371,11 +240,6 @@ class CommandMessage extends AsyncMessage {
 	 *  Constructs an instance of a CommandMessage with an empty body and header
 	 *  and a default <code>operation</code> of <code>UNKNOWN_OPERATION</code>.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {
 		super();
@@ -393,11 +257,6 @@ class CommandMessage extends AsyncMessage {
 	 *  Operations indicate how this message should be processed by the remote
 	 *  destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var operation:UInt;
 
@@ -434,11 +293,6 @@ class CommandMessage extends AsyncMessage {
 	 *
 	 *  @return String representation of the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function toString():String {
 		return getDebugString();
@@ -451,27 +305,20 @@ class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Provides a description of the operation specified.
-	 *  This method is used in <code>toString()</code> operations on this 
-	 *  message.
-	 * 
-	 *  @param op One of the CommandMessage operation constants.
-	 * 
-	 *  @return Short name for the operation.
-	 * 
-	 *  @example
-	 *  <code><pre>
-	 *     var msg:CommandMessage = CommandMessage(event.message);
-	 *     trace("Current operation -'"+
-	 *            CommandMessage.getOperationAsString(msg.operation)+ "'.");
-	 *  </pre></code>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Provides a description of the operation specified.
+		This method is used in <code>toString()</code> operations on this 
+		message.
+
+		@param op One of the CommandMessage operation constants.
+
+		@return Short name for the operation.
+
+		```haxe
+		var msg = cast(event.message, CommandMessage);
+		trace("Current operation -'" +
+			CommandMessage.getOperationAsString(msg.operation)+ "'.");
+		```
+	**/
 	public static function getOperationAsString(op:UInt):String {
 		if (operationTexts == null) {
 			operationTexts = {};

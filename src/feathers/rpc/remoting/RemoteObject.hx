@@ -26,11 +26,6 @@ import haxe.Constraints.Function;
 
 /**
  * The RemoteObject class gives you access to classes on a remote application server.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 #if (neko || hl)
 @:deprecated("RemoteObject is not available on this target.")
@@ -48,11 +43,6 @@ class RemoteObject extends AbstractService {
 	/**
 	 * Creates a new RemoteObject.
 	 * @param destination [optional] Destination of the RemoteObject; should match a destination name in the services-config.xml file.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(destination:String = null) {
 		super(destination);
@@ -100,11 +90,6 @@ class RemoteObject extends AbstractService {
 	 * This may simplify event handling in the client application, but care should be taken to only use 
 	 * this mode when results or faults for requests may be safely ignored.</li>
 	 * </ul>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var concurrency(get, set):String;
 
@@ -130,16 +115,11 @@ class RemoteObject extends AbstractService {
 	 * destination without referring to a services configuration file at compile time or programmatically creating 
 	 * a ChannelSet. It also overrides an existing ChannelSet if one has been set for the RemoteObject service.
 	 *
-	 * <p>If the endpoint url starts with "https" a SecureAMFChannel will be used, otherwise an AMFChannel will 
+	 * If the endpoint url starts with "https" a SecureAMFChannel will be used, otherwise an AMFChannel will 
 	 * be used. Two special tokens, {server.name} and {server.port}, can be used in the endpoint url to specify
-	 * that the channel should use the server name and port that was used to load the SWF. </p>
+	 * that the channel should use the server name and port that was used to load the SWF.
 	 *
-	 * <p><b>Note:</b> This property is required when creating AIR applications.</p>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
+	 * **Note:** This property is required when creating AIR applications.
 	 */
 	public var endpoint(get, set):String;
 
@@ -164,11 +144,6 @@ class RemoteObject extends AbstractService {
 
 	/**
 	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var makeObjectsBindable(get, set):Bool;
 
@@ -189,11 +164,6 @@ class RemoteObject extends AbstractService {
 	/**
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var showBusyCursor(get, set):Bool;
 
@@ -215,11 +185,6 @@ class RemoteObject extends AbstractService {
 	 * Lets you specify a source value on the client; not supported for destinations that use the JavaAdapter. This allows you to provide more than one source
 	 * that can be accessed from a single destination on the server. 
 	 *     
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var source(get, set):String;
 
@@ -241,11 +206,6 @@ class RemoteObject extends AbstractService {
 	 * <code>
 	 *   function myParametersFunction(parameters:Array):Array
 	 * </code>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var convertParametersHandler:Function;
 
@@ -260,11 +220,6 @@ class RemoteObject extends AbstractService {
 	 * 
 	 * It is passed the result just after the makeObjectsBindable conversion has been done
 	 * but before the result event is created.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var convertResultHandler:Function;
 
@@ -311,11 +266,6 @@ class RemoteObject extends AbstractService {
 	 * Operation instead.
 	 * @param name Name of the Operation.
 	 * @return Operation that executes for this name.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function getOperation(name:String):AbstractOperation {
 		var op:AbstractOperation = super.getOperation(name);
@@ -337,11 +287,6 @@ class RemoteObject extends AbstractService {
 	 * @param charset The character set encoding to use while encoding the
 	 * remote credentials. The default is null, which implies the legacy charset
 	 * of ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		super.setRemoteCredentials(remoteUsername, remotePassword, charset);
@@ -353,11 +298,6 @@ class RemoteObject extends AbstractService {
 	 * channels assigned.
 	 *
 	 * @return Returns a String representing an instance of a RemoteObject.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function toString():String {
 		var s:String = "[RemoteObject ";

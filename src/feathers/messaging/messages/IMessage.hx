@@ -19,12 +19,6 @@ package feathers.messaging.messages;
 
 /**
  *  This interface defines the contract for message objects.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 interface IMessage {
 	//--------------------------------------------------------------------------
@@ -40,11 +34,6 @@ interface IMessage {
 	 *  The body of a message contains the specific data that needs to be 
 	 *  delivered to the remote destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var body(get, set):Any;
 
@@ -55,11 +44,6 @@ interface IMessage {
 	/**
 	 *  The clientId indicates which client sent the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var clientId(get, set):String;
 
@@ -70,11 +54,6 @@ interface IMessage {
 	/**
 	 *  The message destination.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var destination(get, set):String;
 
@@ -89,11 +68,6 @@ interface IMessage {
 	 *  This property provides access to specialized meta information for the 
 	 *  specific message instance.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var headers(get, set):Any;
 
@@ -106,11 +80,6 @@ interface IMessage {
 	 *  The message id can be used to correlate a response to the original
 	 *  request message in request-response messaging scenarios.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var messageId(get, set):String;
 
@@ -127,11 +96,6 @@ interface IMessage {
 	 *
 	 *  @see #timeToLive
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var timestamp(get, set):Float;
 
@@ -150,11 +114,6 @@ interface IMessage {
 	 *  expire at 04/05/05 1:30:50 PST.
 	 *  Once a message expires it will not be delivered to any other clients.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	var timeToLive(get, set):Float;
 
@@ -169,11 +128,6 @@ interface IMessage {
 	 *
 	 *  @return String representation of the message.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	function toString():String;
 }

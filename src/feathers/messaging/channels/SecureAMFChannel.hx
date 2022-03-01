@@ -20,12 +20,6 @@ package feathers.messaging.channels;
 /**
  *  The SecureAMFChannel class is identical to the AMFChannel class except that it uses a
  *  secure protocol, HTTPS, to send messages to an AMF endpoint.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class SecureAMFChannel extends AMFChannel {
 	//--------------------------------------------------------------------------
@@ -41,11 +35,6 @@ class SecureAMFChannel extends AMFChannel {
 	 *  
 	 *  @param uri The uri for this Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
@@ -60,11 +49,6 @@ class SecureAMFChannel extends AMFChannel {
 	/**
 	 *  Returns the protocol for this channel (https).
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override private function get_protocol():String {
 		return "https";

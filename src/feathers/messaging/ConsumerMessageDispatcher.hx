@@ -80,11 +80,6 @@ class ConsumerMessageDispatcher {
 	 *  Returns the sole instance of this singleton class,
 	 *  creating it if it does not already exist.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function getInstance():ConsumerMessageDispatcher {
 		if (_instance == null)
@@ -103,11 +98,6 @@ class ConsumerMessageDispatcher {
 	 *  Constructor.
 	 *  Use getInstance() instead of "new" to create.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {}
 
@@ -121,11 +111,6 @@ class ConsumerMessageDispatcher {
 	 *  Lookup table for subscribed Consumer instances; Object<Consumer clientId, Consumer>
 	 *  This is used to dispatch pushed/polled messages to the proper Consumer instance.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private final _consumers:Dynamic = {};
 
@@ -135,11 +120,6 @@ class ConsumerMessageDispatcher {
 	 *  When we add a new ChannelSet we need to start listening on it for MessageEvents to redispatch to subscribed Consumers.
 	 *  When the ref-count drops to zero we need to stop listening on it for MessageEvents and remove it from the table.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private final _channelSetRefCounts:Map<ChannelSet, Int> = [];
 
@@ -147,11 +127,6 @@ class ConsumerMessageDispatcher {
 	 *  Table used to prevent duplicate delivery of messages to a Consumer when multiple ChannelSets are
 	 *  connected to the same server endpoint over a single, underlying shared Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private final _consumerDuplicateMessageBarrier:Dynamic = {};
 
@@ -164,11 +139,6 @@ class ConsumerMessageDispatcher {
 	/**
 	 *  Determines whether any subscriptions are using the specified channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function isChannelUsedForSubscriptions(channel:Channel):Bool {
 		var memberOfChannelSets = channel.channelSets;
@@ -187,11 +157,6 @@ class ConsumerMessageDispatcher {
 	 *  This will cause the ConsumerMessageDispatcher to start listening for MessageEvents
 	 *  from the underlying ChannelSet used to subscribe and redispatch messages to Consumers.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function registerSubscription(consumer:AbstractConsumer):Void {
 		Reflect.setField(_consumers, consumer.clientId, consumer);
@@ -211,11 +176,6 @@ class ConsumerMessageDispatcher {
 	 *  The ConsumerMessageDispatcher will stop monitoring underlying channels for messages for
 	 *  this Consumer.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function unregisterSubscription(consumer:AbstractConsumer):Void {
 		Reflect.deleteField(_consumers, consumer.clientId);
@@ -245,11 +205,6 @@ class ConsumerMessageDispatcher {
 	 *  Handles message events from ChannelSets that Consumers are subscribed over.
 	 *  We just need to redirect the event to the proper Consumer instance.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function messageHandler(event:MessageEvent):Void {
 		var consumer:AbstractConsumer = Reflect.field(_consumers, event.message.clientId);

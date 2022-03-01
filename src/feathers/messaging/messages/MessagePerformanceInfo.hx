@@ -49,11 +49,6 @@ class MessagePerformanceInfo {
 	/**
 	 * Size of message in Bytes (message types depends on what header this MPI is in)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var messageSize:Int;
 
@@ -61,11 +56,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when this message was sent
 	 * (origin depends on on what header this MPI is in)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var sendTime:Float = 0;
 
@@ -73,11 +63,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when this message was received
 	 * (destination depends on on what header this MPI is in)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private var _receiveTime:Float;
 
@@ -85,33 +70,18 @@ class MessagePerformanceInfo {
 	 * Amount of time in milliseconds that this message was being processed on the server
 	 * in order to calculate and populate MPI metrics
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var overheadTime:Float;
 
 	/**
 	 * "OUT" when this message originated on the server
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private var _infoType:String;
 
 	/**
 	 * True if this is info for a message that was pushed from server to client
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var pushedFlag:Bool;
 
@@ -119,11 +89,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when the server became ready to push this message out 
 	 * to clients
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var serverPrePushTime:Float;
 
@@ -131,11 +96,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when the server called into the adapter associated with the
 	 * destination of this message
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var serverPreAdapterTime:Float;
 
@@ -143,11 +103,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when server processing returned from the adapater associated 
 	 * with the destination of this message
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var serverPostAdapterTime:Float;
 
@@ -155,11 +110,6 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when the adapter associated with the destination of this message
 	 * made a call to an external component (for example a JMS server)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var serverPreAdapterExternalTime:Float;
 
@@ -167,33 +117,18 @@ class MessagePerformanceInfo {
 	 * Millisecond timestamp of when processing came back to the adapter associated with the destination 
 	 * of this message from a call to an external component (for example a JMS server)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var serverPostAdapterExternalTime:Float;
 
 	/**
 	 * Flag is true when record-message-times is enabled for the communication channel
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var recordMessageTimes:Bool;
 
 	/**
 	 * Flag is true when record-message-sizes is enabled for the communication channel
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var recordMessageSizes:Bool;
 
@@ -210,11 +145,6 @@ class MessagePerformanceInfo {
 	 * 
 	 * @param type - "IN" or "OUT" info type
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var infoType(get, set):String;
 
@@ -232,11 +162,6 @@ class MessagePerformanceInfo {
 	 * 
 	 * @return "IN" or "OUT" (from the perspective of the server)
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private function get_infoType():String {
 		return this._infoType;

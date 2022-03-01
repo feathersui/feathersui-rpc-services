@@ -44,12 +44,6 @@ import feathers.net.AMFNetConnection;
 /**
  *  This NetConnectionChannel provides the basic NetConnection support for messaging.
  *  The AMFChannel and RTMPChannel both extend this class.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
@@ -60,23 +54,15 @@ class NetConnectionChannel extends PollingChannel {
 
 	/**
 	 *  Creates a new NetConnectionChannel instance.
-	 *  <p>
+	 *  
 	 *  The underlying NetConnection's <code>objectEncoding</code>
 	 *  is set to <code>ObjectEncoding.AMF3</code> by default. It can be
 	 *  changed manually by accessing the channel's <code>netConnection</code>
 	 *  property. The global <code>NetConnection.defaultObjectEncoding</code>
 	 *  setting is not honored by this channel.
-	 *  </p>
 	 *
 	 *  @param id The id of this Channel.
-	 *
 	 *  @param uri The uri for this Channel.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
@@ -119,11 +105,6 @@ class NetConnectionChannel extends PollingChannel {
 	/**
 	 *  Provides access to the associated NetConnection for this Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var netConnection(get, never):NetConnection;
 
@@ -140,11 +121,6 @@ class NetConnectionChannel extends PollingChannel {
 	/**
 	 *  Provides access to the associated NetConnection for this Channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var netConnection(get, never):AMFNetConnection;
 
@@ -475,11 +451,6 @@ class NetConnectionMessageResponder extends MessageResponder {
 	 *
 	 *  @param channel The channel this responder is using.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(agent:MessageAgent, msg:IMessage, channel:NetConnectionChannel) {
 		super(agent, msg, channel);

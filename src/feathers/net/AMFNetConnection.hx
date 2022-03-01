@@ -53,24 +53,11 @@ class AMFNetConnection {
 
 	/**
 	 *  Constructor
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3
 	 */
 	public function new() {}
 
 	/**
 	 *  The class to use to test if success or failure
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Royale 0.9.5
-	 *
-	 *  @royalesuppresspublicvarwarning
 	 */
 	public var errorClass:Class<Dynamic>;
 
@@ -193,12 +180,6 @@ class AMFNetConnection {
 	/**
 	 *  Connect to a server.  Pass in an http URL as the commmand for
 	 *  connection to AMF server.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3
 	 */
 	public function connect(command:String, ...params):Void {
 		// send a ping to the URL in the command param
@@ -207,12 +188,6 @@ class AMFNetConnection {
 
 	/**
 	 *  Call a server function.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3
 	 */
 	public function call(command:String, responder:Responder, ...params:Dynamic):Void {
 		requestQueue.push({

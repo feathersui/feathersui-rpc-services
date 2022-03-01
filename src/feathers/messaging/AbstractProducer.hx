@@ -31,12 +31,6 @@ import openfl.utils.Timer;
  *  The AbstractProducer is the base class for the Producer and
  *  MultiTopicConsumer classes. 
  *  You use these classes to push messages to the server.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
@@ -108,11 +102,6 @@ class AbstractProducer extends MessageAgent {
 	 *  in an offline mode may set this to <code>false</code> to prevent the <code>send()</code> method
 	 *  from connecting implicitly.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var autoConnect(get, set):Bool;
 
@@ -149,11 +138,6 @@ class AbstractProducer extends MessageAgent {
 	 *  If the message already contains a matching header, the value in the 
 	 *  message takes precedence and the default header value is ignored. 
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var defaultHeaders(get, set):Dynamic;
 
@@ -190,11 +174,6 @@ class AbstractProducer extends MessageAgent {
 	 *  does not have a priority set. Note that if the message already has a 
 	 *  priority defined, that takes precedence over Producer's priority.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var priority(get, set):Int;
 
@@ -233,20 +212,15 @@ class AbstractProducer extends MessageAgent {
 	 *  A value of -1 enables infinite attempts.
 	 *  A value of zero disables reconnect attempts.
 	 *  
-	 *  <p>Reconnect attempts are made at a constant rate according to the reconnect interval
+	 *  Reconnect attempts are made at a constant rate according to the reconnect interval
 	 *  value. When a reconnect attempt is made if the underlying channel for the Producer is not
 	 *  connected or attempting to connect the channel will start a connect attempt. 
 	 *  Subsequent Producer reconnect attempts that occur while the underlying
 	 *  channel connect attempt is outstanding are effectively ignored until
-	 *  the outstanding channel connect attempt succeeds or fails.</p>
+	 *  the outstanding channel connect attempt succeeds or fails.
 	 * 
 	 *  @see mx.messaging.Producer#reconnectInterval
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var reconnectAttempts(get, set):Int;
 
@@ -287,22 +261,17 @@ class AbstractProducer extends MessageAgent {
 	 *  making a subsequent reconnect attempt. 
 	 *  Setting the value to zero disables reconnect attempts.
 	 *  
-	 *  <p>Reconnect attempts are made at a constant rate according to this
+	 *  Reconnect attempts are made at a constant rate according to this
 	 *  value. When a reconnect attempt is made if the underlying channel for the Producer is not
 	 *  connected or attempting to connect the channel will start a connect attempt. 
 	 *  Subsequent Producer reconnect attempts that occur while the underlying
 	 *  channel connect attempt is outstanding are effectively ignored until
-	 *  the outstanding channel connect attempt succeeds or fails.</p>
+	 *  the outstanding channel connect attempt succeeds or fails.
 	 * 
 	 *  @see mx.messaging.Producer#reconnectInterval  
 	 * 
 	 *  @throws ArgumentError If the assigned value is negative.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var reconnectInterval(get, set):Int;
 
@@ -403,11 +372,6 @@ class AbstractProducer extends MessageAgent {
 	 *  connected and it will not receive any outstanding message acknowledgements or faults.
 	 *  Disconnecting stops automatic reconnect attempts if they are running.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function disconnect():Void {
 		_shouldBeConnected = false; // Prevent reconnect attempts.
@@ -424,30 +388,23 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Connects the Producer to its target destination.
-	 *  When a connection is established the <code>connected</code> property will
-	 *  change to <code>true</code> and this property is bindable and generates
-	 *  <code>PropertyChangeEvent</code>s.
-	 *  The internal TRIGGER_CONNECT_OPERATION CommandMessage that is sent will result
-	 *  in an acknowledge or fault event depending upon whether the underlying channel
-	 *  establishes its connection.
-	 * 
-	 *  @throws mx.messaging.errors.InvalidDestinationError  If no destination is set.
-	 * 
-	 *  @example
-	 *  <pre>
-	 *     var producer:Producer = new Producer();
-	 *     producer.destination = "TestTopic";
-	 *     producer.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, handleConnect);
-	 *     producer.connect();
-	 *  </pre>
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Connects the Producer to its target destination.
+		When a connection is established the <code>connected</code> property will
+		change to <code>true</code> and this property is bindable and generates
+		<code>PropertyChangeEvent</code>s.
+		The internal TRIGGER_CONNECT_OPERATION CommandMessage that is sent will result
+		in an acknowledge or fault event depending upon whether the underlying channel
+		establishes its connection.
+			 
+		@throws mx.messaging.errors.InvalidDestinationError  If no destination is set.
+
+		```haxe
+		var producer:Producer = new Producer();
+		producer.destination = "TestTopic";
+		producer.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, handleConnect);
+		producer.connect();
+		```
+	**/
 	public function connect():Void {
 		if (!connected) {
 			_shouldBeConnected = true;
@@ -465,32 +422,24 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Sends the specified message to its destination.
-	 *  If the producer is being used for publish/subscribe messaging, only messages of type AsyncMessage
-	 *  should be sent unless a custom message type is being used and the 
-	 *  message destination on the server has been configured to process the
-	 *  custom message type.
-	 *
-	 *  @param message The Message to send.
-	 * 
-	 *  @throws mx.messaging.errors.InvalidDestinationError  If no destination is set.
-	 * 
-	 *  @example
-	 *  <pre>
-	 *     var producer:Producer = new Producer();
-	 *     producer.destination = "TestTopic";
-	 *     var msg:AsyncMessage = new AsyncMessage();
-	 *     msg.body = "test message";
-	 *     producer.send(msg);
-	 *  </pre>
-	 *
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
-	 */
+		Sends the specified message to its destination.
+		If the producer is being used for publish/subscribe messaging, only messages of type AsyncMessage
+		should be sent unless a custom message type is being used and the 
+		message destination on the server has been configured to process the
+		custom message type.
+
+		@param message The Message to send.
+
+		@throws mx.messaging.errors.InvalidDestinationError  If no destination is set.
+
+		```haxe
+		var producer = new Producer();
+		producer.destination = "TestTopic";
+		var msg = new AsyncMessage();
+		msg.body = "test message";
+		producer.send(msg);
+		``` 
+	**/
 	public function send(message:IMessage):Void {
 		if (!connected && autoConnect)
 			_shouldBeConnected = true;
@@ -614,12 +563,6 @@ class AbstractProducer extends MessageAgent {
 				 * Initially, the timeout is set to 1 so we try to 
 				 * reconnect immediately (perhaps to a different channel).
 				 * after that, it will poll at the configured time interval.
-				 *  
-				 *  @langversion 3.0
-				 *  @playerversion Flash 9
-				 *  @playerversion AIR 1.1
-				 *  @productversion BlazeDS 4
-				 *  @productversion LCDS 3 
 				 */
 				_reconnectTimer = new Timer(1);
 				_reconnectTimer.addEventListener(TimerEvent.TIMER, reconnect);

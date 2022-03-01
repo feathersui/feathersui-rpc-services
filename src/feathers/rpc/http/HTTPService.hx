@@ -36,15 +36,10 @@ import flash.xml.XMLNode;
  *  the useProxy  property to true and you use the server-based proxy service, you
  *  can also use the HTTP HEAD, OPTIONS, TRACE, and DELETE methods.
  *
- *  <p><b>Note:</b> Due to a software limitation, HTTPService does not generate user-friendly
- *  error messages when using GET.</p>
+ *  **Note:** Due to a software limitation, HTTPService does not generate user-friendly
+ *  error messages when using GET.
  * 
  *  @see mx.rpc.http.mxml.HTTPService
- *
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 @:access(feathers.rpc.http.AbstractOperation)
 class HTTPService extends AbstractInvoker {
@@ -62,11 +57,6 @@ class HTTPService extends AbstractInvoker {
 	 * @param rootURL The URL the HTTPService should use when computing relative URLS.
 	 *
 	 * @param destination An HTTPService destination name in the service-config.xml file.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(rootURL:String = null, destination:String = null) {
 		super();
@@ -97,11 +87,6 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	#if !flash
 	@:deprecated("RESULT_FORMAT_E4X is not available on this target. RESULT_FORMAT_HAXE_XML is recommended instead.")
@@ -111,21 +96,11 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  The result format "flashvars" specifies that the value returned is text containing name=value pairs
 	 *  separated by ampersands, which is parsed into an ActionScript object.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final RESULT_FORMAT_FLASHVARS:String = "flashvars";
 
 	/**
 	 *  The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final RESULT_FORMAT_OBJECT:String = "object";
 
@@ -133,32 +108,17 @@ class HTTPService extends AbstractInvoker {
 	 *  The result format "array" is similar to "object" however the value returned is always an Array such
 	 *  that if the result returned from result format "object" is not an Array already the item will be
 	 *  added as the first item to a new Array.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final RESULT_FORMAT_ARRAY:String = "array";
 
 	/**
 	 *  The result format "text" specifies that the HTTPService result text should be an unprocessed String.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final RESULT_FORMAT_TEXT:String = "text";
 
 	/**
 	 *  The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
 	 *  the first child of the parent flash.xml.XMLDocument.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	#if !flash
 	@:deprecated("RESULT_FORMAT_XML is not available on this target. RESULT_FORMAT_HAXE_XML is recommended instead.")
@@ -179,41 +139,21 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  Indicates that the data being sent by the HTTP service is encoded as application/xml.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final CONTENT_TYPE_XML:String = "application/xml";
 
 	/**
 	 *  Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final CONTENT_TYPE_FORM:String = "application/x-www-form-urlencoded";
 
 	/**
 	 *  Indicates that the HTTPService object uses the DefaultHTTP destination.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final DEFAULT_DESTINATION_HTTP:String = "DefaultHTTP";
 
 	/**
 	 *  Indicates that the HTTPService object uses the DefaultHTTPS destination.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final DEFAULT_DESTINATION_HTTPS:String = "DefaultHTTPS";
 
@@ -221,32 +161,17 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  Indicates that the useProxy property was set to false but a url was not provided.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final ERROR_URL_REQUIRED:String = "Client.URLRequired";
 
 	/**
 	 *  Indicates that an XML formatted result could not be parsed into an XML instance
 	 *  or decoded into an Object.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final ERROR_DECODING:String = "Client.CouldNotDecode";
 
 	/**
 	 *  Indicates that an input parameter could not be encoded as XML.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final ERROR_ENCODING:String = "Client.CouldNotEncode";
 
@@ -290,11 +215,6 @@ class HTTPService extends AbstractInvoker {
 	 *  ChannelSet can be manually constructed and assigned, or it will be 
 	 *  dynamically created to use the configured Channels for the
 	 *  <code>destination</code> for this service.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var channelSet(get, set):ChannelSet;
 
@@ -321,11 +241,6 @@ class HTTPService extends AbstractInvoker {
 	 *  The default is <code>application/x-www-form-urlencoded</code> which sends requests
 	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
 	 *  requests as XML.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var contentType(get, set):String;
 
@@ -351,11 +266,6 @@ class HTTPService extends AbstractInvoker {
 	 * multiple requests generate a fault.</li>
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var concurrency(get, set):String;
 
@@ -378,11 +288,6 @@ class HTTPService extends AbstractInvoker {
 	 *  unspecified, Flex uses the <code>DefaultHTTP</code> destination.
 	 *  If you are using the <code>url</code> property, but want requests
 	 *  to reach the proxy over HTTPS, specify <code>DefaultHTTPS</code>.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var destination(get, set):String;
 
@@ -403,11 +308,6 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function get_makeObjectsBindable():Bool {
 		return operation.makeObjectsBindable;
@@ -426,11 +326,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
 	 *  be sent with the same name the value should be specified as an Array.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var headers(get, set):Dynamic;
 
@@ -452,11 +347,6 @@ class HTTPService extends AbstractInvoker {
 	 *  HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
 	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
 	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var method(get, set):String;
 
@@ -477,11 +367,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  Object of name-value pairs used as parameters to the URL. If
 	 *  the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var request(get, set):Dynamic;
 
@@ -497,38 +382,31 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(enumeration="object,array,xml,flashvars,text,e4x", defaultValue="object", category="General")]
 
 	/**
-	 *  Value that indicates how you want to deserialize the result
-	 *  returned by the HTTP call. The value for this is based on the following:
-	 *  <ul>
-	 *  <li>Whether you are returning XML or name/value pairs.</li>
-	 *  <li>How you want to access the results; you can access results as an object,
-	 *    text, or XML.</li>
-	 *  </ul>
-	 * 
-	 *  <p>The default value is <code>object</code>. The following values are permitted:</p>
-	 *  <ul>
-	 *  <li><code>object</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects. This is the default.</li>
-	 *  <li><code>array</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects however if the top level object is not an Array, a new Array is created and the result
-	 *    set as the first item. If makeObjectsBindable is true then the Array 
-	 *    will be wrapped in an ArrayCollection.</li>
-	 *  <li><code>xml</code> The value returned is XML and is returned as literal XML in an
-	 *    ActionScript XMLnode object.</li>
-	 *  <li><code>flashvars</code> The value returned is text containing 
-	 *    name=value pairs separated by ampersands, which
-	 *  is parsed into an ActionScript object.</li>
-	 *  <li><code>text</code> The value returned is text, and is left raw.</li>
-	 *  <li><code>e4x</code> The value returned is XML and is returned as literal XML 
-	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
-	 *    XML (E4X) expressions.</li>
-	 *  </ul>
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
-	 */
+		Value that indicates how you want to deserialize the result
+		returned by the HTTP call. The value for this is based on the following:
+
+		- Whether you are returning XML or name/value pairs.</li>
+		- How you want to access the results; you can access results as an object,
+		  text, or XML.
+
+		The default value is <code>object</code>. The following values are permitted:
+
+		- <code>object</code> The value returned is XML and is parsed as a tree of ActionScript
+		  objects. This is the default.
+		- <code>array</code> The value returned is XML and is parsed as a tree of ActionScript
+		  objects however if the top level object is not an Array, a new Array is created and the result
+		  set as the first item. If makeObjectsBindable is true then the Array 
+		  will be wrapped in an ArrayCollection.
+		- <code>xml</code> The value returned is XML and is returned as literal XML in an
+		  ActionScript XMLnode object.
+		- <code>flashvars</code> The value returned is text containing 
+		  name=value pairs separated by ampersands, which
+		is parsed into an ActionScript object.
+		- <code>text</code> The value returned is text, and is left raw.
+		- <code>e4x</code> The value returned is XML and is returned as literal XML 
+		  in an ActionScript XML object, which can be accessed using ECMAScript for 
+		  XML (E4X) expressions.
+	**/
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -551,11 +429,6 @@ class HTTPService extends AbstractInvoker {
 	 *  based on the location of the SWF running this application.
 	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
 	 *  mx.messaging.config.LoaderConfig.url.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var rootURL(get, set):String;
 
@@ -576,11 +449,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var showBusyCursor(get, set):Bool;
 
@@ -603,11 +471,6 @@ class HTTPService extends AbstractInvoker {
 	 * and post body of the HTTP request.  This can also be set indirectly by setting the 
 	 * resultFormat by registering a SerializationFilter using the static method:
 	 * SerializationFilter.registerFilterForResultFormat("formatName", filter)
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var serializationFilter(get, set):SerializationFilter;
 
@@ -625,11 +488,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
 	 *  your destination in the services-config.xml file must allow the specified URL.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var url(get, set):String;
 
@@ -651,11 +509,6 @@ class HTTPService extends AbstractInvoker {
 	 *  <code>useProxy</code> property is set to <code>false</code>.
 	 *
 	 *  @default false    
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var useProxy(get, set):Bool;
 
@@ -674,44 +527,39 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-		*  ActionScript function used to decode a service result from XML.
-		*  When the <code>resultFormat</code> is an object and the <code>xmlDecode</code> property is set,
-		*  Flex uses the XML that the HTTPService returns to create an
-		*  Object. If it is not defined the default XMLDecoder is used
-		*  to do the work.
-		*  <p>The function referenced by the <code>xmlDecode</code> property must
-		*  take a flash.xml.XMLNode object as a parameter and should return
-		*  an Object. It can return any type of object, but it must return
-		*  something. Returning <code>null</code> or <code>undefined</code> causes a fault.</p>
+		ActionScript function used to decode a service result from XML.
+		When the <code>resultFormat</code> is an object and the <code>xmlDecode</code> property is set,
+		Flex uses the XML that the HTTPService returns to create an
+		Object. If it is not defined the default XMLDecoder is used
+		to do the work.
+
+		The function referenced by the <code>xmlDecode</code> property must
+		take a flash.xml.XMLNode object as a parameter and should return
+		an Object. It can return any type of object, but it must return
+		something. Returning <code>null</code> or <code>undefined</code> causes a fault.
 
 		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlDecode function:
 
-		<pre>
+		```xml
 		&lt;mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
 			&lt;mx:request&gt;&lt;source/&gt;
 				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
 			&lt;/mx:request&gt;
 		&lt;/mx:HTTPService&gt;
-		</pre>
-
+		```
 
 		The following example shows an xmlDecoder function:
-		<pre>
-		function xmlDecoder (myXML)
-		{
-		// Simplified decoding logic.
-		var myObj = {};
-		myObj.name = myXML.firstChild.nodeValue;
-		myObj.honorific = myXML.firstChild.attributes.honorific;
-		return myObj;
+
+		```haxe
+		function xmlDecoder(myXML) {
+			// Simplified decoding logic.
+			var myObj = {};
+			myObj.name = myXML.firstChild.nodeValue;
+			myObj.honorific = myXML.firstChild.attributes.honorific;
+			return myObj;
 		}
-		</pre>
-		*
-		*  @langversion 3.0
-		*  @playerversion Flash 9
-		*  @playerversion AIR 1.1
-		*  @productversion Flex 3
-	 */
+		```
+	**/
 	#if !flash
 	@:deprecated("xmlDecode is not available on this target.")
 	#end
@@ -732,45 +580,37 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-		*  ActionScript function used to encode a service request as XML.
-		*  When the <code>contentType</code> of a request is <code>application/xml</code> and the
-		*  request object passed in is an Object, Flex attempts to use
-		*  the function specified in the <code>xmlEncode</code> property to turn it
-		*  into a flash.xml.XMLNode object If the <code>xmlEncode</code> property is not set, 
-		*  Flex uses the default
-		*  XMLEncoder to turn the object graph into a flash.xml.XMLNode object.
-		* 
-		*  <p>The <code>xmlEncode</code> property takes an Object and should return
-		*  a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
-		*  which is a subclass of XMLNode, or the first child of the
-		*  flash.xml.XML object, which is what you get from an <code>&lt;mx:XML&gt;</code> tag.
-		*  Returning the wrong type of object causes a fault.
-		*  The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:</p>
+		ActionScript function used to encode a service request as XML.
+		When the <code>contentType</code> of a request is <code>application/xml</code> and the
+		request object passed in is an Object, Flex attempts to use
+		the function specified in the <code>xmlEncode</code> property to turn it
+		into a flash.xml.XMLNode object If the <code>xmlEncode</code> property is not set, 
+		Flex uses the default
+		XMLEncoder to turn the object graph into a flash.xml.XMLNode object.
 
-		<pre>
+		The <code>xmlEncode</code> property takes an Object and should return
+		a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
+		which is a subclass of XMLNode, or the first child of the
+		flash.xml.XML object, which is what you get from an <code>&lt;mx:XML&gt;</code> tag.
+		Returning the wrong type of object causes a fault.
+		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:
+
+		```xml
 		&lt;mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
 			&lt;mx:request&gt;&lt;source/&gt;
 				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
 			&lt;/mx:request&gt;
 		&lt;/mx:HTTPService&gt;
-		</pre>
-
+		```
 
 		The following example shows an xmlEncoder function:
-		<pre>
-		function xmlEncoder (myObj)
-		{
-		return new XML("<userencoded><attrib0>MyObj.test</attrib0>
-		<attrib1>MyObj.anotherTest</attrib1></userencoded>");
-		}
-		</pre>
 
-		*
-		*  @langversion 3.0
-		*  @playerversion Flash 9
-		*  @playerversion AIR 1.1
-		*  @productversion Flex 3
-	 */
+		```haxe
+		function xmlEncoder(myObj) {
+			return new XML("<userencoded><attrib0>MyObj.test</attrib0><attrib1>MyObj.anotherTest</attrib1></userencoded>");
+		}
+		```
+	**/
 	#if !flash
 	@:deprecated("xmlEncode is not available on this target.")
 	#end
@@ -789,11 +629,6 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  The result of the last invocation.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function get_lastResult():Dynamic {
 		return operation.lastResult;
@@ -801,11 +636,6 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  @inheritDoc
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function clearResult(fireBindingEvent:Bool = true):Void {
 		operation.clearResult(fireBindingEvent);
@@ -819,11 +649,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  Provides access to the request timeout in seconds for sent messages. 
 	 *  A value less than or equal to zero prevents request timeout.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var requestTimeout(get, set):Int;
 
@@ -857,15 +682,10 @@ class HTTPService extends AbstractInvoker {
 	 *  as specified in the server configuration. For example, if you're connected over the my-rtmp channel
 	 *  and you log out using one of your RPC components, anything that was connected over my-rtmp is logged out.
 	 *
-	 *  <p><b>Note:</b> Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
-	 *  rather than this method. </p>
+	 *  **Note:** Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
+	 *  rather than this method.
 	 *
 	 *  @see mx.messaging.ChannelSet#logout()   
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function logout():Void {
 		asyncRequest.logout();
@@ -881,11 +701,6 @@ class HTTPService extends AbstractInvoker {
 	 * 
 	 *  @return An object representing the asynchronous completion token. It is the same object
 	 *  available in the <code>result</code> or <code>fault</code> event's <code>token</code> property.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function send(parameters:Dynamic = null):AsyncToken {
 		if (parameters == null)
@@ -897,11 +712,6 @@ class HTTPService extends AbstractInvoker {
 	/**
 	 *  Disconnects the service's network connection.
 	 *  This method does not wait for outstanding network operations to complete.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function disconnect():Void {
 		asyncRequest.disconnect();
@@ -918,11 +728,6 @@ class HTTPService extends AbstractInvoker {
 	 *  @param charset The character set encoding to use while encoding the
 	 *  credentials. The default is null, which implies the legacy charset of
 	 *  ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function setCredentials(username:String, password:String, charset:String = null):Void {
 		asyncRequest.setCredentials(username, password, charset);
@@ -940,11 +745,6 @@ class HTTPService extends AbstractInvoker {
 	 *  remote credentials. The default is null, which implies the legacy
 	 *  charset of ISO-Latin-1. The only other supported charset is
 	 *  &quot;UTF-8&quot;.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		asyncRequest.setRemoteCredentials(remoteUsername, remotePassword, charset);
@@ -952,11 +752,6 @@ class HTTPService extends AbstractInvoker {
 
 	/**
 	 *  @inheritDoc
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function cancel(id:String = null):AsyncToken {
 		return operation.cancel(id);

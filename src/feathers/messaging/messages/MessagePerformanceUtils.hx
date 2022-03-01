@@ -20,30 +20,23 @@ package feathers.messaging.messages;
 import openfl.errors.Error;
 
 /** 
- * The MessagePerformanceUtils utility class is used to retrieve various metrics about
- * the sizing and timing of a message sent from a client to the server and its 
- * response message, as well as pushed messages from the server to the client.  
- * Metrics are gathered when corresponding properties on the channel used are enabled:
- * &lt;record-message-times&gt; denotes capturing of timing information,
- * &lt;record-message-sizes&gt; denotes capturing of sizing information.
- * 
- * <p>You can then use methods of this utility class to retrieve various performance information
- * about the message that you have just received.</p>
- * 
- * <p>When these metrics are enabled an instance of this class should be created from 
- * a response, acknowledgement, or message handler using code such as below: </p>
- * 
- * <pre>
- *      var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(event.message);
- * </pre> 
- *
- * @langversion 3.0
- * @playerversion Flash 9
- * @playerversion AIR 1.1
- * @productversion BlazeDS 4
- * @productversion LCDS 3     
- * 
- */
+	The MessagePerformanceUtils utility class is used to retrieve various metrics about
+	the sizing and timing of a message sent from a client to the server and its 
+	response message, as well as pushed messages from the server to the client.  
+	Metrics are gathered when corresponding properties on the channel used are enabled:
+	&lt;record-message-times&gt; denotes capturing of timing information,
+	&lt;record-message-sizes&gt; denotes capturing of sizing information.
+
+	You can then use methods of this utility class to retrieve various performance information
+	about the message that you have just received.
+
+	When these metrics are enabled an instance of this class should be created from 
+	a response, acknowledgement, or message handler using code such as below:
+
+	```haxe
+	var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(event.message);
+	```
+**/
 class MessagePerformanceUtils {
 	/**
 	 * @private 
@@ -102,12 +95,6 @@ class MessagePerformanceUtils {
 	 * 
 	 * @param message The message whose MPI headers will be used in retrieving
 	 * MPI information
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3         
 	 */
 	public function new(message:Dynamic) {
 		this.mpii = Std.downcast(Reflect.field(message.headers, MPI_HEADER_IN), MessagePerformanceInfo);
@@ -133,12 +120,6 @@ class MessagePerformanceUtils {
 	 * for it from the server
 	 * 
 	 * @return Total time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var totalTime(get, never):Float;
 
@@ -155,12 +136,6 @@ class MessagePerformanceUtils {
 	 * to be sent to the receiving client.  
 	 * 
 	 * @return Server processing time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverProcessingTime(get, never):Float;
 
@@ -177,12 +152,6 @@ class MessagePerformanceUtils {
 	 * messages out to other clients as a result of the original message.  
 	 * 
 	 * @return Server pre-push processing time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverPrePushTime(get, never):Float;
 
@@ -201,12 +170,6 @@ class MessagePerformanceUtils {
 	 * to be pushed to the receiving client.  
 	 * 
 	 * @return Server adapter processing time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverAdapterTime(get, never):Float;
 
@@ -234,12 +197,6 @@ class MessagePerformanceUtils {
 	 * prepared to be pushed to the receiving client.  
 	 * 
 	 * @return Server adapter-external processing time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverAdapterExternalTime(get, never):Float;
 
@@ -264,12 +221,6 @@ class MessagePerformanceUtils {
 	/**
 	 * Time that the message waited on the server after it was ready to be pushed to the client
 	 * but had not yet been polled for.
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverPollDelay(get, never):Float;
 
@@ -283,13 +234,7 @@ class MessagePerformanceUtils {
 	}
 
 	/**
-	 * Server processing time spent outside of the adapter associated with the destination of this message.
-	 * 
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
+	 * Server processing time spent outside of the adapter associated with the destination of this message.      
 	 */
 	public var serverNonAdapterTime(get, never):Float;
 
@@ -302,12 +247,6 @@ class MessagePerformanceUtils {
 	 * calculated by the difference between total time and server processing time.
 	 * 
 	 * @return Network round trip time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var networkRTT(get, never):Float;
 
@@ -323,12 +262,6 @@ class MessagePerformanceUtils {
 	 * to the client.
 	 * 
 	 * @return Timestamp in milliseconds since epoch
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var serverSendTime(get, never):Float;
 
@@ -341,12 +274,6 @@ class MessagePerformanceUtils {
 	 * the server.
 	 * 
 	 * @return Timestamp in milliseconds since epoch
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var clientReceiveTime(get, never):Float;
 
@@ -374,12 +301,6 @@ class MessagePerformanceUtils {
 	 * at the server endpoint.
 	 * 
 	 * @return Message size in Bytes
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var responseMessageSize(get, never):Int;
 
@@ -393,12 +314,6 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return true if this message was pushed to the client and is not a response to a message that
 	 * originated on the client
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var pushedMessageFlag(get, never):Bool;
 
@@ -412,12 +327,6 @@ class MessagePerformanceUtils {
 	 * clocks must be in sync for this to be meaningful.
 	 * 
 	 * @return Total push time in milliseconds
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var totalPushTime(get, never):Float;
 
@@ -430,13 +339,7 @@ class MessagePerformanceUtils {
 	 * the server pushing the message and the client receiving it.  Note that the server
 	 * and client clocks must be in sync for this to be meaningful.
 	 * 
-	 * @return One way server push time in milliseconds
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3          
+	 * @return One way server push time in milliseconds       
 	 */
 	public var pushOneWayTime(get, never):Float;
 
@@ -449,12 +352,6 @@ class MessagePerformanceUtils {
 	 * when the client that caused a push message sent its message.
 	 * 
 	 * @return Timestamp in milliseconds since epoch
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var originatingMessageSentTime(get, never):Float;
 
@@ -467,12 +364,6 @@ class MessagePerformanceUtils {
 	 * caused this pushed message.
 	 * 
 	 * @return Pushed causer message size in Bytes
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
 	 */
 	public var originatingMessageSize(get, never):Float;
 
@@ -481,22 +372,17 @@ class MessagePerformanceUtils {
 	}
 
 	/**
-	 *  Returns a summary of all information available in MPI.  
-	 *  For example:
-	 * 
-	 * <pre>
-	 *      var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(message);                     
-	 *      Alert.show(mpiutil.prettyPrint(), "MPI Output", Alert.NONMODAL);
-	 * </pre>            
-	 * 
-	 * @return String containing a summary of all information available in MPI
-	 *
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 * @productversion BlazeDS 4
-	 * @productversion LCDS 3          
-	 */
+		Returns a summary of all information available in MPI.  
+
+		For example:
+
+		```haxe
+		var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(message);                     
+		Alert.show(mpiutil.prettyPrint(), "MPI Output", Alert.NONMODAL);
+		```
+
+		@return String containing a summary of all information available in MPI
+	**/
 	public function prettyPrint():String {
 		var alertString:String = new String("");
 		if (messageSize != 0)

@@ -47,11 +47,6 @@ class DirectHTTPChannel extends Channel {
 	 *  Constructs an instance of a DirectHTTPChannel.
 	 *  The parameters are not used.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(id:String, uri:String = "") {
 		super(id, uri);
@@ -72,11 +67,6 @@ class DirectHTTPChannel extends Channel {
 	/**
 	 *  Indicates if this channel is connected.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function get_connected():Bool {
 		return true;
@@ -85,11 +75,6 @@ class DirectHTTPChannel extends Channel {
 	/**
 	 *  Indicates the protocol used by this channel.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override public function get_protocol():String {
 		return "http";
@@ -125,11 +110,6 @@ class DirectHTTPChannel extends Channel {
 	 * 
 	 *  @return The MessageResponder to handle the send result or fault.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override private function getMessageResponder(agent:MessageAgent, message:IMessage):MessageResponder {
 		return new DirectHTTPMessageResponder(agent, message, this, new URLLoader());
@@ -261,11 +241,6 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	/**
 	 *  Constructs a DirectHTTPMessageResponder.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new(agent:MessageAgent, msg:IMessage, channel:DirectHTTPChannel, urlLoader:URLLoader) {
 		super(agent, msg, channel);
@@ -292,11 +267,6 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	/**
 	 *  The URLLoader associated with this responder.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var urlLoader:URLLoader;
 
@@ -383,11 +353,6 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	 *  Handle a request timeout by closing our associated URLLoader and
 	 *  faulting the message to the agent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	override private function requestTimedOut():Void {
 		urlLoader.removeEventListener(ErrorEvent.ERROR, errorHandler);

@@ -21,12 +21,6 @@ package feathers.messaging.config;
 /**
  *  The ConfigMap class provides a mechanism to store the properties returned 
  *  by the server with the ordering of the properties maintained. 
- *
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3  
  */
 @:meta(RemoteClass(alias = "flex.messaging.config.ConfigMap"))
 class ConfigMap extends flash.utils.Proxy {
@@ -40,12 +34,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 * Constructor.
 	 *
 	 * @param item An Object containing name/value pairs.
-	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3       
 	 */
 	public function new(item:Dynamic = null) {
 		super();
@@ -66,11 +54,6 @@ class ConfigMap extends flash.utils.Proxy {
 	/**
 	 *  Contains a list of all of the property names for the proxied object.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	private var propertyList:Array<String>;
 
@@ -103,11 +86,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @return The value of the property.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function getProperty(name:Dynamic):Dynamic {
 		// if we have a data proxy for this then
@@ -126,11 +104,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @return The return value of the called method.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function callProperty(name:Dynamic, ...rest:Dynamic):Dynamic {
 		return Reflect.callMethod(_item, Reflect.field(_item, name), rest.toArray());
@@ -146,11 +119,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @return A Boolean indicating if the property was deleted.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function deleteProperty(name:Dynamic):Bool {
 		var oldVal:Dynamic = Reflect.field(_item, name);
@@ -180,11 +148,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @see flash.utils.Proxy#hasProperty()
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function hasProperty(name:Dynamic):Bool {
 		return Reflect.hasField(_item, name);
@@ -201,11 +164,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @see flash.utils.Proxy#nextName()
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextName(index:Int):String {
 		return propertyList[index - 1];
@@ -222,11 +180,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @see flash.utils.Proxy#nextNameIndex()
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextNameIndex(index:Int):Int {
 		if (index < propertyList.length) {
@@ -247,11 +200,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @see flash.utils.Proxy#nextValue()
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextValue(index:Int):Dynamic {
 		return Reflect.field(_item, propertyList[index - 1]);
@@ -266,11 +214,6 @@ class ConfigMap extends flash.utils.Proxy {
 	 *
 	 *  @param value Value that should be set on the proxied object.
 	 *
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3     
 	 */
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function setProperty(name:Dynamic, value:Dynamic):Void {
 		var oldVal:Dynamic = Reflect.field(_item, name);

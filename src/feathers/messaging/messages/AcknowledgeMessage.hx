@@ -25,12 +25,6 @@ import openfl.utils.IDataOutput;
  *  was sent previously.
  *  Every message sent within the messaging system must receive an
  *  acknowledgement.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
  */
 @:meta(RemoteClass(alias = "flex.messaging.messages.AcknowledgeMessage"))
 class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
@@ -45,11 +39,6 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	 *  Used to indicate that the acknowledgement is for a message that
 	 *  generated an error.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static final ERROR_HINT_HEADER:String = "DSErrorHint";
 
@@ -62,11 +51,6 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	/**
 	 *  Constructs an instance of an AcknowledgeMessage with an empty body and header.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {
 		super();

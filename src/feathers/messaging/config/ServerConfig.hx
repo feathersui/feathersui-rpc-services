@@ -29,16 +29,10 @@ import openfl.errors.ArgumentError;
  *  and is used by the messaging system to provide configured ChannelSets and Channels
  *  to the messaging framework.
  *
- *  <p>The XML source is provided during the compilation process.
+ *  The XML source is provided during the compilation process.
  *  However, there is currently no internal restriction preventing the
  *  acquisition of this XML data by other means, such as network, local file
- *  system, or shared object at runtime.</p>
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
+ *  system, or shared object at runtime.
  */
 @:access(feathers.messaging.MessageAgent)
 class ServerConfig {
@@ -118,11 +112,6 @@ class ServerConfig {
 	 *  The XML configuration; this value must contain the relevant portions of
 	 *  the &lt;services&gt; tag from the services-config.xml file.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static var xml(get, set):Xml;
 
@@ -173,11 +162,6 @@ class ServerConfig {
 	 *  @throw   ArgumentError if the channel definitions of the specified
 	 *           destinations aren't identical.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function checkChannelConsistency(destinationA:String, destinationB:String):Void {
 		var channelIdsA = getChannelIdList(destinationA);
@@ -232,11 +216,6 @@ class ServerConfig {
 	 *
 	 *  @throws mx.messaging.errors.InvalidChannelError If no Channel has the specified id.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function getChannel(id:String, clustered:Bool = false):Channel {
 		var channel:Channel;
@@ -272,11 +251,6 @@ class ServerConfig {
 	 *                                  does not have channels and the application
 	 *                                  did not define default channels.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function getChannelSet(destinationId:String):ChannelSet {
 		var destinationConfig = getDestinationConfig(destinationId);
@@ -292,11 +266,6 @@ class ServerConfig {
 	 *
 	 *  @throws mx.messaging.errors.InvalidDestinationError If the specified destination is not found.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public static function getProperties(destinationId:String):Array<Xml> {
 		var destinations:Array<Xml> = [];
@@ -332,11 +301,6 @@ class ServerConfig {
 	 *  This method returns true iff the channelset specified has channels with
 	 *  ids or uris that match those found in the destination specified.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static function channelSetMatchesDestinationConfig(channelSet:ChannelSet, destination:String):Bool {
 		if (channelSet != null) {
@@ -523,11 +487,6 @@ class ServerConfig {
 	 *  @throws mx.messaging.errors.InvalidChannelError If no configuration data for the specified
 	 *                             id exists.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static function createChannel(channelId:String):Channel {
 		var message:String;
@@ -571,11 +530,6 @@ class ServerConfig {
 	/**
 	 * Converts the ConfigMap of properties into XML
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static function convertToXML(config:#if flash ConfigMap #else Any #end, configXML:Xml):Void {
 		for (propertyKey in Reflect.fields(config)) {
@@ -638,11 +592,6 @@ class ServerConfig {
 	 *  Returns the destination XML data specific to the destination and message
 	 *  type specified. Returns null if the destination is not found.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static function getDestinationConfig(destinationId:String):Xml {
 		for (destination in xml.elementsNamed("destination")) {
@@ -663,11 +612,6 @@ class ServerConfig {
 	 *
 	 *  @return The ChannelSet.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	private static function internalGetChannelSet(destinationConfig:Xml, destinationId:String):ChannelSet {
 		var channelIds:Array<String>;

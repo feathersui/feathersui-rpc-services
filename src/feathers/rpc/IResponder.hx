@@ -20,11 +20,6 @@ package feathers.rpc;
 /**
  *  This interface provides the contract for any service
  *  that needs to respond to remote or asynchronous calls.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 interface IResponder {
 	/**

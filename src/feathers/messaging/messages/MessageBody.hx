@@ -19,14 +19,6 @@ package feathers.messaging.messages;
 
 /**
  *  The MessageBody for an ActionMessage
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
- * 
- *  @royalesuppresspublicvarwarning
  */
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.MessageBody"))
 class MessageBody {
@@ -39,11 +31,6 @@ class MessageBody {
 	/**
 	 *  Constructs an instance of a MessageBody
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {}
 
@@ -56,22 +43,12 @@ class MessageBody {
 	/**
 	 *  The target URI.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var targetURI:String = "null";
 
 	/**
 	 *  The response URI.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var responseURI:String = "/1";
 
@@ -92,11 +69,6 @@ class MessageBody {
 	/**
 	 *  The data to be sent.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var data(get, set):Dynamic;
 

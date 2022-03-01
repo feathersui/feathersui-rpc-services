@@ -25,11 +25,6 @@ import openfl.events.EventType;
 
 /**
  * This event is dispatched when an RPC call has a fault.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion Flex 3
  */
 class FaultEvent extends AbstractEvent {
 	//--------------------------------------------------------------------------
@@ -41,7 +36,8 @@ class FaultEvent extends AbstractEvent {
 	/**
 	 * The FAULT event type.
 	 *
-	 * <p>The properties of the event object have the following values:</p>
+	 * The properties of the event object have the following values:
+	 * 
 	 * <table class="innertable">
 	 *     <tr><th>Property</th><th>Value</th></tr>
 	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
@@ -63,11 +59,6 @@ class FaultEvent extends AbstractEvent {
 	 *     to the method. Used in the asynchronous completion token pattern.</td></tr>   
 	 *  </table>
 	 *  @eventType fault 
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static final FAULT:EventType<FaultEvent> = "fault";
 
@@ -86,11 +77,6 @@ class FaultEvent extends AbstractEvent {
 	 * @param fault Object that holds details of the fault, including a faultCode and faultString.
 	 * @param token Token representing the call to the method. Used in the asynchronous completion token pattern.
 	 * @param message Source Message of the fault.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = true, fault:Fault = null, token:AsyncToken = null, message:IMessage = null) {
 		super(type, bubbles, cancelable, token, message);
@@ -110,11 +96,6 @@ class FaultEvent extends AbstractEvent {
 
 	/**
 	 * The Fault object that contains the details of what caused this event.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var fault(get, never):Fault;
 
@@ -125,11 +106,6 @@ class FaultEvent extends AbstractEvent {
 	/**
 	 * In certain circumstances, headers may also be returned with a fault to
 	 * provide further context to the failure.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var headers(get, set):Any;
 
@@ -146,11 +122,6 @@ class FaultEvent extends AbstractEvent {
 	 * If the source message was sent via HTTP, this property provides access
 	 * to the HTTP response status code (if available), otherwise the value is
 	 * 0.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public var statusCode(get, never):Int;
 
@@ -177,11 +148,6 @@ class FaultEvent extends AbstractEvent {
 	 * Returns a string representation of the FaultEvent.
 	 *
 	 * @return String representation of the FaultEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	override public function toString():String {
 		#if flash
@@ -219,11 +185,6 @@ class FaultEvent extends AbstractEvent {
 	 *  fault information from.
 	 *  @param token AsyncToken [optional] associated with this fault.
 	 *  @return Returns a FaultEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function createEventFromMessageFault(value:MessageFaultEvent, token:AsyncToken = null):FaultEvent {
 		var fault:Fault = new Fault(value.faultCode, value.faultString, value.faultDetail);
@@ -239,11 +200,6 @@ class FaultEvent extends AbstractEvent {
 	 *  @param token AsyncToken [optional] associated with this fault.
 	 *  @param msg Message [optional] associated with this fault.
 	 *  @return Returns a FaultEvent.
-	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion Flex 3
 	 */
 	public static function createEvent(fault:Fault, token:AsyncToken = null, msg:IMessage = null):FaultEvent {
 		return new FaultEvent(FaultEvent.FAULT, false, true, fault, token, msg);

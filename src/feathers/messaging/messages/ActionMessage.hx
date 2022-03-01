@@ -21,14 +21,6 @@ package feathers.messaging.messages;
  *  The CommandMessage class provides a mechanism for sending commands to the
  *  server infrastructure, such as commands related to publish/subscribe 
  *  messaging scenarios, ping operations, and cluster operations.
- *  
- *  @langversion 3.0
- *  @playerversion Flash 9
- *  @playerversion AIR 1.1
- *  @productversion BlazeDS 4
- *  @productversion LCDS 3 
- * 
- *  @royalesuppresspublicvarwarning
  */
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.ActionMessage"))
 class ActionMessage {
@@ -42,11 +34,6 @@ class ActionMessage {
 	 *  Constructs an instance of an ActionMessage with an empty array of bodies
 	 *  and headers.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public function new() {}
 
@@ -59,11 +46,6 @@ class ActionMessage {
 	/**
 	 *  The version of the ActionMessage.  Probably should not be changed.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var version:Int = 3;
 
@@ -89,11 +71,6 @@ class ActionMessage {
 	/**
 	 *  The array of MessageBody instances.
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var bodies(get, set):Array<MessageBody>;
 
@@ -121,11 +98,6 @@ class ActionMessage {
 	/**
 	 *  The array of MessageHeaders
 	 *  
-	 *  @langversion 3.0
-	 *  @playerversion Flash 9
-	 *  @playerversion AIR 1.1
-	 *  @productversion BlazeDS 4
-	 *  @productversion LCDS 3 
 	 */
 	public var headers(get, set):Array<MessageHeader>;
 

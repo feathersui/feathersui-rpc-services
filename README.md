@@ -39,3 +39,7 @@ After installing the library above, add it to your OpenFL _project.xml_ file:
 ```xml
 <haxelib name="feathersui-rpc-services" />
 ```
+
+## Documentation
+
+- [feathersui-rpc-services API Reference](https://api.feathersui.com/rpc-services/unstable/)

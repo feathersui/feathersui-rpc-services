@@ -403,7 +403,7 @@ class AMF3Test extends Test {
 		Assert.isTrue(bytesMatchExpectedData(ba, [10]));
 	}
 
-	#if !flash
+	#if (!flash && openfl >= "9.2.0")
 	public function testExternalizable():Void {
 		var test3 = new TestClass3b();
 		// register an alias

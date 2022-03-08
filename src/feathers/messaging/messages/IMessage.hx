@@ -35,6 +35,7 @@ interface IMessage {
 	 *  delivered to the remote destination.
 	 *  
 	 */
+	@:flash.property
 	var body(get, set):Any;
 
 	//----------------------------------
@@ -45,6 +46,7 @@ interface IMessage {
 	 *  The clientId indicates which client sent the message.
 	 *  
 	 */
+	@:flash.property
 	var clientId(get, set):String;
 
 	//----------------------------------
@@ -55,6 +57,7 @@ interface IMessage {
 	 *  The message destination.
 	 *  
 	 */
+	@:flash.property
 	var destination(get, set):String;
 
 	//----------------------------------
@@ -69,6 +72,7 @@ interface IMessage {
 	 *  specific message instance.
 	 *  
 	 */
+	@:flash.property
 	var headers(get, set):Any;
 
 	//----------------------------------
@@ -81,6 +85,7 @@ interface IMessage {
 	 *  request message in request-response messaging scenarios.
 	 *  
 	 */
+	@:flash.property
 	var messageId(get, set):String;
 
 	//----------------------------------
@@ -97,6 +102,7 @@ interface IMessage {
 	 *  @see #timeToLive
 	 *  
 	 */
+	@:flash.property
 	var timestamp(get, set):Float;
 
 	//----------------------------------
@@ -115,6 +121,7 @@ interface IMessage {
 	 *  Once a message expires it will not be delivered to any other clients.
 	 *  
 	 */
+	@:flash.property
 	var timeToLive(get, set):Float;
 
 	//--------------------------------------------------------------------------

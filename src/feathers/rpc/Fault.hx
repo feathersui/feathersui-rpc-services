@@ -67,6 +67,7 @@ class Fault extends Error {
 	/**
 	 * A simple code describing the fault.
 	 */
+	@:flash.property
 	public var faultCode(get, never):String;
 
 	private function get_faultCode():String {
@@ -76,6 +77,7 @@ class Fault extends Error {
 	/**
 	 * Any extra details of the fault.
 	 */
+	@:flash.property
 	public var faultDetail(get, never):String;
 
 	private function get_faultDetail():String {
@@ -85,6 +87,7 @@ class Fault extends Error {
 	/**
 	 * Text description of the fault.
 	 */
+	@:flash.property
 	public var faultString(get, never):String;
 
 	private function get_faultString():String {

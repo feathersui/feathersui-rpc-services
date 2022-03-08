@@ -157,6 +157,7 @@ class HTTPMultiService extends AbstractService {
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
 	 */
+	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -177,6 +178,7 @@ class HTTPMultiService extends AbstractService {
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
 	 */
+	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -263,6 +265,7 @@ class HTTPMultiService extends AbstractService {
 	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
 	 *    XML (E4X) expressions.
 	 */
+	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -335,6 +338,7 @@ class HTTPMultiService extends AbstractService {
 	 *
 	 *  @default false    
 	 */
+	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -364,6 +368,7 @@ class HTTPMultiService extends AbstractService {
 	 * define a set of operations as direct children of the HTTPMultiService
 	 * tag in MXML.
 	 */
+	@:flash.property
 	public var operationList(get, set):Array<AbstractOperation>;
 
 	private function get_operationList():Array<AbstractOperation> {

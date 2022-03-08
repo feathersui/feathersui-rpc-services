@@ -146,6 +146,7 @@ class MessagePerformanceInfo {
 	 * @param type - "IN" or "OUT" info type
 	 *  
 	 */
+	@:flash.property
 	public var infoType(get, set):String;
 
 	private function set_infoType(type:String):String {
@@ -174,6 +175,7 @@ class MessagePerformanceInfo {
 	 * 
 	 * @param time - the receive time to set
 	 */
+	@:flash.property
 	public var receiveTime(get, set):Float;
 
 	private function set_receiveTime(time:Float):Float {

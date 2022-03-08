@@ -77,6 +77,7 @@ class AbstractService implements IEventDispatcher {
 	 *  dynamically created to use the configured Channels for the
 	 *  <code>destination</code> for this service.
 	 */
+	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -102,6 +103,7 @@ class AbstractService implements IEventDispatcher {
 	 * The destination of the service. This value should match a destination
 	 * entry in the services-config.xml file.
 	 */
+	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -126,6 +128,7 @@ class AbstractService implements IEventDispatcher {
 	 * the value of this service.  When this service is initialized, we also call
 	 * the initialize method on any manager components.
 	 */
+	@:flash.property
 	public var managers(get, set):Array<Dynamic>;
 
 	private function get_managers():Array<Dynamic> {
@@ -164,6 +167,7 @@ class AbstractService implements IEventDispatcher {
 	 * @private
 	 * This is required by data binding.
 	 */
+	@:flash.property
 	public var operations(get, set):Dynamic;
 
 	private function get_operations():Dynamic {
@@ -198,6 +202,7 @@ class AbstractService implements IEventDispatcher {
 	 *  Provides access to the request timeout in seconds for sent messages. 
 	 *  A value less than or equal to zero prevents request timeout.
 	 */
+	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -236,6 +241,7 @@ class AbstractService implements IEventDispatcher {
 		@see mx.rpc.AbstractInvoker#keepLastResult
 		@default true
 	**/
+	@:flash.property
 	public var keepLastResult(get, set):Bool;
 
 	private function get_keepLastResult():Bool {

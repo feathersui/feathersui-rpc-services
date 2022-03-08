@@ -181,6 +181,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Indicates if this MessageAgent is using an authenticated connection to
 	 *  its destination.
 	 */
+	@:flash.property
 	public var authenticated(get, never):Bool;
 
 	private function get_authenticated():Bool {
@@ -218,6 +219,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  dynamically initialized to use the configured Channels for the
 	 *  destination for this MessageAgent.
 	 */
+	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -277,6 +279,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  and this value is used to route messages from the remote destination to
 	 *  the proper MessageAgent.
 	 */
+	@:flash.property
 	public var clientId(get, never):String;
 
 	private function get_clientId():String {
@@ -318,6 +321,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  destination via its ChannelSet. The <code>propertyChange</code> event is dispatched when
 	 *  this property changes.
 	 */
+	@:flash.property
 	public var connected(get, never):Bool;
 
 	private function get_connected():Bool {
@@ -355,6 +359,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @throws mx.messaging.errors.InvalidDestinationError If the destination is null or
 	 *                                  zero-length.
 	 */
+	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -402,6 +407,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  @private
 	 *  The id of this agent.
 	 */
+	@:flash.property
 	public var id(get, set):String;
 
 	private function get_id():String {
@@ -437,6 +443,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  remote destination before the timeout is reached the message is faulted on the client.
 	 *  A value less than or equal to zero prevents request timeout.
 	 */
+	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {

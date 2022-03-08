@@ -216,6 +216,7 @@ class HTTPService extends AbstractInvoker {
 	 *  dynamically created to use the configured Channels for the
 	 *  <code>destination</code> for this service.
 	 */
+	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
 	private function get_channelSet():ChannelSet {
@@ -242,6 +243,7 @@ class HTTPService extends AbstractInvoker {
 	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
 	 *  requests as XML.
 	 */
+	@:flash.property
 	public var contentType(get, set):String;
 
 	private function get_contentType():String {
@@ -267,6 +269,7 @@ class HTTPService extends AbstractInvoker {
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
 	 */
+	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -289,6 +292,7 @@ class HTTPService extends AbstractInvoker {
 	 *  If you are using the <code>url</code> property, but want requests
 	 *  to reach the proxy over HTTPS, specify <code>DefaultHTTPS</code>.
 	 */
+	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -327,6 +331,7 @@ class HTTPService extends AbstractInvoker {
 	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
 	 *  be sent with the same name the value should be specified as an Array.
 	 */
+	@:flash.property
 	public var headers(get, set):Dynamic;
 
 	private function get_headers():Dynamic {
@@ -348,6 +353,7 @@ class HTTPService extends AbstractInvoker {
 	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
 	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
 	 */
+	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {
@@ -368,6 +374,7 @@ class HTTPService extends AbstractInvoker {
 	 *  Object of name-value pairs used as parameters to the URL. If
 	 *  the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
 	 */
+	@:flash.property
 	public var request(get, set):Dynamic;
 
 	private function get_request():Dynamic {
@@ -407,6 +414,7 @@ class HTTPService extends AbstractInvoker {
 		  in an ActionScript XML object, which can be accessed using ECMAScript for 
 		  XML (E4X) expressions.
 	**/
+	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -430,6 +438,7 @@ class HTTPService extends AbstractInvoker {
 	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
 	 *  mx.messaging.config.LoaderConfig.url.
 	 */
+	@:flash.property
 	public var rootURL(get, set):String;
 
 	private function get_rootURL():String {
@@ -450,6 +459,7 @@ class HTTPService extends AbstractInvoker {
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
 	 */
+	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -472,6 +482,7 @@ class HTTPService extends AbstractInvoker {
 	 * resultFormat by registering a SerializationFilter using the static method:
 	 * SerializationFilter.registerFilterForResultFormat("formatName", filter)
 	 */
+	@:flash.property
 	public var serializationFilter(get, set):SerializationFilter;
 
 	private function get_serializationFilter():SerializationFilter {
@@ -489,6 +500,7 @@ class HTTPService extends AbstractInvoker {
 	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
 	 *  your destination in the services-config.xml file must allow the specified URL.
 	 */
+	@:flash.property
 	public var url(get, set):String;
 
 	private function get_url():String {
@@ -510,6 +522,7 @@ class HTTPService extends AbstractInvoker {
 	 *
 	 *  @default false    
 	 */
+	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -650,6 +663,7 @@ class HTTPService extends AbstractInvoker {
 	 *  Provides access to the request timeout in seconds for sent messages. 
 	 *  A value less than or equal to zero prevents request timeout.
 	 */
+	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {

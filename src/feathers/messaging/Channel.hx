@@ -236,6 +236,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Provides access to the ChannelSets connected to the Channel.
 	 *
 	 */
+	@:flash.property
 	public var channelSets(get, never):Array<ChannelSet>;
 
 	private function get_channelSets():Array<ChannelSet> {
@@ -257,6 +258,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Indicates whether this channel has established a connection to the 
 	 *  remote destination.
 	 */
+	@:flash.property
 	public var connected(get, never):Bool;
 
 	private function get_connected():Bool {
@@ -298,6 +300,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  to connect to.
 	 *  
 	 */
+	@:flash.property
 	public var connectTimeout(get, set):Int;
 
 	private function get_connectTimeout():Int {
@@ -326,6 +329,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  This value is calculated based on the value of the <code>uri</code>
 	 *  property.
 	 */
+	@:flash.property
 	public var endpoint(get, never):String;
 
 	private function get_endpoint():String {
@@ -348,6 +352,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * we inject timestamps or not. 
 	 *
 	 */
+	@:flash.property
 	public var recordMessageTimes(get, never):Bool;
 
 	private function get_recordMessageTimes():Bool {
@@ -367,6 +372,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * Channel property determines the level of performance information injection - whether
 	 * we inject message sizes or not.
 	 */
+	@:flash.property
 	public var recordMessageSizes(get, never):Bool;
 
 	private function get_recordMessageSizes():Bool {
@@ -388,6 +394,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Indicates whether this channel is in the process of reconnecting to an
 	 *  alternate endpoint.
 	 */
+	@:flash.property
 	public var reconnecting(get, never):Bool;
 
 	private function get_reconnecting():Bool {
@@ -418,6 +425,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  This property is automatically populated when clustering is enabled.
 	 *  If you don't use clustering, you can set your own values.
 	 */
+	@:flash.property
 	public var failoverURIs(get, set):Array<String>;
 
 	private function get_failoverURIs():Array<String> {
@@ -447,6 +455,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 *  Provides access to the id of this channel.
 	 */
+	@:flash.property
 	public var id(get, set):String;
 
 	private function get_id():String {
@@ -469,6 +478,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 	 *  Indicates if this channel is authenticated.
 	 */
+	@:flash.property
 	public var authenticated(get, never):Bool;
 
 	private function get_authenticated():Bool {
@@ -501,6 +511,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  a string that represents their supported protocol.
 	 *  Examples of supported protocol strings are "rtmp", "http" or "https".
 	 */
+	@:flash.property
 	public var protocol(get, never):String;
 
 	private function get_protocol():String {
@@ -538,6 +549,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Request timeouts are most useful for RPC style messaging that 
 	 *  requires a response from the remote destination.
 	 */
+	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -585,6 +597,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 *  Provides access to the URI used to create the whole endpoint URI for this channel. 
 	 *  The URI can be a partial path, in which case the full endpoint URI is computed as necessary.
 	 */
+	@:flash.property
 	public var uri(get, set):String;
 
 	private function get_uri():String {
@@ -605,6 +618,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * endpoint configuration attribute &quot;url&quot;. This property is
 	 * equivalent to the <code>uri</code> property.
 	 */
+	@:flash.property
 	public var url(get, set):String;
 
 	private function get_url():String {
@@ -635,6 +649,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * they support this feature.
 	 * @private
 	 */
+	@:flash.property
 	public var useSmallMessages(get, set):Bool;
 
 	private function get_useSmallMessages():Bool {
@@ -921,6 +936,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	 * @private     
 	 * Should we record any performance metrics
 	 */
+	@:flash.property
 	public var mpiEnabled(get, never):Bool;
 
 	private function get_mpiEnabled():Bool {

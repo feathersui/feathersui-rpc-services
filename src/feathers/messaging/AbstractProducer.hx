@@ -103,6 +103,7 @@ class AbstractProducer extends MessageAgent {
 	 *  from connecting implicitly.
 	 *  
 	 */
+	@:flash.property
 	public var autoConnect(get, set):Bool;
 
 	private function get_autoConnect():Bool {
@@ -139,6 +140,7 @@ class AbstractProducer extends MessageAgent {
 	 *  message takes precedence and the default header value is ignored. 
 	 *  
 	 */
+	@:flash.property
 	public var defaultHeaders(get, set):Dynamic;
 
 	private function get_defaultHeaders():Dynamic {
@@ -175,6 +177,7 @@ class AbstractProducer extends MessageAgent {
 	 *  priority defined, that takes precedence over Producer's priority.
 	 *  
 	 */
+	@:flash.property
 	public var priority(get, set):Int;
 
 	private function get_priority():Int {
@@ -222,6 +225,7 @@ class AbstractProducer extends MessageAgent {
 	 *  @see mx.messaging.Producer#reconnectInterval
 	 *  
 	 */
+	@:flash.property
 	public var reconnectAttempts(get, set):Int;
 
 	private function get_reconnectAttempts():Int {
@@ -273,6 +277,7 @@ class AbstractProducer extends MessageAgent {
 	 *  @throws ArgumentError If the assigned value is negative.
 	 *  
 	 */
+	@:flash.property
 	public var reconnectInterval(get, set):Int;
 
 	private function get_reconnectInterval():Int {

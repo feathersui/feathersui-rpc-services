@@ -155,6 +155,7 @@ class AbstractMessage implements IMessage {
 	 *  delivered to the remote destination.
 	 *  
 	 */
+	@:flash.property
 	public var body(get, set):Any;
 
 	private function get_body():Any {
@@ -187,6 +188,7 @@ class AbstractMessage implements IMessage {
 	 *  The clientId indicates which MessageAgent sent the message.
 	 *  
 	 */
+	@:flash.property
 	public var clientId(get, set):String;
 
 	private function get_clientId():String {
@@ -215,6 +217,7 @@ class AbstractMessage implements IMessage {
 	 *  The message destination.
 	 *  
 	 */
+	@:flash.property
 	public var destination(get, set):String;
 
 	private function get_destination():String {
@@ -247,6 +250,7 @@ class AbstractMessage implements IMessage {
 	 *  with a unique prefix to avoid name collisions.
 	 *  
 	 */
+	@:flash.property
 	public var headers(get, set):Any;
 
 	private function get_headers():Any {
@@ -282,6 +286,7 @@ class AbstractMessage implements IMessage {
 	 *  The unique id for the message.
 	 *  
 	 */
+	@:flash.property
 	public var messageId(get, set):String;
 
 	private function get_messageId():String {
@@ -319,6 +324,7 @@ class AbstractMessage implements IMessage {
 	 *  @see #timeToLive
 	 *  
 	 */
+	@:flash.property
 	public var timestamp(get, set):Float;
 
 	private function get_timestamp():Float {
@@ -354,6 +360,7 @@ class AbstractMessage implements IMessage {
 	 *  Once a message expires it will not be delivered to any other clients.
 	 *  
 	 */
+	@:flash.property
 	public var timeToLive(get, set):Float;
 
 	private function get_timeToLive():Float {

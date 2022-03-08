@@ -107,6 +107,7 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	 *  @see mx.messaging.messages.AbstractMessage#messageId
 	 *  
 	 */
+	@:flash.property
 	public var correlationId(get, set):String;
 
 	private function get_correlationId():String {

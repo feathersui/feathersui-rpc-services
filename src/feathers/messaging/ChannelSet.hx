@@ -240,6 +240,7 @@ class ChannelSet extends EventDispatcher {
 	 *  Indicates whether the ChannelSet has an underlying Channel that successfully
 	 *  authenticated with its endpoint.
 	 */
+	@:flash.property
 	public var authenticated(get, never):Bool;
 
 	private function get_authenticated():Bool {
@@ -288,6 +289,7 @@ class ChannelSet extends EventDispatcher {
 	 *  @throws flash.errors.IllegalOperationError If the ChannelSet is
 	 *             <code>configured</code>, assigning to this property is not allowed.
 	 */
+	@:flash.property
 	public var channels(get, set):Array<Channel>;
 
 	private function get_channels():Array<Channel> {
@@ -333,6 +335,7 @@ class ChannelSet extends EventDispatcher {
 	/**
 	 *  The ids of the Channels used by the ChannelSet.
 	 */
+	@:flash.property
 	public var channelIds(get, never):Array<String>;
 
 	private function get_channelIds():Array<String> {
@@ -363,6 +366,7 @@ class ChannelSet extends EventDispatcher {
 	/**
 	 *  Returns the current Channel for the ChannelSet.
 	 */
+	@:flash.property
 	public var currentChannel(get, never):Channel;
 
 	private function get_currentChannel():Channel {
@@ -441,6 +445,7 @@ class ChannelSet extends EventDispatcher {
 	/**
 	 *  Indicates whether the ChannelSet is connected.
 	 */
+	@:flash.property
 	public var connected(get, never):Bool;
 
 	private function get_connected():Bool {
@@ -485,6 +490,7 @@ class ChannelSet extends EventDispatcher {
 	 *  If the ChannelSet is not using url load balancing on the client this
 	 *  property should not be set to true.
 	 */
+	@:flash.property
 	public var clustered(get, set):Bool;
 
 	private function get_clustered():Bool {
@@ -549,6 +555,7 @@ class ChannelSet extends EventDispatcher {
 	 *  the remote host, heartbeats are suppressed because the periodic poll
 	 *  requests effectively take their place.
 	 */
+	@:flash.property
 	public var heartbeatInterval(get, set):Int;
 
 	private function get_heartbeatInterval():Int {
@@ -584,6 +591,7 @@ class ChannelSet extends EventDispatcher {
 	 *  When the clustered property is true, this value is used to request available failover URIs
 	 *  for the configured channels for the destination.
 	 */
+	@:flash.property
 	public var initialDestinationId(get, set):String;
 
 	private function get_initialDestinationId():String {
@@ -610,6 +618,7 @@ class ChannelSet extends EventDispatcher {
 	/**
 	 *  Provides access to the set of MessageAgents that use this ChannelSet.
 	 */
+	@:flash.property
 	public var messageAgents(get, never):Array<MessageAgent>;
 
 	private function get_messageAgents():Array<MessageAgent> {
@@ -1632,6 +1641,7 @@ class AuthenticationAgent extends MessageAgent {
 	 * Returns the current state for the agent.
 	 * See the static state constants defined by this class.
 	 */
+	@:flash.property
 	public var state(get, set):Int;
 
 	private function get_state():Int {

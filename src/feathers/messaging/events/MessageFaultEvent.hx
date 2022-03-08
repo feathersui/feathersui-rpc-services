@@ -144,6 +144,7 @@ class MessageFaultEvent extends Event {
 	 *  @see #faultDetail
 	 *  
 	 */
+	@:flash.property
 	public var faultCode(get, never):String;
 
 	private function get_faultCode():String {
@@ -164,6 +165,7 @@ class MessageFaultEvent extends Event {
 	 *  @see #faultCode
 	 *  
 	 */
+	@:flash.property
 	public var faultDetail(get, never):String;
 
 	private function get_faultDetail():String {
@@ -181,6 +183,7 @@ class MessageFaultEvent extends Event {
 	 *  @see #faultDetail
 	 *  
 	 */
+	@:flash.property
 	public var faultString(get, never):String;
 
 	private function get_faultString():String {
@@ -201,6 +204,7 @@ class MessageFaultEvent extends Event {
 	 *  @see MessageFaultEvent#rootCause
 	 *  
 	 */
+	@:flash.property
 	public var rootCause(get, never):Dynamic;
 
 	private function get_rootCause():Dynamic {

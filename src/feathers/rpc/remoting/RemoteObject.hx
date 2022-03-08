@@ -91,6 +91,7 @@ class RemoteObject extends AbstractService {
 	 * this mode when results or faults for requests may be safely ignored.</li>
 	 * </ul>
 	 */
+	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -121,6 +122,7 @@ class RemoteObject extends AbstractService {
 	 *
 	 * **Note:** This property is required when creating AIR applications.
 	 */
+	@:flash.property
 	public var endpoint(get, set):String;
 
 	private function get_endpoint():String {
@@ -145,6 +147,7 @@ class RemoteObject extends AbstractService {
 	/**
 	 * When this value is true, anonymous objects returned are forced to bindable objects.
 	 */
+	@:flash.property
 	public var makeObjectsBindable(get, set):Bool;
 
 	private function get_makeObjectsBindable():Bool {
@@ -165,6 +168,7 @@ class RemoteObject extends AbstractService {
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
 	 */
+	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -186,6 +190,7 @@ class RemoteObject extends AbstractService {
 	 * that can be accessed from a single destination on the server. 
 	 *     
 	 */
+	@:flash.property
 	public var source(get, set):String;
 
 	private function get_source():String {

@@ -89,6 +89,7 @@ class AbstractOperation extends AbstractInvoker {
 	 * The name of this Operation. This is how the Operation is accessed off the
 	 * service. It can only be set once.
 	 */
+	@:flash.property
 	public var name(get, set):String;
 
 	private function get_name():String {
@@ -109,6 +110,7 @@ class AbstractOperation extends AbstractInvoker {
 	 * is being invoked. Note that the service cannot be changed after
 	 * the Operation is constructed.
 	 */
+	@:flash.property
 	public var service(get, never):AbstractService;
 
 	private function get_service():AbstractService {

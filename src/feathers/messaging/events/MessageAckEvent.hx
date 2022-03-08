@@ -137,6 +137,7 @@ class MessageAckEvent extends MessageEvent {
 	 *  Utility property to get the message property from the MessageEvent as an AcknowledgeMessage.  
 	 *  
 	 */
+	@:flash.property
 	public var acknowledgeMessage(get, never):AcknowledgeMessage;
 
 	private function get_acknowledgeMessage():AcknowledgeMessage {
@@ -150,6 +151,7 @@ class MessageAckEvent extends MessageEvent {
 	/**
 	 *  @private
 	 */
+	@:flash.property
 	public var correlationId(get, never):String;
 
 	private function get_correlationId():String {

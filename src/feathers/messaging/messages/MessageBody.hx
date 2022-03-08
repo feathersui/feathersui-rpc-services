@@ -70,6 +70,7 @@ class MessageBody {
 	 *  The data to be sent.
 	 *  
 	 */
+	@:flash.property
 	public var data(get, set):Dynamic;
 
 	private function get_data():Dynamic {

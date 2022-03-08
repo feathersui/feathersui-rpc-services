@@ -92,6 +92,7 @@ class Producer extends AbstractProducer {
 	 *  Provides access to the subtopic for the remote destination that the MessageAgent uses.
 	 *  
 	 */
+	@:flash.property
 	public var subtopic(get, set):String;
 
 	private function get_subtopic():String {

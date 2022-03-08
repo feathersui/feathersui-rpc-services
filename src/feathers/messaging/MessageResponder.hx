@@ -108,6 +108,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *  Provides access to the MessageAgent that sent the message.
 	 *  
 	 */
+	@:flash.property
 	public var agent(get, never):MessageAgent;
 
 	private function get_agent():MessageAgent {
@@ -127,6 +128,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *  Provides access to the Channel used to send the message.
 	 *  
 	 */
+	@:flash.property
 	public var channel(get, never):Channel;
 
 	private function get_channel():Channel {
@@ -146,6 +148,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	 *  Provides access to the sent Message.
 	 *  
 	 */
+	@:flash.property
 	public var message(get, set):IMessage;
 
 	private function get_message():IMessage {

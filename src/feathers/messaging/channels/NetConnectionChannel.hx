@@ -106,6 +106,7 @@ class NetConnectionChannel extends PollingChannel {
 	 *  Provides access to the associated NetConnection for this Channel.
 	 *  
 	 */
+	@:flash.property
 	public var netConnection(get, never):NetConnection;
 
 	private function get_netConnection():NetConnection {
@@ -122,6 +123,7 @@ class NetConnectionChannel extends PollingChannel {
 	 *  Provides access to the associated NetConnection for this Channel.
 	 *  
 	 */
+	@:flash.property
 	public var netConnection(get, never):AMFNetConnection;
 
 	private function get_netConnection():AMFNetConnection {

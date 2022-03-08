@@ -109,6 +109,7 @@ class FlexClient extends EventDispatcher {
 	 *  If no Channel has connected to a server this value is null.
 	 *  
 	 */
+	@:flash.property
 	public var id(get, set):String;
 
 	private function get_id():String {

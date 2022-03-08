@@ -96,6 +96,7 @@ class AMFReader #if !flash implements IDataInput #end {
 
 	private var target:ByteArray;
 
+	@:flash.property
 	public var endian(get, set):Endian;
 
 	private function get_endian():Endian {
@@ -109,6 +110,7 @@ class AMFReader #if !flash implements IDataInput #end {
 
 	public var objectEncoding:ObjectEncoding = AMF3;
 
+	@:flash.property
 	public var bytesAvailable(get, never):Int;
 
 	private function get_bytesAvailable():Int {

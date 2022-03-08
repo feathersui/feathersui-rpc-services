@@ -122,6 +122,7 @@ class AMFChannel extends NetConnectionChannel {
 	 *  along with its response to client's message.
 	 *  
 	 */
+	@:flash.property
 	public var piggybackingEnabled(get, set):Bool;
 
 	private function get_piggybackingEnabled():Bool {
@@ -144,6 +145,7 @@ class AMFChannel extends NetConnectionChannel {
 	 *  Indicates whether this channel is enabled to poll.
 	 *  
 	 */
+	@:flash.property
 	public var pollingEnabled(get, set):Bool;
 
 	private function get_pollingEnabled():Bool {
@@ -172,6 +174,7 @@ class AMFChannel extends NetConnectionChannel {
 	 *                        less.
 	 *  
 	 */
+	@:flash.property
 	public var pollingInterval(get, set):Float;
 
 	private function get_pollingInterval():Float {
@@ -194,6 +197,7 @@ class AMFChannel extends NetConnectionChannel {
 	 *  Reports whether the channel is actively polling.
 	 *  
 	 */
+	@:flash.property
 	public var polling(get, never):Bool;
 
 	private function get_polling():Bool {

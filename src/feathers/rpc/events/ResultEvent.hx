@@ -96,6 +96,7 @@ class ResultEvent extends AbstractEvent {
 	 * In certain circumstances, headers may also be returned with a result to
 	 * provide further context.
 	 */
+	@:flash.property
 	public var headers(get, set):Any;
 
 	private function get_headers():Any {
@@ -110,6 +111,7 @@ class ResultEvent extends AbstractEvent {
 	/**
 	 * Result that the RPC call returns.
 	 */
+	@:flash.property
 	public var result(get, never):Dynamic;
 
 	private function get_result():Dynamic {
@@ -121,6 +123,7 @@ class ResultEvent extends AbstractEvent {
 	 * to the HTTP response status code (if available), otherwise the value is
 	 * 0.
 	 */
+	@:flash.property
 	public var statusCode(get, never):Int;
 
 	private function get_statusCode():Int {

@@ -61,6 +61,7 @@ class Operation extends AbstractOperation {
 	 * The concurrency for this Operation.  If it has not been explicitly set the setting from the RemoteObject
 	 * will be used.
 	 */
+	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -104,6 +105,7 @@ class Operation extends AbstractOperation {
 	 * If it has not been explicitly set the setting from the RemoteObject
 	 * will be used.
 	 */
+	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {

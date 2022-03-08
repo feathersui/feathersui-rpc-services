@@ -35,6 +35,7 @@ class AbstractEvent extends MessageEvent {
 	/**
 	 * The token that represents the call to the method. Used in the asynchronous completion token pattern.
 	 */
+	@:flash.property
 	public var token(get, never):AsyncToken;
 
 	public function get_token():AsyncToken {

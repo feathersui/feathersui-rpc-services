@@ -59,6 +59,7 @@ class AsyncToken extends EventDispatcher {
 	/**
 	 *  Provides access to the associated message.
 	 */
+	@:flash.property
 	public var message(get, never):IMessage;
 
 	private function get_message():IMessage {
@@ -89,6 +90,7 @@ class AsyncToken extends EventDispatcher {
 	 * Note that this will not prevent the service or operation's 
 	 * <code>result</code> property from being assigned.
 	 */
+	@:flash.property
 	public var responders(get, never):Array<IResponder>;
 
 	private function get_responders():Array<IResponder> {
@@ -108,6 +110,7 @@ class AsyncToken extends EventDispatcher {
 	 * it will be strictly equal to the result property on the associated
 	 * ResultEvent.
 	 */
+	@:flash.property
 	public var result(get, never):Dynamic;
 
 	private function get_result():Dynamic {

@@ -180,6 +180,7 @@ class AbstractConsumer extends MessageAgent {
 	 *  Consumer unsubscribes and resubscribes.
 	 *  
 	 */
+	@:flash.property
 	public var maxFrequency(get, set):UInt;
 
 	private function get_maxFrequency():UInt {
@@ -224,6 +225,7 @@ class AbstractConsumer extends MessageAgent {
 	 *  @see mx.messaging.Consumer#resubscribeInterval
 	 *  
 	 */
+	@:flash.property
 	public var resubscribeAttempts(get, set):Int;
 
 	private function get_resubscribeAttempts():Int {
@@ -276,6 +278,7 @@ class AbstractConsumer extends MessageAgent {
 	 *  @throws ArgumentError If the assigned value is negative.
 	 *  
 	 */
+	@:flash.property
 	public var resubscribeInterval(get, set):Int;
 
 	private function get_resubscribeInterval():Int {
@@ -319,6 +322,7 @@ class AbstractConsumer extends MessageAgent {
 	 *  event is dispatched when this property changes.
 	 *  
 	 */
+	@:flash.property
 	public var subscribed(get, never):Bool;
 
 	private function get_subscribed():Bool {
@@ -373,6 +377,7 @@ class AbstractConsumer extends MessageAgent {
 	 *  destination.
 	 *  
 	 */
+	@:flash.property
 	public var timestamp(get, set):Float;
 
 	private function get_timestamp():Float {

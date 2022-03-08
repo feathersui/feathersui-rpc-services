@@ -100,6 +100,7 @@ class Consumer extends AbstractConsumer {
 	 *  expression.
 	 *  
 	 */
+	@:flash.property
 	public var selector(get, set):String;
 
 	private function get_selector():String {
@@ -145,6 +146,7 @@ class Consumer extends AbstractConsumer {
 	 *  Provides access to the subtopic for the remote destination that the MessageAgent uses.
 	 *  
 	 */
+	@:flash.property
 	public var subtopic(get, set):String;
 
 	private function get_subtopic():String {

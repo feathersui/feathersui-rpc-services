@@ -113,6 +113,7 @@ class ServerConfig {
 	 *  the &lt;services&gt; tag from the services-config.xml file.
 	 *  
 	 */
+	@:flash.property
 	public static var xml(get, set):Xml;
 
 	private static function get_xml():Xml {

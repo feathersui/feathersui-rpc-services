@@ -121,6 +121,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Total time in milliseconds
 	 */
+	@:flash.property
 	public var totalTime(get, never):Float;
 
 	private function get_totalTime():Float {
@@ -137,6 +138,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Server processing time in milliseconds
 	 */
+	@:flash.property
 	public var serverProcessingTime(get, never):Float;
 
 	private function get_serverProcessingTime():Float {
@@ -153,6 +155,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Server pre-push processing time in milliseconds
 	 */
+	@:flash.property
 	public var serverPrePushTime(get, never):Float;
 
 	private function get_serverPrePushTime():Float {
@@ -171,6 +174,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Server adapter processing time in milliseconds
 	 */
+	@:flash.property
 	public var serverAdapterTime(get, never):Float;
 
 	private function get_serverAdapterTime():Float {
@@ -198,6 +202,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Server adapter-external processing time in milliseconds
 	 */
+	@:flash.property
 	public var serverAdapterExternalTime(get, never):Float;
 
 	private function get_serverAdapterExternalTime():Float {
@@ -222,6 +227,7 @@ class MessagePerformanceUtils {
 	 * Time that the message waited on the server after it was ready to be pushed to the client
 	 * but had not yet been polled for.
 	 */
+	@:flash.property
 	public var serverPollDelay(get, never):Float;
 
 	private function get_serverPollDelay():Float {
@@ -236,6 +242,7 @@ class MessagePerformanceUtils {
 	/**
 	 * Server processing time spent outside of the adapter associated with the destination of this message.      
 	 */
+	@:flash.property
 	public var serverNonAdapterTime(get, never):Float;
 
 	private function get_serverNonAdapterTime():Float {
@@ -248,6 +255,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Network round trip time in milliseconds
 	 */
+	@:flash.property
 	public var networkRTT(get, never):Float;
 
 	private function get_networkRTT():Float {
@@ -263,6 +271,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Timestamp in milliseconds since epoch
 	 */
+	@:flash.property
 	public var serverSendTime(get, never):Float;
 
 	private function get_serverSendTime():Float {
@@ -275,6 +284,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Timestamp in milliseconds since epoch
 	 */
+	@:flash.property
 	public var clientReceiveTime(get, never):Float;
 
 	private function get_clientReceiveTime():Float {
@@ -287,6 +297,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Message size in Bytes
 	 */
+	@:flash.property
 	public var messageSize(get, never):Int;
 
 	private function get_messageSize():Int {
@@ -302,6 +313,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Message size in Bytes
 	 */
+	@:flash.property
 	public var responseMessageSize(get, never):Int;
 
 	private function get_responseMessageSize():Int {
@@ -315,6 +327,7 @@ class MessagePerformanceUtils {
 	 * @return true if this message was pushed to the client and is not a response to a message that
 	 * originated on the client
 	 */
+	@:flash.property
 	public var pushedMessageFlag(get, never):Bool;
 
 	private function get_pushedMessageFlag():Bool {
@@ -328,6 +341,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Total push time in milliseconds
 	 */
+	@:flash.property
 	public var totalPushTime(get, never):Float;
 
 	private function get_totalPushTime():Float {
@@ -341,6 +355,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return One way server push time in milliseconds       
 	 */
+	@:flash.property
 	public var pushOneWayTime(get, never):Float;
 
 	private function get_pushOneWayTime():Float {
@@ -353,6 +368,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Timestamp in milliseconds since epoch
 	 */
+	@:flash.property
 	public var originatingMessageSentTime(get, never):Float;
 
 	private function get_originatingMessageSentTime():Float {
@@ -365,6 +381,7 @@ class MessagePerformanceUtils {
 	 * 
 	 * @return Pushed causer message size in Bytes
 	 */
+	@:flash.property
 	public var originatingMessageSize(get, never):Float;
 
 	private function get_originatingMessageSize():Float {

@@ -77,6 +77,7 @@ class AbstractInvoker extends EventDispatcher {
 		@see mx.rpc.AbstractService#keepLastResult
 		@default true
 	**/
+	@:flash.property
 	public var keepLastResult(get, never):Bool;
 
 	private function get_keepLastResult():Bool {
@@ -103,6 +104,7 @@ class AbstractInvoker extends EventDispatcher {
 	/**
 	 *  The result of the last invocation.
 	 */
+	@:flash.property
 	public var lastResult(get, never):Dynamic;
 
 	private function get_lastResult():Dynamic {
@@ -114,6 +116,7 @@ class AbstractInvoker extends EventDispatcher {
 	/**
 	 * When this value is true, anonymous objects returned are forced to bindable objects.
 	 */
+	@:flash.property
 	public var makeObjectsBindable(get, set):Bool;
 
 	private function get_makeObjectsBindable():Bool {

@@ -177,6 +177,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
 	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
 	 */
+	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {
@@ -202,6 +203,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 * <li><code>last</code> Making a request cancels any existing request.</li>
 	 * </ul>
 	 */
+	@:flash.property
 	public var concurrency(get, set):String;
 
 	private function get_concurrency():String {
@@ -231,6 +233,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  remote destination before the timeout is reached the message is faulted
 	 *  on the client. A value less than or equal to zero prevents request timeout.
 	 */
+	@:flash.property
 	public var requestTimeout(get, set):Int;
 
 	private function get_requestTimeout():Int {
@@ -279,6 +282,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
 	 *    XML (E4X) expressions.
 	 */
+	@:flash.property
 	public var resultFormat(get, set):String;
 
 	private function get_resultFormat():String {
@@ -363,6 +367,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
 	 *  your destination in the services-config.xml file must allow the specified URL.
 	 */
+	@:flash.property
 	public var url(get, set):String;
 
 	private function get_url():String {
@@ -396,6 +401,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *
 	 *  @default false    
 	 */
+	@:flash.property
 	public var useProxy(get, set):Bool;
 
 	private function get_useProxy():Bool {
@@ -525,6 +531,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
 	 *  requests as XML.
 	 */
+	@:flash.property
 	public var contentType(get, set):String;
 
 	private function get_contentType():String {
@@ -545,6 +552,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
 	 * value is <code>false</code>.
 	 */
+	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
 	private function get_showBusyCursor():Bool {
@@ -573,6 +581,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
 	 *  mx.messaging.config.LoaderConfig.url.
 	 */
+	@:flash.property
 	public var rootURL(get, set):String;
 
 	private function get_rootURL():String {

@@ -151,6 +151,7 @@ class MessageEvent extends Event {
 	//----------------------------------
 	//  messageId
 	//----------------------------------
+	@:flash.property
 	public var messageId(get, never):String;
 
 	private function get_messageId():String {

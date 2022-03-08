@@ -72,6 +72,7 @@ class ActionMessage {
 	 *  The array of MessageBody instances.
 	 *  
 	 */
+	@:flash.property
 	public var bodies(get, set):Array<MessageBody>;
 
 	private function get_bodies():Array<MessageBody> {
@@ -99,6 +100,7 @@ class ActionMessage {
 	 *  The array of MessageHeaders
 	 *  
 	 */
+	@:flash.property
 	public var headers(get, set):Array<MessageHeader>;
 
 	private function get_headers():Array<MessageHeader> {

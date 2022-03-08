@@ -100,6 +100,7 @@ class AMFWriter #if !flash implements IDataOutput #end implements IDynamicProper
 
 	private var switchedToAMF3:Bool = false;
 
+	@:flash.property
 	public var endian(get, set):Endian;
 
 	private function get_endian():Endian {

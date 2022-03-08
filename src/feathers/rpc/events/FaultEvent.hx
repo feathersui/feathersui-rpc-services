@@ -97,6 +97,7 @@ class FaultEvent extends AbstractEvent {
 	/**
 	 * The Fault object that contains the details of what caused this event.
 	 */
+	@:flash.property
 	public var fault(get, never):Fault;
 
 	private function get_fault():Fault {
@@ -107,6 +108,7 @@ class FaultEvent extends AbstractEvent {
 	 * In certain circumstances, headers may also be returned with a fault to
 	 * provide further context to the failure.
 	 */
+	@:flash.property
 	public var headers(get, set):Any;
 
 	private function get_headers():Any {
@@ -123,6 +125,7 @@ class FaultEvent extends AbstractEvent {
 	 * to the HTTP response status code (if available), otherwise the value is
 	 * 0.
 	 */
+	@:flash.property
 	public var statusCode(get, never):Int;
 
 	private function get_statusCode():Int {

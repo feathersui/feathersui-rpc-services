@@ -80,6 +80,7 @@ class LoaderConfig {
 	 *  If the LoaderConfig has been initialized, this
 	 *  should represent the top-level MovieClip's parameters.
 	 */
+	@:flash.property
 	public static var parameters(get, never):Dynamic;
 
 	private static function get_parameters():Dynamic {
@@ -95,6 +96,7 @@ class LoaderConfig {
 	 *  If the LoaderConfig has been initialized, this should represent the
 	 *  top-level MovieClip's swfVersion.
 	 */
+	@:flash.property
 	public static var swfVersion(get, never):UInt;
 
 	private static function get_swfVersion():UInt {
@@ -115,6 +117,7 @@ class LoaderConfig {
 	 *  If the LoaderConfig has been initialized, this
 	 *  should represent the top-level MovieClip's URL.
 	 */
+	@:flash.property
 	public static var url(get, never):String;
 
 	private static function get_url():String {

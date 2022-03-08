@@ -135,6 +135,7 @@ class HTTPRequestMessage extends AbstractMessage {
 		msg.url = "http://my.company.com/login";
 		```
 	**/
+	@:flash.property
 	public var method(get, set):String;
 
 	private function get_method():String {

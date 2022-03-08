@@ -816,7 +816,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				var tmp:Xml = null;
 				try {
 					tmp = Xml.parse(Std.string(body));
-				} catch (parseError) {
+				} catch (parseError:Dynamic) {
 					var fault:Fault = new Fault(ERROR_DECODING, parseError.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;

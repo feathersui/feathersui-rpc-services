@@ -1,11 +1,6 @@
 package feathers.utils;
 
-import haxe.Constraints.Function;
-import openfl.errors.Error;
 import openfl.utils.ByteArray;
-import openfl.utils.IDataInput;
-import openfl.utils.IDataOutput;
-import openfl.utils.IExternalizable;
 import utest.Assert;
 import utest.Test;
 

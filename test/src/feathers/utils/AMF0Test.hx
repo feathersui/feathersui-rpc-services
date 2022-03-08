@@ -75,26 +75,26 @@ class AMF0Test extends Test {
 
 	public function testLongString():Void {
 		var baseString:String = "";
-		var l = 100;
-		while (l > 0) {
-			baseString += String.fromCharCode(32 + 100 - l);
+		var l = 94; // include all ascii chars between 32 to 126
+		while (l >= 0) {
+			baseString += String.fromCharCode(32 + 94 - l);
 			l--;
 		}
 		var buffer:Array<String> = [];
 		while (l < 65536) {
 			buffer.push(baseString);
-			l += 100;
+			l += baseString.length;
 		}
-		baseString = buffer.join("");
+		var fullString = buffer.join("");
 
-		writer.writeObject(baseString);
+		writer.writeObject(fullString);
 
-		Assert.equals(68229, ba.length);
-		Assert.equals(68229, ba.position);
+		Assert.equals(65555, ba.length);
+		Assert.equals(65555, ba.position);
 
 		ba.position = 0;
 		var result = reader.readObject();
-		Assert.equals(baseString, result);
+		Assert.equals(fullString, result);
 
 		Assert.equals(0, ba.bytesAvailable);
 	}

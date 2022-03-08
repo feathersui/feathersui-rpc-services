@@ -31,7 +31,6 @@ import openfl.events.Event;
 import openfl.events.HTTPStatusEvent;
 import openfl.events.IOErrorEvent;
 import openfl.events.SecurityErrorEvent;
-import openfl.net.Responder;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
 import openfl.net.URLRequestMethod;
@@ -39,7 +38,13 @@ import openfl.utils.ByteArray;
 #if (!flash && !html5)
 import openfl.net.URLRequestHeader;
 #end
+#if (openfl >= "9.2.0")
+import openfl.net.Responder;
+#elseif flash
+import flash.net.Responder;
+#end
 
+#if !flash
 class AMFNetConnection {
 	//--------------------------------------------------------------------------
 	//
@@ -225,7 +230,9 @@ class AMFNetConnection {
 				error.faultString = "Failed decoding the response.";
 				error.faultDetail = null;
 				error.extendedData = null;
+				#if !flash
 				@:privateAccess responder.__status(error);
+				#end
 				if (requestQueue.length > 0)
 					_processQueue();
 				return;
@@ -235,10 +242,15 @@ class AMFNetConnection {
 				body = message.bodies[i];
 				// todo review this: consider what happens if an error is thrown in the responder callback(s),
 				// this should (or should not?) be caught and trigger failure here? maybe not...
-				if (!Std.isOfType(body.data, errorClass))
+				if (!Std.isOfType(body.data, errorClass)) {
+					#if !flash
 					@:privateAccess responder.__result(body.data);
-				else
+					#end
+				} else {
+					#if !flash
 					@:privateAccess responder.__status(body.data);
+					#end
+				}
 			}
 		} catch (e) {
 			_relinquishCall(call);
@@ -247,7 +259,9 @@ class AMFNetConnection {
 			unknownError.faultString = "Unknown error.";
 			unknownError.faultDetail = e.message;
 			unknownError.extendedData = null;
+			#if !flash
 			@:privateAccess responder.__status(unknownError);
+			#end
 		}
 		if (requestQueue.length > 0)
 			_processQueue();
@@ -266,7 +280,9 @@ class AMFNetConnection {
 			error.faultString = "Invalid response type.";
 			error.faultDetail = "Invalid XMLHttpRequest response status or type.";
 			error.extendedData = null;
+			#if !flash
 			@:privateAccess responder.__status(error);
+			#end
 		}
 		#if (!flash && !html5)
 		if (event.responseHeaders != null) {
@@ -295,7 +311,9 @@ class AMFNetConnection {
 		error.faultString = "Invalid response.";
 		error.faultDetail = "";
 		error.extendedData = null;
+		#if !flash
 		@:privateAccess responder.__status(error);
+		#end
 	}
 
 	private function writeMessage(writer:AMFWriter, message:ActionMessage):Void {
@@ -416,3 +434,4 @@ private class RequestQueueItem {
 	public var responder:Responder;
 	public var args:Array<Dynamic>;
 }
+#end

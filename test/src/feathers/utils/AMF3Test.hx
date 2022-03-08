@@ -450,12 +450,14 @@ class AMF3Test extends Test {
 	#end
 }
 
+@:keep
 private class TestClass1 {
 	public function new() {}
 
 	public var testField1:String = "";
 }
 
+@:keep
 private class TestClass2 {
 	// Note: do not change this test class unless you change the related tests to
 	// support any changes that might appear when testing reflection into it
@@ -464,6 +466,7 @@ private class TestClass2 {
 	public var testField1:Bool = true;
 }
 
+@:keep
 private class TestClass3a implements IExternalizable {
 	public function new() {}
 
@@ -479,6 +482,7 @@ private class TestClass3a implements IExternalizable {
 	}
 }
 
+@:keep
 private class TestClass3b implements IExternalizable {
 	public function new() {}
 
@@ -494,6 +498,7 @@ private class TestClass3b implements IExternalizable {
 	}
 }
 
+@:keep
 private class TestClass3c implements IExternalizable {
 	public function new() {}
 
@@ -509,6 +514,7 @@ private class TestClass3c implements IExternalizable {
 	}
 }
 
+@:keep
 private class TestClass4 {
 	public function new() {}
 

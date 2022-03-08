@@ -389,12 +389,14 @@ class AMF0Test extends Test {
 	}
 }
 
+@:keep
 private class TestClass1 {
 	public function new() {}
 
 	public var testField1:String = "";
 }
 
+@:keep
 private class TestClass2 {
 	// Note: do not change this test class unless you change the related tests to
 	// support any changes that might appear when testing reflection into it

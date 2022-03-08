@@ -36,7 +36,7 @@ jobs:
       - name: Run Tests
         working-directory: test
         run: |
-          haxelib run openfl build html5 -release -Dplaywright
+          haxelib run openfl build html5 -final -Dplaywright
           node playwright-runner.js
   test-hashlink:
     strategy:

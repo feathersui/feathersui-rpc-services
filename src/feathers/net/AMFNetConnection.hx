@@ -186,7 +186,9 @@ class AMFNetConnection {
 	 *  Connect to a server.  Pass in an http URL as the commmand for
 	 *  connection to AMF server.
 	 */
-	public function connect(command:String, ...params):Void {
+	public function connect(command:String,
+			#if (haxe_ver >= 4.2)...params:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+		p5:Dynamic = null #end):Void {
 		// send a ping to the URL in the command param
 		url = command;
 	}
@@ -194,12 +196,34 @@ class AMFNetConnection {
 	/**
 	 *  Call a server function.
 	 */
-	public function call(command:String, responder:Responder, ...params:Dynamic):Void {
+	public function call(command:String, responder:Responder,
+			#if (haxe_ver >= 4.2)...params:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+		p5:Dynamic = null #end):Void {
+		#if (haxe_ver >= 4.2)
+		var args = params.toArray();
+		#else
+		var args:Array<Dynamic> = [];
+		if (p1 != null) {
+			args.push(p1);
+		}
+		if (p2 != null) {
+			args.push(p2);
+		}
+		if (p3 != null) {
+			args.push(p3);
+		}
+		if (p4 != null) {
+			args.push(p4);
+		}
+		if (p5 != null) {
+			args.push(p5);
+		}
+		#end
 		requestQueue.push({
 			url: url,
 			targetURI: command,
 			responder: responder,
-			args: params.toArray()
+			args: args
 		});
 		_startQueue();
 	}
@@ -222,7 +246,7 @@ class AMFNetConnection {
 			reader.objectEncoding = AMF3;
 			try {
 				message = Std.downcast(readMessage(reader), ActionMessage);
-			} catch (e) {
+			} catch (e:Dynamic) {
 				trace(e);
 				// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 				var error = new ErrorMessage();
@@ -242,7 +266,7 @@ class AMFNetConnection {
 				body = message.bodies[i];
 				// todo review this: consider what happens if an error is thrown in the responder callback(s),
 				// this should (or should not?) be caught and trigger failure here? maybe not...
-				if (!Std.isOfType(body.data, errorClass)) {
+				if (#if (haxe_ver > 4.2) !Std.isOfType(body.data, errorClass) #else !Std.is(body.data, errorClass) #end) {
 					#if !flash
 					@:privateAccess responder.__result(body.data);
 					#end
@@ -252,7 +276,7 @@ class AMFNetConnection {
 					#end
 				}
 			}
-		} catch (e) {
+		} catch (e:Dynamic) {
 			_relinquishCall(call);
 			var unknownError = new ErrorMessage();
 			unknownError.faultCode = "-1006";
@@ -329,7 +353,7 @@ class AMFNetConnection {
 			for (i in 0...l) {
 				this.writeBody(writer, message.bodies[i]);
 			}
-		} catch (e) {
+		} catch (e:Dynamic) {
 			trace(e);
 			// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 		}

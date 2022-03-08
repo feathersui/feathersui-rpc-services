@@ -149,7 +149,8 @@ class AbstractOperation extends AbstractInvoker {
 	 *
 	 */
 	/* abstract */
-	public function send(...args:Dynamic):AsyncToken {
+	public function send(#if (haxe_ver >= 4.2)...args:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+		p5:Dynamic = null #end):AsyncToken {
 		return null;
 	}
 

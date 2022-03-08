@@ -482,7 +482,7 @@ class AMFChannel extends NetConnectionChannel {
 		// Update the ServerConfig with dynamic configuration
 		if (msg != null) {
 			#if flash
-			ServerConfig.updateServerConfigData(Std.downcast(msg.body, ConfigMap), endpoint);
+			ServerConfig.updateServerConfigData(Std.downcast(cast msg.body, ConfigMap), endpoint);
 			#end
 
 			// Set the server assigned FlexClient Id.

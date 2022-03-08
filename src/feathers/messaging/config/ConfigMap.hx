@@ -94,6 +94,7 @@ class ConfigMap extends flash.utils.Proxy {
 		return result;
 	}
 
+	#if (haxe_ver >= 4.2)
 	/**
 	 *  Returns the value of the proxied object's method with the specified name.
 	 *
@@ -108,6 +109,7 @@ class ConfigMap extends flash.utils.Proxy {
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function callProperty(name:Dynamic, ...rest:Dynamic):Dynamic {
 		return Reflect.callMethod(_item, Reflect.field(_item, name), rest.toArray());
 	}
+	#end
 
 	/**
 	 *  Deletes the specified property on the proxied object and

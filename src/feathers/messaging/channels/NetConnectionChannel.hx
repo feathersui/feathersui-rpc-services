@@ -313,10 +313,11 @@ class NetConnectionChannel extends PollingChannel {
 	 *
 	 *  @param msg The message pushed from the server.
 	 */
-	public function receive(msg:IMessage, ...rest:Dynamic):Void {
+	public function receive(msg:IMessage,
+			#if (haxe_ver >= 4.2)...rest:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+		p5:Dynamic = null #end):Void {
 		// if (Log.isDebug()) {
 		// 	_log.debug("'{0}' channel got message\n{1}\n", id, msg.toString());
-
 		// 	// If MPI is enabled write a performance summary to log
 		// 	if (this.mpiEnabled) {
 		// 		try {

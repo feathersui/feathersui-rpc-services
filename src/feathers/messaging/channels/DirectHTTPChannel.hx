@@ -193,7 +193,7 @@ class DirectHTTPChannel extends Channel {
 				// For XML content, work around bug 196450 by calling
 				// XML.toXMLString() ourselves as URLRequest.data uses
 				// XML.toString() hence bug 184950.
-				if (httpMsg.body != null && httpMsg.body is Xml)
+				if (httpMsg.body != null && (httpMsg.body is Xml))
 					result.data = cast(httpMsg.body, Xml).toString();
 				else
 					result.data = httpMsg.body;

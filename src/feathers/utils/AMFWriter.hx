@@ -556,7 +556,7 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 			}
 		} else if ((v is Bool)) {
 			writeByte((v == true ? AMF3_BOOLEAN_TRUE : AMF3_BOOLEAN_FALSE));
-		} else if (v is Date) {
+		} else if ((v is Date)) {
 			writeAmf3Date((v : Date));
 		}
 		/*
@@ -584,7 +584,7 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 	}
 
 	private function writeAmf3ObjectVariant(v:Dynamic):Void {
-		if (v is ByteArrayData) {
+		if ((v is ByteArrayData)) {
 			writeByte(AMF3_BYTEARRAY);
 			if (!this.amf3ObjectByReference(v)) {
 				var byteArray:ByteArray = cast(v, ByteArray);
@@ -716,9 +716,15 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 		if (!this.amf3ObjectByReference(v)) {
 			var denseLength:UInt = len;
 			var keys:Array<Dynamic> = [];
+			#if (haxe_ver >= 4.2)
 			for (key => value in v.keyValueIterator()) {
 				keys.push(key);
 			}
+			#else
+			for (i in 0...len) {
+				keys.push(i);
+			}
+			#end
 			// profile the array
 			// es6 specifies a generalized traversal order we can rely upon going forward
 			// testing in IE11 shows the same order applies in that es5 Array implementation, so we assume it here:
@@ -859,14 +865,20 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 		throw new Error("AMF0 Vector not supported");
 	}
 
-	private function writeAMF0Array(v:Array<Any>):Void {
+	private function writeAMF0Array(v:Array<Dynamic>):Void {
 		// is it strict or associative
 		if (!this.amf0ObjectByReference(v)) {
 			var len:UInt = v.length;
 			var keys:Array<Dynamic> = [];
+			#if (haxe_ver >= 4.2)
 			for (key => value in v.keyValueIterator()) {
 				keys.push(key);
 			}
+			#else
+			for (i in 0...len) {
+				keys.push(i);
+			}
+			#end
 			// profile the array
 			// es6 specifies a generalized traversal order we can rely upon going forward
 			// testing in IE11 shows the same order applies in that es5 Array implementation, so we assume it here:

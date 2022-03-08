@@ -151,8 +151,33 @@ class Operation extends AbstractOperation {
 	/**
 	 * @inheritDoc
 	 */
-	override public function send(...rest:Dynamic):AsyncToken {
+	// #if (haxe_ver >= 4.2)
+	// override public function send(...args:Dynamic):AsyncToken
+	// #else
+	// override public function send(p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null, p5:Dynamic = null):AsyncToken
+	// #end
+	override public function send(#if (haxe_ver >= 4.2)...args:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+		p5:Dynamic = null #end):AsyncToken {
+		#if (haxe_ver >= 4.2)
 		var args = rest.toArray();
+		#else
+		var args:Array<Dynamic> = [];
+		if (p1 != null) {
+			args.push(p1);
+		}
+		if (p2 != null) {
+			args.push(p2);
+		}
+		if (p3 != null) {
+			args.push(p3);
+		}
+		if (p4 != null) {
+			args.push(p4);
+		}
+		if (p5 != null) {
+			args.push(p5);
+		}
+		#end
 
 		if (service != null)
 			service.initialize();
@@ -180,7 +205,7 @@ class Operation extends AbstractOperation {
 		}
 
 		if (args == null || (args.length == 0 && this.arguments != null)) {
-			if (this.arguments is Array) {
+			if ((this.arguments is Array)) {
 				args = Std.downcast(this.arguments, Array);
 			} else {
 				args = [];

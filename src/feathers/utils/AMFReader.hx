@@ -507,19 +507,19 @@ class AMFReader #if !flash implements IDataInput #end {
 					className = 'Object';
 				}
 			}
-			vector = new openfl.Vector<Dynamic>(len, fixed);
+			vector = new openfl.Vector<{}>(len, fixed);
 			for (i in 0...len)
 				vector[i] = readObject();
 		} else if (amfType == AMF3_VECTOR_INT) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
+			vector = new openfl.Vector<Int>(len, fixed);
 			for (i in 0...len)
 				vector[i] = readInt();
 		} else if (amfType == AMF3_VECTOR_UINT) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
+			vector = new openfl.Vector<UInt>(len, fixed);
 			for (i in 0...len)
 				vector[i] = readUnsignedInt();
 		} else if (amfType == AMF3_VECTOR_DOUBLE) {
-			vector = new openfl.Vector<Dynamic>(len, fixed);
+			vector = new openfl.Vector<Float>(len, fixed);
 			for (i in 0...len)
 				vector[i] = readDouble();
 		} else {
@@ -539,7 +539,7 @@ class AMFReader #if !flash implements IDataInput #end {
 			case AMF3_OBJECT:
 				try {
 					value = readScriptObject();
-				} catch (e) {
+				} catch (e:Dynamic) {
 					// trace(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 					throw new Error("Failed to deserialize: " + e);
 				}

@@ -520,7 +520,7 @@ class ServerConfig {
 				// use that instead of uri configured in the config file
 				if (LoaderConfig.parameters != null && LoaderConfig.parameters.WSRP_ENCODED_CHANNEL != null)
 					channel.url = LoaderConfig.parameters.WSRP_ENCODED_CHANNEL;
-			} catch (e) {
+			} catch (e:Dynamic) {
 				message = 'The channel class \'$className\' specified was not found.';
 				throw new InvalidChannelError(message);
 			}

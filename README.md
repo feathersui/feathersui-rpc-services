@@ -21,7 +21,7 @@ Please review the notes below for an overview of what currently works, doesn't w
 ## Requirements
 
 - Haxe 4.0
-- OpenFL 9.2
+- OpenFL 8.9.7 (RemoteObject requires OpenFL 9.2)
 - Feathers UI 1.0
 
 ## Installation

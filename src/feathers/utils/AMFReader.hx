@@ -4,10 +4,12 @@ import openfl.errors.Error;
 import openfl.net.ObjectEncoding;
 import openfl.utils.ByteArray;
 import openfl.utils.Endian;
-import openfl.utils.IDataInput;
 import openfl.utils.IExternalizable;
+#if !flash
+import openfl.utils.IDataInput;
+#end
 
-class AMFReader implements IDataInput {
+class AMFReader #if !flash implements IDataInput #end {
 	private static final AMF0_AMF3:UInt = 0x11;
 	private static final AMF0_NUMBER:UInt = 0x0;
 	private static final AMF0_BOOLEAN:UInt = 0x1;
@@ -51,12 +53,14 @@ class AMFReader implements IDataInput {
 	private static final EMPTY_STRING:String = "";
 
 	private static function getAliasByClass(theClass:Dynamic):String {
+		#if (openfl >= "9.2.0")
 		var registeredClassAliases = @:privateAccess openfl.Lib.__registeredClassAliases;
 		for (key => value in registeredClassAliases) {
 			if (value == theClass) {
 				return key;
 			}
 		}
+		#end
 		return null;
 	}
 
@@ -287,7 +291,12 @@ class AMFReader implements IDataInput {
 			var obj:Dynamic;
 			var localTraits:AMFTraits = null;
 			if (decodedTraits.alias != null && decodedTraits.alias.length > 0) {
-				var c:Class<Dynamic> = openfl.Lib.getClassByAlias(decodedTraits.alias);
+				var c:Class<Dynamic> = null;
+				#if (openfl >= "9.2.0")
+				c = openfl.Lib.getClassByAlias(decodedTraits.alias);
+				#elseif flash
+				c = untyped __global__["flash.net.getClassByAlias"](decodedTraits.alias);
+				#end
 				if (c != null) {
 					obj = Type.createInstance(c, []);
 					localTraits = getLocalTraitsInfo(obj);
@@ -466,7 +475,13 @@ class AMFReader implements IDataInput {
 				className = 'Object';
 			} else {
 				try {
-					className = openfl.Lib.getQualifiedClassName(openfl.Lib.getClassByAlias(className));
+					var c:Class<Dynamic> = null;
+					#if (openfl >= "9.2.0")
+					c = openfl.Lib.getClassByAlias(className);
+					#elseif flash
+					c = untyped __global__["flash.net.getClassByAlias"](className);
+					#end
+					className = openfl.Lib.getQualifiedClassName(c);
 				} catch (e:Error) {
 					className = 'Object';
 				}
@@ -596,7 +611,12 @@ class AMFReader implements IDataInput {
 		var obj:Dynamic = null;
 		var localTraits:AMFTraits = null;
 		if (alias != null && alias.length > 0) {
-			var c:Class<Dynamic> = openfl.Lib.getClassByAlias(alias);
+			var c:Class<Dynamic> = null;
+			#if (openfl >= "9.2.0")
+			c = openfl.Lib.getClassByAlias(alias);
+			#elseif flash
+			c = untyped __global__["flash.net.getClassByAlias"](alias);
+			#end
 			if (c != null) {
 				obj = Type.createInstance(c, []);
 				localTraits = getLocalTraitsInfo(obj);

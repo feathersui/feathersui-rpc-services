@@ -4,7 +4,6 @@ import openfl.errors.Error;
 import openfl.net.ObjectEncoding;
 import openfl.utils.ByteArray;
 import openfl.utils.Endian;
-import openfl.utils.IDataOutput;
 import openfl.utils.IExternalizable;
 #if (openfl >= "9.2.0")
 import openfl.net.IDynamicPropertyOutput;
@@ -13,8 +12,11 @@ import openfl.net.IDynamicPropertyWriter;
 import flash.net.IDynamicPropertyOutput;
 import flash.net.IDynamicPropertyWriter;
 #end
+#if !flash
+import openfl.utils.IDataOutput;
+#end
 
-class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
+class AMFWriter #if !flash implements IDataOutput #end implements IDynamicPropertyOutput {
 	private static final AMF0_AMF3:UInt = 0x11;
 	private static final AMF0_NUMBER:UInt = 0x0;
 	private static final AMF0_BOOLEAN:UInt = 0x1;
@@ -61,12 +63,14 @@ class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
 	private static final nothing:Dynamic = {};
 
 	private static function getAliasByClass(theClass:Dynamic):String {
+		#if (openfl >= "9.2.0")
 		var registeredClassAliases = @:privateAccess openfl.Lib.__registeredClassAliases;
 		for (key => value in registeredClassAliases) {
 			if (value == theClass) {
 				return key;
 			}
 		}
+		#end
 		return null;
 	}
 

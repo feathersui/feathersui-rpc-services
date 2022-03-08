@@ -35,7 +35,7 @@ import flash.net.IDynamicPropertyWriter;
 import openfl.utils.IDataOutput;
 #end
 
-class AMFWriter #if !flash implements IDataOutput #end implements IDynamicPropertyOutput {
+class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9.2.0") implements IDynamicPropertyOutput #end {
 	private static final AMF0_AMF3:UInt = 0x11;
 	private static final AMF0_NUMBER:UInt = 0x0;
 	private static final AMF0_BOOLEAN:UInt = 0x1;
@@ -116,7 +116,7 @@ class AMFWriter #if !flash implements IDataOutput #end implements IDynamicProper
 
 	private var target:ByteArray;
 
-	public var dynamicPropertyWriter:IDynamicPropertyWriter;
+	public var dynamicPropertyWriter:#if (flash || openfl >= "9.2.0") IDynamicPropertyWriter #else Dynamic #end;
 
 	private var objects:Array<Dynamic>;
 	private var traits:Array<Dynamic>;

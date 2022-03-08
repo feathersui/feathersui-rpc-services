@@ -403,6 +403,7 @@ class AMF3Test extends Test {
 		Assert.isTrue(bytesMatchExpectedData(ba, [10]));
 	}
 
+	#if !flash
 	public function testExternalizable():Void {
 		var test3 = new TestClass3b();
 		// register an alias
@@ -446,6 +447,7 @@ class AMF3Test extends Test {
 
 		Assert.equals(0, ba.bytesAvailable);
 	}
+	#end
 }
 
 private class TestClass1 {

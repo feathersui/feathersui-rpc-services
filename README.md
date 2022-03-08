@@ -18,7 +18,7 @@ Please review the notes below for an overview of what currently works, doesn't w
 - ~~`WebService`~~: Provides access to SOAP-based web services on remote servers.
   - Not yet ported to Haxe.
 
-## Requirements
+## Minimum Requirements
 
 - Haxe 4.0
 - OpenFL 8.9.7 (RemoteObject requires OpenFL 9.2)

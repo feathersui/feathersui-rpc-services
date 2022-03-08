@@ -27,9 +27,7 @@ import haxe.Constraints.Function;
 /**
  * The RemoteObject class gives you access to classes on a remote application server.
  */
-#if (neko || hl)
-@:deprecated("RemoteObject is not available on this target.")
-#elseif (!flash && openfl < "9.2.0")
+#if (!flash && openfl < "9.2.0")
 @:deprecated("RemoteObject is not available on this target before OpenFL 9.2.0.")
 #end
 @:access(feathers.rpc.AbstractOperation)

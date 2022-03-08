@@ -1,13 +1,18 @@
 package feathers.utils;
 
 import openfl.errors.Error;
-import openfl.net.IDynamicPropertyOutput;
-import openfl.net.IDynamicPropertyWriter;
 import openfl.net.ObjectEncoding;
 import openfl.utils.ByteArray;
 import openfl.utils.Endian;
 import openfl.utils.IDataOutput;
 import openfl.utils.IExternalizable;
+#if (openfl >= "9.2.0")
+import openfl.net.IDynamicPropertyOutput;
+import openfl.net.IDynamicPropertyWriter;
+#elseif flash
+import flash.net.IDynamicPropertyOutput;
+import flash.net.IDynamicPropertyWriter;
+#end
 
 class AMFWriter implements IDataOutput implements IDynamicPropertyOutput {
 	private static final AMF0_AMF3:UInt = 0x11;

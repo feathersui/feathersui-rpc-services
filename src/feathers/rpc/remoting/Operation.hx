@@ -151,12 +151,7 @@ class Operation extends AbstractOperation {
 	/**
 	 * @inheritDoc
 	 */
-	// #if (haxe_ver >= 4.2)
-	// override public function send(...args:Dynamic):AsyncToken
-	// #else
-	// override public function send(p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null, p5:Dynamic = null):AsyncToken
-	// #end
-	override public function send(#if (haxe_ver >= 4.2)...args:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
+	override public function send(#if (haxe_ver >= 4.2)...rest:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):AsyncToken {
 		#if (haxe_ver >= 4.2)
 		var args = rest.toArray();

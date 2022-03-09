@@ -8,7 +8,7 @@ Uses the `RemoteObject` service, which is currently supported on the **air** and
 
 The backend for this sample is included with the Amfphp distribution.
 
-- [Download Amfphp from SourceForge](https://sourceforge.net/projects/amfphp/files/#files)
+- [Download Amfphp](https://github.com/silexlabs/amfphp-2.0)
 
 - Extract the contents of the _.zip_ file.
 

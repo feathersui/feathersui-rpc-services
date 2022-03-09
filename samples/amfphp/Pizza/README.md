@@ -8,11 +8,9 @@ Uses the `RemoteObject` service, which is currently supported on the **air** and
 
 The backend for this sample is included with the Amfphp distribution.
 
-- [Download Amfphp](https://github.com/silexlabs/amfphp-2.0)
+- [Clone Amfphp from Github](https://github.com/silexlabs/amfphp-2.0)
 
-- Extract the contents of the _.zip_ file.
-
-- Start a local HTTP server supporting PHP on port **8080**. The root document directory should be _Examples/Php_ from the Amfphp distribution.
+- Start a local HTTP server supporting PHP on port **8080**. The root document directory should be _Examples/Php_ from the Amfphp repository.
 
 It's probably easiest to use PHP's built-in web server:
 

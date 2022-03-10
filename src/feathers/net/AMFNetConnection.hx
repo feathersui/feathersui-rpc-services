@@ -76,6 +76,10 @@ class AMFNetConnection {
 
 	private var queueBlocked:Bool;
 
+	#if (!flash && !html5)
+	private var cookies:Map<String, String> = [];
+	#end
+
 	//--------------------------------------------------------------------------
 	//
 	// Methods
@@ -148,8 +152,12 @@ class AMFNetConnection {
 		var urlRequest:URLRequest = new URLRequest(url);
 
 		#if (!flash && !html5)
-		for (name => value in cookies) {
-			urlRequest.requestHeaders.push(new URLRequestHeader("Cookie", '$name=$value'));
+		if (!urlRequest.manageCookies) {
+			// workaround for versions of Lime/OpenFL that don't yet support
+			// cookies on native targets
+			for (name => value in cookies) {
+				urlRequest.requestHeaders.push(new URLRequestHeader("Cookie", '$name=$value'));
+			}
 		}
 		#end
 		urlRequest.method = URLRequestMethod.POST;
@@ -290,8 +298,6 @@ class AMFNetConnection {
 		if (requestQueue.length > 0)
 			_processQueue();
 	}
-
-	private var cookies:Map<String, String> = [];
 
 	private function handleStatus(event:HTTPStatusEvent, call:CallPoolItem):Void {
 		var xhr:URLLoader = call.xhr;

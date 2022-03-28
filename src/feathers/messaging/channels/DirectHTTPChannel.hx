@@ -131,8 +131,23 @@ class DirectHTTPChannel extends Channel {
 
 		try {
 			urlRequest = createURLRequest(httpMsgResp.message);
-		} catch (e:MessageSerializationError) {
-			httpMsgResp.agent.fault(e.fault, httpMsgResp.message);
+		} catch (e:Dynamic) {
+			if ((e is MessageSerializationError)) {
+				httpMsgResp.agent.fault(cast(e, MessageSerializationError).fault, httpMsgResp.message);
+			} else {
+				// fallback for if the caught exception is not a
+				// MessageSerializationError. this was not in the original
+				// Flex version, but it seems to be necessary in the Haxe
+				// version to avoid MessageSerializationError being missing
+				// entirely when compiling for SWF.
+				var msg:ErrorMessage = new ErrorMessage();
+				msg.faultCode = "Client.Error.MessageSend";
+				msg.faultString = "Send failed";
+				msg.faultDetail = "Message serialization failed and the message cannot be sent.";
+				msg.correlationId = msgResp.message.messageId;
+				msg.clientId = clientId;
+				httpMsgResp.agent.fault(msg, httpMsgResp.message);
+			}
 			return;
 		}
 

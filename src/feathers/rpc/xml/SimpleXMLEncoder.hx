@@ -25,19 +25,15 @@ import flash.xml.XMLNode;
 #end
 
 /**
- * The SimpleXMLEncoder class takes ActionScript Objects and encodes them to XML
- * using default serialization.
- */
+	The SimpleXMLEncoder class takes ActionScript Objects and encodes them to XML
+	using default serialization.
+**/
 class SimpleXMLEncoder {
 	//--------------------------------------------------------------------------
 	//
 	//  Class Methods
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @private
-	 */
 	private static function encodeDate(rawDate:Date, dateType:String):String {
 		var s:String = "";
 		var n:Float;
@@ -97,10 +93,10 @@ class SimpleXMLEncoder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 *
-	 *  @param myXML The XML object.
-	 */
+		Constructor.
+
+		@param myXML The XML object.
+	**/
 	public function new(myXML:#if flash XMLDocument #else Xml #end) {
 		this.myXMLDoc = myXML != null ? myXML : #if flash new XMLDocument() #else Xml.createDocument() #end;
 	}
@@ -119,18 +115,14 @@ class SimpleXMLEncoder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Encodes an ActionScript object to XML using default serialization.
-	 *  
-	 *  @param obj The ActionScript object to encode.
-	 *  
-	 *  @param qname The qualified name of the child node.
-	 *  
-	 *  @param parentNode An XMLNode under which to put the encoded
-	 *  value.
-	 *
-	 *
-	 *  @return The XMLNode object. 
-	 */
+		Encodes an ActionScript object to XML using default serialization.
+
+		@param obj The ActionScript object to encode.
+		@param qname The qualified name of the child node.
+		@param parentNode An XMLNode under which to put the encoded value.
+
+		@return The XMLNode object. 
+	**/
 	public function encodeValue(obj:Dynamic, qname:#if flash QName #else String #end,
 			parentNode:#if flash XMLNode #else Xml #end):#if flash XMLNode #else Xml #end {
 		var myElement:#if flash XMLNode #else Xml #end;
@@ -214,9 +206,6 @@ class SimpleXMLEncoder {
 		return myElement;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function getDataTypeFromObject(obj:Dynamic):UInt {
 		if ((obj is Float))
 			return SimpleXMLEncoder.NUMBER_TYPE;
@@ -260,8 +249,5 @@ class SimpleXMLEncoder {
 	private static final BASE64_BINARY_TYPE:UInt = 17;
 	private static final HEX_BINARY_TYPE:UInt = 18;
 
-	/**
-	 * @private
-	 */
 	private static final CLASS_INFO_OPTIONS:Dynamic = {includeReadOnly: false, includeTransient: false};
 }

@@ -21,13 +21,12 @@ import openfl.utils.IDataOutput;
 import openfl.utils.IExternalizable;
 
 /**
- * A special serialization wrapper for CommandMessage. This wrapper is used to
- * enable the externalizable form of an CommandMessage for serialization. The
- * wrapper must be applied just before the message is serialized as it does not
- * proxy any information to the wrapped message.
- * 
- * @private
- */
+	A special serialization wrapper for CommandMessage. This wrapper is used to
+	enable the externalizable form of an CommandMessage for serialization. The
+	wrapper must be applied just before the message is serialized as it does not
+	proxy any information to the wrapped message.
+**/
+@:dox(hide)
 @:meta(RemoteClass(alias = "DSC"))
 class CommandMessageExt extends CommandMessage implements IExternalizable {
 	//--------------------------------------------------------------------------
@@ -48,9 +47,8 @@ class CommandMessageExt extends CommandMessage implements IExternalizable {
 	}
 
 	/**
-	 *  The unique id for the message.
-	 *  
-	 */
+		The unique id for the message.
+	**/
 	override public function get_messageId():String {
 		/* If we are wrapping another message, use its messageId */
 		if (_message != null)

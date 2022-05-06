@@ -33,16 +33,15 @@ import feathers.messaging.messages.AcknowledgeMessage;
 import feathers.data.ArrayCollection;
 
 /**
- *  The RpcClassAliasInitializer class registers all 
- * classes for AMF serialization needed by the Flex RPC library.
- *
- */
+	The RpcClassAliasInitializer class registers all 
+	classes for AMF serialization needed by the Flex RPC library.
+**/
 class RpcClassAliasInitializer {
 	/**
-	 * In the event that an application does not use the Flex UI classes which processes
-	 * the <code>[RemoteClass(alias="")]</code> bootstrap code, this function registers all the
-	 * classes for AMF serialization needed by the Flex RPC library.
-	 */
+		In the event that an application does not use the Flex UI classes which processes
+		the <code>[RemoteClass(alias="")]</code> bootstrap code, this function registers all the
+		classes for AMF serialization needed by the Flex RPC library.
+	**/
 	public static function registerClassAliases():Void {
 		#if (openfl >= "9.2.0")
 		#if !flash

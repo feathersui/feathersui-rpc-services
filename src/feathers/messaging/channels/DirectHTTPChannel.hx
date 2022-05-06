@@ -37,17 +37,16 @@ import openfl.net.URLRequestHeader;
 import openfl.net.URLVariables;
 
 /**
- *  @private
- *  The DirectHTTPChannel class is used to turn an HTTPRequestMessage object into an
- *  HTTP request.
- *  This Channel does not connect to a Flex endpoint.
- */
+	The DirectHTTPChannel class is used to turn an HTTPRequestMessage object into an
+	HTTP request.
+	This Channel does not connect to a Flex endpoint.
+**/
+@:dox(hide)
 class DirectHTTPChannel extends Channel {
 	/**
-	 *  Constructs an instance of a DirectHTTPChannel.
-	 *  The parameters are not used.
-	 *  
-	 */
+		Constructs an instance of a DirectHTTPChannel.
+		The parameters are not used.
+	**/
 	public function new(id:String, uri:String = "") {
 		super(id, uri);
 		if (uri.length > 0) {
@@ -58,24 +57,21 @@ class DirectHTTPChannel extends Channel {
 	}
 
 	/**
-	 * @private
-	 * Used by DirectHTTPMessageResponder to specify a dummy clientId for AcknowledgeMessages.
-	 * Each instance of this channel gets a new clientId.
-	 */
+		Used by DirectHTTPMessageResponder to specify a dummy clientId for AcknowledgeMessages.
+		Each instance of this channel gets a new clientId.
+	**/
 	private var clientId:String;
 
 	/**
-	 *  Indicates if this channel is connected.
-	 *  
-	 */
+		Indicates if this channel is connected.
+	**/
 	override public function get_connected():Bool {
 		return true;
 	}
 
 	/**
-	 *  Indicates the protocol used by this channel.
-	 *  
-	 */
+		Indicates the protocol used by this channel.
+	**/
 	override public function get_protocol():String {
 		return "http";
 	}
@@ -85,42 +81,37 @@ class DirectHTTPChannel extends Channel {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Returns true if the channel supports realtime behavior via server push or client poll.
-	 */
+		Returns true if the channel supports realtime behavior via server push or client poll.
+	**/
 	override private function get_realtime():Bool {
 		return false;
 	}
 
 	/**
-	 *  @private
-	 *  Because this channel is always "connected", we ignore any connect timeout
-	 *  that is reported.
-	 */
+		Because this channel is always "connected", we ignore any connect timeout
+		that is reported.
+	**/
 	override private function connectTimeoutHandler(event:TimerEvent):Void {
 		// Ignore.
 	}
 
 	/**
-	 *  Returns the appropriate MessageResponder for the Channel.
-	 *
-	 *  @param agent The MessageAgent sending the message.
-	 * 
-	 *  @param message The IMessage to send.
-	 * 
-	 *  @return The MessageResponder to handle the send result or fault.
-	 *  
-	 */
+		Returns the appropriate MessageResponder for the Channel.
+
+		@param agent The MessageAgent sending the message.
+
+		@param message The IMessage to send.
+
+		@return The MessageResponder to handle the send result or fault.
+	**/
 	override private function getMessageResponder(agent:MessageAgent, message:IMessage):MessageResponder {
 		return new DirectHTTPMessageResponder(agent, message, this, new URLLoader());
 	}
 
 	/**
-	 *  Because this channel doesn't participate in hunting we will always assume
-	 *  that we have connected.
-	 *
-	 *  @private
-	 */
+		Because this channel doesn't participate in hunting we will always assume
+		that we have connected.
+	**/
 	override private function internalConnect():Void {
 		connectSuccess();
 	}
@@ -160,9 +151,6 @@ class DirectHTTPChannel extends Channel {
 		urlLoader.load(urlRequest);
 	}
 
-	/**
-	 * @private
-	 */
 	/*override */
 	private function createURLRequest(message:IMessage):URLRequest {
 		var httpMsg:HTTPRequestMessage = cast(message, HTTPRequestMessage);
@@ -235,16 +223,14 @@ class DirectHTTPChannel extends Channel {
 	}
 
 	/**
-	 * @private
-	 * Incremented per new instance of the channel to create clientIds.
-	 */
+		Incremented per new instance of the channel to create clientIds.
+	**/
 	private static var clientCounter:UInt = 0;
 }
 
 /**
- *  @private
- *  This is an adapter for url loader that is used by the HTTPChannel.
- */
+	This is an adapter for url loader that is used by the HTTPChannel.
+**/
 @:access(feathers.messaging.channels.DirectHTTPChannel)
 private class DirectHTTPMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
@@ -254,9 +240,8 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a DirectHTTPMessageResponder.
-	 *  
-	 */
+		Constructs a DirectHTTPMessageResponder.
+	**/
 	public function new(agent:MessageAgent, msg:IMessage, channel:DirectHTTPChannel, urlLoader:URLLoader) {
 		super(agent, msg, channel);
 		this.urlLoader = urlLoader;
@@ -268,21 +253,13 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	// Variables
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @private
-	 */
 	private var clientId:String;
 
-	/**
-	 * @private
-	 */
 	private var lastStatus:Int;
 
 	/**
-	 *  The URLLoader associated with this responder.
-	 *  
-	 */
+		The URLLoader associated with this responder.
+	**/
 	public var urlLoader:URLLoader;
 
 	//--------------------------------------------------------------------------
@@ -291,9 +268,7 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public function errorHandler(event:Event):Void {
 		status(null);
 		// send the ack
@@ -320,9 +295,7 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 		agent.fault(msg, message);
 	}
 
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public function securityErrorHandler(event:Event):Void {
 		status(null);
 		// send the ack
@@ -344,9 +317,7 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 		agent.fault(msg, message);
 	}
 
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public function completeHandler(event:Event):Void {
 		result(null);
 		var ack:AcknowledgeMessage = new AcknowledgeMessage();
@@ -357,18 +328,15 @@ private class DirectHTTPMessageResponder extends MessageResponder {
 		agent.acknowledge(ack, message);
 	}
 
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public function httpStatusHandler(event:HTTPStatusEvent):Void {
 		lastStatus = event.status;
 	}
 
 	/**
-	 *  Handle a request timeout by closing our associated URLLoader and
-	 *  faulting the message to the agent.
-	 *  
-	 */
+		Handle a request timeout by closing our associated URLLoader and
+		faulting the message to the agent.
+	**/
 	override private function requestTimedOut():Void {
 		urlLoader.removeEventListener(ErrorEvent.ERROR, errorHandler);
 		urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);

@@ -21,8 +21,12 @@ import openfl.utils.IDataOutput;
 import openfl.utils.IExternalizable;
 
 /**
- * @private
- */
+	A special serialization wrapper for AcknowledgeMessage. This wrapper is used to
+	enable the externalizable form of an AcknowledgeMessage for serialization. The
+	wrapper must be applied just before the message is serialized as it does not
+	proxy any information to the wrapped message.
+**/
+@:dox(hide)
 @:meta(RemoteClass(alias = "DSK"))
 class AcknowledgeMessageExt extends AcknowledgeMessage implements IExternalizable {
 	//--------------------------------------------------------------------------
@@ -43,9 +47,8 @@ class AcknowledgeMessageExt extends AcknowledgeMessage implements IExternalizabl
 	}
 
 	/**
-	 *  The unique id for the message.
-	 *  
-	 */
+		The unique id for the message.
+	**/
 	override private function get_messageId():String {
 		/* If we are wrapping another message, use its messageId */
 		if (_message != null)

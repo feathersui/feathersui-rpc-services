@@ -18,27 +18,26 @@
 package feathers.rpc;
 
 /**
- *  This interface provides the contract for any service
- *  that needs to respond to remote or asynchronous calls.
- */
+	This interface provides the contract for any service
+	that needs to respond to remote or asynchronous calls.
+**/
 interface IResponder {
 	/**
-	 *  This method is called by a service when the return value
-	 *  has been received. 
-	 *  While <code>data</code> is typed as Object, it is often
-	 *  (but not always) an mx.rpc.events.ResultEvent object.
-	 	*
-	 *  @param data Contains the information returned from the request.
-	 */
+		This method is called by a service when the return value
+		has been received. 
+		While <code>data</code> is typed as Object, it is often
+		(but not always) an mx.rpc.events.ResultEvent object.
+
+		@param data Contains the information returned from the request.
+	**/
 	function result(data:Dynamic):Void;
 
 	/**
-	 *  This method is called by a service when an error has been received.
-	 *  While <code>info</code> is typed as Object it is often
-	 *  (but not always) an mx.rpc.events.FaultEvent object.
-	 	*
-	 *  @param info Contains the information about the error that 
-	 *  occured.
-	 */
+		This method is called by a service when an error has been received.
+		While <code>info</code> is typed as Object it is often
+		(but not always) an mx.rpc.events.FaultEvent object.
+
+		@param info Contains the information about the error that occured.
+	**/
 	function fault(info:Dynamic):Void;
 }

@@ -44,11 +44,11 @@ import openfl.utils.Timer;
 import feathers.messaging.channels.NetConnectionChannel;
 
 /**
- *  The ChannelSet is a set of Channels that are used to send messages to a
- *  target destination. The ChannelSet improves the quality of service on the
- *  client by hunting through its Channels to send messages in the face of
- *  network failures or individual Channel problems.
- */
+	The ChannelSet is a set of Channels that are used to send messages to a
+	target destination. The ChannelSet improves the quality of service on the
+	client by hunting through its Channels to send messages in the face of
+	network failures or individual Channel problems.
+**/
 @:access(feathers.messaging.Channel)
 @:access(feathers.messaging.MessageAgent)
 @:access(feathers.rpc.events.AbstractEvent)
@@ -60,40 +60,40 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a ChannelSet.
-	 *  If the <code>channelIds</code> argument is provided, the ChannelSet will
-	 *  use automatically configured Channels obtained via <code>ServerConfig.getChannel()</code>
-	 *  to reach a destination.
-	 *  Attempting to manually assign Channels to a ChannelSet that uses configured
-	 *  Channels is not allowed.
-	 *
-	 *  If the <code>channelIds</code> argument is not provided or is null,
-	 *  Channels must be manually created and added to the ChannelSet in order
-	 *  to connect and send messages.
-	 *
-	 *  If the ChannelSet is clustered using url-load-balancing (where each server
-	 *  declares a unique RTMP or HTTP URL and the client fails over from one URL to
-	 *  the next), the first time that a Channel in the ChannelSet successfully connects
-	 *  the ChannelSet will automatically make a request for all of the endpoints across
-	 *  the cluster for all member Channels and will assign these failover URLs to each
-	 *  respective Channel.
-	 *  This allows Channels in the ChannelSet to failover individually, and when failover
-	 *  options for a specific Channel are exhausted the ChannelSet will advance to the next
-	 *  Channel in the set to attempt to reconnect.
-	 *
-	 *  Regardless of clustering, if a Channel cannot connect or looses
-	 *  connectivity, the ChannelSet will advance to its next available Channel
-	 *  and attempt to reconnect.
-	 *  This allows the ChannelSet to hunt through Channels that use different
-	 *  protocols, ports, etc., in search of one that can connect to its endpoint
-	 *  successfully.
-	 *
-	 *  @param channelIds The ids of configured Channels obtained from ServerConfig for this ChannelSet to
-	 *                    use. If null, Channels must be manually added to the ChannelSet.
-	 *
-	 *  @param clusteredWithURLLoadBalancing True if the Channels in the ChannelSet are clustered
-	 *                   using url load balancing.
-	 */
+		Constructs a ChannelSet.
+		If the <code>channelIds</code> argument is provided, the ChannelSet will
+		use automatically configured Channels obtained via <code>ServerConfig.getChannel()</code>
+		to reach a destination.
+		Attempting to manually assign Channels to a ChannelSet that uses configured
+		Channels is not allowed.
+
+		If the <code>channelIds</code> argument is not provided or is null,
+		Channels must be manually created and added to the ChannelSet in order
+		to connect and send messages.
+
+		If the ChannelSet is clustered using url-load-balancing (where each server
+		declares a unique RTMP or HTTP URL and the client fails over from one URL to
+		the next), the first time that a Channel in the ChannelSet successfully connects
+		the ChannelSet will automatically make a request for all of the endpoints across
+		the cluster for all member Channels and will assign these failover URLs to each
+		respective Channel.
+		This allows Channels in the ChannelSet to failover individually, and when failover
+		options for a specific Channel are exhausted the ChannelSet will advance to the next
+		Channel in the set to attempt to reconnect.
+
+		Regardless of clustering, if a Channel cannot connect or looses
+		connectivity, the ChannelSet will advance to its next available Channel
+		and attempt to reconnect.
+		This allows the ChannelSet to hunt through Channels that use different
+		protocols, ports, etc., in search of one that can connect to its endpoint
+		successfully.
+
+		@param channelIds The ids of configured Channels obtained from ServerConfig for this ChannelSet to
+		use. If null, Channels must be manually added to the ChannelSet.
+
+		@param clusteredWithURLLoadBalancing True if the Channels in the ChannelSet are clustered
+		using url load balancing.
+	**/
 	public function new(channelIds:Array<String> = null, clusteredWithURLLoadBalancing:Bool = false) {
 		super();
 		_clustered = clusteredWithURLLoadBalancing;
@@ -125,99 +125,86 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Helper MessageAgent used for direct authentication.
-	 */
+		Helper MessageAgent used for direct authentication.
+	**/
 	private var _authAgent:AuthenticationAgent;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether the ChannelSet is in the process of connecting
-	 *  over the current Channel.
-	 */
+		Flag indicating whether the ChannelSet is in the process of connecting
+		over the current Channel.
+	**/
 	private var _connecting:Bool;
 
 	/**
-	 *  @private
-	 *  Stored credentials to be set on the member channels.
-	 */
+		Stored credentials to be set on the member channels.
+	**/
 	private var _credentials:String;
 
 	/**
-	 *  @private
-	 *  The character-set encoding used to create the credentials String.
-	 */
+		The character-set encoding used to create the credentials String.
+	**/
 	private var _credentialsCharset:String;
 
 	/**
-	 *  @private
-	 *  Current index into the _channels/_channelIds arrays.
-	 */
+		Current index into the _channels/_channelIds arrays.
+	**/
 	private var _currentChannelIndex:Int;
 
 	/**
-	 *  @private
-	 *  This flag restricts our cluster request to only happen upon initial
-	 *  connect to the cluster.
-	 */
+		This flag restricts our cluster request to only happen upon initial
+		connect to the cluster.
+	**/
 	private var _hasRequestedClusterEndpoints:Bool;
 
 	/**
-	 *  @private
-	 *  Timer used to issue periodic heartbeats to the remote host if the
-	 *  client is idle, and not actively sending messages.
-	 */
+		Timer used to issue periodic heartbeats to the remote host if the
+		client is idle, and not actively sending messages.
+	**/
 	private var _heartbeatTimer:Timer;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether the ChannelSet is in the process of hunting to a
-	 *  new Channel; this lets us control the "reconnecting" flag on
-	 *  CONNECT ChannelEvents that we dispatch when we hunt to a new
-	 *  Channel that isn't internally failing over. The new Channel doesn't know we're
-	 *  in a reconnect attempt when it makes its initial connect attempt so this lets
-	 *  us set "reconnecting" to true on the CONNECT event if it succeeds.
-	 */
+		Flag indicating whether the ChannelSet is in the process of hunting to a
+		new Channel; this lets us control the "reconnecting" flag on
+		CONNECT ChannelEvents that we dispatch when we hunt to a new
+		Channel that isn't internally failing over. The new Channel doesn't know we're
+		in a reconnect attempt when it makes its initial connect attempt so this lets
+		us set "reconnecting" to true on the CONNECT event if it succeeds.
+	**/
 	private var _hunting:Bool;
 
 	/**
-	 *  @private
-	 *  A dictionary of pending messages used to filter out duplicate
-	 *  messages passed to the ChannelSet to send while it is not connected.
-	 *  This allows agents to perform message resend behavior (i.e. Consumer resubscribe
-	 *  attempts) without worrying about duplicate messages queuing up and being sent to
-	 *  the server once a connection is established.
-	 */
+		A dictionary of pending messages used to filter out duplicate
+		messages passed to the ChannelSet to send while it is not connected.
+		This allows agents to perform message resend behavior (i.e. Consumer resubscribe
+		attempts) without worrying about duplicate messages queuing up and being sent to
+		the server once a connection is established.
+	**/
 	private var _pendingMessages:Map<IMessage, Bool>;
 
 	/**
-	 *  @private
-	 *  An array of PendingSend instances to pass into send() when a connection
-	 *  is (re)established.
-	 */
+		An array of PendingSend instances to pass into send() when a connection
+		is (re)established.
+	**/
 	private var _pendingSends:Array<PendingSend>;
 
 	/**
-	 *  @private
-	 *  A timer used to do a delayed reconnect for NetConnection channels.
-	 */
+		A timer used to do a delayed reconnect for NetConnection channels.
+	**/
 	private var _reconnectTimer:Timer = null;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether the ChannelSet should be connected.
-	 *  If true, the ChannelSet will attempt to hunt to the next available
-	 *  Channel when a disconnect or fault occurs. If false, hunting is not
-	 *  performed.
-	 */
+		Flag indicating whether the ChannelSet should be connected.
+		If true, the ChannelSet will attempt to hunt to the next available
+		Channel when a disconnect or fault occurs. If false, hunting is not
+		performed.
+	**/
 	private var _shouldBeConnected:Bool;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether a Channel disconnect/fault should trigger hunting or not;
-	 *  used when connected Channels are removed from the ChannelSet which should not trigger
-	 *  hunting.
-	 */
+		Flag indicating whether a Channel disconnect/fault should trigger hunting or not;
+		used when connected Channels are removed from the ChannelSet which should not trigger
+		hunting.
+	**/
 	private var _shouldHunt:Bool;
 
 	//--------------------------------------------------------------------------
@@ -228,18 +215,14 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  authenticated
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _authenticated:Bool;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Indicates whether the ChannelSet has an underlying Channel that successfully
-	 *  authenticated with its endpoint.
-	 */
+		Indicates whether the ChannelSet has an underlying Channel that successfully
+		authenticated with its endpoint.
+	**/
 	@:flash.property
 	public var authenticated(get, never):Bool;
 
@@ -247,9 +230,6 @@ class ChannelSet extends EventDispatcher {
 		return _authenticated;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function setAuthenticated(value:Bool, creds:String, notifyAgents:Bool = true):Void {
 		if (_authenticated != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "authenticated", _authenticated, value);
@@ -273,22 +253,18 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  channels
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _channels:Array<Channel>;
 
 	/**
-	 *  Provides access to the Channels in the ChannelSet.
-	 *  This property may be used to assign a set of channels at once or channels
-	 *  may be added directly to the ChannelSet via addChannel() individually.
-	 *  If this ChannelSet is <code>configured</code> automatically the individual
-	 *  channels are created lazily and added to this property as needed.
-	 *
-	 *  @throws flash.errors.IllegalOperationError If the ChannelSet is
-	 *             <code>configured</code>, assigning to this property is not allowed.
-	 */
+		Provides access to the Channels in the ChannelSet.
+		This property may be used to assign a set of channels at once or channels
+		may be added directly to the ChannelSet via addChannel() individually.
+		If this ChannelSet is <code>configured</code> automatically the individual
+		channels are created lazily and added to this property as needed.
+
+		@throws flash.errors.IllegalOperationError If the ChannelSet is
+		<code>configured</code>, assigning to this property is not allowed.
+	**/
 	@:flash.property
 	public var channels(get, set):Array<Channel>;
 
@@ -298,9 +274,6 @@ class ChannelSet extends EventDispatcher {
 
 	// [ArrayElementType("mx.messaging.Channel")]
 
-	/**
-	 *  @private
-	 */
 	private function set_channels(values:Array<Channel>):Array<Channel> {
 		if (configured) {
 			throw new IllegalOperationError("Channels cannot be added to a ChannelSet that targets a configured destination.");
@@ -326,15 +299,11 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  channelIds
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _channelIds:Array<String>;
 
 	/**
-	 *  The ids of the Channels used by the ChannelSet.
-	 */
+		The ids of the Channels used by the ChannelSet.
+	**/
 	@:flash.property
 	public var channelIds(get, never):Array<String>;
 
@@ -357,15 +326,11 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  currentChannel
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _currentChannel:Channel;
 
 	/**
-	 *  Returns the current Channel for the ChannelSet.
-	 */
+		Returns the current Channel for the ChannelSet.
+	**/
 	@:flash.property
 	public var currentChannel(get, never):Channel;
 
@@ -376,27 +341,19 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  channelFailoverURIs
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _channelFailoverURIs:Map<String, Array<String>>;
 
 	/**
-	 *  @private
-	 *  Map of arrays of failoverURIs keyed by channel id for the Channels in this ChannelSet.
-	 *  This property is assigned to by the ClusterMessageResponder in order to update the
-	 *  member Channels with their failoverURIs.
-	 */
+		Map of arrays of failoverURIs keyed by channel id for the Channels in this ChannelSet.
+		This property is assigned to by the ClusterMessageResponder in order to update the
+		member Channels with their failoverURIs.
+	**/
 	private var channelFailoverURIs(get, set):Map<String, Array<String>>;
 
 	private function get_channelFailoverURIs():Map<String, Array<String>> {
 		return _channelFailoverURIs;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_channelFailoverURIs(value:Map<String, Array<String>>):Map<String, Array<String>> {
 		_channelFailoverURIs = value;
 		// Update any existing Channels in the set with their current failover endpoint URIs.
@@ -415,16 +372,12 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  configured
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _configured:Bool;
 
 	/**
-	 *  Indicates whether the ChannelSet is using automatically configured
-	 *  Channels or manually assigned Channels.
-	 */
+		Indicates whether the ChannelSet is using automatically configured
+		Channels or manually assigned Channels.
+	**/
 	private var configured(get, never):Bool;
 
 	private function get_configured():Bool {
@@ -434,17 +387,13 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  connected
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _connected:Bool;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Indicates whether the ChannelSet is connected.
-	 */
+		Indicates whether the ChannelSet is connected.
+	**/
 	@:flash.property
 	public var connected(get, never):Bool;
 
@@ -452,9 +401,6 @@ class ChannelSet extends EventDispatcher {
 		return _connected;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function setConnected(value:Bool):Void {
 		if (_connected != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "connected", _connected, value)
@@ -473,23 +419,19 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  clustered
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _clustered:Bool;
 
 	/**
-	 *  Indicates whether the ChannelSet targets a clustered destination.
-	 *  If true, upon a successful connection the ChannelSet will query the
-	 *  destination for all clustered endpoints for its Channels and will assign
-	 *  failoverURIs to them.
-	 *  Channel ids are used to assign failoverURIs to the proper Channel instances
-	 *  so this requires that all Channels in the ChannelSet have non-null ids and an
-	 *  Error will be thrown when this property is set to true if this is not the case.
-	 *  If the ChannelSet is not using url load balancing on the client this
-	 *  property should not be set to true.
-	 */
+		Indicates whether the ChannelSet targets a clustered destination.
+		If true, upon a successful connection the ChannelSet will query the
+		destination for all clustered endpoints for its Channels and will assign
+		failoverURIs to them.
+		Channel ids are used to assign failoverURIs to the proper Channel instances
+		so this requires that all Channels in the ChannelSet have non-null ids and an
+		Error will be thrown when this property is set to true if this is not the case.
+		If the ChannelSet is not using url load balancing on the client this
+		property should not be set to true.
+	**/
 	@:flash.property
 	public var clustered(get, set):Bool;
 
@@ -497,9 +439,6 @@ class ChannelSet extends EventDispatcher {
 		return _clustered;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_clustered(value:Bool):Bool {
 		if (_clustered != value) {
 			if (value) {
@@ -520,41 +459,37 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  heartbeatInterval
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _heartbeatInterval:Int = 0;
 
 	/**
-	 *  The number of milliseconds between heartbeats sent to the remote
-	 *  host while this ChannelSet is actively connected but idle.
-	 *  Any outbound message traffic will delay heartbeats temporarily, with
-	 *  this number of milliseconds elapsing after the last sent message before
-	 *  the next heartbeat is issued.
-	 *  
-	 *  This property is useful for applications that connect to a remote host
-	 *  to received pushed updates and are not actively sending any messages, but
-	 *  still wish to be notified of a dropped connection even when the networking
-	 *  layer fails to provide such notification directly. By issuing periodic
-	 *  heartbeats the client can force the networking layer to report a timeout
-	 *  if the underlying connection has dropped without notification and the
-	 *  application can respond to the disconnect appropriately.
-	 *  
-	 *  Any non-positive value disables heartbeats to the remote host.
-	 *  The default value is 0 indicating that heartbeats are disabled.
-	 *  If the application sets this value it should prefer a longer rather than
-	 *  shorter interval, to avoid placing unnecessary load on the remote host.
-	 *  As an illustrative example, low-level TCP socket keep-alives generally
-	 *  default to an interval of 2 hours. That is a longer interval than most
-	 *  applications that enable heartbeats will likely want to use, but it
-	 *  serves as a clear precedent to prefer a longer interval over a shorter
-	 *  interval.
-	 *  
-	 *  If the currently connected underlying Channel issues poll requests to
-	 *  the remote host, heartbeats are suppressed because the periodic poll
-	 *  requests effectively take their place.
-	 */
+		The number of milliseconds between heartbeats sent to the remote
+		host while this ChannelSet is actively connected but idle.
+		Any outbound message traffic will delay heartbeats temporarily, with
+		this number of milliseconds elapsing after the last sent message before
+		the next heartbeat is issued.
+
+		This property is useful for applications that connect to a remote host
+		to received pushed updates and are not actively sending any messages, but
+		still wish to be notified of a dropped connection even when the networking
+		layer fails to provide such notification directly. By issuing periodic
+		heartbeats the client can force the networking layer to report a timeout
+		if the underlying connection has dropped without notification and the
+		application can respond to the disconnect appropriately.
+
+		Any non-positive value disables heartbeats to the remote host.
+		The default value is 0 indicating that heartbeats are disabled.
+		If the application sets this value it should prefer a longer rather than
+		shorter interval, to avoid placing unnecessary load on the remote host.
+		As an illustrative example, low-level TCP socket keep-alives generally
+		default to an interval of 2 hours. That is a longer interval than most
+		applications that enable heartbeats will likely want to use, but it
+		serves as a clear precedent to prefer a longer interval over a shorter
+		interval.
+
+		If the currently connected underlying Channel issues poll requests to
+		the remote host, heartbeats are suppressed because the periodic poll
+		requests effectively take their place.
+	**/
 	@:flash.property
 	public var heartbeatInterval(get, set):Int;
 
@@ -562,9 +497,6 @@ class ChannelSet extends EventDispatcher {
 		return _heartbeatInterval;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_heartbeatInterval(value:Int):Int {
 		if (_heartbeatInterval != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "heartbeatInterval", _heartbeatInterval, value);
@@ -580,17 +512,13 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  initialDestinationId
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _initialDestinationId:String;
 
 	/**
-	 *  Provides access to the initial destination this ChannelSet is used to access.
-	 *  When the clustered property is true, this value is used to request available failover URIs
-	 *  for the configured channels for the destination.
-	 */
+		Provides access to the initial destination this ChannelSet is used to access.
+		When the clustered property is true, this value is used to request available failover URIs
+		for the configured channels for the destination.
+	**/
 	@:flash.property
 	public var initialDestinationId(get, set):String;
 
@@ -598,9 +526,6 @@ class ChannelSet extends EventDispatcher {
 		return _initialDestinationId;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_initialDestinationId(value:String):String {
 		_initialDestinationId = value;
 		return _initialDestinationId;
@@ -609,15 +534,11 @@ class ChannelSet extends EventDispatcher {
 	//----------------------------------
 	//  messageAgents
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _messageAgents:Array<MessageAgent>;
 
 	/**
-	 *  Provides access to the set of MessageAgents that use this ChannelSet.
-	 */
+		Provides access to the set of MessageAgents that use this ChannelSet.
+	**/
 	@:flash.property
 	public var messageAgents(get, never):Array<MessageAgent>;
 
@@ -632,10 +553,10 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Returns a String containing the ids of the Channels in the ChannelSet.
-	 *
-	 *  @return String representation of the ChannelSet.
-	 */
+		Returns a String containing the ids of the Channels in the ChannelSet.
+
+		@return String representation of the ChannelSet.
+	**/
 	override public function toString():String {
 		var s:String = "[ChannelSet ";
 		for (i in 0..._channels.length) {
@@ -653,16 +574,16 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Adds a Channel to the ChannelSet. A Channel with a null id cannot be added
-	 *  to the ChannelSet if the ChannelSet targets a clustered destination.
-	 *
-	 *  @param channel The Channel to add.
-	 *
-	 *  @throws flash.errors.IllegalOperationError If the ChannelSet is
-	 *             <code>configured</code>, adding a Channel is not supported.
-	 *             This error is also thrown if the ChannelSet's <code>clustered</code> property
-	 *             is <code>true</code> but the Channel has a null id.
-	 */
+		Adds a Channel to the ChannelSet. A Channel with a null id cannot be added
+		to the ChannelSet if the ChannelSet targets a clustered destination.
+
+		@param channel The Channel to add.
+
+		@throws flash.errors.IllegalOperationError If the ChannelSet is
+		<code>configured</code>, adding a Channel is not supported.
+		This error is also thrown if the ChannelSet's <code>clustered</code> property
+		is <code>true</code> but the Channel has a null id.
+	**/
 	public function addChannel(channel:Channel):Void {
 		if (channel == null)
 			return;
@@ -684,15 +605,15 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Removes a Channel from the ChannelSet. If the Channel to remove is
-	 *  currently connected and being used by the ChannelSet, it is
-	 *  disconnected as well as removed.
-	 *
-	 *  @param channel The Channel to remove.
-	 *
-	 *  @throws flash.errors.IllegalOperationError If the ChannelSet is
-	 *             <code>configured</code>, removing a Channel is not supported.
-	 */
+		Removes a Channel from the ChannelSet. If the Channel to remove is
+		currently connected and being used by the ChannelSet, it is
+		disconnected as well as removed.
+
+		@param channel The Channel to remove.
+
+		@throws flash.errors.IllegalOperationError If the ChannelSet is
+		<code>configured</code>, removing a Channel is not supported.
+	**/
 	public function removeChannel(channel:Channel):Void {
 		if (configured) {
 			throw new IllegalOperationError("Channels cannot be removed from a ChannelSet that targets a configured destination.");
@@ -715,11 +636,11 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Connects a MessageAgent to the ChannelSet. Once connected, the agent
-	 *  can use the ChannelSet to send messages.
-	 *
-	 *  @param agent The MessageAgent to connect.
-	 */
+		Connects a MessageAgent to the ChannelSet. Once connected, the agent
+		can use the ChannelSet to send messages.
+
+		@param agent The MessageAgent to connect.
+	**/
 	public function connect(agent:MessageAgent):Void {
 		if ((agent != null) && (_messageAgents.indexOf(agent) == -1)) {
 			_shouldBeConnected = true;
@@ -737,12 +658,12 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Disconnects a specific MessageAgent from the ChannelSet. If this is the
-	 *  last MessageAgent using the ChannelSet and the current Channel in the set is
-	 *  connected, the Channel will physically disconnect from the server.
-	 *
-	 *  @param agent The MessageAgent to disconnect.
-	 */
+		Disconnects a specific MessageAgent from the ChannelSet. If this is the
+		last MessageAgent using the ChannelSet and the current Channel in the set is
+		connected, the Channel will physically disconnect from the server.
+
+		@param agent The MessageAgent to disconnect.
+	**/
 	public function disconnect(agent:MessageAgent):Void {
 		if (agent == null) // Disconnect the ChannelSet completely.
 		{
@@ -800,21 +721,21 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Disconnects all associated MessageAgents and disconnects any underlying Channel that
-	 *  is connected.
-	 *  Unlike <code>disconnect(MessageAgent)</code> which is invoked by the disconnect implementations
-	 *  of specific service components, this method provides a single, convenient point to shut down
-	 *  connectivity between the client and server.
-	 */
+		Disconnects all associated MessageAgents and disconnects any underlying Channel that
+		is connected.
+		Unlike <code>disconnect(MessageAgent)</code> which is invoked by the disconnect implementations
+		of specific service components, this method provides a single, convenient point to shut down
+		connectivity between the client and server.
+	**/
 	public function disconnectAll():Void {
 		disconnect(null);
 	}
 
 	/**
-	 *  Handles a CONNECT ChannelEvent and redispatches the event.
-	 *
-	 *  @param event The ChannelEvent.
-	 */
+		Handles a CONNECT ChannelEvent and redispatches the event.
+
+		@param event The ChannelEvent.
+	**/
 	public function channelConnectHandler(event:ChannelEvent):Void {
 		_connecting = false;
 		_connected = true; // Set internally to allow us to send pending messages before dispatching the connect event.
@@ -859,10 +780,10 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Handles a DISCONNECT ChannelEvent and redispatches the event.
-	 *
-	 *  @param event The ChannelEvent.
-	 */
+		Handles a DISCONNECT ChannelEvent and redispatches the event.
+
+		@param event The ChannelEvent.
+	**/
 	public function channelDisconnectHandler(event:ChannelEvent):Void {
 		_connecting = false;
 		setConnected(false);
@@ -903,10 +824,10 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Handles a ChannelFaultEvent and redispatches the event.
-	 *
-	 *  @param event The ChannelFaultEvent.
-	 */
+		Handles a ChannelFaultEvent and redispatches the event.
+
+		@param event The ChannelFaultEvent.
+	**/
 	public function channelFaultHandler(event:ChannelFaultEvent):Void {
 		if (event.channel.connected) {
 			dispatchEvent(event);
@@ -949,29 +870,29 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Authenticates the ChannelSet with the server using the provided credentials.
-	 *  Unlike other operations on Channels and the ChannelSet, this operation returns an
-	 *  AsyncToken that client code may add a responder to in order to handle success or
-	 *  failure directly.
-	 *  If the ChannelSet is not connected to the server when this method is invoked it will
-	 *  trigger a connect attempt, and if successful, send the login command to the server.
-	 *  Only one login or logout operation may be pending at a time and overlapping calls will
-	 *  generate an IllegalOperationError.
-	 *  Invoking login when the ChannelSet is already authenticated will generate also generate
-	 *  an IllegalOperationError.
-	 *
-	 *  @param username The username.
-	 *  @param password The password.
-	 *  @param charset The character set encoding to use while encoding the
-	 *  credentials. The default is null, which implies the legacy charset of
-	 *  ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 *
-	 *  @return Returns a token that client code may add a responder to in order to handle
-	 *  success or failure directly.
-	 *
-	 *  @throws flash.errors.IllegalOperationError in two situations; if the ChannelSet is
-	 *          already authenticated, or if a login or logout operation is currently in progress.
-	 */
+		Authenticates the ChannelSet with the server using the provided credentials.
+		Unlike other operations on Channels and the ChannelSet, this operation returns an
+		AsyncToken that client code may add a responder to in order to handle success or
+		failure directly.
+		If the ChannelSet is not connected to the server when this method is invoked it will
+		trigger a connect attempt, and if successful, send the login command to the server.
+		Only one login or logout operation may be pending at a time and overlapping calls will
+		generate an IllegalOperationError.
+		Invoking login when the ChannelSet is already authenticated will generate also generate
+		an IllegalOperationError.
+
+		@param username The username.
+		@param password The password.
+		@param charset The character set encoding to use while encoding the
+		credentials. The default is null, which implies the legacy charset of
+		ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+
+		@return Returns a token that client code may add a responder to in order to handle
+		success or failure directly.
+
+		@throws flash.errors.IllegalOperationError in two situations; if the ChannelSet is
+		already authenticated, or if a login or logout operation is currently in progress.
+	**/
 	public function login(username:String, password:String, charset:String = null):AsyncToken {
 		if (authenticated)
 			throw new IllegalOperationError("ChannelSet is already authenticated.");
@@ -1019,35 +940,35 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Logs the ChannelSet out from the server. Unlike other operations on Channels
-	 *  and the ChannelSet, this operation returns an AsyncToken that client code may
-	 *  add a responder to in order to handle success or failure directly.
-	 *  If logout is successful any credentials that have been cached for use in
-	 *  automatic reconnects are cleared for the ChannelSet and its Channels and their
-	 *  authenticated state is set to false.
-	 *  If the ChannelSet is not connected to the server when this method is invoked it
-	 *  will trigger a connect attempt, and if successful, send a logout command to the server.
-	 *
-	 *  The MessageAgent argument is present to support legacy logout behavior and client code that
-	 *  invokes this method should not pass a MessageAgent reference. Just invoke <code>logout()</code>
-	 *  passing no arguments.
-	 *
-	 *  This method is also invoked by service components from their <code>logout()</code>
-	 *  methods, and these components pass a MessageAgent reference to this method when they logout.
-	 *  The presence of this argument is the trigger to execute legacy logout behavior that differs
-	 *  from the new behavior described above.
-	 *  Legacy behavior only sends a logout request to the server if the client is connected
-	 *  and authenticated.
-	 *  If these conditions are not met the legacy behavior for this method is to do nothing other
-	 *  than clear any credentials that have been cached for use in automatic reconnects.
-	 *
-	 *  @param agent Legacy argument. The MessageAgent that is initiating the logout.
-	 *
-	 *  @return Returns a token that client code may
-	 *  add a responder to in order to handle success or failure directly.
-	 *
-	 *  @throws flash.errors.IllegalOperationError if a login or logout operation is currently in progress.
-	 */
+		Logs the ChannelSet out from the server. Unlike other operations on Channels
+		and the ChannelSet, this operation returns an AsyncToken that client code may
+		add a responder to in order to handle success or failure directly.
+		If logout is successful any credentials that have been cached for use in
+		automatic reconnects are cleared for the ChannelSet and its Channels and their
+		authenticated state is set to false.
+		If the ChannelSet is not connected to the server when this method is invoked it
+		will trigger a connect attempt, and if successful, send a logout command to the server.
+
+		The MessageAgent argument is present to support legacy logout behavior and client code that
+		invokes this method should not pass a MessageAgent reference. Just invoke <code>logout()</code>
+		passing no arguments.
+
+		This method is also invoked by service components from their <code>logout()</code>
+		methods, and these components pass a MessageAgent reference to this method when they logout.
+		The presence of this argument is the trigger to execute legacy logout behavior that differs
+		from the new behavior described above.
+		Legacy behavior only sends a logout request to the server if the client is connected
+		and authenticated.
+		If these conditions are not met the legacy behavior for this method is to do nothing other
+		than clear any credentials that have been cached for use in automatic reconnects.
+
+		@param agent Legacy argument. The MessageAgent that is initiating the logout.
+
+		@return Returns a token that client code may
+		add a responder to in order to handle success or failure directly.
+
+		@throws flash.errors.IllegalOperationError if a login or logout operation is currently in progress.
+	**/
 	public function logout(agent:MessageAgent = null):AsyncToken {
 		_credentials = null;
 		if (agent == null) {
@@ -1095,15 +1016,15 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Sends a message from a MessageAgent over the currently connected Channel.
-	 *
-	 *  @param agent The MessageAgent sending the message.
-	 *
-	 *  @param message The Message to send.
-	 *
-	 *  @throws mx.messaging.errors.NoChannelAvailableError If the ChannelSet has no internal
-	 *                                  Channels to use.
-	 */
+		Sends a message from a MessageAgent over the currently connected Channel.
+
+		@param agent The MessageAgent sending the message.
+
+		@param message The Message to send.
+
+		@throws mx.messaging.errors.NoChannelAvailableError If the ChannelSet has no internal
+		Channels to use.
+	**/
 	public function send(agent:MessageAgent, message:IMessage):Void {
 		if (_currentChannel != null && _currentChannel.connected) {
 			// Filter out any commands to trigger connection establishment, and
@@ -1163,19 +1084,19 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Stores the credentials and passes them through to every connected channel.
-	 *
-	 *  @param credentials The credentials for the MessageAgent.
-	 *  @param agent The MessageAgent that is setting the credentials.
-	 *  @param charset The character set encoding used while encoding the
-	 *  credentials. The default is null, which implies the legacy encoding of
-	 *  ISO-Latin-1.
-	 *
-	 *  @throws flash.errors.IllegalOperationError in two situations; if credentials
-	 *  have already been set and an authentication is in progress with the remote
-	 *  detination, or if authenticated and the credentials specified don't match
-	 *  the currently authenticated credentials.
-	 */
+		Stores the credentials and passes them through to every connected channel.
+
+		@param credentials The credentials for the MessageAgent.
+		@param agent The MessageAgent that is setting the credentials.
+		@param charset The character set encoding used while encoding the
+		credentials. The default is null, which implies the legacy encoding of
+		ISO-Latin-1.
+
+		@throws flash.errors.IllegalOperationError in two situations; if credentials
+		have already been set and an authentication is in progress with the remote
+		detination, or if authenticated and the credentials specified don't match
+		the currently authenticated credentials.
+	**/
 	public function setCredentials(credentials:String, agent:MessageAgent, charset:String = null):Void {
 		_credentials = credentials;
 		var n:Int = _channels.length;
@@ -1192,9 +1113,8 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Handles a successful login or logout operation for the ChannelSet.
-	 */
+		Handles a successful login or logout operation for the ChannelSet.
+	**/
 	private function authenticationSuccess(agent:AuthenticationAgent, token:AsyncToken, ackMessage:AcknowledgeMessage):Void {
 		// Reset authentication state depending on whether a login or logout was successful.
 		var command:CommandMessage = cast(token.message, CommandMessage);
@@ -1244,9 +1164,8 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Handles a failed login or logout operation for the ChannelSet.
-	 */
+		Handles a failed login or logout operation for the ChannelSet.
+	**/
 	private function authenticationFailure(agent:AuthenticationAgent, token:AsyncToken, faultMessage:ErrorMessage):Void {
 		var messageFaultEvent:MessageFaultEvent = MessageFaultEvent.createEvent(faultMessage);
 		var faultEvent:FaultEvent = FaultEvent.createEventFromMessageFault(messageFaultEvent, token);
@@ -1265,15 +1184,14 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Helper method to fault pending messages.
-	 *  The ErrorMessage is tagged with a __retryable__ header to indicate that
-	 *  the error was due to connectivity problems on the client as opposed to
-	 *  a server error response and the message can be retried (resent).
-	 *
-	 *  @param event A ChannelEvent.DISCONNECT or a ChannelFaultEvent that is the root cause
-	 *               for faulting these pending sends.
-	 */
+		Helper method to fault pending messages.
+		The ErrorMessage is tagged with a __retryable__ header to indicate that
+		the error was due to connectivity problems on the client as opposed to
+		a server error response and the message can be retried (resent).
+
+		@param event A ChannelEvent.DISCONNECT or a ChannelFaultEvent that is the root cause
+		for faulting these pending sends.
+	**/
 	private function faultPendingSends(event:ChannelEvent):Void {
 		while (_pendingSends.length > 0) {
 			var ps:PendingSend = _pendingSends.shift();
@@ -1305,18 +1223,17 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  Redispatches message events from the currently connected Channel.
-	 *
-	 *  @param event The MessageEvent from the Channel.
-	 */
+		Redispatches message events from the currently connected Channel.
+
+		@param event The MessageEvent from the Channel.
+	**/
 	private function messageHandler(event:MessageEvent):Void {
 		dispatchEvent(event);
 	}
 
 	/**
-	 *  @private
-	 *  Schedules a heartbeat to be sent in heartbeatInterval milliseconds.
-	 */
+		Schedules a heartbeat to be sent in heartbeatInterval milliseconds.
+	**/
 	private function scheduleHeartbeat():Void {
 		if (_heartbeatTimer == null && heartbeatInterval > 0) {
 			_heartbeatTimer = new Timer(heartbeatInterval, 1);
@@ -1326,10 +1243,9 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Handles a heartbeat timer event by conditionally sending a heartbeat
-	 *  and scheduling the next.
-	 */
+		Handles a heartbeat timer event by conditionally sending a heartbeat
+		and scheduling the next.
+	**/
 	private function sendHeartbeatHandler(event:TimerEvent):Void {
 		unscheduleHeartbeat();
 		if (currentChannel != null) {
@@ -1339,9 +1255,8 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Sends a heartbeat request.
-	 */
+		Sends a heartbeat request.
+	**/
 	private function sendHeartbeat():Void {
 		// Current channel may be actively polling, which suppresses explicit heartbeats.
 		var pollingChannel:PollingChannel = Std.downcast(currentChannel, PollingChannel);
@@ -1355,9 +1270,8 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Unschedules any currently scheduled pending heartbeat.
-	 */
+		Unschedules any currently scheduled pending heartbeat.
+	**/
 	private function unscheduleHeartbeat():Void {
 		if (_heartbeatTimer != null) {
 			_heartbeatTimer.stop();
@@ -1373,9 +1287,8 @@ class ChannelSet extends EventDispatcher {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Helper method to connect the current internal Channel.
-	 */
+		Helper method to connect the current internal Channel.
+	**/
 	private function connectChannel():Void {
 		_connecting = true;
 		_currentChannel.connect(this);
@@ -1384,9 +1297,8 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Helper method to disconnect the current internal Channel.
-	 */
+		Helper method to disconnect the current internal Channel.
+	**/
 	private function disconnectChannel():Void {
 		_connecting = false;
 		// Stop listening for server pushed messages on the Channel.
@@ -1395,27 +1307,25 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  Helper method to dispatch authentication-related RPC events.
-	 *
-	 *  @param event The event to dispatch.
-	 */
+		Helper method to dispatch authentication-related RPC events.
+
+		@param event The event to dispatch.
+	**/
 	private function dispatchRPCEvent(event:AbstractEvent):Void {
 		event.callTokenResponders();
 		dispatchEvent(event);
 	}
 
 	/**
-	 *  @private
-	 *  Helper method to hunt to the next available internal Channel for the
-	 *  ChannelSet.
-	 *
-	 *  @return True if hunting to the next available Channel was successful; false if hunting
-	 *          exhausted available channels and has reset to the beginning of the set.
-	 *
-	 *  @throws mx.messaging.errors.NoChannelAvailableError If the ChannelSet has no internal
-	 *                                  Channels to use.
-	 */
+		Helper method to hunt to the next available internal Channel for the
+		ChannelSet.
+
+		@return True if hunting to the next available Channel was successful; false if hunting
+		exhausted available channels and has reset to the beginning of the set.
+
+		@throws mx.messaging.errors.NoChannelAvailableError If the ChannelSet has no internal
+		Channels to use.
+	**/
 	private function hunt():Bool {
 		if (_channels.length == 0) {
 			throw new NoChannelAvailableError("No Channels are available for use.");
@@ -1457,10 +1367,9 @@ class ChannelSet extends EventDispatcher {
 	}
 
 	/**
-	 *  @private
-	 *  This method is invoked by a timer and it works around a reconnect issue
-	 *  with NetConnection based channels within a single frame by reconnecting after a slight delay.
-	 */
+		This method is invoked by a timer and it works around a reconnect issue
+		with NetConnection based channels within a single frame by reconnecting after a slight delay.
+	**/
 	private function reconnectChannel(event:TimerEvent):Void {
 		_reconnectTimer.stop();
 		_reconnectTimer.removeEventListener(TimerEvent.TIMER, reconnectChannel);
@@ -1470,19 +1379,18 @@ class ChannelSet extends EventDispatcher {
 }
 
 /**
- *  @private
- *  Clustered ChannelSets need to request the clustered channel endpoints for
- *  the channels they contain upon a successful connect. However, Channels
- *  require that all outbound messages be sent by a MessageAgent that their
- *  internal MessageResponder implementations can callback to upon a response
- *  or fault. The ChannelSet is not a MessageAgent, so in this case, it
- *  circumvents the regular Channel.send() by passing its own custom responder
- *  to Channel.sendUsingCustomResponder().
- *
- *  This is the custom responder.
- */
+	Clustered ChannelSets need to request the clustered channel endpoints for
+	the channels they contain upon a successful connect. However, Channels
+	require that all outbound messages be sent by a MessageAgent that their
+	internal MessageResponder implementations can callback to upon a response
+	or fault. The ChannelSet is not a MessageAgent, so in this case, it
+	circumvents the regular Channel.send() by passing its own custom responder
+	to Channel.sendUsingCustomResponder().
+
+	This is the custom responder.
+**/
 @:access(feathers.messaging.ChannelSet)
-class ClusterMessageResponder extends MessageResponder {
+private class ClusterMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
@@ -1490,8 +1398,8 @@ class ClusterMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 */
+		Constructor.
+	**/
 	public function new(message:IMessage, channelSet:ChannelSet) {
 		super(null, message);
 		_channelSet = channelSet;
@@ -1504,10 +1412,9 @@ class ClusterMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Gives the responder access to this ChannelSet, to pass it failover URIs for
-	 *  its channels.
-	 */
+		Gives the responder access to this ChannelSet, to pass it failover URIs for
+		its channels.
+	**/
 	private var _channelSet:ChannelSet;
 
 	//--------------------------------------------------------------------------
@@ -1517,10 +1424,10 @@ class ClusterMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Handles a cluster message response.
-	 *
-	 *  @param message The response Message.
-	 */
+		Handles a cluster message response.
+
+		@param message The response Message.
+	**/
 	override private function resultHandler(message:IMessage):Void {
 		if ((message.body != null) && ((message.body is Array) || (message.body is ArrayCollection))) {
 			var channelFailoverURIs:Dynamic = {};
@@ -1541,11 +1448,10 @@ class ClusterMessageResponder extends MessageResponder {
 }
 
 /**
- *  @private
- *  Stores a pending message to send when the ChannelSet does not have a
- *  connected Channel to use immediately.
- */
-class PendingSend {
+	Stores a pending message to send when the ChannelSet does not have a
+	connected Channel to use immediately.
+**/
+private class PendingSend {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
@@ -1553,13 +1459,12 @@ class PendingSend {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Constructor.
-	 *
-	 *  @param agent The MessageAgent sending the message.
-	 *
-	 *  @param msg The Message to send.
-	 */
+		Constructor.
+
+		@param agent The MessageAgent sending the message.
+
+		@param msg The Message to send.
+	**/
 	public function new(agent:MessageAgent, message:IMessage) {
 		this.agent = agent;
 		this.message = message;
@@ -1572,24 +1477,21 @@ class PendingSend {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  The MessageAgent.
-	 */
+		The MessageAgent.
+	**/
 	public var agent:MessageAgent;
 
 	/**
-	 *  @private
-	 *  The Message to send.
-	 */
+		The Message to send.
+	**/
 	public var message:IMessage;
 }
 
 /**
- *  @private
- *  Helper class for handling and redispatching login and logout results or faults.
- */
+	Helper class for handling and redispatching login and logout results or faults.
+**/
 @:access(feathers.messaging.ChannelSet)
-class AuthenticationAgent extends MessageAgent {
+private class AuthenticationAgent extends MessageAgent {
 	//--------------------------------------------------------------------------
 	//
 	// Public Static Constants
@@ -1609,8 +1511,8 @@ class AuthenticationAgent extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 */
+		Constructor.
+	**/
 	public function new(channelSet:ChannelSet) {
 		super();
 		// _log = Log.getLogger("ChannelSet.AuthenticationAgent");
@@ -1626,8 +1528,8 @@ class AuthenticationAgent extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Map of login/logout message Ids to associated tokens.
-	 */
+		Map of login/logout message Ids to associated tokens.
+	**/
 	private var tokens:Dynamic = {};
 
 	//--------------------------------------------------------------------------
@@ -1638,9 +1540,9 @@ class AuthenticationAgent extends MessageAgent {
 	private var _state:Int = LOGGED_OUT_STATE;
 
 	/**
-	 * Returns the current state for the agent.
-	 * See the static state constants defined by this class.
-	 */
+		Returns the current state for the agent.
+		See the static state constants defined by this class.
+	**/
 	@:flash.property
 	public var state(get, set):Int;
 
@@ -1662,15 +1564,15 @@ class AuthenticationAgent extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Registers an outbound login/logout message and its associated token for response/fault handling.
-	 */
+		Registers an outbound login/logout message and its associated token for response/fault handling.
+	**/
 	public function registerToken(token:AsyncToken):Void {
 		Reflect.setField(tokens, token.message.messageId, token);
 	}
 
 	/**
-	 * Acknowledge message callback.
-	 */
+		Acknowledge message callback.
+	**/
 	override public function acknowledge(ackMsg:AcknowledgeMessage, msg:IMessage):Void {
 		if (state == SHUTDOWN_STATE)
 			return;
@@ -1688,8 +1590,8 @@ class AuthenticationAgent extends MessageAgent {
 	}
 
 	/**
-	 * Fault callback.
-	 */
+		Fault callback.
+	**/
 	override public function fault(errMsg:ErrorMessage, msg:IMessage):Void {
 		if (state == SHUTDOWN_STATE)
 			return;

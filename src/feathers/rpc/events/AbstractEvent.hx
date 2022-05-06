@@ -21,20 +21,21 @@ import feathers.messaging.events.MessageEvent;
 import feathers.messaging.messages.IMessage;
 
 /**
- * The base class for events that RPC services dispatch.
- */
+	The base class for events that RPC services dispatch.
+**/
 class AbstractEvent extends MessageEvent {
 	private var _token:AsyncToken;
 
-	private function new(type:String, bubbles:Bool = false, cancelable:Bool = true, token:AsyncToken = null, message:IMessage = null) {
+	@:dox(hide)
+	public function new(type:String, bubbles:Bool = false, cancelable:Bool = true, token:AsyncToken = null, message:IMessage = null) {
 		super(type, bubbles, cancelable, message);
 
 		_token = token;
 	}
 
 	/**
-	 * The token that represents the call to the method. Used in the asynchronous completion token pattern.
-	 */
+		The token that represents the call to the method. Used in the asynchronous completion token pattern.
+	**/
 	@:flash.property
 	public var token(get, never):AsyncToken;
 
@@ -46,8 +47,6 @@ class AbstractEvent extends MessageEvent {
 		_token = t;
 	}
 
-	/**
-	 * Does nothing by default.
-	 */
+	// Does nothing by default.
 	private function callTokenResponders():Void {}
 }

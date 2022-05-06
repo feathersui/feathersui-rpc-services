@@ -18,8 +18,8 @@
 package feathers.messaging.messages;
 
 /**
- *  The MessageBody for an ActionMessage
- */
+	The MessageBody for an ActionMessage
+**/
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.MessageBody"))
 class MessageBody {
 	//--------------------------------------------------------------------------
@@ -29,9 +29,8 @@ class MessageBody {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of a MessageBody
-	 *  
-	 */
+		Constructs an instance of a MessageBody
+	**/
 	public function new() {}
 
 	//--------------------------------------------------------------------------
@@ -41,15 +40,13 @@ class MessageBody {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The target URI.
-	 *  
-	 */
+		The target URI.
+	**/
 	public var targetURI:String = "null";
 
 	/**
-	 *  The response URI.
-	 *  
-	 */
+		The response URI.
+	**/
 	public var responseURI:String = "/1";
 
 	//--------------------------------------------------------------------------
@@ -60,16 +57,11 @@ class MessageBody {
 	//----------------------------------
 	//  data
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _data:Dynamic;
 
 	/**
-	 *  The data to be sent.
-	 *  
-	 */
+		The data to be sent.
+	**/
 	@:flash.property
 	public var data(get, set):Dynamic;
 
@@ -77,9 +69,6 @@ class MessageBody {
 		return _data;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_data(value:Dynamic):Dynamic {
 		_data = value;
 		return _data;

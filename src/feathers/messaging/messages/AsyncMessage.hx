@@ -23,8 +23,8 @@ import openfl.utils.IDataInput;
 import openfl.utils.IDataOutput;
 
 /**
- *  AsyncMessage is the base class for all asynchronous messages.
- */
+	AsyncMessage is the base class for all asynchronous messages.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.messages.AsyncMessage"))
 class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
@@ -34,10 +34,9 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Messages sent by a MessageAgent with a defined <code>subtopic</code>
-	 *  property indicate their target subtopic in this header.
-	 *  
-	 */
+		Messages sent by a MessageAgent with a defined <code>subtopic</code>
+		property indicate their target subtopic in this header.
+	**/
 	public static final SUBTOPIC_HEADER:String = "DSSubtopic";
 
 	//--------------------------------------------------------------------------
@@ -55,19 +54,18 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of an AsyncMessage with an empty body and header.
-	 *  In addition to this default behavior, the body and the headers for the
-	 *  message may also be passed to the constructor as a convenience.
-	 *  An example of this invocation approach for the body is:
-	 *  <code>var msg:AsyncMessage = new AsyncMessage("Body text");</code>
-	 *  An example that provides both the body and headers is:
-	 *  <code>var msg:AsyncMessage = new AsyncMessage("Body text", {"customerHeader":"customValue"});</code>
-	 * 
-	 *  @param body The optional body to assign to the message.
-	 * 
-	 *  @param headers The optional headers to assign to the message.
-	 *  
-	 */
+		Constructs an instance of an AsyncMessage with an empty body and header.
+		In addition to this default behavior, the body and the headers for the
+		message may also be passed to the constructor as a convenience.
+		An example of this invocation approach for the body is:
+		<code>var msg:AsyncMessage = new AsyncMessage("Body text");</code>
+		An example that provides both the body and headers is:
+		<code>var msg:AsyncMessage = new AsyncMessage("Body text", {"customerHeader":"customValue"});</code>
+
+		@param body The optional body to assign to the message.
+
+		@param headers The optional headers to assign to the message.
+	**/
 	public function new(body:Any = null, headers:Any = null) {
 		super();
 
@@ -87,26 +85,18 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//----------------------------------
 	//  correlationId
 	//----------------------------------
-
-	/**
-	 * @private
-	 */
 	private var _correlationId:String;
 
-	/**
-	 * @private
-	 */
 	private var correlationIdBytes:ByteArray;
 
 	/**
-	 *  Provides access to the correlation id of the message.
-	 *  Used for acknowledgement and for segmentation of messages.
-	 *  The <code>correlationId</code> contains the <code>messageId</code> of the
-	 *  previous message that this message refers to.
-	 *
-	 *  @see mx.messaging.messages.AbstractMessage#messageId
-	 *  
-	 */
+		Provides access to the correlation id of the message.
+		Used for acknowledgement and for segmentation of messages.
+		The <code>correlationId</code> contains the <code>messageId</code> of the
+		previous message that this message refers to.
+
+		@see mx.messaging.messages.AbstractMessage#messageId
+	**/
 	@:flash.property
 	public var correlationId(get, set):String;
 
@@ -114,9 +104,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 		return _correlationId;
 	}
 
-	/**
-	 * @private
-	 */
 	private function set_correlationId(value:String):String {
 		_correlationId = value;
 		correlationIdBytes = null;
@@ -129,9 +116,7 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
+	@:dox(hide)
 	public function getSmallMessage():IMessage {
 		// If it is a subclass, it will need to override this itself if it wants to use
 		// small messages.
@@ -140,9 +125,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 		return null;
 	}
 
-	/**
-	 * @private
-	 */
 	override public function readExternal(input:IDataInput):Void {
 		super.readExternal(input);
 
@@ -175,9 +157,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 		}
 	}
 
-	/**
-	 * @private
-	 */
 	override public function writeExternal(output:IDataOutput):Void {
 		super.writeExternal(output);
 
@@ -201,9 +180,6 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 			output.writeObject(correlationIdBytes);
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function addDebugAttributes(attributes:Any):Void {
 		super.addDebugAttributes(attributes);
 		Reflect.setField(attributes, "correlationId", correlationId);

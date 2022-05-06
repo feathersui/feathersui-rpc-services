@@ -20,10 +20,10 @@ package feathers.messaging.errors;
 import feathers.messaging.messages.ErrorMessage;
 
 /**
- *  This error indicates a problem serializing a message within a channel.
- *  It provides a fault property which corresponds to an ErrorMessage generated
- *  when this error is thrown.
- */
+	This error indicates a problem serializing a message within a channel.
+	It provides a fault property which corresponds to an ErrorMessage generated
+	when this error is thrown.
+**/
 class MessageSerializationError extends MessagingError {
 	//--------------------------------------------------------------------------
 	//
@@ -32,14 +32,13 @@ class MessageSerializationError extends MessagingError {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a new instance of the MessageSerializationError
-	 *  with the specified message.
-	 *
-	 *  @param msg String that contains the message that describes the error.
-	 *  @param fault Provides specific information about the fault that occured
-	 *  and for which message.
-	 *  
-	 */
+		Constructs a new instance of the MessageSerializationError
+		with the specified message.
+
+		@param msg String that contains the message that describes the error.
+		@param fault Provides specific information about the fault that occured
+		and for which message.
+	**/
 	public function new(msg:String, fault:ErrorMessage) {
 		super(msg);
 		this.fault = fault;
@@ -52,9 +51,8 @@ class MessageSerializationError extends MessagingError {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Provides specific information about the fault that occurred and for
-	 *  which message.
-	 *  
-	 */
+		Provides specific information about the fault that occurred and for
+		which message.
+	**/
 	public var fault:ErrorMessage;
 }

@@ -20,12 +20,12 @@ package feathers.messaging.config;
 import openfl.display.DisplayObject;
 
 /**
- *  @private
- *  This class acts as a context for the messaging framework so that it
- *  has access the URL and arguments of the SWF without needing
- *  access to the root MovieClip's LoaderInfo or Flex's Application
- *  class.
- */
+	This class acts as a context for the messaging framework so that it
+	has access the URL and arguments of the SWF without needing
+	access to the root MovieClip's LoaderInfo or Flex's Application
+	class.
+**/
+@:dox(hide)
 class LoaderConfig {
 	// include "../../core/Version.as";
 	//--------------------------------------------------------------------------
@@ -54,11 +54,11 @@ class LoaderConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 *
-	 *  One instance of LoaderConfig is created by the SystemManager. 
-	 *  You should not need to construct your own.
-	 */
+		Constructor.
+
+		One instance of LoaderConfig is created by the SystemManager. 
+		You should not need to construct your own.
+	**/
 	public function new() {}
 
 	//--------------------------------------------------------------------------
@@ -71,15 +71,14 @@ class LoaderConfig {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Storage for the parameters property.
-	 */
+		Storage for the parameters property.
+	**/
 	private static var _parameters:Dynamic;
 
 	/**
-	 *  If the LoaderConfig has been initialized, this
-	 *  should represent the top-level MovieClip's parameters.
-	 */
+		If the LoaderConfig has been initialized, this
+		should represent the top-level MovieClip's parameters.
+	**/
 	@:flash.property
 	public static var parameters(get, never):Dynamic;
 
@@ -93,9 +92,9 @@ class LoaderConfig {
 	private static var _swfVersion:UInt;
 
 	/**
-	 *  If the LoaderConfig has been initialized, this should represent the
-	 *  top-level MovieClip's swfVersion.
-	 */
+		If the LoaderConfig has been initialized, this should represent the
+		top-level MovieClip's swfVersion.
+	**/
 	@:flash.property
 	public static var swfVersion(get, never):UInt;
 
@@ -108,15 +107,14 @@ class LoaderConfig {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Storage for the url property.
-	 */
+		Storage for the url property.
+	**/
 	private static var _url:String = null;
 
 	/**
-	 *  If the LoaderConfig has been initialized, this
-	 *  should represent the top-level MovieClip's URL.
-	 */
+		If the LoaderConfig has been initialized, this
+		should represent the top-level MovieClip's URL.
+	**/
 	@:flash.property
 	public static var url(get, never):String;
 

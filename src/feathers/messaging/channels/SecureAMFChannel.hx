@@ -18,9 +18,9 @@
 package feathers.messaging.channels;
 
 /**
- *  The SecureAMFChannel class is identical to the AMFChannel class except that it uses a
- *  secure protocol, HTTPS, to send messages to an AMF endpoint.
- */
+	The SecureAMFChannel class is identical to the AMFChannel class except that it uses a
+	secure protocol, HTTPS, to send messages to an AMF endpoint.
+**/
 class SecureAMFChannel extends AMFChannel {
 	//--------------------------------------------------------------------------
 	//
@@ -29,13 +29,11 @@ class SecureAMFChannel extends AMFChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 *
-	 *  @param id The id of this Channel.
-	 *  
-	 *  @param uri The uri for this Channel.
-	 *  
-	 */
+		Constructor.
+
+		@param id The id of this Channel.
+		@param uri The uri for this Channel.
+	**/
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
 	}
@@ -47,9 +45,8 @@ class SecureAMFChannel extends AMFChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Returns the protocol for this channel (https).
-	 *  
-	 */
+		Returns the protocol for this channel (https).
+	**/
 	override private function get_protocol():String {
 		return "https";
 	}

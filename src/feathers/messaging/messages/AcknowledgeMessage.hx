@@ -21,11 +21,11 @@ import openfl.utils.IDataInput;
 import openfl.utils.IDataOutput;
 
 /**
- *  An AcknowledgeMessage acknowledges the receipt of a message that 
- *  was sent previously.
- *  Every message sent within the messaging system must receive an
- *  acknowledgement.
- */
+	An AcknowledgeMessage acknowledges the receipt of a message that 
+	was sent previously.
+	Every message sent within the messaging system must receive an
+	acknowledgement.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.messages.AcknowledgeMessage"))
 class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
@@ -35,11 +35,10 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Header name for the error hint header.
-	 *  Used to indicate that the acknowledgement is for a message that
-	 *  generated an error.
-	 *  
-	 */
+		Header name for the error hint header.
+		Used to indicate that the acknowledgement is for a message that
+		generated an error.
+	**/
 	public static final ERROR_HINT_HEADER:String = "DSErrorHint";
 
 	//--------------------------------------------------------------------------
@@ -49,9 +48,8 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of an AcknowledgeMessage with an empty body and header.
-	 *  
-	 */
+		Constructs an instance of an AcknowledgeMessage with an empty body and header.
+	**/
 	public function new() {
 		super();
 	}
@@ -62,18 +60,12 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
 	override public function getSmallMessage():IMessage {
 		if (Type.getClass(this) == AcknowledgeMessage)
 			return new AcknowledgeMessageExt(this);
 		return null;
 	}
 
-	/**
-	 * @private
-	 */
 	override public function readExternal(input:IDataInput):Void {
 		super.readExternal(input);
 
@@ -94,9 +86,6 @@ class AcknowledgeMessage extends AsyncMessage implements ISmallMessage {
 		}
 	}
 
-	/**
-	 * @private
-	 */
 	override public function writeExternal(output:IDataOutput):Void {
 		super.writeExternal(output);
 

@@ -22,13 +22,10 @@ import openfl.events.TimerEvent;
 import openfl.utils.Timer;
 
 /**
- *  This class provides a mechanism for dispatching a method asynchronously.
- *  @private
- */
+	This class provides a mechanism for dispatching a method asynchronously.
+**/
+@:dox(hide)
 class AsyncDispatcher {
-	/**
-	 *  @private
-	 */
 	public function new(method:Function, args:Array<Any>, delay:Float) {
 		_method = method;
 		_args = args;

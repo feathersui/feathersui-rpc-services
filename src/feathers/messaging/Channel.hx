@@ -38,26 +38,25 @@ import openfl.events.TimerEvent;
 import openfl.utils.Timer;
 
 /**
- *  The Channel class is the base message channel class that all channels in the messaging
- *  system must extend.
- *
- *  Channels are specific protocol-based conduits for messages sent between 
- *  MessageAgents and remote destinations.
- *  Preconfigured channels are obtained within the framework using the
- *  <code>ServerConfig.getChannel()</code> method.
- *  You can create a Channel directly using the <code>new</code> operator and
- *  add it to a ChannelSet directly.
- * 
- *  Channels represent a physical connection to a remote endpoint.
- *  Channels are shared across destinations by default.
- *  This means that a client targetting different destinations may use
- *  the same Channel to communicate with these destinations.
- *
- *  **Note:** This class is for advanced use only.
- *  Use this class for creating custom channels like the existing RTMPChannel,
- *  AMFChannel, and HTTPChannel.
- *
- */
+	The Channel class is the base message channel class that all channels in the messaging
+	system must extend.
+
+	Channels are specific protocol-based conduits for messages sent between 
+	MessageAgents and remote destinations.
+	Preconfigured channels are obtained within the framework using the
+	<code>ServerConfig.getChannel()</code> method.
+	You can create a Channel directly using the <code>new</code> operator and
+	add it to a ChannelSet directly.
+
+	Channels represent a physical connection to a remote endpoint.
+	Channels are shared across destinations by default.
+	This means that a client targetting different destinations may use
+	the same Channel to communicate with these destinations.
+
+	**Note:** This class is for advanced use only.
+	Use this class for creating custom channels like the existing RTMPChannel,
+	AMFChannel, and HTTPChannel.
+**/
 @:access(feathers.messaging.ChannelSet)
 @:access(feathers.messaging.FlexClient)
 @:access(feathers.messaging.MessageAgent)
@@ -70,9 +69,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Channel config parsing constants. 
-	 */
+		Channel config parsing constants. 
+	**/
 	private static final CLIENT_LOAD_BALANCING:String = "client-load-balancing";
 
 	private static final CONNECT_TIMEOUT_SECONDS:String = "connect-timeout-seconds";
@@ -91,17 +89,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of a generic Channel that connects to the
-	 *  specified endpoint URI.
-	 *
-	 *  **Note:** The Channel type should not be constructed directly. Instead
-	 *  create instances of protocol specific subclasses such as RTMPChannel or
-	 *  AMFChannel.
-	 *
-	 *  @param id The id of this channel.
-	 * 
-	 *  @param uri The endpoint URI for this channel.
-	 */
+		Constructs an instance of a generic Channel that connects to the
+		specified endpoint URI.
+
+		**Note:** The Channel type should not be constructed directly. Instead
+		create instances of protocol specific subclasses such as RTMPChannel or
+		AMFChannel.
+
+		@param id The id of this channel.
+
+		@param uri The endpoint URI for this channel.
+	**/
 	public function new(id:String = null, uri:String = null) {
 		super();
 
@@ -112,9 +110,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		this.uri = uri; // Current URI
 	}
 
-	/**
-	 * @private
-	 */
+	@:dox(hide)
 	public function initialized(document:Any, id:String):Void {
 		this.id = id;
 	}
@@ -126,92 +122,80 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Used to prevent multiple logouts.
-	 */
+		Used to prevent multiple logouts.
+	**/
 	private var authenticating:Bool;
 
 	/**
-	 *  @private
-	 *  The credentials string that is passed via a CommandMessage to the server when the
-	 *  Channel connects. Channels inherit the credentials of connected ChannelSets that
-	 *  inherit their credentials from connected MessageAgents. 
-	 *  <code>MessageAgent.setCredentials(username, password)</code> is generally used
-	 *  to set credentials.
-	 */
+		The credentials string that is passed via a CommandMessage to the server when the
+		Channel connects. Channels inherit the credentials of connected ChannelSets that
+		inherit their credentials from connected MessageAgents. 
+		<code>MessageAgent.setCredentials(username, password)</code> is generally used
+		to set credentials.
+	**/
 	private var credentials:String;
 
 	/**
-	 * @private
-	 * A channel specific override to determine whether small messages should
-	 * be used. If set to false, small messages will not be used even if they
-	 * are supported by an endpoint.
-	 */
+		A channel specific override to determine whether small messages should
+		be used. If set to false, small messages will not be used even if they
+		are supported by an endpoint.
+	**/
+	@:dox(hide)
 	public var enableSmallMessages:Bool = true;
 
 	/**
-	 *  @private
-	 *  Provides access to a logger for this channel.
-	 */
+		Provides access to a logger for this channel.
+	**/
 	private var _log:Any /*ILogger*/;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether the Channel is in the process of connecting.
-	 */
+		Flag indicating whether the Channel is in the process of connecting.
+	**/
 	private var _connecting:Bool;
 
 	/**
-	 *  @private
-	 *  Timer to track connect timeouts.
-	 */
+		Timer to track connect timeouts.
+	**/
 	private var _connectTimer:Timer;
 
 	/**
-	 *  @private
-	 *  Current index into failover URIs during a failover attempt.
-	 *  When not failing over, this variable is reset to a sentinal
-	 *  value of -1.
-	 */
+		Current index into failover URIs during a failover attempt.
+		When not failing over, this variable is reset to a sentinal
+		value of -1.
+	**/
 	private var _failoverIndex:Int;
 
 	/**
-	 * @private
-	 * Flag indicating whether the endpoint has been calculated from the uri.
-	 */
+		lag indicating whether the endpoint has been calculated from the uri.
+	**/
 	private var _isEndpointCalculated:Bool;
 
 	/**
-	 * @private
-	 * The messaging version implies which features are enabled on this client
-	 * channel. Channel endpoints exchange this information through headers on
-	 * the ping CommandMessage exchanged during the connection handshake.
-	 */
+		The messaging version implies which features are enabled on this client
+		channel. Channel endpoints exchange this information through headers on
+		the ping CommandMessage exchanged during the connection handshake.
+	**/
 	private var messagingVersion:Float = 1.0;
 
 	/**
-	 *  @private
-	 *  Flag indicating whether this Channel owns the wait guard for managing initial connect attempts.
-	 */
+		Flag indicating whether this Channel owns the wait guard for managing initial connect attempts.
+	**/
 	private var _ownsWaitGuard:Bool;
 
 	/**
-	 *  @private
-	 *  Indicates whether the Channel was previously connected successfully. Used for pinned reconnect
-	 *  attempts before trying failover options.
-	 */
+		Indicates whether the Channel was previously connected successfully. Used for pinned reconnect
+		attempts before trying failover options.
+	**/
 	private var _previouslyConnected:Bool;
 
 	/**
-	 *  @private
-	 *  Primary URI; the initial URI for this channel.
-	 */
+		Primary URI; the initial URI for this channel.
+	**/
 	private var _primaryURI:String;
 
 	/**
-	 *  @private
-	 *  Used for pinned reconnect attempts.
-	 */
+		Used for pinned reconnect attempts.
+	**/
 	private var reliableReconnectDuration:Int = -1;
 
 	private var _reliableReconnectBeginTimestamp:Float;
@@ -226,16 +210,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  channelSets
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _channelSets:Array<ChannelSet> = [];
 
 	/**
-	 *  Provides access to the ChannelSets connected to the Channel.
-	 *
-	 */
+		Provides access to the ChannelSets connected to the Channel.
+	**/
 	@:flash.property
 	public var channelSets(get, never):Array<ChannelSet>;
 
@@ -246,18 +225,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  connected
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _connected:Bool = false;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Indicates whether this channel has established a connection to the 
-	 *  remote destination.
-	 */
+		Indicates whether this channel has established a connection to the 
+		remote destination.
+	**/
 	@:flash.property
 	public var connected(get, never):Bool;
 
@@ -265,9 +240,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return _connected;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function setConnected(value:Bool):Void {
 		if (_connected != value) {
 			if (_connected)
@@ -284,22 +256,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  connectTimeout
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _connectTimeout:Int = -1;
 
 	/**
-	 *  Provides access to the connect timeout in seconds for the channel. 
-	 *  A value of 0 or below indicates that a connect attempt will never 
-	 *  be timed out on the client.
-	 *  For channels that are configured to failover, this value is the total
-	 *  time to wait for a connection to be established.
-	 *  It is not reset for each failover URI that the channel may attempt 
-	 *  to connect to.
-	 *  
-	 */
+		Provides access to the connect timeout in seconds for the channel. 
+		A value of 0 or below indicates that a connect attempt will never 
+		be timed out on the client.
+		For channels that are configured to failover, this value is the total
+		time to wait for a connection to be established.
+		It is not reset for each failover URI that the channel may attempt 
+		to connect to.
+	**/
 	@:flash.property
 	public var connectTimeout(get, set):Int;
 
@@ -307,9 +274,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return _connectTimeout;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_connectTimeout(value:Int):Int {
 		_connectTimeout = value;
 		return _connectTimeout;
@@ -318,17 +282,13 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  endpoint
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _endpoint:String;
 
 	/**
-	 *  Provides access to the endpoint for this channel.
-	 *  This value is calculated based on the value of the <code>uri</code>
-	 *  property.
-	 */
+		Provides access to the endpoint for this channel.
+		This value is calculated based on the value of the <code>uri</code>
+		property.
+	**/
 	@:flash.property
 	public var endpoint(get, never):String;
 
@@ -341,17 +301,12 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  recordMessageTimes
 	//----------------------------------
-
-	/**
-	 * @private
-	 */
 	private var _recordMessageTimes:Bool = false;
 
 	/**
-	 * Channel property determines the level of performance information injection - whether
-	 * we inject timestamps or not. 
-	 *
-	 */
+		Channel property determines the level of performance information injection - whether
+		we inject timestamps or not. 
+	**/
 	@:flash.property
 	public var recordMessageTimes(get, never):Bool;
 
@@ -362,16 +317,12 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  recordMessageSizes
 	//----------------------------------
-
-	/**
-	 * @private
-	 */
 	private var _recordMessageSizes:Bool = false;
 
 	/**
-	 * Channel property determines the level of performance information injection - whether
-	 * we inject message sizes or not.
-	 */
+		Channel property determines the level of performance information injection - whether
+		we inject message sizes or not.
+	**/
 	@:flash.property
 	public var recordMessageSizes(get, never):Bool;
 
@@ -382,18 +333,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  reconnecting
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _reconnecting:Bool = false;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Indicates whether this channel is in the process of reconnecting to an
-	 *  alternate endpoint.
-	 */
+		Indicates whether this channel is in the process of reconnecting to an
+		alternate endpoint.
+	**/
 	@:flash.property
 	public var reconnecting(get, never):Bool;
 
@@ -412,19 +359,15 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  failoverURIs
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _failoverURIs:Array<String>;
 
 	/**
-	 *  Provides access to the set of endpoint URIs that this channel can
-	 *  attempt to failover to if the endpoint is clustered.
-	 *
-	 *  This property is automatically populated when clustering is enabled.
-	 *  If you don't use clustering, you can set your own values.
-	 */
+		Provides access to the set of endpoint URIs that this channel can
+		attempt to failover to if the endpoint is clustered.
+
+		This property is automatically populated when clustering is enabled.
+		If you don't use clustering, you can set your own values.
+	**/
 	@:flash.property
 	public var failoverURIs(get, set):Array<String>;
 
@@ -432,9 +375,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return (_failoverURIs != null) ? _failoverURIs : [];
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_failoverURIs(value:Array<String>):Array<String> {
 		if (value != null) {
 			_failoverURIs = value;
@@ -446,15 +386,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  id
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _id:String;
 
 	/**
-	 *  Provides access to the id of this channel.
-	 */
+		Provides access to the id of this channel.
+	**/
 	@:flash.property
 	public var id(get, set):String;
 
@@ -476,8 +412,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Indicates if this channel is authenticated.
-	 */
+		Indicates if this channel is authenticated.
+	**/
 	@:flash.property
 	public var authenticated(get, never):Bool;
 
@@ -505,12 +441,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 
 	/**
-	 *  Provides access to the protocol that the channel uses.
-	 *
-	 *  **Note:** Subclasses of Channel must override this method and return 
-	 *  a string that represents their supported protocol.
-	 *  Examples of supported protocol strings are "rtmp", "http" or "https".
-	 */
+		Provides access to the protocol that the channel uses.
+		**Note:** Subclasses of Channel must override this method and return 
+		a string that represents their supported protocol.
+		Examples of supported protocol strings are "rtmp", "http" or "https".
+	**/
 	@:flash.property
 	public var protocol(get, never):String;
 
@@ -523,9 +458,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Returns true if the channel supports realtime behavior via server push or client poll.
-	 */
+		Returns true if the channel supports realtime behavior via server push or client poll.
+	**/
 	private var realtime(get, never):Bool;
 
 	private function get_realtime():Bool {
@@ -535,20 +469,16 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  requestTimeout
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _requestTimeout:Int = -1;
 
 	/**
-	 *  Provides access to the default request timeout in seconds for the 
-	 *  channel. A value of 0 or below indicates that outbound requests will 
-	 *  never be timed out on the client.
-	 *  
-	 *  Request timeouts are most useful for RPC style messaging that 
-	 *  requires a response from the remote destination.
-	 */
+		Provides access to the default request timeout in seconds for the 
+		channel. A value of 0 or below indicates that outbound requests will 
+		never be timed out on the client.
+
+		Request timeouts are most useful for RPC style messaging that 
+		requires a response from the remote destination.
+	**/
 	@:flash.property
 	public var requestTimeout(get, set):Int;
 
@@ -556,9 +486,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return _requestTimeout;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_requestTimeout(value:Int):Int {
 		_requestTimeout = value;
 		return _requestTimeout;
@@ -567,17 +494,13 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  shouldBeConnected
 	//----------------------------------
-
-	/**
-	 *  @private  
-	 */
 	private var _shouldBeConnected:Bool;
 
 	/**
-	 *  Indicates whether this channel should be connected to its endpoint.
-	 *  This flag is used to control when fail over should be attempted and when disconnect
-	 *  notification is sent to the remote endpoint upon disconnect or fault.
-	 */
+		Indicates whether this channel should be connected to its endpoint.
+		This flag is used to control when fail over should be attempted and when disconnect
+		notification is sent to the remote endpoint upon disconnect or fault.
+	**/
 	private var shouldBeConnected(get, never):Bool;
 
 	private function get_shouldBeConnected():Bool {
@@ -587,16 +510,12 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  uri
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _uri:String;
 
 	/**
-	 *  Provides access to the URI used to create the whole endpoint URI for this channel. 
-	 *  The URI can be a partial path, in which case the full endpoint URI is computed as necessary.
-	 */
+		Provides access to the URI used to create the whole endpoint URI for this channel. 
+		The URI can be a partial path, in which case the full endpoint URI is computed as necessary.
+	**/
 	@:flash.property
 	public var uri(get, set):String;
 
@@ -613,11 +532,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 * @private
-	 * This alternate property for an endpoint URL is provided to match the
-	 * endpoint configuration attribute &quot;url&quot;. This property is
-	 * equivalent to the <code>uri</code> property.
-	 */
+		This alternate property for an endpoint URL is provided to match the
+		endpoint configuration attribute &quot;url&quot;. This property is
+		equivalent to the <code>uri</code> property.
+	**/
+	@:dox(hide)
 	@:flash.property
 	public var url(get, set):String;
 
@@ -625,9 +544,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return uri;
 	}
 
-	/**
-	 * @private
-	 */
 	private function set_url(value:String):String {
 		uri = value;
 		return uri;
@@ -636,19 +552,15 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//----------------------------------
 	//  useSmallMessages
 	//----------------------------------
-
-	/**
-	 * @private
-	 */
 	private var _smallMessagesSupported:Bool;
 
 	/**
-	 * This flag determines whether small messages should be sent if the
-	 * alternative is available. This value should only be true if both the
-	 * client channel and the server endpoint have successfully advertised that
-	 * they support this feature.
-	 * @private
-	 */
+		This flag determines whether small messages should be sent if the
+		alternative is available. This value should only be true if both the
+		client channel and the server endpoint have successfully advertised that
+		they support this feature.
+	**/
+	@:dox(hide)
 	@:flash.property
 	public var useSmallMessages(get, set):Bool;
 
@@ -656,9 +568,6 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		return _smallMessagesSupported && enableSmallMessages;
 	}
 
-	/**
-	 * @private
-	 */
 	private function set_useSmallMessages(value:Bool):Bool {
 		_smallMessagesSupported = value;
 		return _smallMessagesSupported && enableSmallMessages;
@@ -671,12 +580,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Subclasses should override this method to apply any settings that may be
-	 *  necessary for an individual channel.
-	 *  Make sure to call <code>super.applySettings()</code> to apply common settings for the channel. * *  This method is used primarily in Channel subclasses.
-	 *
-	 *  @param settings XML fragment of the services-config.xml file for this channel.
-	 */
+		Subclasses should override this method to apply any settings that may be
+		necessary for an individual channel.
+		Make sure to call <code>super.applySettings()</code> to apply common settings for the channel.
+
+		This method is used primarily in Channel subclasses.
+
+		@param settings XML fragment of the services-config.xml file for this channel.
+	**/
 	public function applySettings(settings:Xml):Void {
 		// if (Log.isInfo())
 		// 	_log.info("'{0}' channel settings are:\n{1}", id, settings);
@@ -708,14 +619,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Applies the client load balancing urls if they exists. It randomly picks
-	 *  a url from the set of client load balancing urls and sets it as the channel's
-	 *  main url; then it assigns the rest of the urls as the <code>failoverURIs</code>
-	 *  of the channel.
-	 *
-	 *  @param props The properties section of the XML fragment of the services-config.xml
-	 *  file for this channel.
-	 */
+		Applies the client load balancing urls if they exists. It randomly picks
+		a url from the set of client load balancing urls and sets it as the channel's
+		main url; then it assigns the rest of the urls as the <code>failoverURIs</code>
+		of the channel.
+
+		@param props The properties section of the XML fragment of the services-config.xml
+		file for this channel.
+	**/
 	private function applyClientLoadBalancingSettings(props:Xml):Void {
 		// Add urls to an array, so they can be shuffled.
 		var urls:Array<String> = [];
@@ -739,14 +650,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Connects the ChannelSet to the Channel. If the Channel has not yet
-	 *  connected to its endpoint, it attempts to do so.
-	 *  Channel subclasses must override the <code>internalConnect()</code> 
-	 *  method, and call the <code>connectSuccess()</code> method once the
-	 *  underlying connection is established.
-	 * 
-	 *  @param channelSet The ChannelSet to connect to the Channel.
-	 */
+		Connects the ChannelSet to the Channel. If the Channel has not yet
+		connected to its endpoint, it attempts to do so.
+		Channel subclasses must override the <code>internalConnect()</code> 
+		method, and call the <code>connectSuccess()</code> method once the
+		underlying connection is established.
+
+		@param channelSet The ChannelSet to connect to the Channel.
+	**/
 	final public function connect(channelSet:ChannelSet):Void {
 		var exists:Bool = false;
 		var n:Int = _channelSets.length;
@@ -802,17 +713,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Disconnects the ChannelSet from the Channel. If the Channel is connected
-	 *  to its endpoint and it has no more connected ChannelSets it will 
-	 *  internally disconnect.
-	 *
-	 *  Channel subclasses need to override the 
-	 *  <code>internalDisconnect()</code> method, and call the
-	 *  <code>disconnectSuccess()</code> method when the underlying connection
-	 *  has been terminated.
-	 * 
-	 *  @param channelSet The ChannelSet to disconnect from the Channel.
-	 */
+		Disconnects the ChannelSet from the Channel. If the Channel is connected
+		to its endpoint and it has no more connected ChannelSets it will 
+		internally disconnect.
+
+		Channel subclasses need to override the 
+		<code>internalDisconnect()</code> method, and call the
+		<code>disconnectSuccess()</code> method when the underlying connection
+		has been terminated.
+
+		@param channelSet The ChannelSet to disconnect from the Channel.
+	**/
 	final public function disconnect(channelSet:ChannelSet):Void {
 		// If we own the wait guard for initial Channel connects release it.
 		// This will only be true if this Channel is the first to attempt to connect
@@ -847,11 +758,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Sends a CommandMessage to the server to logout if the Channel is connected.
-	 *  Current credentials are cleared.
-	 * 
-	 *  @param agent The MessageAgent to logout.
-	 */
+		Sends a CommandMessage to the server to logout if the Channel is connected.
+		Current credentials are cleared.
+
+		@param agent The MessageAgent to logout.
+	**/
 	public function logout(agent:MessageAgent):Void {
 		if ((connected && authenticated && credentials != null && credentials.length > 0)
 			|| (authenticating && credentials != null && credentials.length > 0)) {
@@ -864,17 +775,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Sends the specified message to its target destination.
-	 *  Subclasses must override the <code>internalSend()</code> method to
-	 *  perform the actual send.
-	 *
-	 *  @param agent The MessageAgent that is sending the message.
-	 * 
-	 *  @param message The Message to send.
-	 * 
-	 *  @throws mx.messaging.errors.InvalidDestinationError If neither the MessageAgent nor the
-	 *                                  message specify a destination.
-	 */
+		Sends the specified message to its target destination.
+		Subclasses must override the <code>internalSend()</code> method to
+		perform the actual send.
+
+		@param agent The MessageAgent that is sending the message.
+
+		@param message The Message to send.
+
+		@throws mx.messaging.errors.InvalidDestinationError If neither the MessageAgent nor the
+		message specify a destination.
+	**/
 	public function send(agent:MessageAgent, message:IMessage):Void {
 		// Set the destination header of the message if it is not already set.
 		if (message.destination.length == 0) {
@@ -896,21 +807,21 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Sets the credentials to the specified value. 
-	 *  If the credentials are non-null and the Channel is connected, this method also
-	 *  sends a CommandMessage to the server to login using the credentials.
-	 * 
-	 *  @param credentials The credentials string.
-	 *  @param agent The MessageAgent to login, that will handle the login result.
-	 *  @param charset The character set encoding used while encoding the
-	 *  credentials. The default is null, which implies the legacy charset of
-	 *  ISO-Latin-1.
-	 *
-	 *  @throws flash.errors.IllegalOperationError in two situations; if credentials
-	 *  have already been set and an authentication is in progress with the remote
-	 *  detination, or if authenticated and the credentials specified don't match
-	 *  the currently authenticated credentials.
-	 */
+		Sets the credentials to the specified value. 
+		If the credentials are non-null and the Channel is connected, this method also
+		sends a CommandMessage to the server to login using the credentials.
+
+		@param credentials The credentials string.
+		@param agent The MessageAgent to login, that will handle the login result.
+		@param charset The character set encoding used while encoding the
+		credentials. The default is null, which implies the legacy charset of
+		ISO-Latin-1.
+
+		@throws flash.errors.IllegalOperationError in two situations; if credentials
+		have already been set and an authentication is in progress with the remote
+		detination, or if authenticated and the credentials specified don't match
+		the currently authenticated credentials.
+	**/
 	public function setCredentials(credentials:String, agent:MessageAgent = null, charset:String = null):Void {
 		var changedCreds:Bool = this.credentials != credentials;
 
@@ -933,9 +844,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 * @private     
-	 * Should we record any performance metrics
-	 */
+		Should we record any performance metrics
+	**/
+	@:dox(hide)
 	@:flash.property
 	public var mpiEnabled(get, never):Bool;
 
@@ -950,22 +861,20 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Internal hook for ChannelSet to assign credentials when it has authenticated
-	 *  successfully via a direct <code>login(...)</code> call to the server.
-	 */
+		Internal hook for ChannelSet to assign credentials when it has authenticated
+		successfully via a direct <code>login(...)</code> call to the server.
+	**/
 	private function internalSetCredentials(credentials:String):Void {
 		this.credentials = credentials;
 	}
 
 	/**
-	 *  @private
-	 *  This is a hook for ChannelSet (not a MessageAgent) to send internal messages. 
-	 *  This is used for fetching info on clustered endpoints for a clustered destination
-	 *  as well as for optional heartbeats, etc.
-	 * 
-	 *  @param msgResp The message responder to use for the internal message.
-	 */
+		This is a hook for ChannelSet (not a MessageAgent) to send internal messages. 
+		This is used for fetching info on clustered endpoints for a clustered destination
+		as well as for optional heartbeats, etc.
+
+		@param msgResp The message responder to use for the internal message.
+	**/
 	private function sendInternalMessage(msgResp:MessageResponder):Void {
 		internalSend(msgResp);
 	}
@@ -977,14 +886,14 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Processes a failed internal connect and dispatches the 
-	 *  <code>FAULT</code> event for the channel.
-	 *  If the Channel has <code>failoverURI</code> values, it will
-	 *  attempt to reconnect automatically by trying these URI values in order until 
-	 *  a connection is established or the available values are exhausted.
-	 * 
-	 *  @param event The ChannelFaultEvent for the failed connect.
-	 */
+		Processes a failed internal connect and dispatches the 
+		<code>FAULT</code> event for the channel.
+		If the Channel has <code>failoverURI</code> values, it will
+		attempt to reconnect automatically by trying these URI values in order until 
+		a connection is established or the available values are exhausted.
+
+		@param event The ChannelFaultEvent for the failed connect.
+	**/
 	private function connectFailed(event:ChannelFaultEvent):Void {
 		shutdownConnectTimer();
 		setConnected(false);
@@ -1006,9 +915,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Processes a successful internal connect and dispatches the 
-	 *  <code>CONNECT</code> event for the Channel.
-	 */
+		Processes a successful internal connect and dispatches the 
+		<code>CONNECT</code> event for the Channel.
+	**/
 	private function connectSuccess():Void {
 		shutdownConnectTimer();
 
@@ -1035,12 +944,12 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Handles a connect timeout by dispatching a ChannelFaultEvent. 
-	 *  Subtypes may overide this to shutdown the current connect attempt but must 
-	 *  call <code>super.connectTimeoutHandler(event)</code>.
-	 * 
-	 *  @param event The timer event indicating that the connect timeout has been reached.
-	 */
+		Handles a connect timeout by dispatching a ChannelFaultEvent. 
+		Subtypes may overide this to shutdown the current connect attempt but must 
+		call <code>super.connectTimeoutHandler(event)</code>.
+
+		@param event The timer event indicating that the connect timeout has been reached.
+	**/
 	private function connectTimeoutHandler(event:TimerEvent):Void {
 		shutdownConnectTimer();
 		if (!connected) {
@@ -1052,17 +961,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Processes a successful internal disconnect and dispatches the 
-	 *  <code>DISCONNECT</code> event for the Channel.
-	 *  If the disconnect is due to a network failure and the Channel has 
-	 *  <code>failoverURI</code> values, it will attempt to reconnect automatically 
-	 *  by trying these URI values in order until a connection is established or the 
-	 *  available values are exhausted.
-	 *  
-	 *  @param rejected True if the disconnect should skip any
-	 *         failover processing that would otherwise be attempted; false
-	 *         if failover processing should be allowed to run.
-	 */
+		Processes a successful internal disconnect and dispatches the 
+		<code>DISCONNECT</code> event for the Channel.
+		If the disconnect is due to a network failure and the Channel has 
+		<code>failoverURI</code> values, it will attempt to reconnect automatically 
+		by trying these URI values in order until a connection is established or the 
+		available values are exhausted.
+
+		@param rejected True if the disconnect should skip any
+		failover processing that would otherwise be attempted; false
+		if failover processing should be allowed to run.
+	**/
 	private function disconnectSuccess(rejected:Bool = false):Void {
 		setConnected(false);
 
@@ -1080,11 +989,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Processes a failed internal disconnect and dispatches the
-	 *  <code>FAULT</code> event for the channel.
-	 * 
-	 *  @param event The ChannelFaultEvent for the failed disconnect.
-	 */
+		Processes a failed internal disconnect and dispatches the
+		<code>FAULT</code> event for the channel.
+
+		@param event The ChannelFaultEvent for the failed disconnect.
+	**/
 	private function disconnectFailed(event:ChannelFaultEvent):Void {
 		_connecting = false;
 		setConnected(false);
@@ -1100,11 +1009,11 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Handles a change to the guard condition for managing initial Channel connect for the application.
-	 *  When this is invoked it means that this Channel is waiting to attempt to connect.
-	 * 
-	 *  @param event The PropertyChangeEvent dispatched by the FlexClient singleton.
-	 */
+		Handles a change to the guard condition for managing initial Channel connect for the application.
+		When this is invoked it means that this Channel is waiting to attempt to connect.
+
+		@param event The PropertyChangeEvent dispatched by the FlexClient singleton.
+	**/
 	private function flexClientWaitHandler(event:Event /*PropertyChangeEvent*/):Void {
 		throw new Error("Not implemented");
 		// if (event.property == "waitForFlexClientId") {
@@ -1123,62 +1032,60 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  Returns the appropriate MessageResponder for the Channel's
-	 *  <code>send()</code> method.
-	 *  Must be overridden.
-	 *
-	 *  @param agent The MessageAgent sending the message.
-	 * 
-	 *  @param message The Message to send.
-	 * 
-	 *  @return The MessageResponder to handle the result or fault.
-	 * 
-	 *  @throws flash.errors.IllegalOperationError If the Channel subclass does not override
-	 *                                this method.
-	 */
+		Returns the appropriate MessageResponder for the Channel's
+		<code>send()</code> method.
+		Must be overridden.
+
+		@param agent The MessageAgent sending the message.
+
+		@param message The Message to send.
+
+		@return The MessageResponder to handle the result or fault.
+
+		@throws flash.errors.IllegalOperationError If the Channel subclass does not override
+		this method.
+	**/
 	private function getMessageResponder(agent:MessageAgent, message:IMessage):MessageResponder {
 		throw new IllegalOperationError("Channel subclasses must override " + " getMessageResponder().");
 	}
 
 	/**
-	 *  Connects the Channel to its endpoint.
-	 *  Must be overridden.
-	 */
+		Connects the Channel to its endpoint.
+		Must be overridden.
+	**/
 	private function internalConnect():Void {}
 
 	/**
-	 *  Disconnects the Channel from its endpoint. 
-	 *  Must be overridden.
-	 * 
-	 *  @param rejected True if the disconnect was due to a connection rejection or timeout
-	 *                  and reconnection should not be attempted automatically; otherwise false. 
-	 */
+		Disconnects the Channel from its endpoint. 
+		Must be overridden.
+
+		@param rejected True if the disconnect was due to a connection rejection or timeout
+		and reconnection should not be attempted automatically; otherwise false. 
+	**/
 	private function internalDisconnect(rejected:Bool = false):Void {}
 
 	/**
-	 *  Sends the Message out over the Channel and routes the response to the
-	 *  responder.
-	 *  Must be overridden.
-	 * 
-	 *  @param messageResponder The MessageResponder to handle the response.
-	 */
+		Sends the Message out over the Channel and routes the response to the
+		responder.
+		Must be overridden.
+
+		@param messageResponder The MessageResponder to handle the response.
+	**/
 	private function internalSend(messageResponder:MessageResponder):Void {}
 
 	/**
-	 * @private
-	 * Utility method to examine the reported server messaging version and
-	 * thus determine which features are available.
-	 */
+		Utility method to examine the reported server messaging version and
+		thus determine which features are available.
+	**/
 	private function handleServerMessagingVersion(version:Float):Void {
 		useSmallMessages = version >= messagingVersion;
 	}
 
 	/**
-	 *  @private
-	 *  Utility method used to assign the FlexClient Id value to outbound messages.
-	 * 
-	 *  @param message The message to set the FlexClient Id on.
-	 */
+		Utility method used to assign the FlexClient Id value to outbound messages.
+
+		@param message The message to set the FlexClient Id on.
+	**/
 	private function setFlexClientIdOnMessage(message:IMessage):Void {
 		var id:String = FlexClient.getInstance().id;
 		Reflect.setField(message.headers, AbstractMessage.FLEX_CLIENT_ID_HEADER, (id != null) ? id : FlexClient.NULL_FLEXCLIENT_ID);
@@ -1190,11 +1097,10 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 *  @private   
-	 *  This method calculates the endpoint value based on the current
-	 *  <code>uri</code>.
-	 */
+	/** 
+		This method calculates the endpoint value based on the current
+		<code>uri</code>.
+	**/
 	private function calculateEndpoint():Void {
 		if (uri == null) {
 			var message:String = "No url was specified for the channel.";
@@ -1230,16 +1136,15 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  Initializes the request timeout for this message if the outbound message 
-	 *  defines a REQUEST_TIMEOUT_HEADER value. 
-	 *  If this header is not set and the default requestTimeout for the 
-	 *  channel is greater than 0, the channel default is used. 
-	 *  Otherwise, no request timeout is enforced on the client.
-	 * 
-	 *  @param messageResponder The MessageResponder to handle the response and monitor the outbound
-	 *                          request for a timeout.
-	 */
+		Initializes the request timeout for this message if the outbound message 
+		defines a REQUEST_TIMEOUT_HEADER value. 
+		If this header is not set and the default requestTimeout for the 
+		channel is greater than 0, the channel default is used. 
+		Otherwise, no request timeout is enforced on the client.
+
+		@param messageResponder The MessageResponder to handle the response and monitor the outbound
+		request for a timeout.
+	**/
 	private function initializeRequestTimeout(messageResponder:MessageResponder):Void {
 		var message:IMessage = messageResponder.message;
 		// Turn on request timeout machinery if the message defines it.
@@ -1252,22 +1157,20 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  Convenience method to test whether the Channel should attempt to
-	 *  failover.
-	 * 
-	 *  @return <code>true</code> if the Channel should try to failover;
-	 *          otherwise <code>false</code>.
-	 */
+		Convenience method to test whether the Channel should attempt to
+		failover.
+
+		@return <code>true</code> if the Channel should try to failover;
+		otherwise <code>false</code>.
+	**/
 	private function shouldAttemptFailover():Bool {
 		return (_shouldBeConnected
 			&& (_previouslyConnected || (reliableReconnectDuration != -1) || ((_failoverURIs != null) && (_failoverURIs.length > 0))));
 	}
 
 	/**
-	 *  @private
-	 *  This method attempts to fail the Channel over to the next available URI.
-	 */
+		This method attempts to fail the Channel over to the next available URI.
+	**/
 	private function failover():Void {
 		// Potentially enter reliable reconnect loop.
 		if (_previouslyConnected) {
@@ -1352,9 +1255,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  Cleanup following a connect or failover attempt.
-	 */
+		Cleanup following a connect or failover attempt.
+	**/
 	private function connectCleanup():Void {
 		// If we own the wait guard for initial Channel connects release it.
 		if (_ownsWaitGuard) {
@@ -1370,19 +1272,17 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  This method is invoked by a timer from failover() and it works around a 
-	 *  reconnect issue with NetConnection based channels by invoking 
-	 *  internalConnect() after a slight delay.
-	 */
+		This method is invoked by a timer from failover() and it works around a 
+		reconnect issue with NetConnection based channels by invoking 
+		internalConnect() after a slight delay.
+	**/
 	private function reconnect(event:TimerEvent = null):Void {
 		internalConnect();
 	}
 
 	/**
-	 *  @private
-	 *  Cleanup following a reliable reconnect attempt.
-	 */
+		Cleanup following a reliable reconnect attempt.
+	**/
 	private function reliableReconnectCleanup():Void {
 		reliableReconnectDuration = -1;
 		_reliableReconnectBeginTimestamp = 0;
@@ -1391,10 +1291,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  This method resets the channel back to its primary URI after
-	 *  exhausting all failover URIs.
-	 */
+		This method resets the channel back to its primary URI after
+		exhausting all failover URIs.
+	**/
 	private function resetToPrimaryURI():Void {
 		_connecting = false;
 		setReconnecting(false);
@@ -1403,9 +1302,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  Shuffles the array.
-	 */
+		Shuffles the array.
+	**/
 	private function shuffle(elements:Array<String>):Void {
 		var length:Int = elements.length;
 		for (i in 0...length) {
@@ -1419,9 +1317,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-	 *  @private
-	 *  Shuts down and nulls out the connect timer.
-	 */
+		Shuts down and nulls out the connect timer.
+	**/
 	private function shutdownConnectTimer():Void {
 		if (_connectTimer != null) {
 			_connectTimer.stop();
@@ -1435,24 +1332,19 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	// Static Constants
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @private
-	 */
+	@:dox(hide)
 	public static final SMALL_MESSAGES_FEATURE:String = "small_messages";
 
 	/**
-	 *  @private
-	 *  Creates a compile time dependency on ArrayCollection to ensure
-	 *  it is present for response data containing collections.
-	 */
+		Creates a compile time dependency on ArrayCollection to ensure
+		it is present for response data containing collections.
+	**/
 	private static final dep:ArrayCollection<Dynamic> = null;
 }
 
 /**
- *  @private
- *  Responder for processing channel authentication responses.
- */
+	Responder for processing channel authentication responses.
+**/
 @:access(feathers.messaging.Channel)
 class AuthenticationMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
@@ -1472,9 +1364,8 @@ class AuthenticationMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Reference to the logger for the associated Channel.
-	 */
+		Reference to the logger for the associated Channel.
+	**/
 	private var _log:Any /*ILogger*/;
 
 	//--------------------------------------------------------------------------
@@ -1484,10 +1375,10 @@ class AuthenticationMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Handles an authentication result.
-	 * 
-	 *  @param msg The result Message.
-	 */
+		Handles an authentication result.
+
+		@param msg The result Message.
+	**/
 	override private function resultHandler(msg:IMessage):Void {
 		var cmd:CommandMessage = Std.downcast(message, CommandMessage);
 		channel.authenticating = false;
@@ -1509,10 +1400,10 @@ class AuthenticationMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  Handles an authentication failure.
-	 * 
-	 *  @param msg The failure Message.
-	 */
+		Handles an authentication failure.
+
+		@param msg The failure Message.
+	**/
 	override private function statusHandler(msg:IMessage):Void {
 		var cmd:CommandMessage = cast(message, CommandMessage);
 

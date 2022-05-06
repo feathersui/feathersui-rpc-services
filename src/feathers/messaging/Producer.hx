@@ -22,11 +22,11 @@ import feathers.messaging.messages.AsyncMessage;
 import feathers.messaging.messages.IMessage;
 
 /**
- *  A Producer sends messages to a destination.
- *  Producers dispatch a MessageAckEvent or MessageFaultEvent 
- *  for each message they send depending upon whether the outbound message
- *  was sent and processed successfully or not.
- */
+	A Producer sends messages to a destination.
+	Producers dispatch a MessageAckEvent or MessageFaultEvent 
+	for each message they send depending upon whether the outbound message
+	was sent and processed successfully or not.
+**/
 class Producer extends AbstractProducer {
 	//--------------------------------------------------------------------------
 	//
@@ -35,9 +35,8 @@ class Producer extends AbstractProducer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The default message priority.
-	 *  
-	 */
+		The default message priority.
+	**/
 	public static final DEFAULT_PRIORITY:Int = 4;
 
 	//--------------------------------------------------------------------------
@@ -80,18 +79,13 @@ class Producer extends AbstractProducer {
 	//----------------------------------
 	//  subtopic
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _subtopic:String = "";
 
 	// [Bindable(event = "propertyChange")]
 
 	/**
-	 *  Provides access to the subtopic for the remote destination that the MessageAgent uses.
-	 *  
-	 */
+		Provides access to the subtopic for the remote destination that the MessageAgent uses.
+	**/
 	@:flash.property
 	public var subtopic(get, set):String;
 
@@ -99,9 +93,6 @@ class Producer extends AbstractProducer {
 		return _subtopic;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_subtopic(value:String):String {
 		if (_subtopic != value) {
 			// var event:PropertyChangeEvent;
@@ -122,9 +113,6 @@ class Producer extends AbstractProducer {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
 	override private function internalSend(message:IMessage, waitForClientId:Bool = true):Void {
 		if (subtopic.length > 0)
 			Reflect.setField(message.headers, AsyncMessage.SUBTOPIC_HEADER, subtopic);
@@ -141,12 +129,10 @@ class Producer extends AbstractProducer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  If the priority header has been set on the message, makes sure that the
-	 *  priority value is within the valid range (0-9). If no priority header
-	 *  has been set, tries to use Producer's priority level if one exists.
-	 * 
-	 */
+		If the priority header has been set on the message, makes sure that the
+		priority value is within the valid range (0-9). If no priority header
+		has been set, tries to use Producer's priority level if one exists.
+	**/
 	private function handlePriority(message:IMessage):Void {
 		// If message priority is already set, make sure it's within range.
 		if (Reflect.field(message.headers, AbstractMessage.PRIORITY_HEADER) != null) {

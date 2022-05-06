@@ -607,11 +607,11 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 	}
 
 	/**
-	 * This serialization context is passed as the 2nd parameter to an IDynamicPropertyWriter
-	 * implementation's writeDynamicProperties method call. The resolved properties are written here
-	 * @param name property name
-	 * @param value property value
-	 */
+		This serialization context is passed as the 2nd parameter to an IDynamicPropertyWriter
+		implementation's writeDynamicProperties method call. The resolved properties are written here
+		@param name property name
+		@param value property value
+	**/
 	public function writeDynamicProperty(name:String, value:Dynamic):Void {
 		this.writeAMF3StringWithoutType(name);
 		this.writeAmf3Object(value);
@@ -682,12 +682,12 @@ class AMFWriter #if !flash implements IDataOutput #end#if (flash || openfl >= "9
 	private var _comparator:String;
 
 	/**
-	 * javascript does not differentiate between 'Class' and 'Function'
-	 * So in javascript : Object instanceof Function is true, in flash it is not (Object instanceof Class *is* true).
-	 * The function below is an attempt to discriminate between a pure function and a 'constructor' function
-	 * @param value the value to inspect
-	 * @return true if considered to be a 'pure' function value (not a constructor)
-	 */
+		Javascript does not differentiate between 'Class' and 'Function'
+		So in javascript : Object instanceof Function is true, in flash it is not (Object instanceof Class *is* true).
+		The function below is an attempt to discriminate between a pure function and a 'constructor' function
+		@param value the value to inspect
+		@return true if considered to be a 'pure' function value (not a constructor)
+	**/
 	private function isFunctionValue(value:Dynamic):Bool {
 		if (Type.typeof(value) == TFunction) {
 			var comparator:String = _comparator;

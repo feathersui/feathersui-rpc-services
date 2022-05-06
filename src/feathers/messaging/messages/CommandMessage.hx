@@ -21,10 +21,10 @@ import openfl.utils.IDataInput;
 import openfl.utils.IDataOutput;
 
 /**
- *  The CommandMessage class provides a mechanism for sending commands to the
- *  server infrastructure, such as commands related to publish/subscribe 
- *  messaging scenarios, ping operations, and cluster operations.
- */
+	The CommandMessage class provides a mechanism for sending commands to the
+	server infrastructure, such as commands related to publish/subscribe 
+	messaging scenarios, ping operations, and cluster operations.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.messages.CommandMessage"))
 class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
@@ -34,181 +34,156 @@ class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  This operation is used to subscribe to a remote destination.
-	 *  
-	 */
+		This operation is used to subscribe to a remote destination.
+	**/
 	public static final SUBSCRIBE_OPERATION:UInt = 0;
 
 	/**
-	 *  This operation is used to unsubscribe from a remote destination.
-	 *  
-	 */
+		This operation is used to unsubscribe from a remote destination.
+	**/
 	public static final UNSUBSCRIBE_OPERATION:UInt = 1;
 
 	/**
-	 *  This operation is used to poll a remote destination for pending,
-	 *  undelivered messages.
-	 *  
-	 */
+		This operation is used to poll a remote destination for pending,
+		undelivered messages.
+	**/
 	public static final POLL_OPERATION:UInt = 2;
 
 	/**
-	 *  This operation is used by a remote destination to sync missed or cached messages 
-	 *  back to a client as a result of a client issued poll command.
-	 *  
-	 */
+		This operation is used by a remote destination to sync missed or cached messages 
+		back to a client as a result of a client issued poll command.
+	**/
 	public static final CLIENT_SYNC_OPERATION:UInt = 4;
 
 	/**
-	 *  This operation is used to test connectivity over the current channel to
-	 *  the remote endpoint.
-	 *  
-	 */
+		This operation is used to test connectivity over the current channel to
+		he remote endpoint.
+	**/
 	public static final CLIENT_PING_OPERATION:UInt = 5;
 
 	/**
-	 *  This operation is used to request a list of failover endpoint URIs
-	 *  for the remote destination based on cluster membership.
-	 *  
-	 */
+		This operation is used to request a list of failover endpoint URIs
+		for the remote destination based on cluster membership.
+	**/
 	public static final CLUSTER_REQUEST_OPERATION:UInt = 7;
 
 	/**
-	 * This operation is used to send credentials to the endpoint so that
-	 * the user can be logged in over the current channel.  
-	 * The credentials need to be Base64 encoded and stored in the <code>body</code>
-	 * of the message.
-	 *  
-	 */
+		This operation is used to send credentials to the endpoint so that
+		the user can be logged in over the current channel.  
+		The credentials need to be Base64 encoded and stored in the <code>body</code>
+		of the message.
+	**/
 	public static final LOGIN_OPERATION:UInt = 8;
 
 	/**
-	 * This operation is used to log the user out of the current channel, and 
-	 * will invalidate the server session if the channel is HTTP based.
-	 *  
-	 */
+		This operation is used to log the user out of the current channel, and 
+		will invalidate the server session if the channel is HTTP based.
+	**/
 	public static final LOGOUT_OPERATION:UInt = 9;
 
 	/**
-	 * Endpoints can imply what features they support by reporting the
-	 * latest version of messaging they are capable of during the handshake of
-	 * the initial ping CommandMessage.
-	 *  
-	 */
+		Endpoints can imply what features they support by reporting the
+		latest version of messaging they are capable of during the handshake of
+		the initial ping CommandMessage.
+	**/
 	public static final MESSAGING_VERSION:String = "DSMessagingVersion";
 
 	/**
-	 * This operation is used to indicate that the client's subscription with a
-	 * remote destination has timed out.
-	 *  
-	 */
+		This operation is used to indicate that the client's subscription with a
+		remote destination has timed out.
+	**/
 	public static final SUBSCRIPTION_INVALIDATE_OPERATION:UInt = 10;
 
 	/**
-	 * Used by the MultiTopicConsumer to subscribe/unsubscribe for more
-	 * than one topic in the same message.
-	 *  
-	 */
+		Used by the MultiTopicConsumer to subscribe/unsubscribe for more
+		than one topic in the same message.
+	**/
 	public static final MULTI_SUBSCRIBE_OPERATION:UInt = 11;
 
 	/**
-	 *  This operation is used to indicate that a channel has disconnected.
-	 *  
-	 */
+		This operation is used to indicate that a channel has disconnected.
+	**/
 	public static final DISCONNECT_OPERATION:UInt = 12;
 
 	/**
-	 *  This operation is used to trigger a ChannelSet to connect.
-	 *  
-	 */
+		This operation is used to trigger a ChannelSet to connect.
+	**/
 	public static final TRIGGER_CONNECT_OPERATION:UInt = 13;
 
 	/**
-	 *  This is the default operation for new CommandMessage instances.
-	 *  
-	 */
+		This is the default operation for new CommandMessage instances.
+	**/
 	public static final UNKNOWN_OPERATION:UInt = 10000;
 
 	/**
-	 *  The server message type for authentication commands.
-	 *  
-	 */
+		The server message type for authentication commands.
+	**/
 	public static final AUTHENTICATION_MESSAGE_REF_TYPE:String = "flex.messaging.messages.AuthenticationMessage";
 
 	/**
-	 *  Subscribe commands issued by a Consumer pass the Consumer's <code>selector</code>
-	 *  expression in this header.
-	 *  
-	 */
+		Subscribe commands issued by a Consumer pass the Consumer's <code>selector</code>
+		expression in this header.
+	**/
 	public static final SELECTOR_HEADER:String = "DSSelector";
 
 	/**
-	 *  Durable JMS subscriptions are preserved when an unsubscribe message
-	 *  has this parameter set to true in its header.
-	 *  
-	 */
+		Durable JMS subscriptions are preserved when an unsubscribe message
+		has this parameter set to true in its header.
+	**/
 	public static final PRESERVE_DURABLE_HEADER:String = "DSPreserveDurable";
 
 	/**
-	 * Header to indicate that the Channel needs the configuration from the
-	 * server.
-	 *  
-	 */
+		Header to indicate that the Channel needs the configuration from the
+		server.
+	**/
 	public static final NEEDS_CONFIG_HEADER:String = "DSNeedsConfig";
 
 	/** 
-	 * Header used in a MULTI_SUBSCRIBE message to specify an Array of subtopic/selector
-	 * pairs to add to the existing set of subscriptions.
-	 *  
-	 */
+		Header used in a MULTI_SUBSCRIBE message to specify an Array of subtopic/selector
+		pairs to add to the existing set of subscriptions.
+	**/
 	public static final ADD_SUBSCRIPTIONS:String = "DSAddSub";
 
 	/**
-	 * Like the above, but specifies the subtopic/selector array of to remove
-	 *  
-	 */
+		Like the above, but specifies the subtopic/selector array of to remove
+	**/
 	public static final REMOVE_SUBSCRIPTIONS:String = "DSRemSub";
 
 	/**
-	 * The separator string used for separating subtopic and selectors in the 
-	 * add and remove subscription headers.
-	 *  
-	 */
+		The separator string used for separating subtopic and selectors in the 
+		add and remove subscription headers.
+	**/
 	public static final SUBTOPIC_SEPARATOR:String = "_;_";
 
 	/**
-	 * Header to drive an idle wait time before the next client poll request.
-	 *  
-	 */
+		Header to drive an idle wait time before the next client poll request.
+	**/
 	public static final POLL_WAIT_HEADER:String = "DSPollWait";
 
 	/**
-	 * Header to suppress poll response processing. If a client has a long-poll 
-	 * parked on the server and issues another poll, the response to this subsequent poll 
-	 * should be tagged with this header in which case the response is treated as a
-	 * no-op and the next poll will not be scheduled. Without this, a subsequent poll 
-	 * will put the channel and endpoint into a busy polling cycle.
-	 *  
-	 */
+		Header to suppress poll response processing. If a client has a long-poll 
+		parked on the server and issues another poll, the response to this subsequent poll 
+		should be tagged with this header in which case the response is treated as a
+		no-op and the next poll will not be scheduled. Without this, a subsequent poll 
+		will put the channel and endpoint into a busy polling cycle.
+	**/
 	public static final NO_OP_POLL_HEADER:String = "DSNoOpPoll";
 
 	/**
-	 * Header to specify which character set encoding was used while encoding
-	 * login credentials. 
-	 *  
-	 */
+		Header to specify which character set encoding was used while encoding
+		login credentials. 
+	**/
 	public static final CREDENTIALS_CHARSET_HEADER:String = "DSCredentialsCharset";
 
 	/**
-	 * Header to indicate the maximum number of messages a Consumer wants to 
-	 * receive per second.
-	 *  
-	 */
+		Header to indicate the maximum number of messages a Consumer wants to 
+		receive per second.
+	**/
 	public static final MAX_FREQUENCY_HEADER:String = "DSMaxFrequency";
 
 	/**
-	 * Header that indicates the message is a heartbeat.
-	 */
+		Header that indicates the message is a heartbeat.
+	**/
 	public static final HEARTBEAT_HEADER:String = "DS<3";
 
 	//--------------------------------------------------------------------------
@@ -225,9 +200,8 @@ class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private 
-	 *  Map of operations to semi-descriptive operation text strings.
-	 */
+		Map of operations to semi-descriptive operation text strings.
+	**/
 	private static var operationTexts:Dynamic = null;
 
 	//--------------------------------------------------------------------------
@@ -237,10 +211,9 @@ class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of a CommandMessage with an empty body and header
-	 *  and a default <code>operation</code> of <code>UNKNOWN_OPERATION</code>.
-	 *  
-	 */
+		Constructs an instance of a CommandMessage with an empty body and header
+		and a default <code>operation</code> of <code>UNKNOWN_OPERATION</code>.
+	**/
 	public function new() {
 		super();
 		operation = UNKNOWN_OPERATION;
@@ -253,11 +226,10 @@ class CommandMessage extends AsyncMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Provides access to the operation/command for the CommandMessage.
-	 *  Operations indicate how this message should be processed by the remote
-	 *  destination.
-	 *  
-	 */
+		Provides access to the operation/command for the CommandMessage.
+		Operations indicate how this message should be processed by the remote
+		destination.
+	**/
 	public var operation:UInt;
 
 	//--------------------------------------------------------------------------
@@ -266,9 +238,6 @@ class CommandMessage extends AsyncMessage {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
 	override public function getSmallMessage():IMessage {
 		// We shouldn't use small messages for PING or LOGIN operations as the
 		// messaging version handshake would not yet be complete... for now just
@@ -280,20 +249,16 @@ class CommandMessage extends AsyncMessage {
 		return null;
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function addDebugAttributes(attributes:Dynamic):Void {
 		super.addDebugAttributes(attributes);
 		Reflect.setField(attributes, "operation", getOperationAsString(operation));
 	}
 
 	/**
-	 *  Returns a string representation of the message.
-	 *
-	 *  @return String representation of the message.
-	 *  
-	 */
+		Returns a string representation of the message.
+
+		@return String representation of the message.
+	**/
 	override public function toString():String {
 		return getDebugString();
 	}
@@ -340,9 +305,6 @@ class CommandMessage extends AsyncMessage {
 		return Std.string(result);
 	}
 
-	/**
-	 * @private
-	 */
 	override public function readExternal(input:IDataInput):Void {
 		super.readExternal(input);
 
@@ -370,9 +332,6 @@ class CommandMessage extends AsyncMessage {
 		}
 	}
 
-	/**
-	 * @private
-	 */
 	override public function writeExternal(output:IDataOutput):Void {
 		super.writeExternal(output);
 

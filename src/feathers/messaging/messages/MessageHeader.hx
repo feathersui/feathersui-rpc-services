@@ -18,8 +18,8 @@
 package feathers.messaging.messages;
 
 /**
- *  The MessageHeader for an ActionMessage
- */
+	The MessageHeader for an ActionMessage
+**/
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.MessageHeader"))
 class MessageHeader {
 	//--------------------------------------------------------------------------
@@ -29,9 +29,8 @@ class MessageHeader {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of a MessageHeader
-	 *  
-	 */
+		Constructs an instance of a MessageHeader
+	**/
 	public function new() {}
 
 	//--------------------------------------------------------------------------
@@ -41,15 +40,13 @@ class MessageHeader {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The header name.
-	 *  
-	 */
+		The header name.
+	**/
 	public var name:String = "";
 
 	/**
-	 *  Whether the receipient must understand the header
-	 *  
-	 */
+		Whether the receipient must understand the header
+	**/
 	public var mustUnderstand:Bool = false;
 
 	//--------------------------------------------------------------------------
@@ -60,16 +57,11 @@ class MessageHeader {
 	//----------------------------------
 	//  data
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _data:Dynamic;
 
 	/**
-	 *  The data to be sent.
-	 *  
-	 */
+		The data to be sent.
+	**/
 	@:flash.property
 	public var data(get, set):Dynamic;
 
@@ -77,9 +69,6 @@ class MessageHeader {
 		return _data;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_data(value:Dynamic):Dynamic {
 		_data = value;
 		return _data;

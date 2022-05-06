@@ -32,9 +32,9 @@ import openfl.events.Event;
 import openfl.events.EventDispatcher;
 
 /**
- * An invoker is an object that actually executes a remote procedure call (RPC).
- * For example, RemoteObject, HTTPService, and WebService objects are invokers.
- */
+	An invoker is an object that actually executes a remote procedure call (RPC).
+	For example, RemoteObject, HTTPService, and WebService objects are invokers.
+**/
 @:access(feathers.rpc.AsyncToken)
 @:access(feathers.rpc.events.AbstractEvent)
 class AbstractInvoker extends EventDispatcher {
@@ -43,10 +43,7 @@ class AbstractInvoker extends EventDispatcher {
 	// Constructor
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public function new() {
 		super();
 		// _log = Log.getLogger("mx.rpc.AbstractInvoker");
@@ -90,10 +87,10 @@ class AbstractInvoker extends EventDispatcher {
 		return _keepLastResult;
 	}
 
-	/** @private
-	 * sets keepLastResult if not set locally, typically by container Service or RemoteObject
-	 * @param value
-	 */
+	/**
+		sets keepLastResult if not set locally, typically by container Service or RemoteObject
+		@param value
+	**/
 	private function setKeepLastResultIfNotSet(value:Bool):Void {
 		if (!_keepLastResultSet)
 			_keepLastResult = value;
@@ -102,8 +99,8 @@ class AbstractInvoker extends EventDispatcher {
 	// [Bindable("resultForBinding")]
 
 	/**
-	 *  The result of the last invocation.
-	 */
+		The result of the last invocation.
+	**/
 	@:flash.property
 	public var lastResult(get, never):Dynamic;
 
@@ -114,8 +111,8 @@ class AbstractInvoker extends EventDispatcher {
 	// [Inspectable(defaultValue="true", category="General")]
 
 	/**
-	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 */
+		When this value is true, anonymous objects returned are forced to bindable objects.
+	**/
 	@:flash.property
 	public var makeObjectsBindable(get, set):Bool;
 
@@ -129,42 +126,42 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 * This property is set usually by framework code which wants to modify the
-	 * behavior of a service invocation without modifying the way in which the
-	 * service is called externally.  This allows you to add a "filter" step on 
-	 * the method call to ensure for example that you do not return duplicate
-	 * instances for the same id or to insert parameters for performing on-demand
-	 * paging.
-	 *
-	 * When this is set to a non-null value on the send call, the operationManager function 
-	 * is called instead.  It returns the token that the caller uses to be notified
-	 * of the result.  Typically the called function will at some point clear this
-	 * property temporarily, then invoke the operation again actually sending it to 
-	 * the server this time.
-	 */
+		This property is set usually by framework code which wants to modify the
+		behavior of a service invocation without modifying the way in which the
+		service is called externally.  This allows you to add a "filter" step on 
+		the method call to ensure for example that you do not return duplicate
+		instances for the same id or to insert parameters for performing on-demand
+		paging.
+
+		When this is set to a non-null value on the send call, the operationManager function 
+		is called instead.  It returns the token that the caller uses to be notified
+		of the result.  Typically the called function will at some point clear this
+		property temporarily, then invoke the operation again actually sending it to 
+		the server this time.
+	**/
 	public var operationManager:Function;
 
 	/** 
-	 * Specifies an optional return type for the operation.  Used in situations where 
-	 * you want to coerce the over-the-wire information into a specific ActionScript class
-	 * or to provide metadata for other services as to the return type of this operation.
+		Specifies an optional return type for the operation.  Used in situations where 
+		you want to coerce the over-the-wire information into a specific ActionScript class
+		or to provide metadata for other services as to the return type of this operation.
 	 */
 	public var resultType:Class<Dynamic>;
 
 	/**
-	 * Like resultType, used to define the ActionScript class used by a given operation though
-	 * this property only applies to operations which return a multi-valued result (e.g. an Array
-	 * or ArrayCollection (IList)).  This property specifies an ActionScript class for the members of the
-	 * array or array collection.   When you set resultElementType, you do not have to set 
-	 * resultType.  In that case, the operation returns an Array if makeObjectsbindable is
-	 * false and an ArrayCollection otherwise.
-	 */
+		Like resultType, used to define the ActionScript class used by a given operation though
+		this property only applies to operations which return a multi-valued result (e.g. an Array
+		or ArrayCollection (IList)).  This property specifies an ActionScript class for the members of the
+		array or array collection.   When you set resultElementType, you do not have to set 
+		resultType.  In that case, the operation returns an Array if makeObjectsbindable is
+		false and an ArrayCollection otherwise.
+	**/
 	public var resultElementType:Class<Dynamic>;
 
 	/**
-	 *  Event dispatched for binding when the <code>result</code> property
-	 *  changes.
-	 */
+		Event dispatched for binding when the <code>result</code> property
+		changes.
+	**/
 	private static final BINDING_RESULT:String = "resultForBinding";
 
 	//-------------------------------------------------------------------------
@@ -174,15 +171,15 @@ class AbstractInvoker extends EventDispatcher {
 	//-------------------------------------------------------------------------
 
 	/**
-	 *  Cancels the last service invocation or an invokation with the specified ID.
-	 *  Even though the network operation may still continue, no result or fault event
-	 *  is dispatched.
-	 * 
-	 *  @param id The messageId of the invocation to cancel. Optional. If omitted, the
-	 *         last service invocation is canceled.
-	 *  
-	 *  @return The AsyncToken associated with the call that is cancelled or null if no call was cancelled.
-	 */
+		Cancels the last service invocation or an invokation with the specified ID.
+		Even though the network operation may still continue, no result or fault event
+		is dispatched.
+
+		@param id The messageId of the invocation to cancel. Optional. If omitted, the
+		last service invocation is canceled.
+
+		@return The AsyncToken associated with the call that is cancelled or null if no call was cancelled.
+	**/
 	public function cancel(id:String = null):AsyncToken {
 		if (id != null)
 			return activeCalls.removeCall(id);
@@ -191,15 +188,15 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 *  Sets the <code>result</code> property of the invoker to <code>null</code>.
-	 *  This is useful when the result is a large object that is no longer being
-	 *  used.
-	 *
-	 *  @param fireBindingEvent Set to <code>true</code> if you want anything
-	 *  bound to the result to update. Otherwise, set to
-	 *  <code>false</code>.
-	 *  The default value is <code>true</code>
-	 */
+		Sets the <code>result</code> property of the invoker to <code>null</code>.
+		This is useful when the result is a large object that is no longer being
+		used.
+
+		@param fireBindingEvent Set to <code>true</code> if you want anything
+		bound to the result to update. Otherwise, set to
+		<code>false</code>.
+		The default value is <code>true</code>
+	**/
 	public function clearResult(fireBindingEvent:Bool = true):Void {
 		if (fireBindingEvent)
 			setResult(null);
@@ -208,14 +205,14 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 *  This hook is exposed to update the lastResult property.  Since lastResult
-	 *  is ordinarily updated automatically by the service, you do not typically 
-	 *  call this.  It is used by managed services that want to ensure lastResult
-	 *  always points to "the" managed instance for a given identity even if the
-	 *  the service returns a new copy of the same object.  
-	 *
-	 *  @param result The new value for the lastResult property.
-	 */
+		This hook is exposed to update the lastResult property.  Since lastResult
+		is ordinarily updated automatically by the service, you do not typically 
+		call this.  It is used by managed services that want to ensure lastResult
+		always points to "the" managed instance for a given identity even if the
+		the service returns a new copy of the same object.  
+
+		@param result The new value for the lastResult property.
+	**/
 	public function setResult(result:Any):Void {
 		_result = result;
 		dispatchEvent(new flash.events.Event(BINDING_RESULT));
@@ -228,11 +225,9 @@ class AbstractInvoker extends EventDispatcher {
 	//-------------------------------------------------------------------------
 
 	/**
-	 *  This method is overridden in subclasses to redirect the event to another
-	 *  class.
-	 *
-	 *  @private
-	 */
+		This method is overridden in subclasses to redirect the event to another
+		class.
+	**/
 	private function dispatchRpcEvent(event:AbstractEvent):Void {
 		event.callTokenResponders();
 		if (!event.isDefaultPrevented()) {
@@ -241,8 +236,8 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 * Monitor an rpc event that is being dispatched
-	 */
+		Monitor an rpc event that is being dispatched
+	**/
 	private function monitorRpcEvent(event:AbstractEvent):Void {
 		// if (NetworkMonitor.isMonitoring()) {
 		// 	if ((event is mx.rpc.events.ResultEvent)) {
@@ -255,11 +250,9 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 *  Take the MessageAckEvent and take the result, store it, and broadcast out
-	 *  appropriately.
-	 *
-	 *  @private
-	 */
+		Take the MessageAckEvent and take the result, store it, and broadcast out
+		appropriately.
+	**/
 	private function resultHandler(event:MessageEvent):Void {
 		var token:AsyncToken = preHandle(event);
 
@@ -281,10 +274,8 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 *  Take the fault and convert it into a rpc.events.FaultEvent.
-	 *
-	 *  @private
-	 */
+		Take the fault and convert it into a rpc.events.FaultEvent.
+	**/
 	private function faultHandler(event:MessageFaultEvent):Void {
 		var msgEvent:MessageEvent = MessageEvent.createEvent(MessageEvent.MESSAGE, event.message);
 		var token:AsyncToken = preHandle(msgEvent);
@@ -309,9 +300,8 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 * Return the id for the NetworkMonitor.
-	 * @private
-	 */
+		Return the id for the NetworkMonitor.
+	**/
 	private function getNetmonId():String {
 		return null;
 	}
@@ -344,17 +334,12 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-	 * Find the matching call object and pass it back.
-	 *
-	 * @private
-	 */
+		Find the matching call object and pass it back.
+	**/
 	private function preHandle(event:MessageEvent):AsyncToken {
 		return activeCalls.removeCall(cast(event.message, AsyncMessage).correlationId);
 	}
 
-	/**
-	 * @private
-	 */
 	private function processFault(message:IMessage, token:AsyncToken):Bool {
 		return true;
 	}
@@ -385,33 +370,15 @@ class AbstractInvoker extends EventDispatcher {
 		return _asyncRequest;
 	}
 
-	/**
-	 * @private
-	 */
 	private var activeCalls:ActiveCalls;
 
-	/**
-	 * @private
-	 */
 	private var _responseHeaders:Array<Dynamic>;
 
-	/**
-	 * @private
-	 */
 	private var _result:Any;
 
-	/**
-	 * @private
-	 */
 	private var _makeObjectsBindable:Bool;
 
-	/**
-	 * @private
-	 */
 	private var _asyncRequest:AsyncRequest;
 
-	/**
-	 * @private
-	 */
 	private var _log:Any /*ILogger*/;
 }

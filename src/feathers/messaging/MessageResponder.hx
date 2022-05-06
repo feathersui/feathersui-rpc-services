@@ -29,16 +29,16 @@ import flash.net.Responder;
 #end
 
 /**
- *  The MessageResponder class handles a successful result or fault from a message
- *  destination. For each message that a Channel sends, the Channel creates a
- *  MessageResponder to handle the result. Upon a response, the Channel will
- *  invoke either the <code>result()</code> or <code>status()</code> callback
- *  on the MessageResponder. MessageResponder subclasses should override these
- *  methods to perform any necessary processing. For every response, whether a 
- *  successful result or an error, the MessageResponder should invoke 
- *  <code>acknowledge()</code> on its agent. If the response was a fault, the
- *  MessageResponder should also invoke <code>fault()</code> on its agent.
- */
+	The MessageResponder class handles a successful result or fault from a message
+	destination. For each message that a Channel sends, the Channel creates a
+	MessageResponder to handle the result. Upon a response, the Channel will
+	invoke either the <code>result()</code> or <code>status()</code> callback
+	on the MessageResponder. MessageResponder subclasses should override these
+	methods to perform any necessary processing. For every response, whether a 
+	successful result or an error, the MessageResponder should invoke 
+	<code>acknowledge()</code> on its agent. If the response was a fault, the
+	MessageResponder should also invoke <code>fault()</code> on its agent.
+**/
 class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 	//
@@ -47,16 +47,15 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a MessageResponder to handle the response for the specified
-	 *  Message for the specified MessageAgent.
-	 *
-	 *  @param agent The MessageAgent sending the Message.
-	 * 
-	 *  @param message The Message being sent.
-	 * 
-	 *  @param channel The Channel used to send. 
-	 *  
-	 */
+		Constructs a MessageResponder to handle the response for the specified
+		Message for the specified MessageAgent.
+
+		@param agent The MessageAgent sending the Message.
+
+		@param message The Message being sent.
+
+		@param channel The Channel used to send. 
+	**/
 	public function new(agent:MessageAgent, message:IMessage, channel:Channel = null) {
 		#if (flash || openfl >= "9.2.0")
 		super(result, status);
@@ -75,19 +74,17 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Flag indicating whether the request corresponding to this responder
-	 *  has timed out. This is used by responders that cannot close
-	 *  their underlying connection (NetConnection for instance) so they must 
-	 *  instead ignore any response that is returned after the request timeout 
-	 *  is reached.
-	 */
+		Flag indicating whether the request corresponding to this responder
+		has timed out. This is used by responders that cannot close
+		their underlying connection (NetConnection for instance) so they must 
+		instead ignore any response that is returned after the request timeout 
+		is reached.
+	**/
 	private var _requestTimedOut:Bool;
 
 	/**
-	 *  @private
-	 *  Timer used to trigger a request timeout.
-	 */
+		Timer used to trigger a request timeout.
+	**/
 	private var _requestTimer:Timer;
 
 	//--------------------------------------------------------------------------
@@ -98,16 +95,11 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//----------------------------------
 	//  agent
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _agent:MessageAgent;
 
 	/**
-	 *  Provides access to the MessageAgent that sent the message.
-	 *  
-	 */
+		Provides access to the MessageAgent that sent the message.
+	**/
 	@:flash.property
 	public var agent(get, never):MessageAgent;
 
@@ -118,16 +110,11 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//----------------------------------
 	//  channel
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _channel:Channel;
 
 	/**
-	 *  Provides access to the Channel used to send the message.
-	 *  
-	 */
+		Provides access to the Channel used to send the message.
+	**/
 	@:flash.property
 	public var channel(get, never):Channel;
 
@@ -138,16 +125,11 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//----------------------------------
 	//  message
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _message:IMessage;
 
 	/**
-	 *  Provides access to the sent Message.
-	 *  
-	 */
+		Provides access to the sent Message.
+	**/
 	@:flash.property
 	public var message(get, set):IMessage;
 
@@ -167,15 +149,14 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private 
-	 *  Starts a timer to monitor a request timeout. If the timer hits the
-	 *  specified requestTimeout before a response is returned, 
-	 *  <code>requestTimedOut()</code> is invoked and any subsequent 
-	 *  response is ignored by this responder.
-	 * 
-	 *  @param requestTimeout The amount of time in seconds to allow a request
-	 *                        to run before timing it out.
-	 */
+		Starts a timer to monitor a request timeout. If the timer hits the
+		specified requestTimeout before a response is returned, 
+		<code>requestTimedOut()</code> is invoked and any subsequent 
+		response is ignored by this responder.
+
+		@param requestTimeout The amount of time in seconds to allow a request
+		to run before timing it out.
+	**/
 	final public function startRequestTimeout(requestTimeout:Int):Void {
 		_requestTimer = new Timer(requestTimeout * 1000, 1);
 		_requestTimer.addEventListener(TimerEvent.TIMER, timeoutRequest);
@@ -183,15 +164,14 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	}
 
 	/**
-	 *  Called by the channel that created this MessageResponder when a
-	 *  response returns from the destination.
-	 *  This method performs core result processing and then invokes the
-	 *  <code>resultHandler()</code> method that subclasses may override to
-	 *  perform any necessary custom processing.
-	 *
-	 *  @param message The result Message returned by the destination.
-	 *  
-	 */
+		Called by the channel that created this MessageResponder when a
+		response returns from the destination.
+		This method performs core result processing and then invokes the
+		<code>resultHandler()</code> method that subclasses may override to
+		perform any necessary custom processing.
+
+		@param message The result Message returned by the destination.
+	**/
 	final public function result(message:IMessage):Void {
 		// Ignore any response after the request has timed out.
 		if (!_requestTimedOut) {
@@ -204,15 +184,14 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	}
 
 	/**
-	 *  Called by the channel that created this MessageResponder when a fault
-	 *  response returns from the destination.
-	 *  This method performs core result processing and then invokes the
-	 *  <code>statusHandler()</code> method that subclasses may override to
-	 *  perform any necessary custom processing.
-	 * 
-	 *  @param message The fault Message returned by the destination.
-	 *  
-	 */
+		Called by the channel that created this MessageResponder when a fault
+		response returns from the destination.
+		This method performs core result processing and then invokes the
+		<code>statusHandler()</code> method that subclasses may override to
+		perform any necessary custom processing.
+
+		@param message The fault Message returned by the destination.
+	**/
 	final public function status(message:IMessage):Void {
 		// Ignore any response after the request has timed out.
 		if (!_requestTimedOut) {
@@ -231,13 +210,12 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an ErrorMessage that can be passed to the associated 
-	 *  MessageAgent's callbacks upon a request timeout.
-	 *
-	 *  @return Returns an ErrorMessage that can be passed to the associated
-	 *  MessageAgent's callbacks upon a request timeout.
-	 *  
-	 */
+		Constructs an ErrorMessage that can be passed to the associated 
+		MessageAgent's callbacks upon a request timeout.
+
+		@return Returns an ErrorMessage that can be passed to the associated
+		MessageAgent's callbacks upon a request timeout.
+	**/
 	private function createRequestTimeoutErrorMessage():ErrorMessage {
 		var errorMsg:ErrorMessage = new ErrorMessage();
 		errorMsg.correlationId = message.messageId;
@@ -248,30 +226,27 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	}
 
 	/**
-	 *  Subclasses must override this method to perform custom processing of
-	 *  the result and invoke the proper callbacks on the associated 
-	 *  MessageAgent.
-	 * 
-	 *  @param message The result Message returned by the destination.
-	 *  
-	 */
+		Subclasses must override this method to perform custom processing of
+		the result and invoke the proper callbacks on the associated 
+		MessageAgent.
+
+		@param message The result Message returned by the destination.
+	**/
 	private function resultHandler(message:IMessage):Void {}
 
 	/**
-	 *  Subclasses must override this method to handle a request timeout and 
-	 *  invoke the proper callbacks on the associated MessageAgent.
-	 *  
-	 */
+		Subclasses must override this method to handle a request timeout and 
+		invoke the proper callbacks on the associated MessageAgent.
+	**/
 	private function requestTimedOut():Void {}
 
 	/**
-	 *  Subclasses must override this method to perform custom processing of
-	 *  the status and invoke the proper callbacks on the associated 
-	 *  MessageAgent.
-	 * 
-	 *  @param message The fault Message returned by the destination.
-	 *  
-	 */
+		Subclasses must override this method to perform custom processing of
+		the status and invoke the proper callbacks on the associated 
+		MessageAgent.
+
+		@param message The fault Message returned by the destination.
+	**/
 	private function statusHandler(message:IMessage):Void {}
 
 	//--------------------------------------------------------------------------
@@ -281,10 +256,9 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Helper callback that flags the request as timed out before delegating
-	 *  to custom timeout processing.
-	 */
+		Helper callback that flags the request as timed out before delegating
+		to custom timeout processing.
+	**/
 	private function timeoutRequest(event:TimerEvent):Void {
 		_requestTimedOut = true;
 		releaseTimer();
@@ -292,9 +266,8 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	}
 
 	/**
-	 *  @private
-	 *  Utility method to shutdown the request timeout Timer.
-	 */
+		Utility method to shutdown the request timeout Timer.
+	**/
 	private function releaseTimer():Void {
 		_requestTimer.stop();
 		_requestTimer.removeEventListener(TimerEvent.TIMER, timeoutRequest);

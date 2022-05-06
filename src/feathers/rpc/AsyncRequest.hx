@@ -25,11 +25,11 @@ import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.IMessage;
 
 /**
- *  The AsyncRequest class provides an abstraction of messaging for RPC call invocation.
- *  An AsyncRequest allows multiple requests to be made on a remote destination
- *  and will call back to the responder specified within the request when
- *  the remote request is completed.
- */
+	The AsyncRequest class provides an abstraction of messaging for RPC call invocation.
+	An AsyncRequest allows multiple requests to be made on a remote destination
+	and will call back to the responder specified within the request when
+	the remote request is completed.
+**/
 class AsyncRequest extends Producer {
 	//--------------------------------------------------------------------------
 	//
@@ -38,8 +38,8 @@ class AsyncRequest extends Producer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a new asynchronous request.
-	 */
+		Constructs a new asynchronous request.
+	**/
 	public function new() {
 		super();
 	}
@@ -51,11 +51,11 @@ class AsyncRequest extends Producer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Delegates to the results to responder
-	 *  @param    ack Message acknowlegdement of message previously sent
-	 *  @param    msg Message that was recieved the acknowledgement
-	 *  @private
-	 */
+		Delegates to the results to responder
+		@param    ack Message acknowlegdement of message previously sent
+		@param    msg Message that was recieved the acknowledgement
+	**/
+	@:dox(hide)
 	override public function acknowledge(ack:AcknowledgeMessage, msg:IMessage):Void {
 		var error:Bool = Reflect.field(ack.headers, AcknowledgeMessage.ERROR_HINT_HEADER);
 		// super will clean the error hint from the message
@@ -73,13 +73,11 @@ class AsyncRequest extends Producer {
 	}
 
 	/**
-	 *  Delegates to the fault to responder
-	 *  @param    error message.
-	 *            The error codes and information are contained in the
-	 *            <code>headers</code> property
-	 *  @param    msg Message original message that caused the fault.
-	 *  @private
-	 */
+		Delegates to the fault to responder
+		@param    error message. The error codes and information are contained in the <code>headers</code> property
+		@param    msg Message original message that caused the fault.
+	**/
+	@:dox(hide)
 	override public function fault(errMsg:ErrorMessage, msg:IMessage):Void {
 		super.fault(errMsg, msg);
 
@@ -99,26 +97,26 @@ class AsyncRequest extends Producer {
 	}
 
 	/**
-	 * Returns <code>true</code> if there are any pending requests for the passed in message.
-	 * 
-	 * @param msg The message for which the existence of pending requests is checked.
-	 *
-	 * @return Returns <code>true</code> if there are any pending requests for the 
-	 * passed in message; otherwise, returns <code>false</code>.
-	 */
+		Returns <code>true</code> if there are any pending requests for the passed in message.
+
+		@param msg The message for which the existence of pending requests is checked.
+
+		@return Returns <code>true</code> if there are any pending requests for the 
+		passed in message; otherwise, returns <code>false</code>.
+	**/
 	override public function hasPendingRequestForMessage(msg:IMessage):Bool {
 		var act:String = msg.messageId;
 		return _pendingRequests.exists(act) && _pendingRequests.get(act) != null;
 	}
 
 	/**
-	 *  Dispatches the asynchronous request and stores the responder to call
-	 *  later.
-	 		  *
-	 		  * @param msg The message to be sent asynchronously.
-	 		  *
-	 		  * @param responder The responder to be called later.
-	 */
+		Dispatches the asynchronous request and stores the responder to call
+		later.
+
+		@param msg The message to be sent asynchronously.
+
+		@param responder The responder to be called later.
+	**/
 	public function invoke(msg:IMessage, responder:IResponder):Void {
 		_pendingRequests.set(msg.messageId, responder);
 		send(msg);
@@ -131,8 +129,8 @@ class AsyncRequest extends Producer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  manages a list of all pending requests.  each request must implement
-	 *  IResponder
-	 */
+		manages a list of all pending requests.  each request must implement
+		IResponder
+	**/
 	private var _pendingRequests:Map<String, IResponder> = [];
 }

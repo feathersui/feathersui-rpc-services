@@ -24,11 +24,11 @@ import feathers.messaging.messages.IMessage;
 import feathers.rpc.events.FaultEvent;
 
 /**
- * An Operation used specifically by RemoteObjects. An Operation is an individual method on a service.
- * An Operation can be called either by invoking the
- * function of the same name on the service or by accessing the Operation as a property on the service and
- * calling the <code>send()</code> method.
- */
+	An Operation used specifically by RemoteObjects. An Operation is an individual method on a service.
+	An Operation can be called either by invoking the
+	function of the same name on the service or by accessing the Operation as a property on the service and
+	calling the <code>send()</code> method.
+**/
 @:access(feathers.rpc.remoting.RemoteObject)
 class Operation extends AbstractOperation {
 	//---------------------------------
@@ -36,14 +36,13 @@ class Operation extends AbstractOperation {
 	//---------------------------------
 
 	/**
-	 * Creates a new Operation. This is usually done directly automatically by the RemoteObject
-	 * when an unknown operation has been accessed. It is not recommended that a developer use this constructor
-	 * directly.
-	 * 
-	 *  @param service The RemoteObject object defining the service.
-	 *
-	 *  @param name The name of the service.
-	 */
+		Creates a new Operation. This is usually done directly automatically by the RemoteObject
+		when an unknown operation has been accessed. It is not recommended that a developer use this constructor
+		directly.
+
+		@param service The RemoteObject object defining the service.
+		@param name The name of the service.
+	**/
 	public function new(remoteObject:AbstractService = null, name:String = null) {
 		super(remoteObject, name);
 
@@ -58,9 +57,9 @@ class Operation extends AbstractOperation {
 	// [Inspectable(enumeration="multiple,single,last", defaultValue="multiple", category="General")]
 
 	/**
-	 * The concurrency for this Operation.  If it has not been explicitly set the setting from the RemoteObject
-	 * will be used.
-	 */
+		The concurrency for this Operation.  If it has not been explicitly set the setting from the RemoteObject
+		will be used.
+	**/
 	@:flash.property
 	public var concurrency(get, set):String;
 
@@ -72,9 +71,6 @@ class Operation extends AbstractOperation {
 		return remoteObject.concurrency;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_concurrency(c:String):String {
 		_concurrency = c;
 		_concurrencySet = true;
@@ -83,9 +79,6 @@ class Operation extends AbstractOperation {
 
 	// [Inspectable(defaultValue="true", category="General")]
 
-	/**
-	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 */
 	override private function get_makeObjectsBindable():Bool {
 		if (_makeObjectsBindableSet) {
 			return _makeObjectsBindable;
@@ -101,10 +94,10 @@ class Operation extends AbstractOperation {
 	}
 
 	/**
-	 * Whether this operation should show the busy cursor while it is executing.
-	 * If it has not been explicitly set the setting from the RemoteObject
-	 * will be used.
-	 */
+		Whether this operation should show the busy cursor while it is executing.
+		If it has not been explicitly set the setting from the RemoteObject
+		will be used.
+	**/
 	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
@@ -123,10 +116,10 @@ class Operation extends AbstractOperation {
 	}
 
 	/**
-	 * An ordered list of the names of the arguments to pass to a method invocation.  Since the arguments object is
-	 * a hashmap with no guaranteed ordering, this array helps put everything together correctly.
-	 * It will be set automatically by the MXML compiler, if necessary, when the Operation is used in tag form.
-	 */
+		An ordered list of the names of the arguments to pass to a method invocation.  Since the arguments object is
+		a hashmap with no guaranteed ordering, this array helps put everything together correctly.
+		It will be set automatically by the MXML compiler, if necessary, when the Operation is used in tag form.
+	**/
 	public var argumentNames:Array<String>;
 
 	//--------------------------------------------------------------------------
@@ -148,9 +141,6 @@ class Operation extends AbstractOperation {
 	// Methods
 	//---------------------------------
 
-	/**
-	 * @inheritDoc
-	 */
 	override public function send(#if (haxe_ver >= 4.2)...rest:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):AsyncToken {
 		#if (haxe_ver >= 4.2)
@@ -218,9 +208,6 @@ class Operation extends AbstractOperation {
 		return invoke(message);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	override public function cancel(id:String = null):AsyncToken {
 		// if (showBusyCursor) {
 		// 	CursorManager.removeBusyCursor();
@@ -242,7 +229,7 @@ class Operation extends AbstractOperation {
 	}
 
 	/*
-	 * Kill the busy cursor, find the matching call object and pass it back
+		Kill the busy cursor, find the matching call object and pass it back
 	 */
 	override private function preHandle(event:MessageEvent):AsyncToken {
 		// if (showBusyCursor) {

@@ -18,10 +18,10 @@
 package feathers.messaging.messages;
 
 /**
- *  The CommandMessage class provides a mechanism for sending commands to the
- *  server infrastructure, such as commands related to publish/subscribe 
- *  messaging scenarios, ping operations, and cluster operations.
- */
+	The CommandMessage class provides a mechanism for sending commands to the
+	server infrastructure, such as commands related to publish/subscribe 
+	messaging scenarios, ping operations, and cluster operations.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.io.amf.ActionMessage"))
 class ActionMessage {
 	//--------------------------------------------------------------------------
@@ -31,10 +31,9 @@ class ActionMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of an ActionMessage with an empty array of bodies
-	 *  and headers.
-	 *  
-	 */
+		Constructs an instance of an ActionMessage with an empty array of bodies
+		and headers.
+	**/
 	public function new() {}
 
 	//--------------------------------------------------------------------------
@@ -44,9 +43,8 @@ class ActionMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The version of the ActionMessage.  Probably should not be changed.
-	 *  
-	 */
+		The version of the ActionMessage.  Probably should not be changed.
+	**/
 	public var version:Int = 3;
 
 	//--------------------------------------------------------------------------
@@ -62,16 +60,11 @@ class ActionMessage {
 	//----------------------------------
 	//  bodies
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _bodies:Array<MessageBody> = [];
 
 	/**
-	 *  The array of MessageBody instances.
-	 *  
-	 */
+		The array of MessageBody instances.
+	**/
 	@:flash.property
 	public var bodies(get, set):Array<MessageBody>;
 
@@ -79,9 +72,6 @@ class ActionMessage {
 		return _bodies;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_bodies(value:Array<MessageBody>):Array<MessageBody> {
 		_bodies = value;
 		return _bodies;
@@ -90,16 +80,11 @@ class ActionMessage {
 	//----------------------------------
 	//  headers
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _headers:Array<MessageHeader> = [];
 
 	/**
-	 *  The array of MessageHeaders
-	 *  
-	 */
+		The array of MessageHeaders
+	**/
 	@:flash.property
 	public var headers(get, set):Array<MessageHeader>;
 
@@ -107,9 +92,6 @@ class ActionMessage {
 		return _headers;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_headers(value:Array<MessageHeader>):Array<MessageHeader> {
 		_headers = value;
 		return _headers;

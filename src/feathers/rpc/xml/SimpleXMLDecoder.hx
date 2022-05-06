@@ -25,19 +25,16 @@ import flash.xml.XMLNodeType;
 #end
 
 /**
- *  The SimpleXMLDecoder class deserialize XML into a graph of ActionScript objects.
- * Use  this class when no schema information is available.
- */
+	The SimpleXMLDecoder class deserialize XML into a graph of ActionScript objects.
+	Use this class when no schema information is available.
+**/
 class SimpleXMLDecoder {
 	//--------------------------------------------------------------------------
 	//
 	//  Class Methods
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 *  @private
-	 */
+	@:dox(hide)
 	public static function simpleType(val:Dynamic):Dynamic {
 		var result:Dynamic = val;
 
@@ -75,10 +72,7 @@ class SimpleXMLDecoder {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 *  @private
-	 *  Constructor.
-	 */
+	@:dox(hide)
 	public function new(makeObjectsBindable:Bool = false) {
 		this.makeObjectsBindable = makeObjectsBindable;
 	}
@@ -90,12 +84,12 @@ class SimpleXMLDecoder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Converts a tree of XMLNodes into a tree of ActionScript Objects.
-	 *
-	 *  @param dataNode An XMLNode to be converted into a tree of ActionScript Objects.
-	 *
-	 *  @return A tree of ActionScript Objects.
-	 */
+		Converts a tree of XMLNodes into a tree of ActionScript Objects.
+
+		@param dataNode An XMLNode to be converted into a tree of ActionScript Objects.
+
+		@return A tree of ActionScript Objects.
+	**/
 	public function decodeXML(dataNode:#if flash XMLNode #else Xml #end):Dynamic {
 		var result:Dynamic = null;
 		var isSimpleType = false;
@@ -207,12 +201,12 @@ class SimpleXMLDecoder {
 	}
 
 	/**
-	 * Returns the local name of an XMLNode.
-	 *
-	 *  @param xmlNode The XMLNode. 
-	 *
-	 * @return The local name of an XMLNode.
-	 */
+		Returns the local name of an XMLNode.
+
+		@param xmlNode The XMLNode. 
+
+		@return The local name of an XMLNode.
+	**/
 	public static function getLocalName(xmlNode:#if flash XMLNode #else Xml #end):String {
 		var name:String = xmlNode.nodeName;
 		var myPrefixIndex = name.indexOf(":");

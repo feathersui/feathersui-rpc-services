@@ -57,13 +57,13 @@ class AMFNetConnection {
 	private static final AMF0_AMF3:Int = 17;
 
 	/**
-	 *  Constructor
-	 */
+		Constructor
+	**/
 	public function new() {}
 
 	/**
-	 *  The class to use to test if success or failure
-	 */
+		The class to use to test if success or failure
+	**/
 	public var errorClass:Class<Dynamic>;
 
 	private var url:String;
@@ -191,9 +191,9 @@ class AMFNetConnection {
 	}
 
 	/**
-	 *  Connect to a server.  Pass in an http URL as the commmand for
-	 *  connection to AMF server.
-	 */
+		Connect to a server.  Pass in an http URL as the commmand for
+		connection to AMF server.
+	**/
 	public function connect(command:String,
 			#if (haxe_ver >= 4.2)...params:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):Void {
@@ -202,8 +202,8 @@ class AMFNetConnection {
 	}
 
 	/**
-	 *  Call a server function.
-	 */
+		Call a server function.
+	**/
 	public function call(command:String, responder:Responder,
 			#if (haxe_ver >= 4.2)...params:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):Void {

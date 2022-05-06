@@ -20,9 +20,9 @@ package feathers.messaging.errors;
 import openfl.errors.Error;
 
 /**
- *  This is the base class for any messaging related error.
- *  It allows for less granular catch code.
- */
+	This is the base class for any messaging related error.
+	It allows for less granular catch code.
+**/
 class MessagingError extends Error {
 	//--------------------------------------------------------------------------
 	//
@@ -31,12 +31,11 @@ class MessagingError extends Error {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a new instance of a MessagingError with the
-	 *  specified message.
-	 *
-	 *  @param msg String that contains the message that describes the error.
-	 *  
-	 */
+		Constructs a new instance of a MessagingError with the
+		specified message.
+
+		@param msg String that contains the message that describes the error.
+	**/
 	public function new(msg:String) {
 		super(msg);
 	}
@@ -48,11 +47,10 @@ class MessagingError extends Error {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Returns the string "[MessagingError]" by default, and includes the message property if defined.
-	 * 
-	 *  @return String representation of the MessagingError.
-	 *  
-	 */
+		Returns the string "[MessagingError]" by default, and includes the message property if defined.
+
+		@return String representation of the MessagingError.
+	**/
 	#if !flash override #end public function toString():String {
 		var value:String = "[MessagingError";
 		if (message != null)

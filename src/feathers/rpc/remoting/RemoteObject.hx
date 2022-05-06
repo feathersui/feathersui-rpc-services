@@ -25,8 +25,8 @@ import feathers.messaging.Channel;
 import haxe.Constraints.Function;
 
 /**
- * The RemoteObject class gives you access to classes on a remote application server.
- */
+	The RemoteObject class gives you access to classes on a remote application server.
+**/
 #if (!flash && openfl < "9.2.0")
 @:deprecated("RemoteObject is not available on this target before OpenFL 9.2.0.")
 #end
@@ -39,9 +39,9 @@ class RemoteObject extends AbstractService {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Creates a new RemoteObject.
-	 * @param destination [optional] Destination of the RemoteObject; should match a destination name in the services-config.xml file.
-	 */
+		Creates a new RemoteObject.
+		@param destination [optional] Destination of the RemoteObject; should match a destination name in the services-config.xml file.
+	**/
 	public function new(destination:String = null) {
 		super(destination);
 
@@ -75,20 +75,13 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(enumeration="multiple,single,last", defaultValue="multiple", category="General")]
 
 	/**
-	 * Value that indicates how to handle multiple calls to the same service. The default
-	 * value is multiple. The following values are permitted:
-	 * <ul>
-	 * <li>multiple - Existing requests are not cancelled, and the developer is
-	 * responsible for ensuring the consistency of returned data by carefully
-	 * managing the event stream. This is the default.</li>
-	 * <li>single - Making only one request at a time is allowed on the method; additional requests made 
-	 * while a request is outstanding are immediately faulted on the client and are not sent to the server.</li>
-	 * <li>last - Making a request causes the client to ignore a result or fault for any current outstanding request. 
-	 * Only the result or fault for the most recent request will be dispatched on the client. 
-	 * This may simplify event handling in the client application, but care should be taken to only use 
-	 * this mode when results or faults for requests may be safely ignored.</li>
-	 * </ul>
-	 */
+		Value that indicates how to handle multiple calls to the same service. The default
+		value is multiple. The following values are permitted:
+
+		- multiple - Existing requests are not cancelled, and the developer is responsible for ensuring the consistency of returned data by carefully managing the event stream. This is the default.
+		- single - Making only one request at a time is allowed on the method; additional requests made while a request is outstanding are immediately faulted on the client and are not sent to the server.
+		- last - Making a request causes the client to ignore a result or fault for any current outstanding request. Only the result or fault for the most recent request will be dispatched on the client. This may simplify event handling in the client application, but care should be taken to only use this mode when results or faults for requests may be safely ignored.
+	**/
 	@:flash.property
 	public var concurrency(get, set):String;
 
@@ -96,9 +89,6 @@ class RemoteObject extends AbstractService {
 		return _concurrency;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_concurrency(c:String):String {
 		_concurrency = c;
 		return _concurrency;
@@ -110,16 +100,16 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(category="General")]
 
 	/**
-	 * This property allows the developer to quickly specify an endpoint for a RemoteObject
-	 * destination without referring to a services configuration file at compile time or programmatically creating 
-	 * a ChannelSet. It also overrides an existing ChannelSet if one has been set for the RemoteObject service.
-	 *
-	 * If the endpoint url starts with "https" a SecureAMFChannel will be used, otherwise an AMFChannel will 
-	 * be used. Two special tokens, {server.name} and {server.port}, can be used in the endpoint url to specify
-	 * that the channel should use the server name and port that was used to load the SWF.
-	 *
-	 * **Note:** This property is required when creating AIR applications.
-	 */
+		This property allows the developer to quickly specify an endpoint for a RemoteObject
+		destination without referring to a services configuration file at compile time or programmatically creating 
+		a ChannelSet. It also overrides an existing ChannelSet if one has been set for the RemoteObject service.
+
+		If the endpoint url starts with "https" a SecureAMFChannel will be used, otherwise an AMFChannel will 
+		be used. Two special tokens, {server.name} and {server.port}, can be used in the endpoint url to specify
+		that the channel should use the server name and port that was used to load the SWF.
+
+		**Note:** This property is required when creating AIR applications.
+	**/
 	@:flash.property
 	public var endpoint(get, set):String;
 
@@ -143,8 +133,8 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(category="General", defaultValue="true")]
 
 	/**
-	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 */
+		When this value is true, anonymous objects returned are forced to bindable objects.
+	**/
 	@:flash.property
 	public var makeObjectsBindable(get, set):Bool;
 
@@ -163,9 +153,9 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
-	 * value is <code>false</code>.
-	 */
+		If <code>true</code>, a busy cursor is displayed while a service is executing. The default
+		value is <code>false</code>.
+	**/
 	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
@@ -184,10 +174,9 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(category="General")]
 
 	/**
-	 * Lets you specify a source value on the client; not supported for destinations that use the JavaAdapter. This allows you to provide more than one source
-	 * that can be accessed from a single destination on the server. 
-	 *     
-	 */
+		Lets you specify a source value on the client; not supported for destinations that use the JavaAdapter. This allows you to provide more than one source
+		that can be accessed from a single destination on the server. 
+	**/
 	@:flash.property
 	public var source(get, set):String;
 
@@ -201,29 +190,29 @@ class RemoteObject extends AbstractService {
 	}
 
 	/**
-	 * An optional function, primarily intended for framework developers who need to install
-	 * a function to get called with the parameters passed to each remote object invocation.
-	 * The function takes an array of parameters and returns the potentially altered array.
-	 *
-	 * The function definition should look like:
-	 * <code>
-	 *   function myParametersFunction(parameters:Array):Array
-	 * </code>
-	 */
+		An optional function, primarily intended for framework developers who need to install
+		a function to get called with the parameters passed to each remote object invocation.
+		The function takes an array of parameters and returns the potentially altered array.
+
+		The function definition should look like:
+		<code>
+		function myParametersFunction(parameters:Array):Array
+		</code>
+	**/
 	public var convertParametersHandler:Function;
 
 	/**
-	 * An optional function, primarily intended for framework developers who need to install
-	 * a hook to process the results of an operation before notifying the result handlers.
-	 *
-	 * The function definition should look like:
-	 * <code>
-	 *   function myConvertResultsFunction(result:*, operation:AbstractOperation):*
-	 * </code>
-	 * 
-	 * It is passed the result just after the makeObjectsBindable conversion has been done
-	 * but before the result event is created.
-	 */
+		An optional function, primarily intended for framework developers who need to install
+		a hook to process the results of an operation before notifying the result handlers.
+
+		The function definition should look like:
+		<code>
+		function myConvertResultsFunction(result:*, operation:AbstractOperation):*
+		</code>
+
+		It is passed the result just after the makeObjectsBindable conversion has been done
+		but before the result event is created.
+	**/
 	public var convertResultHandler:Function;
 
 	//-------------------------------------------------------------------------
@@ -232,9 +221,6 @@ class RemoteObject extends AbstractService {
 	//
 	//-------------------------------------------------------------------------
 
-	/**
-		*@private
-	 */
 	private function initEndpoint():Void {
 		if (endpoint != null) {
 			var chan:Channel;
@@ -259,17 +245,18 @@ class RemoteObject extends AbstractService {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns an Operation of the given name. If the Operation wasn't
-	 * created beforehand, a new <code>mx.rpc.remoting.Operation</code> is
-	 * created during this call. Operations are usually accessible by simply
-	 * naming them after the service variable
-	 * (<code>myService.someOperation</code>), but if your Operation name
-	 * happens to match a defined method on the service
-	 * (like <code>setCredentials</code>), you can use this method to get the
-	 * Operation instead.
-	 * @param name Name of the Operation.
-	 * @return Operation that executes for this name.
-	 */
+		Returns an Operation of the given name. If the Operation wasn't
+		created beforehand, a new <code>mx.rpc.remoting.Operation</code> is
+		created during this call. Operations are usually accessible by simply
+		naming them after the service variable
+		(<code>myService.someOperation</code>), but if your Operation name
+		happens to match a defined method on the service
+		(like <code>setCredentials</code>), you can use this method to get the
+		Operation instead.
+
+		@param name Name of the Operation.
+		@return Operation that executes for this name.
+	**/
 	override public function getOperation(name:String):AbstractOperation {
 		var op:AbstractOperation = super.getOperation(name);
 		if (op == null) {
@@ -282,26 +269,26 @@ class RemoteObject extends AbstractService {
 	}
 
 	/**
-	 * If a remote object is managed by an external service, such a ColdFusion Component (CFC),
-	 * a username and password can be set for the authentication mechanism of that remote service.
-	 *
-	 * @param remoteUsername the username to pass to the remote endpoint
-	 * @param remotePassword the password to pass to the remote endpoint
-	 * @param charset The character set encoding to use while encoding the
-	 * remote credentials. The default is null, which implies the legacy charset
-	 * of ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 */
+		If a remote object is managed by an external service, such a ColdFusion Component (CFC),
+		a username and password can be set for the authentication mechanism of that remote service.
+
+		@param remoteUsername the username to pass to the remote endpoint
+		@param remotePassword the password to pass to the remote endpoint
+		@param charset The character set encoding to use while encoding the
+		remote credentials. The default is null, which implies the legacy charset
+		of ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+	**/
 	override public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		super.setRemoteCredentials(remoteUsername, remotePassword, charset);
 	}
 
 	/**
-	 * Represents an instance of RemoteObject as a String, describing
-	 * important properties such as the destination id and the set of
-	 * channels assigned.
-	 *
-	 * @return Returns a String representing an instance of a RemoteObject.
-	 */
+		Represents an instance of RemoteObject as a String, describing
+		important properties such as the destination id and the set of
+		channels assigned.
+
+		@return Returns a String representing an instance of a RemoteObject.
+	**/
 	public function toString():String {
 		var s:String = "[RemoteObject ";
 		s += " destination=\"" + destination + "\"";

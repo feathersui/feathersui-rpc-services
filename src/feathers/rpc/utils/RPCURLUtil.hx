@@ -20,21 +20,15 @@ package feathers.rpc.utils;
 import feathers.messaging.config.LoaderConfig;
 
 /**
- *  The URLUtil class is a static class with methods for working with
- *  full and relative URLs within Flex.
- *  
- *  @see mx.managers.BrowserManager
- */
+	The URLUtil class is a static class with methods for working with
+	full and relative URLs within Flex.
+**/
 class RPCURLUtil {
 	//--------------------------------------------------------------------------
 	//
 	// Private Static Constants
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 *  @private 
-	 */
 	private static final SQUARE_BRACKET_LEFT:String = "]";
 
 	private static final SQUARE_BRACKET_RIGHT:String = "[";
@@ -48,11 +42,11 @@ class RPCURLUtil {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Returns the domain and port information from the specified URL.
-	 *  
-	 *  @param url The URL to analyze.
-	 *  @return The server name and port of the specified URL.
-	 */
+		Returns the domain and port information from the specified URL.
+
+		@param url The URL to analyze.
+		@return The server name and port of the specified URL.
+	**/
 	public static function getServerNameWithPort(url:String):String {
 		// Find first slash; second is +1, start 1 after.
 		var start:Int = url.indexOf("/") + 2;
@@ -61,11 +55,11 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Returns the server name from the specified URL.
-	 *  
-	 *  @param url The URL to analyze.
-	 *  @return The server name of the specified URL.
-	 */
+		Returns the server name from the specified URL.
+
+		@param url The URL to analyze.
+		@return The server name of the specified URL.
+	**/
 	public static function getServerName(url:String):String {
 		var sp:String = getServerNameWithPort(url);
 
@@ -79,11 +73,11 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Returns the port number from the specified URL.
-	 *  
-	 *  @param url The URL to analyze.
-	 *  @return The port number of the specified URL.
-	 */
+		Returns the port number from the specified URL.
+
+		@param url The URL to analyze.
+		@return The port number of the specified URL.
+	**/
 	public static function getPort(url:String):UInt {
 		var sp:String = getServerNameWithPort(url);
 		// If IPv6 is in use, start looking after the square bracket.
@@ -100,17 +94,17 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Converts a potentially relative URL to a fully-qualified URL.
-	 *  If the URL is not relative, it is returned as is.
-	 *  If the URL starts with a slash, the host and port
-	 *  from the root URL are prepended.
-	 *  Otherwise, the host, port, and path are prepended.
-	 *
-	 *  @param rootURL URL used to resolve the URL specified by the <code>url</code> parameter, if <code>url</code> is relative.
-	 *  @param url URL to convert.
-	 *
-	 *  @return Fully-qualified URL.
-	 */
+		Converts a potentially relative URL to a fully-qualified URL.
+		If the URL is not relative, it is returned as is.
+		If the URL starts with a slash, the host and port
+		from the root URL are prepended.
+		Otherwise, the host, port, and path are prepended.
+
+		@param rootURL URL used to resolve the URL specified by the <code>url</code> parameter, if <code>url</code> is relative.
+		@param url URL to convert.
+
+		@return Fully-qualified URL.
+	**/
 	public static function getFullURL(rootURL:String, url:String):String {
 		if (url != null && !RPCURLUtil.isHttpURL(url)) {
 			if (url.indexOf("./") == 0) {
@@ -142,23 +136,23 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Determines if the URL uses the HTTP, HTTPS, or RTMP protocol. 
-	 *
-	 *  @param url The URL to analyze.
-	 * 
-	 *  @return <code>true</code> if the URL starts with "http://", "https://", or "rtmp://".
-	 */
+		Determines if the URL uses the HTTP, HTTPS, or RTMP protocol. 
+
+		@param url The URL to analyze.
+
+		@return <code>true</code> if the URL starts with "http://", "https://", or "rtmp://".
+	**/
 	public static function isHttpURL(url:String):Bool {
 		return url != null && (url.indexOf("http://") == 0 || url.indexOf("https://") == 0);
 	}
 
 	/**
-	 *  Determines if the URL uses the secure HTTPS protocol. 
-	 *
-	 *  @param url The URL to analyze.
-	 * 
-	 *  @return <code>true</code> if the URL starts with "https://".
-	 */
+		Determines if the URL uses the secure HTTPS protocol. 
+
+		@param url The URL to analyze.
+
+		@return <code>true</code> if the URL starts with "https://".
+	**/
 	public static function isHttpsURL(url:String):Bool {
 		return url != null && url.indexOf("https://") == 0;
 	}
@@ -194,17 +188,17 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Replaces the protocol of the
-	 *  specified URI with the given protocol.
-	 *
-	 *  @param uri String containing the URI in which the protocol
-	 *  needs to be replaced.
-	 *
-	 *  @param newProtocol String containing the new protocol to use.
-	 *
-	 *  @return The URI with the protocol replaced,
-	 *  or an empty String if the URI does not contain a protocol.
-	 */
+		Replaces the protocol of the
+		specified URI with the given protocol.
+
+		@param uri String containing the URI in which the protocol
+		needs to be replaced.
+
+		@param newProtocol String containing the new protocol to use.
+
+		@return The URI with the protocol replaced,
+		or an empty String if the URI does not contain a protocol.
+	**/
 	public static function replaceProtocol(uri:String, newProtocol:String):String {
 		var oldProtocol = getProtocol(uri);
 		var index = uri.indexOf(oldProtocol);
@@ -215,15 +209,15 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Returns a new String with the port replaced with the specified port.
-	 *  If there is no port in the specified URI, the port is inserted.
-	 *  This method expects that a protocol has been specified within the URI.
-	 *
-	 *  @param uri String containing the URI in which the port is replaced.
-	 *  @param newPort uint containing the new port to subsitute.
-	 *
-	 *  @return The URI with the new port.
-	 */
+		Returns a new String with the port replaced with the specified port.
+		If there is no port in the specified URI, the port is inserted.
+		This method expects that a protocol has been specified within the URI.
+
+		@param uri String containing the URI in which the port is replaced.
+		@param newPort uint containing the new port to subsitute.
+
+		@return The URI with the new port.
+	**/
 	public static function replacePort(uri:String, newPort:UInt):String {
 		var result:String = "";
 
@@ -266,14 +260,14 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Returns a new String with the port and server tokens replaced with
-	 *  the port and server from the currently running application.
-	 *
-	 *  @param url String containing the <code>SERVER_NAME_TOKEN</code> and/or <code>SERVER_NAME_PORT</code>
-	 *  which should be replaced by the port and server from the application.
-	 *
-	 *  @return The URI with the port and server replaced.
-	 */
+		Returns a new String with the port and server tokens replaced with
+		the port and server from the currently running application.
+
+		@param url String containing the <code>SERVER_NAME_TOKEN</code> and/or <code>SERVER_NAME_PORT</code>
+		which should be replaced by the port and server from the application.
+
+		@return The URI with the port and server replaced.
+	**/
 	public static function replaceTokens(url:String):String {
 		var loaderURL:String = LoaderConfig.url == null ? "" : LoaderConfig.url;
 
@@ -314,13 +308,13 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  Given a url, determines whether the url contains the server.name and
-	 *  server.port tokens.
-	 *
-	 *  @param url A url string. 
-	 * 
-	 *  @return <code>true</code> if the url contains server.name and server.port tokens.
-	 */
+		Given a url, determines whether the url contains the server.name and
+		server.port tokens.
+
+		@param url A url string. 
+
+		@return <code>true</code> if the url contains server.name and server.port tokens.
+	**/
 	public static function hasTokens(url:String):Bool {
 		if (url == null || url == "")
 			return false;
@@ -332,11 +326,11 @@ class RPCURLUtil {
 	}
 
 	/**
-	 * If the <code>LoaderConfig.url</code> property is not available, the <code>replaceTokens()</code> method will not 
-	 * replace the server name and port properties properly.
-	 * 
-	 * @return <code>true</code> if the <code>LoaderConfig.url</code> property is not available. Otherwise, <code>false</code>.
-	 */
+		If the <code>LoaderConfig.url</code> property is not available, the <code>replaceTokens()</code> method will not 
+		replace the server name and port properties properly.
+
+		@return <code>true</code> if the <code>LoaderConfig.url</code> property is not available. Otherwise, <code>false</code>.
+	**/
 	public static function hasUnresolvableTokens():Bool {
 		return LoaderConfig.url != null;
 	}
@@ -360,15 +354,15 @@ class RPCURLUtil {
 	}
 
 	/**
-	 *  The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
-	 *  is replaced by the application's server name.
-	 */
+		The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
+		is replaced by the application's server name.
+	**/
 	public static final SERVER_NAME_TOKEN:String = "{server.name}";
 
 	/**
-	 *  The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
-	 *  is replaced by the application's port.
-	 */
+		The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
+		is replaced by the application's port.
+	**/
 	public static final SERVER_PORT_TOKEN:String = "{server.port}";
 
 	// Reusable reg-exp for token replacement. The . means any char, so this means

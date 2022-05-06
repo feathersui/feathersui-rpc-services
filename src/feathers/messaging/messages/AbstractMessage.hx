@@ -25,17 +25,17 @@ import openfl.utils.IDataInput;
 import openfl.utils.IDataOutput;
 
 /**
- *  Abstract base class for all messages.
- *  Messages have two customizable sections; headers and body.
- *  The <code>headers</code> property provides access to specialized meta
- *  information for a specific message instance.
- *  The <code>headers</code> property is an associative array with the specific
- *  header name as the key.
- *  
- *  The body of a message contains the instance specific data that needs to be
- *  delivered and processed by the remote destination.
- *  The <code>body</code> is an object and is the payload for a message.
- */
+	Abstract base class for all messages.
+	Messages have two customizable sections; headers and body.
+	The <code>headers</code> property provides access to specialized meta
+	information for a specific message instance.
+	The <code>headers</code> property is an associative array with the specific
+	header name as the key.
+
+	The body of a message contains the instance specific data that needs to be
+	delivered and processed by the remote destination.
+	The <code>body</code> is an object and is the payload for a message.
+**/
 class AbstractMessage implements IMessage {
 	//--------------------------------------------------------------------------
 	//
@@ -44,67 +44,59 @@ class AbstractMessage implements IMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Messages pushed from the server may arrive in a batch, with messages in the
-	 *  batch potentially targeted to different Consumer instances. 
-	 *  Each message will contain this header identifying the Consumer instance that 
-	 *  will receive the message.
-	 *  
-	 */
+		Messages pushed from the server may arrive in a batch, with messages in the
+		batch potentially targeted to different Consumer instances. 
+		Each message will contain this header identifying the Consumer instance that 
+		will receive the message.
+	**/
 	public static final DESTINATION_CLIENT_ID_HEADER:String = "DSDstClientId";
 
 	/**
-	 *  Messages are tagged with the endpoint id for the Channel they are sent over.
-	 *  Channels set this value automatically when they send a message.
-	 *  
-	 */
+		Messages are tagged with the endpoint id for the Channel they are sent over.
+		Channels set this value automatically when they send a message.
+	**/
 	public static final ENDPOINT_HEADER:String = "DSEndpoint";
 
 	/**
-	 *  This header is used to transport the global FlexClient Id value in outbound 
-	 *  messages once it has been assigned by the server.
-	 *  
-	 */
+		This header is used to transport the global FlexClient Id value in outbound 
+		messages once it has been assigned by the server.
+	**/
 	public static final FLEX_CLIENT_ID_HEADER:String = "DSId";
 
 	/**
-	 *  Messages sent by a MessageAgent can have a priority header with a 0-9
-	 *  numerical value (0 being lowest) and the server can choose to use this
-	 *  numerical value to prioritize messages to clients. 
-	 *  
-	 */
+		Messages sent by a MessageAgent can have a priority header with a 0-9
+		numerical value (0 being lowest) and the server can choose to use this
+		numerical value to prioritize messages to clients. 
+	**/
 	public static final PRIORITY_HEADER:String = "DSPriority";
 
 	/**
-	 *  Messages that need to set remote credentials for a destination
-	 *  carry the Base64 encoded credentials in this header.  
-	 *  
-	 */
+		Messages that need to set remote credentials for a destination
+		carry the Base64 encoded credentials in this header.  
+	**/
 	public static final REMOTE_CREDENTIALS_HEADER:String = "DSRemoteCredentials";
 
 	/**
-	 *  Messages that need to set remote credentials for a destination
-	 *  may also need to report the character-set encoding that was used to
-	 *  create the credentials String using this header.  
-	 *  
-	 */
+		Messages that need to set remote credentials for a destination
+		may also need to report the character-set encoding that was used to
+		create the credentials String using this header.  
+	**/
 	public static final REMOTE_CREDENTIALS_CHARSET_HEADER:String = "DSRemoteCredentialsCharset";
 
 	/**
-	 *  Messages sent with a defined request timeout use this header. 
-	 *  The request timeout value is set on outbound messages by services or 
-	 *  channels and the value controls how long the corresponding MessageResponder 
-	 *  will wait for an acknowledgement, result or fault response for the message
-	 *  before timing out the request.
-	 *  
-	 */
+		Messages sent with a defined request timeout use this header. 
+		The request timeout value is set on outbound messages by services or 
+		channels and the value controls how long the corresponding MessageResponder 
+		will wait for an acknowledgement, result or fault response for the message
+		before timing out the request.
+	**/
 	public static final REQUEST_TIMEOUT_HEADER:String = "DSRequestTimeout";
 
 	/**
-	 *  A status code can provide context about the nature of a response
-	 *  message. For example, messages received from an HTTP based channel may
-	 *  need to report the HTTP response status code (if available).
-	 *  
-	 */
+		A status code can provide context about the nature of a response
+		message. For example, messages received from an HTTP based channel may
+		need to report the HTTP response status code (if available).
+	**/
 	public static final STATUS_CODE_HEADER:String = "DSStatusCode";
 
 	//--------------------------------------------------------------------------
@@ -130,10 +122,9 @@ class AbstractMessage implements IMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of an AbstractMessage with an empty body and header.
-	 *  This message type should not be instantiated or used directly.
-	 *  
-	 */
+		Constructs an instance of an AbstractMessage with an empty body and header.
+		This message type should not be instantiated or used directly.
+	**/
 	public function new() {}
 
 	//--------------------------------------------------------------------------
@@ -144,17 +135,12 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  body
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _body:Any = {};
 
 	/**
-	 *  The body of a message contains the specific data that needs to be 
-	 *  delivered to the remote destination.
-	 *  
-	 */
+		The body of a message contains the specific data that needs to be 
+		delivered to the remote destination.
+	**/
 	@:flash.property
 	public var body(get, set):Any;
 
@@ -162,9 +148,6 @@ class AbstractMessage implements IMessage {
 		return _body;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_body(value:Any):Any {
 		_body = value;
 		return _body;
@@ -173,21 +156,13 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  clientId
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _clientId:String;
 
-	/**
-	 * @private
-	 */
 	private var clientIdBytes:ByteArray;
 
 	/**
-	 *  The clientId indicates which MessageAgent sent the message.
-	 *  
-	 */
+		The clientId indicates which MessageAgent sent the message.
+	**/
 	@:flash.property
 	public var clientId(get, set):String;
 
@@ -195,9 +170,6 @@ class AbstractMessage implements IMessage {
 		return _clientId;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_clientId(value:String):String {
 		_clientId = value;
 		clientIdBytes = null;
@@ -207,16 +179,11 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  destination
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _destination:String = "";
 
 	/**
-	 *  The message destination.
-	 *  
-	 */
+		The message destination.
+	**/
 	@:flash.property
 	public var destination(get, set):String;
 
@@ -224,9 +191,6 @@ class AbstractMessage implements IMessage {
 		return _destination;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_destination(value:String):String {
 		_destination = value;
 		return _destination;
@@ -235,21 +199,16 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  headers
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _headers:Any;
 
 	/**
-	 *  The headers of a message are an associative array where the key is the
-	 *  header name and the value is the header value.
-	 *  This property provides access to the specialized meta information for the 
-	 *  specific message instance.
-	 *  Core header names begin with a 'DS' prefix. Custom header names should start 
-	 *  with a unique prefix to avoid name collisions.
-	 *  
-	 */
+		The headers of a message are an associative array where the key is the
+		header name and the value is the header value.
+		This property provides access to the specialized meta information for the 
+		specific message instance.
+		Core header names begin with a 'DS' prefix. Custom header names should start 
+		with a unique prefix to avoid name collisions.
+	**/
 	@:flash.property
 	public var headers(get, set):Any;
 
@@ -260,9 +219,6 @@ class AbstractMessage implements IMessage {
 		return _headers;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_headers(value:Any):Any {
 		_headers = value;
 		return _headers;
@@ -271,21 +227,13 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  messageId
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _messageId:String;
 
-	/**
-	 * @private
-	 */
 	private var messageIdBytes:ByteArray;
 
 	/**
-	 *  The unique id for the message.
-	 *  
-	 */
+		The unique id for the message.
+	**/
 	@:flash.property
 	public var messageId(get, set):String;
 
@@ -296,9 +244,6 @@ class AbstractMessage implements IMessage {
 		return _messageId;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_messageId(value:String):String {
 		_messageId = value;
 		messageIdBytes = null;
@@ -308,22 +253,17 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  timestamp
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _timestamp:Float = 0;
 
 	/**
-	 *  Provides access to the time stamp for the message.
-	 *  A time stamp is the date and time that the message was sent.
-	 *  The time stamp is used for tracking the message through the system,
-	 *  ensuring quality of service levels and providing a mechanism for
-	 *  message expiration.
-	 *
-	 *  @see #timeToLive
-	 *  
-	 */
+		Provides access to the time stamp for the message.
+		A time stamp is the date and time that the message was sent.
+		The time stamp is used for tracking the message through the system,
+		ensuring quality of service levels and providing a mechanism for
+		message expiration.
+
+		@see `AbstractMessage.timeToLive`
+	**/
 	@:flash.property
 	public var timestamp(get, set):Float;
 
@@ -331,9 +271,6 @@ class AbstractMessage implements IMessage {
 		return _timestamp;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_timestamp(value:Float):Float {
 		_timestamp = value;
 		return _timestamp;
@@ -342,24 +279,19 @@ class AbstractMessage implements IMessage {
 	//----------------------------------
 	//  timeToLive
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _timeToLive:Float = 0;
 
 	/**
-	 *  The time to live value of a message indicates how long the message
-	 *  should be considered valid and deliverable.
-	 *  This value works in conjunction with the <code>timestamp</code> value.
-	 *  Time to live is the number of milliseconds that this message remains
-	 *  valid starting from the specified <code>timestamp</code> value.
-	 *  For example, if the <code>timestamp</code> value is 04/05/05 1:30:45 PST
-	 *  and the <code>timeToLive</code> value is 5000, then this message will
-	 *  expire at 04/05/05 1:30:50 PST.
-	 *  Once a message expires it will not be delivered to any other clients.
-	 *  
-	 */
+		The time to live value of a message indicates how long the message
+		should be considered valid and deliverable.
+		This value works in conjunction with the <code>timestamp</code> value.
+		Time to live is the number of milliseconds that this message remains
+		valid starting from the specified <code>timestamp</code> value.
+		For example, if the <code>timestamp</code> value is 04/05/05 1:30:45 PST
+		and the <code>timeToLive</code> value is 5000, then this message will
+		expire at 04/05/05 1:30:50 PST.
+		Once a message expires it will not be delivered to any other clients.
+	**/
 	@:flash.property
 	public var timeToLive(get, set):Float;
 
@@ -367,9 +299,6 @@ class AbstractMessage implements IMessage {
 		return _timeToLive;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_timeToLive(value:Float):Float {
 		_timeToLive = value;
 		return _timeToLive;
@@ -382,14 +311,13 @@ class AbstractMessage implements IMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @private
-	 * 
-	 * While this class itself does not implement flash.utils.IExternalizable,
-	 * ISmallMessage implementations will typically use IExternalizable to
-	 * serialize themselves in a smaller form. This method supports this
-	 * functionality by implementing IExternalizable.readExternal(IDataInput) to
-	 * deserialize the properties for this abstract base class.
-	 */
+		While this class itself does not implement flash.utils.IExternalizable,
+		ISmallMessage implementations will typically use IExternalizable to
+		serialize themselves in a smaller form. This method supports this
+		functionality by implementing IExternalizable.readExternal(IDataInput) to
+		deserialize the properties for this abstract base class.
+	**/
+	@:dox(hide)
 	public function readExternal(input:IDataInput):Void {
 		var flagsArray = readFlags(input);
 
@@ -449,24 +377,22 @@ class AbstractMessage implements IMessage {
 	}
 
 	/**
-	 *  Returns a string representation of the message.
-	 *
-	 *  @return String representation of the message.
-	 *  
-	 */
+		Returns a string representation of the message.
+
+		@return String representation of the message.
+	**/
 	public function toString():String {
 		return RPCObjectUtil.toString(this);
 	}
 
 	/**
-	 * @private
-	 * 
-	 * While this class itself does not implement flash.utils.IExternalizable,
-	 * ISmallMessage implementations will typically use IExternalizable to
-	 * serialize themselves in a smaller form. This method supports this
-	 * functionality by implementing IExternalizable.writeExternal(IDataOutput)
-	 * to efficiently serialize the properties for this abstract base class.
-	 */
+		While this class itself does not implement flash.utils.IExternalizable,
+		ISmallMessage implementations will typically use IExternalizable to
+		serialize themselves in a smaller form. This method supports this
+		functionality by implementing IExternalizable.writeExternal(IDataOutput)
+		to efficiently serialize the properties for this abstract base class.
+	**/
+	@:dox(hide)
 	public function writeExternal(output:IDataOutput):Void {
 		var flags:UInt = 0;
 
@@ -590,15 +516,15 @@ class AbstractMessage implements IMessage {
 	}
 
 	/**
-	 * To support efficient serialization for ISmallMessage implementations,
-	 * this utility method reads in the property flags from an IDataInput
-	 * stream. Flags are read in one byte at a time. Flags make use of
-	 * sign-extension so that if the high-bit is set to 1 this indicates that
-	 * another set of flags follows.
-	 * 
-	 * @return The Array of property flags. Each flags byte is stored as a uint
-	 * in the Array.
-	 */
+		To support efficient serialization for ISmallMessage implementations,
+		this utility method reads in the property flags from an IDataInput
+		stream. Flags are read in one byte at a time. Flags make use of
+		sign-extension so that if the high-bit is set to 1 this indicates that
+		another set of flags follows.
+
+		@return The Array of property flags. Each flags byte is stored as a uint
+		in the Array.
+	**/
 	private function readFlags(input:IDataInput):Array<UInt> {
 		var hasNextFlag:Bool = true;
 		var flagsArray:Array<UInt> = [];

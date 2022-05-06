@@ -21,15 +21,15 @@ import feathers.rpc.events.AbstractEvent;
 import openfl.errors.Error;
 
 /**
- * The AbstractOperation class represents an individual method on a
- * service. An Operation can be called either by invoking the function of the
- * same name on the service or by accessing the Operation as a property on the
- * service and calling the <code>send()</code> method.
- * 
- * @see mx.rpc.AbstractService
- * @see mx.rpc.remoting.RemoteObject
- * @see mx.rpc.soap.WebService
- */
+	The AbstractOperation class represents an individual method on a
+	service. An Operation can be called either by invoking the function of the
+	same name on the service or by accessing the Operation as a property on the
+	service and calling the <code>send()</code> method.
+
+	@see mx.rpc.AbstractService
+	@see mx.rpc.remoting.RemoteObject
+	@see mx.rpc.soap.WebService
+**/
 @:access(feathers.rpc.events.AbstractEvent)
 class AbstractOperation extends AbstractInvoker {
 	//--------------------------------------------------------------------------
@@ -39,15 +39,15 @@ class AbstractOperation extends AbstractInvoker {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates a new Operation. This is usually done directly by the MXML
-	 * compiler or automatically by the service when an unknown Operation has
-	 * been accessed. It is not recommended that a developer use this
-	 * constructor directly.
-	 *  
-	 *  @param service The service on which the Operation is being invoked.
-	 *  
-	 *  @param name The name of the new Operation.
-	 */
+		Creates a new Operation. This is usually done directly by the MXML
+		compiler or automatically by the service when an unknown Operation has
+		been accessed. It is not recommended that a developer use this
+		constructor directly.
+
+		@param service The service on which the Operation is being invoked.
+
+		@param name The name of the new Operation.
+	**/
 	public function new(service:AbstractService = null, name:String = null) {
 		super();
 
@@ -63,20 +63,20 @@ class AbstractOperation extends AbstractInvoker {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * The arguments to pass to the Operation when it is invoked. If you call
-	 * the <code>send()</code> method with no parameters, an array based on
-	 * this object is sent. If you call the <code>send()</code> method with
-	 * parameters (or call the function directly on the service) those
-	 * parameters are used instead of whatever is stored in this property.
-	 * For RemoteObject Operations the associated argumentNames array determines
-	 * the order of the arguments passed.
-	 */
+		The arguments to pass to the Operation when it is invoked. If you call
+		the <code>send()</code> method with no parameters, an array based on
+		this object is sent. If you call the <code>send()</code> method with
+		parameters (or call the function directly on the service) those
+		parameters are used instead of whatever is stored in this property.
+		For RemoteObject Operations the associated argumentNames array determines
+		the order of the arguments passed.
+	**/
 	public var arguments:Dynamic;
 
 	/**
-	 * This is a hook primarily for framework developers to register additional user 
-	 * specified properties for your operation.
-	 */
+		This is a hook primarily for framework developers to register additional user 
+		specified properties for your operation.
+	**/
 	public var properties:Dynamic;
 
 	//--------------------------------------------------------------------------
@@ -86,9 +86,9 @@ class AbstractOperation extends AbstractInvoker {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The name of this Operation. This is how the Operation is accessed off the
-	 * service. It can only be set once.
-	 */
+		The name of this Operation. This is how the Operation is accessed off the
+		service. It can only be set once.
+	**/
 	@:flash.property
 	public var name(get, set):String;
 
@@ -106,10 +106,10 @@ class AbstractOperation extends AbstractInvoker {
 	}
 
 	/**
-	 * Provides convenient access to the service on which the Operation
-	 * is being invoked. Note that the service cannot be changed after
-	 * the Operation is constructed.
-	 */
+		Provides convenient access to the service on which the Operation
+		is being invoked. Note that the service cannot be changed after
+		the Operation is constructed.
+	**/
 	@:flash.property
 	public var service(get, never):AbstractService;
 
@@ -117,9 +117,6 @@ class AbstractOperation extends AbstractInvoker {
 		return _service;
 	}
 
-	/**
-	 * @private
-	 */
 	private function setService(s:AbstractService):Void {
 		if (_service == null) {
 			_service = s;
@@ -135,19 +132,18 @@ class AbstractOperation extends AbstractInvoker {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Executes the method. Any arguments passed in are passed along as part of
-	 * the method call. If there are no arguments passed, the arguments object
-	 * is used as the source of parameters.
-	 *
-	 * @param args Optional arguments passed in as part of the method call. If there
-	 * are no arguments passed, the arguments object is used as the source of 
-	 * parameters.
-	 *
-	 * @return AsyncToken object.
-	 * The same object is available in the <code>result</code> and
-	 * <code>fault</code> events from the <code>token</code> property.
-	 *
-	 */
+		Executes the method. Any arguments passed in are passed along as part of
+		the method call. If there are no arguments passed, the arguments object
+		is used as the source of parameters.
+
+		@param args Optional arguments passed in as part of the method call. If there
+		are no arguments passed, the arguments object is used as the source of 
+		parameters.
+
+		@return AsyncToken object.
+		The same object is available in the <code>result</code> and
+		<code>fault</code> events from the <code>token</code> property.
+	**/
 	/* abstract */
 	public function send(#if (haxe_ver >= 4.2)...args:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):AsyncToken {
@@ -159,10 +155,10 @@ class AbstractOperation extends AbstractInvoker {
 	//---------------------------------
 
 	/*
-	 * This is unless we come up with a way for faceless components to support
-	 * event bubbling; dispatch the event if there's someone listening on us,
-	 * otherwise have the RemoteObject dispatch it in case there's a default
-	 * handler.
+		This is unless we come up with a way for faceless components to support
+		event bubbling; dispatch the event if there's someone listening on us,
+		otherwise have the RemoteObject dispatch it in case there's a default
+		handler.
 	 */
 	override private function dispatchRpcEvent(event:AbstractEvent):Void {
 		event.callTokenResponders();

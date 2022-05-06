@@ -42,9 +42,9 @@ import feathers.net.AMFNetConnection;
 #end
 
 /**
- *  This NetConnectionChannel provides the basic NetConnection support for messaging.
- *  The AMFChannel and RTMPChannel both extend this class.
- */
+	This NetConnectionChannel provides the basic NetConnection support for messaging.
+	The AMFChannel and RTMPChannel both extend this class.
+**/
 class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
 	//
@@ -53,17 +53,17 @@ class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Creates a new NetConnectionChannel instance.
-	 *  
-	 *  The underlying NetConnection's <code>objectEncoding</code>
-	 *  is set to <code>ObjectEncoding.AMF3</code> by default. It can be
-	 *  changed manually by accessing the channel's <code>netConnection</code>
-	 *  property. The global <code>NetConnection.defaultObjectEncoding</code>
-	 *  setting is not honored by this channel.
-	 *
-	 *  @param id The id of this Channel.
-	 *  @param uri The uri for this Channel.
-	 */
+		Creates a new NetConnectionChannel instance.
+
+		The underlying NetConnection's <code>objectEncoding</code>
+		is set to <code>ObjectEncoding.AMF3</code> by default. It can be
+		changed manually by accessing the channel's <code>netConnection</code>
+		property. The global <code>NetConnection.defaultObjectEncoding</code>
+		setting is not honored by this channel.
+
+		@param id The id of this Channel.
+		@param uri The uri for this Channel.
+	**/
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
 
@@ -81,10 +81,6 @@ class NetConnectionChannel extends PollingChannel {
 	// Variables
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _appendToURL:String;
 
 	//--------------------------------------------------------------------------
@@ -95,34 +91,24 @@ class NetConnectionChannel extends PollingChannel {
 	//----------------------------------
 	//  netConnection
 	//----------------------------------
-
 	#if flash
-	/**
-	 *  @private
-	 */
 	private var _nc:NetConnection;
 
 	/**
-	 *  Provides access to the associated NetConnection for this Channel.
-	 *  
-	 */
+		Provides access to the associated NetConnection for this Channel.
+	**/
 	@:flash.property
 	public var netConnection(get, never):NetConnection;
 
 	private function get_netConnection():NetConnection {
 		return _nc;
 	}
-
 	#elseif (openfl >= "9.2.0")
-	/**
-	 *  @private
-	 */
 	private var _nc:AMFNetConnection;
 
 	/**
-	 *  Provides access to the associated NetConnection for this Channel.
-	 *  
-	 */
+		Provides access to the associated NetConnection for this Channel.
+	**/
 	@:flash.property
 	public var netConnection(get, never):AMFNetConnection;
 
@@ -136,9 +122,8 @@ class NetConnectionChannel extends PollingChannel {
 	//----------------------------------
 
 	/**
-	 * @private
-	 * If the ObjectEncoding is set to AMF0 we can't support small messages.
-	 */
+		If the ObjectEncoding is set to AMF0 we can't support small messages.
+	**/
 	override private function get_useSmallMessages():Bool {
 		#if flash
 		var ncEncoding:Int = _nc.objectEncoding;
@@ -155,33 +140,21 @@ class NetConnectionChannel extends PollingChannel {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 *  @private
-	 */
 	override private function connectTimeoutHandler(event:TimerEvent):Void {
 		shutdownNetConnection();
 		super.connectTimeoutHandler(event);
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function getDefaultMessageResponder(agent:MessageAgent, msg:IMessage):MessageResponder {
 		return new NetConnectionMessageResponder(agent, msg, this);
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function internalDisconnect(rejected:Bool = false):Void {
 		super.internalDisconnect(rejected);
 		shutdownNetConnection();
 		disconnectSuccess(rejected); // make sure to notify everyone that we have disconnected.
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function internalConnect():Void {
 		super.internalConnect();
 		var url:String = endpoint;
@@ -250,9 +223,6 @@ class NetConnectionChannel extends PollingChannel {
 		}
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function internalSend(msgResp:MessageResponder):Void {
 		// Set the global FlexClient Id.
 		setFlexClientIdOnMessage(msgResp.message);
@@ -287,16 +257,15 @@ class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Special handler for legacy AMF packet level header "AppendToGatewayUrl".
-	 *  When we receive this header we assume the server detected that a session was
-	 *  created but it believed the client could not accept its session cookie, so we
-	 *  need to decorate the channel endpoint with the session id.
-	 *
-	 *  We do not modify the underlying endpoint property, however, as this session
-	 *  is transient and should not apply if the channel is disconnected and re-connected
-	 *  at some point in the future.
-	 */
+		Special handler for legacy AMF packet level header "AppendToGatewayUrl".
+		When we receive this header we assume the server detected that a session was
+		created but it believed the client could not accept its session cookie, so we
+		need to decorate the channel endpoint with the session id.
+
+		We do not modify the underlying endpoint property, however, as this session
+		is transient and should not apply if the channel is disconnected and re-connected
+		at some point in the future.
+	**/
 	public function AppendToGatewayUrl(value:String):Void {
 		if (value != null && value != "" && value != _appendToURL) {
 			// if (Log.isDebug())
@@ -306,13 +275,12 @@ class NetConnectionChannel extends PollingChannel {
 	}
 
 	/**
-	 *  @private
-	 *  Called by the player when the server pushes a message.
-	 *  Dispatches a MessageEvent to any MessageAgents that are listening.
-	 *  Any ...rest args passed via RTMP are ignored.
-	 *
-	 *  @param msg The message pushed from the server.
-	 */
+		Called by the player when the server pushes a message.
+		Dispatches a MessageEvent to any MessageAgents that are listening.
+		Any ...rest args passed via RTMP are ignored.
+
+		@param msg The message pushed from the server.
+	**/
 	public function receive(msg:IMessage,
 			#if (haxe_ver >= 4.2)...rest:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,
 		p5:Dynamic = null #end):Void {
@@ -339,10 +307,9 @@ class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-		*  @private
-		*  Utility method to close a NetConnection; includes retry to deal with instances
-		*  that have generated a NetStatus error on the same frame and can't be closed immediately.
-		*
+		Utility method to close a NetConnection; includes retry to deal with instances
+		that have generated a NetStatus error on the same frame and can't be closed immediately.
+
 		private function closeNetConnection(nc:NetConnection):Void
 		{
 			var closeHelper:CloseHelper = new CloseHelper(_nc);
@@ -350,9 +317,8 @@ class NetConnectionChannel extends PollingChannel {
 		}
 	 */
 	/**
-	 *  @private
-	 *  Shuts down the underlying NetConnection for the channel.
-	 */
+		Shuts down the underlying NetConnection for the channel.
+	**/
 	private function shutdownNetConnection():Void {
 		#if flash
 		_nc.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
@@ -364,36 +330,32 @@ class NetConnectionChannel extends PollingChannel {
 	}
 
 	/**
-	 *  @private
-	 *  Called when a status event occurs on the NetConnection.
-	 *  Descendants must override this method.
-	 */
+		Called when a status event occurs on the NetConnection.
+		Descendants must override this method.
+	**/
 	private function statusHandler(event:NetStatusEvent):Void {}
 
 	/**
-	 *  @private
-	 *  If the player rejects a NetConnection request for security reasons,
-	 *  such as a security sandbox violation, the NetConnection raises a
-	 *  securityError event which we dispatch as a channel fault.
-	 */
+		If the player rejects a NetConnection request for security reasons,
+		such as a security sandbox violation, the NetConnection raises a
+		securityError event which we dispatch as a channel fault.
+	**/
 	private function securityErrorHandler(event:SecurityErrorEvent):Void {
 		defaultErrorHandler("Channel.Security.Error", event);
 	}
 
 	/**
-	 *  @private
-	 *  If there is a network problem, the NetConnection raises an
-	 *  ioError event which we dispatch as a channel fault.
-	 */
+		If there is a network problem, the NetConnection raises an
+		ioError event which we dispatch as a channel fault.
+	**/
 	private function ioErrorHandler(event:IOErrorEvent):Void {
 		defaultErrorHandler("Channel.IO.Error", event);
 	}
 
 	/**
-	 *  @private
-	 *  If a problem arises in the native player code asynchronously, this
-	 *  error event will be dispatched as a channel fault.
-	 */
+		If a problem arises in the native player code asynchronously, this
+		error event will be dispatched as a channel fault.
+	**/
 	private function asyncErrorHandler(event:AsyncErrorEvent):Void {
 		defaultErrorHandler("Channel.Async.Error", event);
 	}
@@ -405,10 +367,9 @@ class NetConnectionChannel extends PollingChannel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Utility function to dispatch a ChannelFaultEvent at an "error" level
-	 *  based upon the passed code and ErrorEvent.
-	 */
+		Utility function to dispatch a ChannelFaultEvent at an "error" level
+		based upon the passed code and ErrorEvent.
+	**/
 	private function defaultErrorHandler(code:String, event:ErrorEvent):Void {
 		var faultEvent:ChannelFaultEvent = ChannelFaultEvent.createEvent(this, false, code, "error", event.text + " url: '" + endpoint + "'");
 		faultEvent.rootCause = event;
@@ -427,16 +388,15 @@ class NetConnectionChannel extends PollingChannel {
 //------------------------------------------------------------------------------
 
 /**
- *  @private
- *  This class provides the responder level interface for dispatching message
- *  results from a remote destination.
- *  The NetConnectionChannel creates this handler to manage
- *  the results of a pending operation started when a message is sent.
- *  The message handler is always associated with a MessageAgent
- *  (the object that sent the message) and calls its <code>fault()</code>,
- *  <code>acknowledge()</code>, or <code>message()</code> method as appopriate.
- */
-class NetConnectionMessageResponder extends MessageResponder {
+	This class provides the responder level interface for dispatching message
+	results from a remote destination.
+	The NetConnectionChannel creates this handler to manage
+	the results of a pending operation started when a message is sent.
+	The message handler is always associated with a MessageAgent
+	(the object that sent the message) and calls its <code>fault()</code>,
+	<code>acknowledge()</code>, or <code>message()</code> method as appopriate.
+**/
+private class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
@@ -444,17 +404,16 @@ class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Initializes this instance of the message responder with the specified
-	 *  agent.
-	 *
-	 *  @param agent MessageAgent that this responder should call back when a
-	 *            message is received.
-	 *
-	 *  @param msg The outbound message.
-	 *
-	 *  @param channel The channel this responder is using.
-	 *  
-	 */
+		Initializes this instance of the message responder with the specified
+		agent.
+
+		@param agent MessageAgent that this responder should call back when a
+		message is received.
+
+		@param msg The outbound message.
+
+		@param channel The channel this responder is using.
+	**/
 	public function new(agent:MessageAgent, msg:IMessage, channel:NetConnectionChannel) {
 		super(agent, msg, channel);
 		channel.addEventListener(ChannelEvent.DISCONNECT, channelDisconnectHandler);
@@ -466,10 +425,6 @@ class NetConnectionMessageResponder extends MessageResponder {
 	// Variables
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var handled:Bool;
 
 	//--------------------------------------------------------------------------
@@ -479,11 +434,10 @@ class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Called when the result of sending a message is received.
-	 *
-	 *  @param msg NetConnectionChannel-specific message data.
-	 */
+		Called when the result of sending a message is received.
+
+		@param msg NetConnectionChannel-specific message data.
+	**/
 	override private function resultHandler(msg:IMessage):Void {
 		if (handled)
 			return;
@@ -512,13 +466,12 @@ class NetConnectionMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  @private
-	 *  Called when the current invocation fails.
-	 *  Passes the fault information on to the associated agent that made
-	 *  the request.
-	 *
-	 *  @param msg NetConnectionMessageResponder status information.
-	 */
+		Called when the current invocation fails.
+		Passes the fault information on to the associated agent that made
+		the request.
+
+		@param msg NetConnectionMessageResponder status information.
+	**/
 	override private function statusHandler(msg:IMessage):Void {
 		if (handled)
 			return;
@@ -563,10 +516,9 @@ class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Handle a request timeout by removing ourselves as a listener on the
-	 *  NetConnection and faulting the message to the agent.
-	 */
+		Handle a request timeout by removing ourselves as a listener on the
+		NetConnection and faulting the message to the agent.
+	**/
 	override private function requestTimedOut():Void {
 		statusHandler(createRequestTimeoutErrorMessage());
 	}
@@ -578,14 +530,13 @@ class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Handles a disconnect of the underlying Channel before a response is
-	 *  returned to the responder.
-	 *  The sent message is faulted and flagged with the ErrorMessage.MESSAGE_DELIVERY_IN_DOUBT
-	 *  code.
-	 *
-	 *  @param event The DISCONNECT event.
-	 */
+		Handles a disconnect of the underlying Channel before a response is
+		returned to the responder.
+		The sent message is faulted and flagged with the ErrorMessage.MESSAGE_DELIVERY_IN_DOUBT
+		code.
+
+		@param event The DISCONNECT event.
+	**/
 	private function channelDisconnectHandler(event:ChannelEvent):Void {
 		if (handled)
 			return;
@@ -601,14 +552,13 @@ class NetConnectionMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  @private
-	 *  Handles a fault of the underlying Channel before a response is
-	 *  returned to the responder.
-	 *  The sent message is faulted and flagged with the ErrorMessage.MESSAGE_DELIVERY_IN_DOUBT
-	 *  code.
-	 *
-	 *  @param event The ChannelFaultEvent.
-	 */
+		Handles a fault of the underlying Channel before a response is
+		returned to the responder.
+		The sent message is faulted and flagged with the ErrorMessage.MESSAGE_DELIVERY_IN_DOUBT
+		code.
+
+		@param event The ChannelFaultEvent.
+	**/
 	private function channelFaultHandler(event:ChannelFaultEvent):Void {
 		if (handled)
 			return;
@@ -632,9 +582,8 @@ class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Disconnects the responder from the underlying Channel.
-	 */
+		Disconnects the responder from the underlying Channel.
+	**/
 	private function disconnect():Void {
 		handled = true;
 		channel.removeEventListener(ChannelEvent.DISCONNECT, channelDisconnectHandler);

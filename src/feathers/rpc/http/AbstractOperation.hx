@@ -41,19 +41,19 @@ import flash.xml.XMLNodeType;
 #end
 
 /**
- * An Operation used specifically by HTTPService or HTTPMultiService.  An Operation is an 
- * individual operation on a service usually corresponding to a single operation on the server
- * side.  An Operation can be called either by invoking the
- * function of the same name on the service or by accessing the Operation as a property on the service and
- * calling the <code>send(param1, param2)</code> method.  HTTP services also support a sendBody
- * method which allows you to directly specify the body of the HTTP response.  If you use the
- * send(param1, param2) method, the body is typically formed by combining the argumentNames
- * property of the operation with the parameters sent.  An Object is created which uses the
- * argumentNames[i] as the key and the corresponding parameter as the value.
- * 
- * The exact way in which the HTTP operation arguments is put into the HTTP body is determined
- * by the serializationFilter used.
- */
+	An Operation used specifically by HTTPService or HTTPMultiService.  An Operation is an 
+	individual operation on a service usually corresponding to a single operation on the server
+	side.  An Operation can be called either by invoking the
+	function of the same name on the service or by accessing the Operation as a property on the service and
+	calling the <code>send(param1, param2)</code> method.  HTTP services also support a sendBody
+	method which allows you to directly specify the body of the HTTP response.  If you use the
+	send(param1, param2) method, the body is typically formed by combining the argumentNames
+	property of the operation with the parameters sent.  An Object is created which uses the
+	argumentNames[i] as the key and the corresponding parameter as the value.
+
+	The exact way in which the HTTP operation arguments is put into the HTTP body is determined
+	by the serializationFilter used.
+**/
 @:access(feathers.rpc.http.SerializationFilter)
 class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//---------------------------------
@@ -61,19 +61,18 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//---------------------------------
 
 	/**
-	 *  Creates a new Operation. 
-	 * 
-	 *  @param service The object defining the type of service, such as 
-	 *  HTTPMultiService, WebService, or RemoteObject.
-	 *
-	 *  @param name The name of the service.
-	 *  Creates a new Operation. 
-	 *
-	 *  @param service The object defining the type of service, such as 
-	 *  HTTPMultiService, WebService, or RemoteObject.
-	 *
-	 *  @param name The name of the service.
-	 */
+		Creates a new Operation. 
+
+		@param service The object defining the type of service, such as 
+		HTTPMultiService, WebService, or RemoteObject.
+
+		@param name The name of the service.
+
+		@param service The object defining the type of service, such as 
+		HTTPMultiService, WebService, or RemoteObject.
+
+		@param name The name of the service.
+	**/
 	public function new(service:AbstractService = null, name:String = null) {
 		super(service, name);
 
@@ -83,77 +82,77 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	}
 
 	/**
-	 *  The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
-	 */
+		The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
+	**/
 	private static final RESULT_FORMAT_E4X:String = "e4x";
 
 	/**
-	 *  The result format "flashvars" specifies that the value returned is text containing name=value pairs
-	 *  separated by ampersands, which is parsed into an ActionScript object.
-	 */
+		The result format "flashvars" specifies that the value returned is text containing name=value pairs
+		separated by ampersands, which is parsed into an ActionScript object.
+	**/
 	private static final RESULT_FORMAT_FLASHVARS:String = "flashvars";
 
 	/**
-	 *  The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
-	 */
+		The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
+	**/
 	private static final RESULT_FORMAT_OBJECT:String = "object";
 
 	/**
-	 *  The result format "array" is similar to "object" however the value returned is always an Array such
-	 *  that if the result returned from result format "object" is not an Array already the item will be
-	 *  added as the first item to a new Array.
-	 */
+		The result format "array" is similar to "object" however the value returned is always an Array such
+		that if the result returned from result format "object" is not an Array already the item will be
+		added as the first item to a new Array.
+	**/
 	private static final RESULT_FORMAT_ARRAY:String = "array";
 
 	/**
-	 *  The result format "text" specifies that the HTTPService result text should be an unprocessed String.
-	 */
+		The result format "text" specifies that the HTTPService result text should be an unprocessed String.
+	**/
 	private static final RESULT_FORMAT_TEXT:String = "text";
 
 	/**
-	 *  The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
-	 *  the first child of the parent flash.xml.XMLDocument.
-	 */
+		The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
+		the first child of the parent flash.xml.XMLDocument.
+	**/
 	private static final RESULT_FORMAT_XML:String = "xml";
 
 	/**
-	 *  The result format "haxexml" specifies that results should be returned as a Haxe language Xml instance.
-	 *
-	 *  @see https://api.haxe.org/Xml.html
-	 */
+		The result format "haxexml" specifies that results should be returned as a Haxe language Xml instance.
+
+		@see https://api.haxe.org/Xml.html
+	**/
 	private static final RESULT_FORMAT_HAXE_XML:String = "haxexml";
 
 	/**
-	 *  The result format "json" specifies that results should be parsed as JSON.
-	 */
+		The result format "json" specifies that results should be parsed as JSON.
+	**/
 	private static final RESULT_FORMAT_JSON:String = "json";
 
 	/**
-	 *  Indicates that the data being sent by the HTTP service is encoded as application/xml.
-	 */
+		Indicates that the data being sent by the HTTP service is encoded as application/xml.
+	**/
 	private static final CONTENT_TYPE_XML:String = "application/xml";
 
 	/**
-	 *  Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
-	 */
+		Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
+	**/
 	private static final CONTENT_TYPE_FORM:String = "application/x-www-form-urlencoded";
 
 	// Constants for error codes
 
 	/**
-	 *  Indicates that the useProxy property was set to false but a url was not provided.
-	 */
+		Indicates that the useProxy property was set to false but a url was not provided.
+	**/
 	private static final ERROR_URL_REQUIRED:String = "Client.URLRequired";
 
 	/**
-	 *  Indicates that an XML formatted result could not be parsed into an XML instance
-	 *  or decoded into an Object.
-	 */
+		Indicates that an XML formatted result could not be parsed into an XML instance
+		or decoded into an Object.
+	**/
 	private static final ERROR_DECODING:String = "Client.CouldNotDecode";
 
 	/**
-	 *  Indicates that an input parameter could not be encoded as XML.
-	 */
+		Indicates that an input parameter could not be encoded as XML.
+	**/
 	private static final ERROR_ENCODING:String = "Client.CouldNotEncode";
 
 	//---------------------------------
@@ -161,10 +160,10 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//---------------------------------
 
 	/**
-	 * An ordered list of the names of the arguments to pass to a method invocation.  Since the arguments object is
-	 * a hashmap with no guaranteed ordering, this array helps put everything together correctly.
-	 * It will be set automatically by the MXML compiler, if necessary, when the Operation is used in tag form.
-	 */
+		An ordered list of the names of the arguments to pass to a method invocation.  Since the arguments object is
+		a hashmap with no guaranteed ordering, this array helps put everything together correctly.
+		It will be set automatically by the MXML compiler, if necessary, when the Operation is used in tag form.
+	**/
 	public var argumentNames:Array<String>;
 
 	//----------------------------------
@@ -173,10 +172,10 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(enumeration="GET,get,POST,post,HEAD,head,OPTIONS,options,PUT,put,TRACE,trace,DELETE,delete", defaultValue="GET", category="General")]
 
 	/**
-	 *  HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
-	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
-	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
-	 */
+		HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
+		<code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
+		Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
+	**/
 	@:flash.property
 	public var method(get, set):String;
 
@@ -192,17 +191,16 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(enumeration="multiple,single,last", defaultValue="multiple", category="General")]
 
 	/**
-	 * Value that indicates how to handle multiple calls to the same service. The default
-	 * value is <code>multiple</code>. The following values are permitted:
-	 * <ul>
-	 * <li><code>multiple</code> Existing requests are not cancelled, and the developer is
-	 * responsible for ensuring the consistency of returned data by carefully
-	 * managing the event stream. This is the default value.</li>
-	 * <li><code>single</code> Only a single request at a time is allowed on the operation;
-	 * multiple requests generate a fault.</li>
-	 * <li><code>last</code> Making a request cancels any existing request.</li>
-	 * </ul>
-	 */
+		Value that indicates how to handle multiple calls to the same service. The default
+		value is <code>multiple</code>. The following values are permitted:
+
+		- <code>multiple</code> Existing requests are not cancelled, and the developer is
+		responsible for ensuring the consistency of returned data by carefully
+		managing the event stream. This is the default value.
+		- <code>single</code> Only a single request at a time is allowed on the operation;
+		multiple requests generate a fault.
+		- <code>last</code> Making a request cancels any existing request.
+	**/
 	@:flash.property
 	public var concurrency(get, set):String;
 
@@ -210,9 +208,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _concurrency;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_concurrency(c:String):String {
 		_concurrency = c;
 		return _concurrency;
@@ -221,18 +216,14 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//----------------------------------
 	//  requestTimeout
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _requestTimeout:Int = -1;
 
 	/**
-	 *  Provides access to the request timeout in seconds for sent messages.
-	 *  If an acknowledgement, response or fault is not received from the
-	 *  remote destination before the timeout is reached the message is faulted
-	 *  on the client. A value less than or equal to zero prevents request timeout.
-	 */
+		Provides access to the request timeout in seconds for sent messages.
+		If an acknowledgement, response or fault is not received from the
+		remote destination before the timeout is reached the message is faulted
+		on the client. A value less than or equal to zero prevents request timeout.
+	**/
 	@:flash.property
 	public var requestTimeout(get, set):Int;
 
@@ -240,48 +231,42 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _requestTimeout;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_requestTimeout(value:Int):Int {
 		if (_requestTimeout != value)
 			_requestTimeout = value;
 		return _requestTimeout;
 	}
 
-	/**
-	 *  @private
-	 */
 	private var _resultFormat:String = RESULT_FORMAT_OBJECT;
 
 	// [Inspectable(enumeration="object,array,xml,flashvars,text,e4x", category="General")]
 
 	/**
-	 *  Value that indicates how you want to deserialize the result
-	 *  returned by the HTTP call. The value for this is based on the following:
-	 *
-	 *  - Whether you are returning XML or name/value pairs.
-	 *  - How you want to access the results; you can access results as an object,
-	 *    text, or XML.
-	 * 
-	 *  The default value is <code>object</code>. The following values are permitted:
-	 *
-	 *  - <code>object</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects. This is the default.
-	 *  - <code>array</code> The value returned is XML and is parsed as a tree of ActionScript
-	 *    objects however if the top level object is not an Array, a new Array is created and the result
-	 *    set as the first item. If makeObjectsBindable is true then the Array 
-	 *    will be wrapped in an ArrayCollection.<
-	 *  - <code>xml</code> The value returned is XML and is returned as literal XML in an
-	 *    ActionScript XMLnode object.
-	 *  - <code>flashvars</code> The value returned is text containing 
-	 *    name=value pairs separated by ampersands, which
-	 *  is parsed into an ActionScript object.
-	 *  - <code>text</code> The value returned is text, and is left raw.
-	 *  - <code>e4x</code> The value returned is XML and is returned as literal XML 
-	 *    in an ActionScript XML object, which can be accessed using ECMAScript for 
-	 *    XML (E4X) expressions.
-	 */
+		Value that indicates how you want to deserialize the result
+		returned by the HTTP call. The value for this is based on the following:
+
+		- Whether you are returning XML or name/value pairs.
+		- How you want to access the results; you can access results as an object,
+		text, or XML.
+
+		The default value is <code>object</code>. The following values are permitted:
+
+		- <code>object</code> The value returned is XML and is parsed as a tree of ActionScript
+		objects. This is the default.
+		- <code>array</code> The value returned is XML and is parsed as a tree of ActionScript
+		objects however if the top level object is not an Array, a new Array is created and the result
+		set as the first item. If makeObjectsBindable is true then the Array 
+		will be wrapped in an ArrayCollection.<
+		- <code>xml</code> The value returned is XML and is returned as literal XML in an
+		ActionScript XMLnode object.
+		- <code>flashvars</code> The value returned is text containing 
+		name=value pairs separated by ampersands, which
+		is parsed into an ActionScript object.
+		- <code>text</code> The value returned is text, and is left raw.
+		- <code>e4x</code> The value returned is XML and is returned as literal XML 
+		in an ActionScript XML object, which can be accessed using ECMAScript for 
+		XML (E4X) expressions.
+	**/
 	@:flash.property
 	public var resultFormat(get, set):String;
 
@@ -289,9 +274,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _resultFormat;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_resultFormat(value:String):String {
 		switch (value) {
 			case RESULT_FORMAT_OBJECT:
@@ -323,20 +305,20 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	}
 
 	/**
-	 * A SerializationFilter can control how the arguments are formatted to form the content
-	 * of the HTTP request.  It also controls how the results are converted into ActionScript
-	 * objects.  It can be set either explicitly using this property or indirectly using the
-	 * resultFormat property.
-	 */
+		A SerializationFilter can control how the arguments are formatted to form the content
+		of the HTTP request.  It also controls how the results are converted into ActionScript
+		objects.  It can be set either explicitly using this property or indirectly using the
+		resultFormat property.
+	**/
 	public var serializationFilter:SerializationFilter;
 
 	/** 
-	 *  Returns the serialization filter.
-	 *  Subclasses can override this method to control 
-	 *  the retrieval of the HTTP request headers. 
-	 *
-	 *  @return The serialization filter.
-	 */
+		Returns the serialization filter.
+		Subclasses can override this method to control 
+		the retrieval of the HTTP request headers. 
+
+		@return The serialization filter.
+	**/
 	private function getSerializationFilter():SerializationFilter {
 		return serializationFilter;
 	}
@@ -347,26 +329,22 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Object of name-value pairs used as parameters to the URL. If
-	 *  the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
-	 */
+		Object of name-value pairs used as parameters to the URL. If
+		the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
+	**/
 	public var request:Dynamic = {};
 
 	//----------------------------------
 	//  url
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _url:String;
 
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
-	 *  your destination in the services-config.xml file must allow the specified URL.
-	 */
+		Location of the service. If you specify the <code>url</code> and a non-default destination,
+		your destination in the services-config.xml file must allow the specified URL.
+	**/
 	@:flash.property
 	public var url(get, set):String;
 
@@ -374,9 +352,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _url;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_url(value:String):String {
 		_url = value;
 		return _url;
@@ -385,22 +360,18 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//----------------------------------
 	//  useProxy
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _useProxy:Bool = false;
 
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-	 *  Specifies whether to use the Flex proxy service. The default value is <code>false</code>. If you
-	 *  do not specify <code>true</code> to proxy requests though the Flex server, you must ensure that the player 
-	 *  can reach the target URL. You also cannot use destinations defined in the services-config.xml file if the
-	 *  <code>useProxy</code> property is set to <code>false</code>.
-	 *
-	 *  @default false    
-	 */
+		Specifies whether to use the Flex proxy service. The default value is <code>false</code>. If you
+		do not specify <code>true</code> to proxy requests though the Flex server, you must ensure that the player 
+		can reach the target URL. You also cannot use destinations defined in the services-config.xml file if the
+		<code>useProxy</code> property is set to <code>false</code>.
+
+		@default false    
+	**/
 	@:flash.property
 	public var useProxy(get, set):Bool;
 
@@ -408,9 +379,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _useProxy;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_useProxy(value:Bool):Bool {
 		if (value != _useProxy) {
 			_useProxy = value;
@@ -512,9 +480,9 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
-	 *  be sent with the same name the value should be specified as an Array.
-	 */
+		Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
+		be sent with the same name the value should be specified as an Array.
+	**/
 	public var headers:Dynamic = {};
 
 	//----------------------------------
@@ -526,11 +494,11 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	private var _contentType:String = CONTENT_TYPE_FORM;
 
 	/**
-	 *  Type of content for service requests. 
-	 *  The default is <code>application/x-www-form-urlencoded</code> which sends requests
-	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
-	 *  requests as XML.
-	 */
+		Type of content for service requests. 
+		The default is <code>application/x-www-form-urlencoded</code> which sends requests
+		like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
+		requests as XML.
+	**/
 	@:flash.property
 	public var contentType(get, set):String;
 
@@ -549,9 +517,9 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
-	 * value is <code>false</code>.
-	 */
+		If <code>true</code>, a busy cursor is displayed while a service is executing. The default
+		value is <code>false</code>.
+	**/
 	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
@@ -567,20 +535,16 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	//----------------------------------
 	//  rootURL
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _rootURL:String;
 
 	/**
-	 *  The URL that the HTTPService object should use when computing relative URLs.
-	 *  This property is only used when going through the proxy.
-	 *  When the <code>useProxy</code> property is set to <code>false</code>, the relative URL is computed automatically
-	 *  based on the location of the SWF running this application.
-	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
-	 *  mx.messaging.config.LoaderConfig.url.
-	 */
+		The URL that the HTTPService object should use when computing relative URLs.
+		This property is only used when going through the proxy.
+		When the <code>useProxy</code> property is set to <code>false</code>, the relative URL is computed automatically
+		based on the location of the SWF running this application.
+		If not set explicitly <code>rootURL</code> is automatically set to the URL of
+		mx.messaging.config.LoaderConfig.url.
+	**/
 	@:flash.property
 	public var rootURL(get, set):String;
 
@@ -591,9 +555,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return _rootURL;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_rootURL(value:String):String {
 		_rootURL = value;
 		return _rootURL;
@@ -603,9 +564,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// Methods
 	//---------------------------------
 
-	/**
-	 * @private
-	 */
 	override public function cancel(id:String = null):AsyncToken {
 		if (showBusyCursor) {
 			// CursorManager.removeBusyCursor();
@@ -764,12 +722,12 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	}
 
 	/**
-	 *  Returns the HTTP request headers.
-	 *  Subclasses can override this method to control 
-	 *  the retrieval of the HTTP request headers. 
-	 *
-	 *  @return The HTTP request headers.
-	 */
+		Returns the HTTP request headers.
+		Subclasses can override this method to control 
+		the retrieval of the HTTP request headers. 
+
+		@return The HTTP request headers.
+	**/
 	private function getHeaders():Dynamic {
 		return headers;
 	}
@@ -782,9 +740,6 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		return result;
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function processResult(message:IMessage, token:AsyncToken):Bool {
 		var body:Dynamic = message.body;
 
@@ -927,7 +882,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	}
 
 	/*
-	 * Kill the busy cursor, find the matching call object and pass it back
+		Kill the busy cursor, find the matching call object and pass it back
 	 */
 	override private function preHandle(event:MessageEvent):AsyncToken {
 		if (showBusyCursor) {
@@ -1003,9 +958,8 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 	// private var _log:ILogger;
 
 	/** 
-	 *  @private
-	 *  A shared direct Http channelset used for service instances that do not use the proxy. 
-	 */
+		A shared direct Http channelset used for service instances that do not use the proxy. 
+	**/
 	private static var _directChannelSet:ChannelSet;
 
 	private var _concurrency:String;

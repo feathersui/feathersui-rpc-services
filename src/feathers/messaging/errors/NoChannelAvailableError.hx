@@ -32,11 +32,10 @@ class NoChannelAvailableError extends MessagingError {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a new instance of the NoChannelAvailableError with the specified message.
-	 *
-	 *  @param msg String that contains the message that describes this NoChannelAvailableError.
-	 *  
-	 */
+		Constructs a new instance of the NoChannelAvailableError with the specified message.
+
+		@param msg String that contains the message that describes this NoChannelAvailableError.
+	**/
 	public function new(msg:String) {
 		super(msg);
 	}

@@ -18,10 +18,10 @@
 package feathers.messaging.messages;
 
 /**
- *  HTTP requests are sent to the HTTP endpoint using this message type.
- *  An HTTPRequestMessage encapsulates content and header information normally
- *  found in HTTP requests made by a browser.
- */
+	HTTP requests are sent to the HTTP endpoint using this message type.
+	An HTTPRequestMessage encapsulates content and header information normally
+	found in HTTP requests made by a browser.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.messages.HTTPMessage"))
 class HTTPRequestMessage extends AbstractMessage {
 	//--------------------------------------------------------------------------
@@ -31,9 +31,8 @@ class HTTPRequestMessage extends AbstractMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an uninitialized HTTP request.
-	 *  
-	 */
+		Constructs an uninitialized HTTP request.
+	**/
 	public function new() {
 		super();
 		_method = GET_METHOD;
@@ -61,18 +60,16 @@ class HTTPRequestMessage extends AbstractMessage {
 	public var contentType:String;
 
 	/**
-	 *  Contains specific HTTP headers that should be placed on the request made
-	 *  to the destination.
-	 *  
-	 */
+		Contains specific HTTP headers that should be placed on the request made
+		to the destination.
+	**/
 	public var httpHeaders:Any;
 
 	/**
-	 * Only used when going through the proxy, should the proxy 
-	 * send back the request and response headers it used.  Defaults to false.
-	 * Currently only set when using the NetworkMonitor.
-	 *  
-	 */
+		Only used when going through the proxy, should the proxy 
+		send back the request and response headers it used.  Defaults to false.
+		Currently only set when using the NetworkMonitor.
+	**/
 	public var recordHeaders:Bool;
 
 	// [Inspectable(defaultValue="undefined", category="General")]
@@ -93,11 +90,7 @@ class HTTPRequestMessage extends AbstractMessage {
 	**/
 	public var url:String;
 
-	/**
-		*  @private
-		private var resourceManager:IResourceManager =
-										ResourceManager.getInstance();
-	 */
+	// private var resourceManager:IResourceManager = ResourceManager.getInstance();
 	//--------------------------------------------------------------------------
 	//
 	// Properties
@@ -106,10 +99,6 @@ class HTTPRequestMessage extends AbstractMessage {
 	//----------------------------------
 	//  method
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _method:String;
 
 	// [Inspectable(category="General")]
@@ -142,9 +131,6 @@ class HTTPRequestMessage extends AbstractMessage {
 		return _method;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_method(value:String):String {
 		/*
 			if (VALID_METHODS.indexOf(value) == -1)

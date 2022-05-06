@@ -20,18 +20,17 @@ package feathers.rpc;
 import openfl.errors.Error;
 
 /**
- * The Fault class represents a fault in a remote procedure call (RPC) service
- * invocation.
- */
+	The Fault class represents a fault in a remote procedure call (RPC) service
+	invocation.
+**/
 class Fault extends Error {
 	/**
-	 * Creates a new Fault object.
-	 *
-	 * @param faultCode A simple code describing the fault.
-	 * @param faultString Text description of the fault.
-	 * @param faultDetail Additional details describing the fault.
-	 * 
-	 */
+		Creates a new Fault object.
+
+		@param faultCode A simple code describing the fault.
+		@param faultString Text description of the fault.
+		@param faultDetail Additional details describing the fault.
+	**/
 	public function new(faultCode:String, faultString:String, faultDetail:String = null) {
 		super("faultCode:" + faultCode + " faultString:'" + faultString + "' faultDetail:'" + faultDetail + "'");
 
@@ -47,15 +46,15 @@ class Fault extends Error {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The raw content of the fault (if available), such as an HTTP response
-	 * body.
-	 */
+		The raw content of the fault (if available), such as an HTTP response
+		body.
+	**/
 	public var content:Dynamic;
 
 	/**
-	 * The cause of the fault. The value will be null if the cause is
-	 * unknown or whether this fault represents the root itself.
-	 */
+		The cause of the fault. The value will be null if the cause is
+		unknown or whether this fault represents the root itself.
+	**/
 	public var rootCause:Dynamic;
 
 	//--------------------------------------------------------------------------
@@ -65,8 +64,8 @@ class Fault extends Error {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * A simple code describing the fault.
-	 */
+		A simple code describing the fault.
+	**/
 	@:flash.property
 	public var faultCode(get, never):String;
 
@@ -75,8 +74,8 @@ class Fault extends Error {
 	}
 
 	/**
-	 * Any extra details of the fault.
-	 */
+		Any extra details of the fault.
+	**/
 	@:flash.property
 	public var faultDetail(get, never):String;
 
@@ -85,8 +84,8 @@ class Fault extends Error {
 	}
 
 	/**
-	 * Text description of the fault.
-	 */
+		Text description of the fault.
+	**/
 	@:flash.property
 	public var faultString(get, never):String;
 
@@ -101,10 +100,10 @@ class Fault extends Error {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the string representation of a Fault object.
-	 *
-	 * @return Returns the string representation of a Fault object.
-	 */
+		Returns the string representation of a Fault object.
+
+		@return Returns the string representation of a Fault object.
+	**/
 	#if !flash override #end public function toString():String {
 		var s:String = "[RPC Fault";
 		s += " faultString=\"" + faultString + "\"";

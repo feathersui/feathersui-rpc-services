@@ -34,11 +34,10 @@ class InvalidChannelError extends ChannelError {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs a new instance of an InvalidChannelError with the specified message.
-	 *
-	 *  @param msg String that contains the message that describes this InvalidChannelError.
-	 *  
-	 */
+		Constructs a new instance of an InvalidChannelError with the specified message.
+
+		@param msg String that contains the message that describes this InvalidChannelError.
+	**/
 	public function new(msg:String) {
 		super(msg);
 	}

@@ -21,8 +21,8 @@ import feathers.messaging.messages.IMessage;
 import openfl.events.Event;
 
 /**
- *  The MessageEvent class is used to propagate messages within the messaging system.
- */
+	The MessageEvent class is used to propagate messages within the messaging system.
+**/
 class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 	//
@@ -31,56 +31,52 @@ class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The MESSAGE event type; dispatched upon receipt of a message.
-	 *
-	 *  The value of this constant is <code>"message"</code>.
-	 *
-	 *  The properties of the event object have the following values:
-	 *
-	 *  <table class="innertable">
-	 *     <tr><th>Property</th><th>Value</th></tr>
-	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
-	 *     <tr><td><code>cancelable</code></td><td>false</td></tr>
-	 *     <tr><td><code>currentTarget</code></td><td>The Object that defines the 
-	 *       event listener that handles the event. For example, if you use 
-	 *       <code>myButton.addEventListener()</code> to register an event listener, 
-	 *       myButton is the value of the <code>currentTarget</code>. </td></tr>
-	 *     <tr><td><code>message</code></td><td>The message associated with this event.</td></tr>
-	 *     <tr><td><code>target</code></td><td>The Object that dispatched the event; 
-	 *       it is not always the Object listening for the event. 
-	 *       Use the <code>currentTarget</code> property to always access the 
-	 *       Object listening for the event.</td></tr>
-	 *  </table>
-	 *  @eventType message
-	 *  
-	 */
+		The MESSAGE event type; dispatched upon receipt of a message.
+
+		The value of this constant is <code>"message"</code>.
+
+		The properties of the event object have the following values:
+
+		<table class="innertable">
+		<tr><th>Property</th><th>Value</th></tr>
+		<tr><td><code>bubbles</code></td><td>false</td></tr>
+		<tr><td><code>cancelable</code></td><td>false</td></tr>
+		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		event listener that handles the event. For example, if you use 
+		<code>myButton.addEventListener()</code> to register an event listener, 
+		myButton is the value of the <code>currentTarget</code>. </td></tr>
+		<tr><td><code>message</code></td><td>The message associated with this event.</td></tr>
+		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		it is not always the Object listening for the event. 
+		Use the <code>currentTarget</code> property to always access the 
+		Object listening for the event.</td></tr>
+		</table>
+	**/
 	public static final MESSAGE:String = "message";
 
 	/**
-	 *  The RESULT event type; dispatched when an RPC agent receives a result from
-	 *  a remote service destination.
-	 *
-	 *  The value of this constant is <code>"result"</code>.
-	 *
-	 *  The properties of the event object have the following values:
-	 *
-	 *  <table class="innertable">
-	 *     <tr><th>Property</th><th>Value</th></tr>
-	 *     <tr><td><code>bubbles</code></td><td>false</td></tr>
-	 *     <tr><td><code>cancelable</code></td><td>false</td></tr>
-	 *     <tr><td><code>currentTarget</code></td><td>The Object that defines the 
-	 *       event listener that handles the event. For example, if you use 
-	 *       <code>myButton.addEventListener()</code> to register an event listener, 
-	 *       myButton is the value of the <code>currentTarget</code>. </td></tr>
-	 *     <tr><td><code>message</code></td><td>The message associated with this event.</td></tr>
-	 *     <tr><td><code>target</code></td><td>The Object that dispatched the event; 
-	 *       it is not always the Object listening for the event. 
-	 *       Use the <code>currentTarget</code> property to always access the 
-	 *       Object listening for the event.</td></tr>
-	 *  </table>
-	 *  @eventType result
-	 *  
-	 */
+		The RESULT event type; dispatched when an RPC agent receives a result from
+		a remote service destination.
+
+		The value of this constant is <code>"result"</code>.
+
+		The properties of the event object have the following values:
+
+		<table class="innertable">
+		<tr><th>Property</th><th>Value</th></tr>
+		<tr><td><code>bubbles</code></td><td>false</td></tr>
+		<tr><td><code>cancelable</code></td><td>false</td></tr>
+		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		event listener that handles the event. For example, if you use 
+		<code>myButton.addEventListener()</code> to register an event listener, 
+		myButton is the value of the <code>currentTarget</code>. </td></tr>
+		<tr><td><code>message</code></td><td>The message associated with this event.</td></tr>
+		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		it is not always the Object listening for the event. 
+		Use the <code>currentTarget</code> property to always access the 
+		Object listening for the event.</td></tr>
+		</table>
+	**/
 	public static final RESULT:String = "result";
 
 	//--------------------------------------------------------------------------
@@ -90,16 +86,15 @@ class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Utility method to create a new MessageEvent that doesn't bubble and
-	 *  is not cancelable.
-	 * 
-	 *  @param type The type for the MessageEvent.
-	 *  
-	 *  @param message The associated message.
-	 * 
-	 *  @return New MessageEvent.
-	 *  
-	 */
+		Utility method to create a new MessageEvent that doesn't bubble and
+		is not cancelable.
+
+		@param type The type for the MessageEvent.
+
+		@param message The associated message.
+
+		@return New MessageEvent.
+	**/
 	public static function createEvent(type:String, msg:IMessage):MessageEvent {
 		return new MessageEvent(type, false, false, msg);
 	}
@@ -111,20 +106,19 @@ class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an instance of this event with the specified type and 
-	 *  message.
-	 * 
-	 *  @param type The type for the MessageEvent.
-	 * 
-	 *  @param bubbles Specifies whether the event can bubble up the display 
-	 *  list hierarchy.
-	 * 
-	 *  @param cancelable Indicates whether the behavior associated with the 
-	 *  event can be prevented; used by the RPC subclasses.
-	 * 
-	 *  @param message The associated message.
-	 *  
-	 */
+		Constructs an instance of this event with the specified type and 
+		message.
+
+		@param type The type for the MessageEvent.
+
+		@param bubbles Specifies whether the event can bubble up the display 
+		list hierarchy.
+
+		@param cancelable Indicates whether the behavior associated with the 
+		event can be prevented; used by the RPC subclasses.
+
+		@param message The associated message.
+	**/
 	public function new(type:String, bubbles:Bool = false, cancelable:Bool = false, message:IMessage = null) {
 		super(type, bubbles, cancelable);
 
@@ -138,9 +132,8 @@ class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The Message associated with this event.
-	 *  
-	 */
+		The Message associated with this event.
+	**/
 	public var message:IMessage;
 
 	//--------------------------------------------------------------------------
@@ -168,21 +161,19 @@ class MessageEvent extends Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Clones the MessageEvent.
-	 *
-	 *  @return Copy of this MessageEvent.
-	 *  
-	 */
+		Clones the MessageEvent.
+
+		@return Copy of this MessageEvent.
+	**/
 	override public function clone():Event {
 		return new MessageEvent(type, bubbles, cancelable, message);
 	}
 
 	/**
-	 *  Returns a string representation of the MessageEvent.
-	 *
-	 *  @return String representation of the MessageEvent.
-	 *  
-	 */
+		Returns a string representation of the MessageEvent.
+
+		@return String representation of the MessageEvent.
+	**/
 	override public function toString():String {
 		return formatToString("MessageEvent", "messageId", "type", "bubbles", "cancelable", "eventPhase");
 	}

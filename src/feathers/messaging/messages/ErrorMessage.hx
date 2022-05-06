@@ -18,10 +18,10 @@
 package feathers.messaging.messages;
 
 /**
- *  The ErrorMessage class is used to report errors within the messaging system.
- *  An error message only occurs in response to a message sent within the
- *  system.
- */
+	The ErrorMessage class is used to report errors within the messaging system.
+	An error message only occurs in response to a message sent within the
+	system.
+**/
 @:meta(RemoteClass(alias = "flex.messaging.messages.ErrorMessage"))
 class ErrorMessage extends AcknowledgeMessage {
 	//--------------------------------------------------------------------------
@@ -31,18 +31,16 @@ class ErrorMessage extends AcknowledgeMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  If a message may not have been delivered, the <code>faultCode</code> will
-	 *  contain this constant. 
-	 *  
-	 */
+		If a message may not have been delivered, the <code>faultCode</code> will
+		contain this constant. 
+	**/
 	public static final MESSAGE_DELIVERY_IN_DOUBT:String = "Client.Error.DeliveryInDoubt";
 
 	/**
-	 *  Header name for the retryable hint header.
-	 *  This is used to indicate that the operation that generated the error
-	 *  may be retryable rather than fatal.
-	 *  
-	 */
+		Header name for the retryable hint header.
+		This is used to indicate that the operation that generated the error
+		may be retryable rather than fatal.
+	**/
 	public static final RETRYABLE_HINT_HEADER:String = "DSRetryableErrorHint";
 
 	//--------------------------------------------------------------------------
@@ -52,9 +50,8 @@ class ErrorMessage extends AcknowledgeMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructs an ErrorMessage instance.
-	 *  
-	 */
+		Constructs an ErrorMessage instance.
+	**/
 	public function new() {
 		super();
 	}
@@ -66,40 +63,35 @@ class ErrorMessage extends AcknowledgeMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The fault code for the error.
-	 *  This value typically follows the convention of
-	 *  "[outer_context].[inner_context].[issue]".
-	 *  For example: "Channel.Connect.Failed", "Server.Call.Failed", etc.
-	 *  
-	 */
+		The fault code for the error.
+		This value typically follows the convention of
+		"[outer_context].[inner_context].[issue]".
+		For example: "Channel.Connect.Failed", "Server.Call.Failed", etc.
+	**/
 	public var faultCode:String;
 
 	/**
-	 *  A simple description of the error.
-	 *  
-	 */
+		A simple description of the error.
+	**/
 	public var faultString:String;
 
 	/**
-	 *  Detailed description of what caused the error.
-	 *  This is typically a stack trace from the remote destination.
-	 *  
-	 */
+		Detailed description of what caused the error.
+		This is typically a stack trace from the remote destination.
+	**/
 	public var faultDetail:String;
 
 	/**
-	 *  Should a root cause exist for the error, this property contains those details.
-	 *  This may be an ErrorMessage, a NetStatusEvent info Object, or an underlying
-	 *  Flash error event: ErrorEvent, IOErrorEvent, or SecurityErrorEvent.
-	 *  
-	 */
+		Should a root cause exist for the error, this property contains those details.
+		This may be an ErrorMessage, a NetStatusEvent info Object, or an underlying
+		Flash error event: ErrorEvent, IOErrorEvent, or SecurityErrorEvent.
+	**/
 	public var rootCause:Any;
 
 	/**
-	 * Extended data that the remote destination has chosen to associate
-	 * with this error to facilitate custom error processing on the client.
-	 *  
-	 */
+		Extended data that the remote destination has chosen to associate
+		with this error to facilitate custom error processing on the client.
+	**/
 	public var extendedData:Any;
 
 	//--------------------------------------------------------------------------
@@ -108,9 +100,6 @@ class ErrorMessage extends AcknowledgeMessage {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
 	override public function getSmallMessage():IMessage {
 		return null;
 	}

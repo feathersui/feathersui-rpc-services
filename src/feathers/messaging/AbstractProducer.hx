@@ -28,20 +28,17 @@ import openfl.events.TimerEvent;
 import openfl.utils.Timer;
 
 /**
- *  The AbstractProducer is the base class for the Producer and
- *  MultiTopicConsumer classes. 
- *  You use these classes to push messages to the server.
- */
+	The AbstractProducer is the base class for the Producer and
+	MultiTopicConsumer classes. 
+	You use these classes to push messages to the server.
+**/
 class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
 	//
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @private
-	 */
+	@:dox(hide)
 	public function new() {
 		super();
 	}
@@ -53,28 +50,24 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  A connect message to use for (re)connect attempts which allows the underlying
-	 *  ChannelSet to de-dupe if multiple reconnects queue up at the channel layer.
-	 */
+			A connect message to use for (re)connect attempts which allows the underlying
+		ChannelSet to de-dupe if multiple reconnects queue up at the channel layer.
+	**/
 	private var _connectMsg:CommandMessage;
 
 	/**
-	 *  @private
-	 *  This is the current number of reconnect attempts that we've done.
-	 */
+		This is the current number of reconnect attempts that we've done.
+	**/
 	private var _currentAttempt:Int;
 
 	/**
-	 *  @private
-	 *  The timer used for reconnect attempts.
-	 */
+		The timer used for reconnect attempts.
+	**/
 	private var _reconnectTimer:Timer;
 
 	/**
-	 *  @private
-	 *  Indicates whether this agent should be connected or not.
-	 */
+		Indicates whether this agent should be connected or not.
+	**/
 	private var _shouldBeConnected:Bool;
 
 	//--------------------------------------------------------------------------
@@ -85,24 +78,19 @@ class AbstractProducer extends MessageAgent {
 	//----------------------------------
 	//  autoConnect
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _autoConnect:Bool = true;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  If <code>true</code> the Producer automatically connects to its destination the
-	 *  first time the <code>send()</code> method is called.
-	 *  If <code>false</code> then the <code>connect()</code> method must be called explicitly to 
-	 *  establish a connection to the destination.
-	 *  By default this property is <code>true</code>, but applications that need to operate
-	 *  in an offline mode may set this to <code>false</code> to prevent the <code>send()</code> method
-	 *  from connecting implicitly.
-	 *  
-	 */
+		If <code>true</code> the Producer automatically connects to its destination the
+		first time the <code>send()</code> method is called.
+		If <code>false</code> then the <code>connect()</code> method must be called explicitly to 
+		establish a connection to the destination.
+		By default this property is <code>true</code>, but applications that need to operate
+		in an offline mode may set this to <code>false</code> to prevent the <code>send()</code> method
+		from connecting implicitly.
+	**/
 	@:flash.property
 	public var autoConnect(get, set):Bool;
 
@@ -110,9 +98,6 @@ class AbstractProducer extends MessageAgent {
 		return _autoConnect;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_autoConnect(value:Bool):Bool {
 		if (_autoConnect != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "autoConnect", _autoConnect, value);
@@ -125,21 +110,16 @@ class AbstractProducer extends MessageAgent {
 	//----------------------------------
 	//  defaultHeaders
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _defaultHeaders:Dynamic;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  The default headers to apply to messages sent by the Producer.
-	 *  Any default headers that do not exist in the message will be created.
-	 *  If the message already contains a matching header, the value in the 
-	 *  message takes precedence and the default header value is ignored. 
-	 *  
-	 */
+		The default headers to apply to messages sent by the Producer.
+		Any default headers that do not exist in the message will be created.
+		If the message already contains a matching header, the value in the 
+		message takes precedence and the default header value is ignored. 
+	**/
 	@:flash.property
 	public var defaultHeaders(get, set):Dynamic;
 
@@ -147,9 +127,6 @@ class AbstractProducer extends MessageAgent {
 		return _defaultHeaders;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_defaultHeaders(value:Dynamic):Dynamic {
 		if (_defaultHeaders != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "defaultHeaders", _defaultHeaders, value);
@@ -162,21 +139,16 @@ class AbstractProducer extends MessageAgent {
 	//----------------------------------
 	//  priority
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _priority:Int = -1;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  The default message priority for the messages sent by the Producer. The
-	 *  valid values are 0 to 9 (0 being lowest) and -1 means that the Producer
-	 *  does not have a priority set. Note that if the message already has a 
-	 *  priority defined, that takes precedence over Producer's priority.
-	 *  
-	 */
+		The default message priority for the messages sent by the Producer. The
+		valid values are 0 to 9 (0 being lowest) and -1 means that the Producer
+		does not have a priority set. Note that if the message already has a 
+		priority defined, that takes precedence over Producer's priority.
+	**/
 	@:flash.property
 	public var priority(get, set):Int;
 
@@ -184,9 +156,6 @@ class AbstractProducer extends MessageAgent {
 		return _priority;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_priority(value:Int):Int {
 		if (_priority != value) {
 			value = value < 0 ? 0 : value > 9 ? 9 : value;
@@ -201,30 +170,25 @@ class AbstractProducer extends MessageAgent {
 	//----------------------------------
 	//  reconnectAttempts
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _reconnectAttempts:Int;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  The number of reconnect attempts that the Producer makes in the event
-	 *  that the destination is unavailable or the connection to the destination closes. 
-	 *  A value of -1 enables infinite attempts.
-	 *  A value of zero disables reconnect attempts.
-	 *  
-	 *  Reconnect attempts are made at a constant rate according to the reconnect interval
-	 *  value. When a reconnect attempt is made if the underlying channel for the Producer is not
-	 *  connected or attempting to connect the channel will start a connect attempt. 
-	 *  Subsequent Producer reconnect attempts that occur while the underlying
-	 *  channel connect attempt is outstanding are effectively ignored until
-	 *  the outstanding channel connect attempt succeeds or fails.
-	 * 
-	 *  @see mx.messaging.Producer#reconnectInterval
-	 *  
-	 */
+		The number of reconnect attempts that the Producer makes in the event
+		that the destination is unavailable or the connection to the destination closes. 
+		A value of -1 enables infinite attempts.
+		A value of zero disables reconnect attempts.
+
+		Reconnect attempts are made at a constant rate according to the reconnect interval
+		value. When a reconnect attempt is made if the underlying channel for the Producer is not
+		connected or attempting to connect the channel will start a connect attempt. 
+		Subsequent Producer reconnect attempts that occur while the underlying
+		channel connect attempt is outstanding are effectively ignored until
+		the outstanding channel connect attempt succeeds or fails.
+
+		@see mx.messaging.Producer#reconnectInterval
+	**/
 	@:flash.property
 	public var reconnectAttempts(get, set):Int;
 
@@ -232,9 +196,6 @@ class AbstractProducer extends MessageAgent {
 		return _reconnectAttempts;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_reconnectAttempts(value:Int):Int {
 		if (_reconnectAttempts != value) {
 			if (value == 0)
@@ -250,33 +211,28 @@ class AbstractProducer extends MessageAgent {
 	//----------------------------------
 	//  reconnectInterval
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _reconnectInterval:Int;
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  The number of milliseconds between reconnect attempts.
-	 *  If a Producer doesn't receive an acknowledgement for a connect
-	 *  attempt, it will wait the specified number of milliseconds before 
-	 *  making a subsequent reconnect attempt. 
-	 *  Setting the value to zero disables reconnect attempts.
-	 *  
-	 *  Reconnect attempts are made at a constant rate according to this
-	 *  value. When a reconnect attempt is made if the underlying channel for the Producer is not
-	 *  connected or attempting to connect the channel will start a connect attempt. 
-	 *  Subsequent Producer reconnect attempts that occur while the underlying
-	 *  channel connect attempt is outstanding are effectively ignored until
-	 *  the outstanding channel connect attempt succeeds or fails.
-	 * 
-	 *  @see mx.messaging.Producer#reconnectInterval  
-	 * 
-	 *  @throws ArgumentError If the assigned value is negative.
-	 *  
-	 */
+		The number of milliseconds between reconnect attempts.
+		If a Producer doesn't receive an acknowledgement for a connect
+		attempt, it will wait the specified number of milliseconds before 
+		making a subsequent reconnect attempt. 
+		Setting the value to zero disables reconnect attempts.
+
+		Reconnect attempts are made at a constant rate according to this
+		value. When a reconnect attempt is made if the underlying channel for the Producer is not
+		connected or attempting to connect the channel will start a connect attempt. 
+		Subsequent Producer reconnect attempts that occur while the underlying
+		channel connect attempt is outstanding are effectively ignored until
+		the outstanding channel connect attempt succeeds or fails.
+
+		@see mx.messaging.Producer#reconnectInterval  
+
+		@throws ArgumentError If the assigned value is negative.
+	**/
 	@:flash.property
 	public var reconnectInterval(get, set):Int;
 
@@ -284,9 +240,6 @@ class AbstractProducer extends MessageAgent {
 		return _reconnectInterval;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_reconnectInterval(value:Int):Int {
 		if (_reconnectInterval != value) {
 			if (value < 0) {
@@ -311,14 +264,14 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Custom processing for message acknowledgments. 
-	 *  Specifically, re/connect acknowledgements.
-	 * 
-	 *  @param ackMsg The AcknowledgeMessage.
-	 * 
-	 *  @param msg The original message.
-	 */
+		Custom processing for message acknowledgments. 
+		Specifically, re/connect acknowledgements.
+
+		@param ackMsg The AcknowledgeMessage.
+
+		@param msg The original message.
+	**/
+	@:dox(hide)
 	override public function acknowledge(ackMsg:AcknowledgeMessage, msg:IMessage):Void {
 		// Ignore acks for any outstanding messages that return after disconnect() is invoked.
 		if (_disconnectBarrier)
@@ -330,25 +283,25 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 *  @private
-	 *  The Producer suppresses ErrorMessage processing if the fault is for a connect
-	 *  attempt that is being retried.
-	 * 
-	 *  @param errMsg The ErrorMessage describing the fault.
-	 * 
-	 *  @param msg The original message.
-	 */
+		The Producer suppresses ErrorMessage processing if the fault is for a connect
+		attempt that is being retried.
+
+		@param errMsg The ErrorMessage describing the fault.
+
+		@param msg The original message.
+	**/
+	@:dox(hide)
 	override public function fault(errMsg:ErrorMessage, msg:IMessage):Void {
 		internalFault(errMsg, msg);
 	}
 
 	/**
-	 *  @private
-	 *  Custom processing to start up a reconnect timer if our channel is
-	 *  disconnected when we should be connected.
-	 * 
-	 *  @param event The ChannelEvent.
-	 */
+		Custom processing to start up a reconnect timer if our channel is
+		disconnected when we should be connected.
+
+		@param event The ChannelEvent.
+	**/
+	@:dox(hide)
 	override public function channelDisconnectHandler(event:ChannelEvent):Void {
 		super.channelDisconnectHandler(event);
 
@@ -357,12 +310,12 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 *  @private
-	 *  Custom processing to start up a reconnect timer if our channel faults
-	 *  when we should be connected.
-	 * 
-	 *  @param event The ChannelFaultEvent.
-	 */
+		Custom processing to start up a reconnect timer if our channel faults
+		when we should be connected.
+
+		@param event The ChannelFaultEvent.
+	**/
+	@:dox(hide)
 	override public function channelFaultHandler(event:ChannelFaultEvent):Void {
 		super.channelFaultHandler(event);
 
@@ -371,13 +324,12 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 *  Disconnects the Producer from its remote destination.
-	 *  This method does not wait for outstanding network operations to complete.
-	 *  After invoking <code>disconnect()</code>, the Producer will report that it is not
-	 *  connected and it will not receive any outstanding message acknowledgements or faults.
-	 *  Disconnecting stops automatic reconnect attempts if they are running.
-	 *  
-	 */
+		Disconnects the Producer from its remote destination.
+		This method does not wait for outstanding network operations to complete.
+		After invoking <code>disconnect()</code>, the Producer will report that it is not
+		connected and it will not receive any outstanding message acknowledgements or faults.
+		Disconnecting stops automatic reconnect attempts if they are running.
+	**/
 	override public function disconnect():Void {
 		_shouldBeConnected = false; // Prevent reconnect attempts.
 
@@ -478,21 +430,20 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  The Producer suppresses ErrorMessage processing if the fault is for a connect
-	 *  attempt that is being retried.
-	 * 
-	 *  @param errMsg The ErrorMessage describing the fault.
-	 * 
-	 *  @param msg The original message.
-	 * 
-	 *  @param routeToStore currently not used.  Previously was a flag used to
-	 *  indicate if the faulted message shoudl be stored offline to retry.
-	 * 
-	 *  @param ignoreDisconnectBarrier If true the message is faulted regardless 
-	 *  of whether disconnect() has been invoked. Generally a disconnect() will 
-	 *  suppress pending acks and faults.
-	 */
+		The Producer suppresses ErrorMessage processing if the fault is for a connect
+		attempt that is being retried.
+
+		@param errMsg The ErrorMessage describing the fault.
+
+		@param msg The original message.
+
+		@param routeToStore currently not used.  Previously was a flag used to
+		indicate if the faulted message shoudl be stored offline to retry.
+
+		@param ignoreDisconnectBarrier If true the message is faulted regardless 
+		of whether disconnect() has been invoked. Generally a disconnect() will 
+		suppress pending acks and faults.
+	**/
 	private function internalFault(errMsg:ErrorMessage, msg:IMessage, routeToStore:Bool = true, ignoreDisconnectBarrier:Bool = false):Void {
 		// Ignore faults for any outstanding messages that return after disconnect() is invoked.
 		if (_disconnectBarrier && !ignoreDisconnectBarrier)
@@ -527,12 +478,11 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Attempt to reconnect.  This can be called directly or
-	 *  from a Timer's event handler.
-	 * 
-	 *  @param event The timer event for reconnect attempts.
-	 */
+		Attempt to reconnect.  This can be called directly or
+		from a Timer's event handler.
+
+		@param event The timer event for reconnect attempts.
+	**/
 	private function reconnect(event:TimerEvent):Void {
 		// If we're past our limit of attempts, fault out.
 		if ((_reconnectAttempts != -1) && (_currentAttempt >= _reconnectAttempts)) {
@@ -554,10 +504,9 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 *  @private
-	 *  This method will start a timer which attempts to reconnect 
-	 *  periodically. 
-	 */
+		This method will start a timer which attempts to reconnect 
+		periodically. 
+	**/
 	private function startReconnectTimer():Void {
 		if (_shouldBeConnected && (_reconnectTimer == null)) {
 			// If we're configured for reconnect set up the timer.
@@ -565,9 +514,9 @@ class AbstractProducer extends MessageAgent {
 				// if (Log.isDebug())
 				// 	_log.debug("'{0}' {1} starting reconnect timer.", id, _agentType);
 				/* 
-				 * Initially, the timeout is set to 1 so we try to 
-				 * reconnect immediately (perhaps to a different channel).
-				 * after that, it will poll at the configured time interval.
+					Initially, the timeout is set to 1 so we try to 
+					reconnect immediately (perhaps to a different channel).
+					after that, it will poll at the configured time interval.
 				 */
 				_reconnectTimer = new Timer(1);
 				_reconnectTimer.addEventListener(TimerEvent.TIMER, reconnect);
@@ -578,9 +527,8 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 * @private 
-	 * Stops a reconnect timer if one is running.
-	 */
+		Stops a reconnect timer if one is running.
+	**/
 	private function stopReconnectTimer():Void {
 		if (_reconnectTimer != null) {
 			// if (Log.isDebug())
@@ -599,11 +547,10 @@ class AbstractProducer extends MessageAgent {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Builds an ErrorMessage for a failed connect attempt.
-	 * 
-	 *  @return The ErrorMessage.
-	 */
+		Builds an ErrorMessage for a failed connect attempt.
+
+		@return The ErrorMessage.
+	**/
 	private function buildConnectErrorMessage():ErrorMessage {
 		var errMsg:ErrorMessage = new ErrorMessage();
 		errMsg.faultCode = "Client.Error.Connect";
@@ -614,11 +561,10 @@ class AbstractProducer extends MessageAgent {
 	}
 
 	/**
-	 *  @private
-	 *  Builds a 'connect' message to use for a connect attempt.
-	 *  
-	 *  @return The 'connect' CommandMessage.
-	 */
+		Builds a 'connect' message to use for a connect attempt.
+
+		@return The 'connect' CommandMessage.
+	**/
 	private function buildConnectMessage():CommandMessage {
 		var msg:CommandMessage = new CommandMessage();
 		msg.operation = CommandMessage.TRIGGER_CONNECT_OPERATION;

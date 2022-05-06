@@ -22,13 +22,13 @@ import feathers.messaging.messages.CommandMessage;
 import feathers.messaging.messages.IMessage;
 
 /**
- *  A Consumer subscribes to a destination to receive messages.
- *  Consumers send subscribe and unsubscribe messages which generate a MessageAckEvent
- *  or MessageFaultEvent depending upon whether the operation was successful or not.
- *  Once subscribed, a Consumer dispatches a MessageEvent for each message it receives.
- *  Consumers provide the ability to filter messages using a selector.
- *  These selectors must be understood by the destination.
- */
+	A Consumer subscribes to a destination to receive messages.
+	Consumers send subscribe and unsubscribe messages which generate a MessageAckEvent
+	or MessageFaultEvent depending upon whether the operation was successful or not.
+	Once subscribed, a Consumer dispatches a MessageEvent for each message it receives.
+	Consumers provide the ability to filter messages using a selector.
+	These selectors must be understood by the destination.
+**/
 class Consumer extends AbstractConsumer {
 	//--------------------------------------------------------------------------
 	//
@@ -37,33 +37,31 @@ class Consumer extends AbstractConsumer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Constructor.
-	 * 
-	 *  @param messageType The alias for the message type processed by the service
-	 *                     hosting the remote destination the Consumer will subscribe to.
-	 *                     This parameter is deprecated and it is ignored by the
-	 *                     constructor.
-	 * 
-	 *  @example
-	 *  <listing version="3.0">
-	 *   function initConsumer():Void
-	 *   {
-	 *       var consumer:Consumer = new Consumer();
-	 *       consumer.destination = "NASDAQ";
-	 *       consumer.selector = "operation IN ('Bid','Ask')";
-	 *       consumer.addEventListener(MessageEvent.MESSAGE, messageHandler);
-	 *       consumer.subscribe();
-	 *   }
-	 *
-	 *   function messageHandler(event:MessageEvent):Void
-	 *   {
-	 *       var msg:IMessage = event.message;
-	 *       var info:Object = msg.body;
-	 *       trace("-App recieved message: " + msg.toString());
-	 *   }
-	 *   </listing>
-	 *  
-	 */
+		Constructor.
+
+		@param messageType The alias for the message type processed by the service
+		hosting the remote destination the Consumer will subscribe to.
+		This parameter is deprecated and it is ignored by the
+		constructor.
+
+		```haxe
+		function initConsumer():Void
+		{
+			var consumer:Consumer = new Consumer();
+			consumer.destination = "NASDAQ";
+			consumer.selector = "operation IN ('Bid','Ask')";
+			consumer.addEventListener(MessageEvent.MESSAGE, messageHandler);
+			consumer.subscribe();
+		}
+
+		function messageHandler(event:MessageEvent):Void
+		{
+			var msg:IMessage = event.message;
+			var info:Object = msg.body;
+			trace("-App recieved message: " + msg.toString());
+		}
+		```
+	**/
 	public function new(messageType:String = "flex.messaging.messages.AsyncMessage") {
 		super();
 	}
@@ -76,30 +74,25 @@ class Consumer extends AbstractConsumer {
 	//----------------------------------
 	//  selector
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _selector:String = "";
 
 	// [Bindable(event="propertyChange")]
 	// [Inspectable(category="General", verbose="1")]
 
 	/**
-	 *  The selector for the Consumer. 
-	 *  This is an expression that is passed to the destination which uses it
-	 *  to filter the messages delivered to the Consumer.
-	 * 
-	 *  Before a call to the <code>subscribe()</code> method, this property 
-	 *  can be set with no side effects. 
-	 *  After the Consumer has subscribed to its destination, changing this 
-	 *  value has the side effect of updating the Consumer's subscription to 
-	 *  use the new selector expression immediately.
-	 * 
-	 *  The remote destination must understand the value of the selector 
-	 *  expression.
-	 *  
-	 */
+		The selector for the Consumer. 
+		This is an expression that is passed to the destination which uses it
+		to filter the messages delivered to the Consumer.
+
+		Before a call to the <code>subscribe()</code> method, this property 
+		can be set with no side effects. 
+		After the Consumer has subscribed to its destination, changing this 
+		value has the side effect of updating the Consumer's subscription to 
+		use the new selector expression immediately.
+
+		The remote destination must understand the value of the selector 
+		expression.
+	**/
 	@:flash.property
 	public var selector(get, set):String;
 
@@ -107,9 +100,6 @@ class Consumer extends AbstractConsumer {
 		return _selector;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_selector(value:String):String {
 		if (_selector != value) {
 			// var event:PropertyChangeEvent = PropertyChangeEvent.createUpdateEvent(this, "selector", _selector, value);
@@ -134,18 +124,13 @@ class Consumer extends AbstractConsumer {
 	//----------------------------------
 	//  subtopic
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _subtopic:String = "";
 
 	// [Bindable(event="propertyChange")]
 
 	/**
-	 *  Provides access to the subtopic for the remote destination that the MessageAgent uses.
-	 *  
-	 */
+		Provides access to the subtopic for the remote destination that the MessageAgent uses.
+	**/
 	@:flash.property
 	public var subtopic(get, set):String;
 
@@ -154,11 +139,10 @@ class Consumer extends AbstractConsumer {
 	}
 
 	/**
-	 *  Setting the subtopic when the Consumer is connected and
-	 *  subscribed has the side effect of unsubscribing and resubscribing
-	 *  the Consumer.
-	 *  
-	 */
+		Setting the subtopic when the Consumer is connected and
+		subscribed has the side effect of unsubscribing and resubscribing
+		the Consumer.
+	**/
 	private function set_subtopic(value:String):String {
 		if (subtopic != value) {
 			var resetSubscription:Bool = false;
@@ -181,9 +165,6 @@ class Consumer extends AbstractConsumer {
 	//
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @private
-	 */
 	override private function internalSend(message:IMessage, waitForClientId:Bool = true):Void {
 		if (subtopic.length > 0)
 			Reflect.setField(message.headers, AsyncMessage.SUBTOPIC_HEADER, subtopic);

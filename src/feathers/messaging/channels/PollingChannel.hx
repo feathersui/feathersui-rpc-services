@@ -30,9 +30,9 @@ import openfl.events.TimerEvent;
 import openfl.utils.Timer;
 
 /**
- *  The PollingChannel class provides the polling behavior that all polling channels in the messaging
- *  system require.
- */
+	The PollingChannel class provides the polling behavior that all polling channels in the messaging
+	system require.
+**/
 class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 	//
@@ -41,9 +41,8 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Channel config parsing constants. 
-	 */
+		Channel config parsing constants. 
+	**/
 	private static final POLLING_ENABLED:String = "polling-enabled";
 
 	private static final POLLING_INTERVAL_MILLIS:String = "polling-interval-millis";
@@ -58,19 +57,18 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Creates a new PollingChannel instance with the specified id. Once a PollingChannel is
-	 *  connected and begins polling, it will issue a poll request once every three seconds
-	 *  by default.
-	 *
-	 *  **Note:** The PollingChannel type should not be constructed directly. Instead
-	 *  create instances of protocol specific subclasses such as HTTPChannel or
-	 *  AMFChannel that extend it.
-	 *
-	 *  @param id The id of this Channel.
-	 *  
-	 *  @param uri The uri for this Channel.
-	 *  
-	 */
+		Creates a new PollingChannel instance with the specified id. Once a PollingChannel is
+		connected and begins polling, it will issue a poll request once every three seconds
+		by default.
+
+		**Note:** The PollingChannel type should not be constructed directly. Instead
+		create instances of protocol specific subclasses such as HTTPChannel or
+		AMFChannel that extend it.
+
+		@param id The id of this Channel.
+
+		@param uri The uri for this Channel.
+	**/
 	public function new(id:String = null, uri:String = null) {
 		super(id, uri);
 
@@ -94,38 +92,33 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private 
-	 *  The base polling interval to use if the server is not triggering adaptive polling
-	 *  interval waits via its poll responses.
-	 */
+		The base polling interval to use if the server is not triggering adaptive polling
+		interval waits via its poll responses.
+	**/
 	private var _pollingInterval:Float;
 
 	/**
-	 *  @private
-	 *  Indicates whether we should poll but stopped for some reason.
-	 */
+		Indicates whether we should poll but stopped for some reason.
+	**/
 	private var _shouldPoll:Bool;
 
 	/**
-	 *  @private
-	 *  This reference count allows us to determine when polling is needed and
-	 *  when it is not.
-	 */
+		This reference count allows us to determine when polling is needed and
+		when it is not.
+	**/
 	private var _pollingRef:Int = -1;
 
 	/**
-	 *  @private
-	 *  Guard used to avoid issuing poll requests on top of each other. This is 
-	 *  needed when a poll request is issued manually by calling poll() method.
-	 */
+		Guard used to avoid issuing poll requests on top of each other. This is 
+		needed when a poll request is issued manually by calling poll() method.
+	**/
 	private var pollOutstanding:Bool;
 
 	/**
-	 *  @private 
-	 *  Used for polling the server at a given interval.  
-	 *  This may be null if channel implementation does not require the use of a 
-	 *  timer to poll.
-	 */
+		Used for polling the server at a given interval.  
+		This may be null if channel implementation does not require the use of a 
+		timer to poll.
+	**/
 	private var _timer:Timer;
 
 	//--------------------------------------------------------------------------
@@ -138,11 +131,10 @@ class PollingChannel extends Channel {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Reset polling state following a transient disconnect if possible.
-	 * 
-	 *  @param value The new connected state.
-	 */
+		Reset polling state following a transient disconnect if possible.
+
+		@param value The new connected state.
+	**/
 	override private function setConnected(value:Bool):Void {
 		if (connected != value) {
 			if (value) // Potentially a transient reconnect; check for subscribed Consumers.
@@ -163,10 +155,6 @@ class PollingChannel extends Channel {
 	//----------------------------------
 	//  loginAfterDisconnect
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _loginAfterDisconnect:Bool;
 
 	private var loginAfterDisconnect(get, never):Bool;
@@ -178,24 +166,14 @@ class PollingChannel extends Channel {
 	//----------------------------------
 	//  piggybackingEnabled
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _piggybackingEnabled:Bool;
 
-	/**
-	 *  @private
-	 */
 	private var internalPiggybackingEnabled(get, set):Bool;
 
 	private function get_internalPiggybackingEnabled():Bool {
 		return _piggybackingEnabled;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_internalPiggybackingEnabled(value:Bool):Bool {
 		_piggybackingEnabled = value;
 		return _piggybackingEnabled;
@@ -204,24 +182,14 @@ class PollingChannel extends Channel {
 	//----------------------------------
 	//  pollingEnabled
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var _pollingEnabled:Bool;
 
-	/**
-	 *  @private
-	 */
 	private var internalPollingEnabled(get, set):Bool;
 
 	private function get_internalPollingEnabled():Bool {
 		return _pollingEnabled;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_internalPollingEnabled(value:Bool):Bool {
 		_pollingEnabled = value;
 		// If the value is false, we want to stop polling only if the timer is
@@ -239,19 +207,12 @@ class PollingChannel extends Channel {
 	//----------------------------------
 	//  pollingInterval
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var internalPollingInterval(get, set):Float;
 
 	private function get_internalPollingInterval():Float {
 		return (_timer == null) ? 0 : _pollingInterval;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_internalPollingInterval(value:Float):Float {
 		// We have to be careful here because the timer's delay cannot be set to
 		// 0 so if we are setting the polling interval to 0, we need to stop the
@@ -284,11 +245,10 @@ class PollingChannel extends Channel {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  Returns true if the channel supports realtime behavior via server push or client poll.
-	 *  Piggybacking does not qualify as real time because no data will arrive from the server
-	 *  without a message being explicitly sent by the client.
-	 */
+		Returns true if the channel supports realtime behavior via server push or client poll.
+		Piggybacking does not qualify as real time because no data will arrive from the server
+		without a message being explicitly sent by the client.
+	**/
 	override private function get_realtime():Bool {
 		return _pollingEnabled;
 	}
@@ -296,10 +256,6 @@ class PollingChannel extends Channel {
 	//----------------------------------
 	//  timerRunning
 	//----------------------------------
-
-	/**
-	 *  @private
-	 */
 	private var timerRunning(get, never):Bool;
 
 	private function get_timerRunning():Bool {
@@ -313,20 +269,19 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Sends the specified message to its target destination.
-	 *  Subclasses must override the <code>internalSend()</code> method to
-	 *  perform the actual send.
-	 *  <code>PollingChannel</code> will wrap outbound messages in poll requests if a poll
-	 *  is not currently outstanding.
-	 *
-	 *  @param agent The MessageAgent that is sending the message.
-	 * 
-	 *  @param message The Message to send.
-	 * 
-	 *  @throws mx.messaging.errors.InvalidDestinationError If neither the MessageAgent nor the
-	 *                                  message specify a destination.
-	 *  
-	 */
+		Sends the specified message to its target destination.
+		Subclasses must override the <code>internalSend()</code> method to
+		perform the actual send.
+		<code>PollingChannel</code> will wrap outbound messages in poll requests if a poll
+		is not currently outstanding.
+
+		@param agent The MessageAgent that is sending the message.
+
+		@param message The Message to send.
+
+		@throws mx.messaging.errors.InvalidDestinationError If neither the MessageAgent nor the
+		message specify a destination.
+	**/
 	override public function send(agent:MessageAgent, message:IMessage):Void {
 		var piggyback:Bool = false;
 		if (!pollOutstanding && _piggybackingEnabled && !(message is CommandMessage)) {
@@ -370,38 +325,35 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  This method prevents polling from continuing when the Channel can not connect.
-	 * 
-	 *  @param event The ChannelFaultEvent.
-	 */
+		This method prevents polling from continuing when the Channel can not connect.
+
+		@param event The ChannelFaultEvent.
+	**/
 	override private function connectFailed(event:ChannelFaultEvent):Void {
 		stopPolling();
 		super.connectFailed(event);
 	}
 
 	/**
-	 *  @private
-	 *  If a consumer sends a subscribe message to the server, we need to
-	 *  track that polling should occur.  In addition, we don't however, want
-	 *  to begin polling before we actually receive the acknowledgement that
-	 *  we have successfully subscribed.  This method is used to return a
-	 *  special message handler that will notify us when we have a successful
-	 *  subscribe and can safely begin polling.  This case is the reverse for
-	 *  unsubscribe, we need to track that we successfully unsubscribed and
-	 *  there are no more consumers attached that need polling.
-	 * 
-	 *  In addition to handling this case, this method also returns a special
-	 *  responder to handle the results or fault for a poll request.
-	 *
-	 *  @param agent MessageAgent that requested the message be sent.
-	 * 
-	 *  @param msg Message to be sent.
-	 * 
-	 *  @return A PollSyncMessageResponder for subscribe/unsubscriber requests or a
-	 *          PollCommandMessageResponder for poll requests; otherwise the default
-	 *          message responder.
-	 */
+		If a consumer sends a subscribe message to the server, we need to
+		track that polling should occur.  In addition, we don't however, want
+		to begin polling before we actually receive the acknowledgement that
+		we have successfully subscribed.  This method is used to return a
+		special message handler that will notify us when we have a successful
+		subscribe and can safely begin polling.  This case is the reverse for
+		unsubscribe, we need to track that we successfully unsubscribed and
+		there are no more consumers attached that need polling.
+
+		In addition to handling this case, this method also returns a special
+		responder to handle the results or fault for a poll request.
+
+		@param agent MessageAgent that requested the message be sent.
+		@param msg Message to be sent.
+
+		@return A PollSyncMessageResponder for subscribe/unsubscriber requests or a
+		PollCommandMessageResponder for poll requests; otherwise the default
+		message responder.
+	**/
 	final override private function getMessageResponder(agent:MessageAgent, msg:IMessage):MessageResponder {
 		if ((msg is CommandMessage) && (cast(msg, CommandMessage).operation == CommandMessage.POLL_OPERATION)) {
 			return new PollCommandMessageResponder(agent, msg, this, _log);
@@ -410,9 +362,8 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-	 *  @private 
-	 *  Disconnects from the remote destination.
-	 */
+		Disconnects from the remote destination.
+	**/
 	override private function internalDisconnect(rejected:Bool = false):Void {
 		stopPolling();
 		super.internalDisconnect(rejected);
@@ -425,14 +376,13 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Enables polling based on the number of times <code>enablePolling()</code>
-	 *  and <code>disablePolling()</code> have been invoked. If the net result is to enable
-	 *  polling the channel will poll the server on behalf of connected MessageAgents.
-	 *
-	 *  Invoked automatically based upon subscribing or unsubscribing from a remote
-	 *  destination over a PollingChannel.
-	 *  
-	 */
+		Enables polling based on the number of times <code>enablePolling()</code>
+		and <code>disablePolling()</code> have been invoked. If the net result is to enable
+		polling the channel will poll the server on behalf of connected MessageAgents.
+
+		Invoked automatically based upon subscribing or unsubscribing from a remote
+		destination over a PollingChannel.
+	**/
 	public function enablePolling():Void {
 		_pollingRef++;
 		if (_pollingRef == 0)
@@ -440,13 +390,13 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-	 *  Disables polling based on the number of times <code>enablePolling()</code>
-	 *  and <code>disablePolling()</code> have been invoked. If the net result is to disable
-	 *  polling the channel stops polling.
-	 *
-	 *  Invoked automatically based upon subscribing or unsubscribing from a remote
-	 *  destination over a PollingChannel.
-	 */
+		Disables polling based on the number of times <code>enablePolling()</code>
+		and <code>disablePolling()</code> have been invoked. If the net result is to disable
+		polling the channel stops polling.
+
+		Invoked automatically based upon subscribing or unsubscribing from a remote
+		destination over a PollingChannel.
+	**/
 	public function disablePolling():Void {
 		_pollingRef--;
 		if (_pollingRef < 0)
@@ -454,12 +404,11 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-	 *  Initiates a poll operation if there are consumers subscribed to this channel, 
-	 *  and polling is enabled for this channel.
-	 *
-	 *  Note that this method will not start a new poll if one is currently in progress.
-	 *  
-	 */
+		Initiates a poll operation if there are consumers subscribed to this channel, 
+		and polling is enabled for this channel.
+
+		Note that this method will not start a new poll if one is currently in progress.
+	**/
 	public function poll():Void {
 		internalPoll();
 	}
@@ -471,25 +420,23 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  This method allows a PollCommandMessageResponder to indicate that the 
-	 *  channel has lost its connectivity.
-	 * 
-	 *  @param rejected Channel will be rejected and will not attempt to reconnect if 
-	 *  this flag is true
-	 */
+		This method allows a PollCommandMessageResponder to indicate that the 
+		channel has lost its connectivity.
+
+		@param rejected Channel will be rejected and will not attempt to reconnect if 
+		this flag is true
+	**/
 	private function pollFailed(rejected:Bool = false):Void {
 		internalDisconnect(rejected);
 	}
 
 	/**
-	 *  @private
-	 *  This method is invoked automatically when <code>disablePolling()</code>
-	 *  is called and it results in a net negative number of requests to poll.
-	 *  
-	 *  mx_internal to allow the poll responder to shut down polling if a general,
-	 *  fatal error occurs.
-	 */
+		This method is invoked automatically when <code>disablePolling()</code>
+		is called and it results in a net negative number of requests to poll.
+
+		mx_internal to allow the poll responder to shut down polling if a general,
+		fatal error occurs.
+	**/
 	private function stopPolling():Void {
 		// if (Log.isInfo())
 		// 	_log.info("'{0}' channel polling stopped.", id);
@@ -509,11 +456,10 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Processes polling related configuration settings.
-	 *  
-	 *  @param settings The Channel settings.
-	 */
+		Processes polling related configuration settings.
+
+		@param settings The Channel settings.
+	**/
 	private function applyPollingSettings(settings:Xml):Void {
 		for (props in settings.elementsNamed("properties")) {
 			for (enabled in props.elementsNamed(POLLING_ENABLED)) {
@@ -535,19 +481,15 @@ class PollingChannel extends Channel {
 		}
 	}
 
-	/**
-	 *  @private
-	 */
 	private function getDefaultMessageResponder(agent:MessageAgent, msg:IMessage):MessageResponder {
 		return super.getMessageResponder(agent, msg);
 	}
 
 	/**
-	 *  @private 
-	 *  Requests the server return any messages queued since the last poll request for this FlexClient.
-	 *
-	 *  @param event Event dispatched by the polling Timer.
-	 */
+		Requests the server return any messages queued since the last poll request for this FlexClient.
+
+		@param event Event dispatched by the polling Timer.
+	**/
 	private function internalPoll(event:Event = null):Void {
 		if (!pollOutstanding) {
 			// if (Log.isInfo())
@@ -581,10 +523,9 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-	 *  @private
-	 *  This method is invoked automatically when <code>enablePolling()</code>
-	 *  is called and it results in net positive number of requests to poll.
-	 */
+		This method is invoked automatically when <code>enablePolling()</code>
+		is called and it results in net positive number of requests to poll.
+	**/
 	private function startPolling():Void {
 		if (_pollingEnabled) {
 			// if (Log.isInfo())
@@ -598,9 +539,8 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-	 *  @private
-	 *  Returns true if this channel requires a timer for polling.
-	 */
+		Returns true if this channel requires a timer for polling.
+	**/
 	private function timerRequired():Bool {
 		return true;
 	}
@@ -612,19 +552,17 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Define the default Polling Interval as 3000ms
-	 *  
-	 */
+		Define the default Polling Interval as 3000ms
+	**/
 	private static final DEFAULT_POLLING_INTERVAL:Int = 3000;
 }
 
 /**
- *  @private
- *  Used internally to dispatch a batched set of messages returned in the poll
- *  command message.
- */
+	Used internally to dispatch a batched set of messages returned in the poll
+	command message.
+**/
 @:access(feathers.messaging.channels.PollingChannel)
-class PollCommandMessageResponder extends MessageResponder {
+private class PollCommandMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 	//
 	// Constructor
@@ -632,12 +570,11 @@ class PollCommandMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private 
-	 *  Initializes an instance of the message responder that handles
-	 *  multiple messages received from a poll request that a Channel makes.
-	 *
-	 *  @param channel PollingChannel.
-	 */
+		Initializes an instance of the message responder that handles
+		multiple messages received from a poll request that a Channel makes.
+
+		@param channel PollingChannel.
+	**/
 	public function new(agent:MessageAgent, msg:IMessage, channel:PollingChannel, log:Any /*ILogger*/) {
 		super(agent, msg, channel);
 		// _log = log;
@@ -654,14 +591,10 @@ class PollCommandMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Reference to the logger for the associated Channel.
-	 */
+		Reference to the logger for the associated Channel.
+	**/
 	private var _log:Any /*ILogger*/;
 
-	/**
-	 *  @private
-	 */
 	private var suppressHandlers:Bool;
 
 	//--------------------------------------------------------------------------
@@ -671,13 +604,12 @@ class PollCommandMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Handles a poll command result from the server which is either an empty acknowledgement
-	 *  if there were no messages to deliver or a response containing a list of messages to 
-	 *  dispatch in its body.
-	 * 
-	 *  @param msg The result message.
-	 */
+		Handles a poll command result from the server which is either an empty acknowledgement
+		if there were no messages to deliver or a response containing a list of messages to 
+		dispatch in its body.
+
+		@param msg The result message.
+	**/
 	override private function resultHandler(msg:IMessage):Void {
 		var pollingChannel:PollingChannel = cast(channel, PollingChannel);
 		// channel.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, channelPropertyChangeHandler);
@@ -743,11 +675,10 @@ class PollCommandMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  @private
-	 *  Handles a fault while attempting to poll.
-	 * 
-	 *  @param msg The ErrorMessage from the remote destination.
-	 */
+		Handles a fault while attempting to poll.
+
+		@param msg The ErrorMessage from the remote destination.
+	**/
 	override private function statusHandler(msg:IMessage):Void {
 		// channel.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, channelPropertyChangeHandler);
 
@@ -776,12 +707,11 @@ class PollCommandMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  @private
-	 *  Watch for 'connected' property change and in the event of a disconnect,
-	 *  suppress poll result/fault handling.
-	 * 
-	 *  @param event A PropertyChangeEvent dispatched by the underlying channel.
-	 */
+		Watch for 'connected' property change and in the event of a disconnect,
+		suppress poll result/fault handling.
+
+		@param event A PropertyChangeEvent dispatched by the underlying channel.
+	**/
 	private function channelPropertyChangeHandler(event:Event /*PropertyChangeEvent*/):Void {
 		throw new Error("Not implemented");
 		// if (event.property == "connected" && !event.newValue) {
@@ -790,11 +720,10 @@ class PollCommandMessageResponder extends MessageResponder {
 	}
 
 	/**
-	 *  @private
-	 *  Helper method to run or schedule the next poll for the underlying channel.
-	 * 
-	 *  @param adaptivePollWait The optional wait time before the next poll should be issued.
-	 */
+		Helper method to run or schedule the next poll for the underlying channel.
+
+		@param adaptivePollWait The optional wait time before the next poll should be issued.
+	**/
 	private function doPoll(adaptivePollWait:Int = 0):Void {
 		var pollingChannel:PollingChannel = cast(channel, PollingChannel);
 		// Only set up the next poll if the channel is still connected.

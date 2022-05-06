@@ -24,16 +24,16 @@ import openfl.Lib;
 import openfl.errors.ArgumentError;
 
 /**
- *  This class provides access to the server messaging configuration information.
- *  This class encapsulates information from the services-config.xml file on the client
- *  and is used by the messaging system to provide configured ChannelSets and Channels
- *  to the messaging framework.
- *
- *  The XML source is provided during the compilation process.
- *  However, there is currently no internal restriction preventing the
- *  acquisition of this XML data by other means, such as network, local file
- *  system, or shared object at runtime.
- */
+	This class provides access to the server messaging configuration information.
+	This class encapsulates information from the services-config.xml file on the client
+	and is used by the messaging system to provide configured ChannelSets and Channels
+	to the messaging framework.
+
+	The XML source is provided during the compilation process.
+	However, there is currently no internal restriction preventing the
+	acquisition of this XML data by other means, such as network, local file
+	system, or shared object at runtime.
+**/
 @:access(feathers.messaging.MessageAgent)
 class ServerConfig {
 	//--------------------------------------------------------------------------
@@ -43,15 +43,13 @@ class ServerConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  Channel config parsing constant.
-	 */
+		Channel config parsing constant.
+	**/
 	public static final CLASS_ATTR:String = "type";
 
 	/**
-	 *  @private
-	 *  Channel config parsing constant.
-	 */
+		Channel config parsing constant.
+	**/
 	public static final URI_ATTR:String = "uri";
 
 	//--------------------------------------------------------------------------
@@ -66,37 +64,32 @@ class ServerConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  @private
-	 *  The server configuration data.
-	 */
+		The server configuration data.
+	**/
 	public static var serverConfigData:Xml;
 
 	/**
-	 *  @private
-	 *  Caches shared ChannelSets, keyed by strings having the format:
-	 *  <list of comma delimited channel ids>:[true|false] - where the final
-	 *  flag indicates whether the ChannelSet should be used for clustered
-	 *  destinations or not.
-	 */
+		Caches shared ChannelSets, keyed by strings having the format:
+		<list of comma delimited channel ids>:[true|false] - where the final
+		flag indicates whether the ChannelSet should be used for clustered
+		destinations or not.
+	**/
 	private static var _channelSets:Dynamic = {};
 
 	/**
-	 *  @private
-	 *  Caches shared clustered Channel instances keyed by Channel id.
-	 */
+		Caches shared clustered Channel instances keyed by Channel id.
+	**/
 	private static var _clusteredChannels:Dynamic = {};
 
 	/**
-	 *  @private
-	 *  Caches shared unclustered Channel instances keyed by Channel id.
-	 */
+		Caches shared unclustered Channel instances keyed by Channel id.
+	**/
 	private static var _unclusteredChannels:Dynamic = {};
 
 	/**
-	 * @private
-	 * Keeps track of Channel endpoint uris whose configuration has been fetched
-	 * from the server.
-	 */
+		Keeps track of Channel endpoint uris whose configuration has been fetched
+		from the server.
+	**/
 	private static var _configFetchedChannels:Dynamic;
 
 	//--------------------------------------------------------------------------
@@ -109,10 +102,9 @@ class ServerConfig {
 	//----------------------------------
 
 	/**
-	 *  The XML configuration; this value must contain the relevant portions of
-	 *  the &lt;services&gt; tag from the services-config.xml file.
-	 *  
-	 */
+		The XML configuration; this value must contain the relevant portions of
+		the &lt;services&gt; tag from the services-config.xml file.
+	**/
 	@:flash.property
 	public static var xml(get, set):Xml;
 
@@ -122,9 +114,6 @@ class ServerConfig {
 		return serverConfigData;
 	}
 
-	/**
-	 *  @private
-	 */
 	private static function set_xml(value:Xml):Xml {
 		serverConfigData = value;
 		// Reset cached Channels and ChannelSets.
@@ -139,11 +128,10 @@ class ServerConfig {
 	//----------------------------------
 
 	/**
-	 *  @private
-	 *  A Class factory to use to generate auto-instantiated ChannelSet instances
-	 *  as is done in getChannelSet(String).
-	 *  Default factory is the base ChannelSet class.
-	 */
+		A Class factory to use to generate auto-instantiated ChannelSet instances
+		as is done in getChannelSet(String).
+		Default factory is the base ChannelSet class.
+	**/
 	public static var channelSetFactory:Class<ChannelSet> = ChannelSet;
 
 	//--------------------------------------------------------------------------
@@ -153,17 +141,16 @@ class ServerConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  This method ensures that the destinations specified contain identical
-	 *  channel definitions.
-	 *  If the channel definitions between the two destinations specified are
-	 *  not identical this method will throw an ArgumentError.
-	 *
-	 *  @param   destinationA:String first destination to compare against
-	 *  @param   destinationB:String second destination to compare channels with
-	 *  @throw   ArgumentError if the channel definitions of the specified
-	 *           destinations aren't identical.
-	 *  
-	 */
+		This method ensures that the destinations specified contain identical
+		channel definitions.
+		If the channel definitions between the two destinations specified are
+		not identical this method will throw an ArgumentError.
+
+		@param   destinationA:String first destination to compare against
+		@param   destinationB:String second destination to compare channels with
+		@throw   ArgumentError if the channel definitions of the specified
+		destinations aren't identical.
+	**/
 	public static function checkChannelConsistency(destinationA:String, destinationB:String):Void {
 		var channelIdsA = getChannelIdList(destinationA);
 		var channelIdsB = getChannelIdList(destinationB);
@@ -206,18 +193,17 @@ class ServerConfig {
 	}
 
 	/**
-	 *  Returns a shared instance of the configured Channel.
-	 *
-	 *  @param id The id of the desired Channel.
-	 *
-	 *  @param clustered True if the Channel will be used in a clustered
-	 *                   fashion; otherwise false.
-	 *
-	 *  @return The Channel instance.
-	 *
-	 *  @throws mx.messaging.errors.InvalidChannelError If no Channel has the specified id.
-	 *  
-	 */
+		Returns a shared instance of the configured Channel.
+
+		@param id The id of the desired Channel.
+
+		@param clustered True if the Channel will be used in a clustered
+		fashion; otherwise false.
+
+		@return The Channel instance.
+
+		@throws mx.messaging.errors.InvalidChannelError If no Channel has the specified id.
+	**/
 	public static function getChannel(id:String, clustered:Bool = false):Channel {
 		var channel:Channel;
 
@@ -241,33 +227,31 @@ class ServerConfig {
 	}
 
 	/**
-	 *  Returns a shared ChannelSet for use with the specified destination
-	 *  belonging to the service that handles the specified message type.
-	 *
-	 *  @param destinationId The target destination id.
-	 *
-	 *  @return The ChannelSet.
-	 *
-	 *  @throws mx.messaging.errors.InvalidDestinationError If the specified destination
-	 *                                  does not have channels and the application
-	 *                                  did not define default channels.
-	 *  
-	 */
+		Returns a shared ChannelSet for use with the specified destination
+		belonging to the service that handles the specified message type.
+
+		@param destinationId The target destination id.
+
+		@return The ChannelSet.
+
+		@throws mx.messaging.errors.InvalidDestinationError If the specified destination
+		does not have channels and the application
+		did not define default channels.
+	**/
 	public static function getChannelSet(destinationId:String):ChannelSet {
 		var destinationConfig = getDestinationConfig(destinationId);
 		return internalGetChannelSet(destinationConfig, destinationId);
 	}
 
 	/**
-	 *  Returns the property information for the specified destination
-	 *
-	 *  @param destinationId The id of the desired destination.
-	 *
-	 *  @return XMLList containing the &lt;property&gt; tag information.
-	 *
-	 *  @throws mx.messaging.errors.InvalidDestinationError If the specified destination is not found.
-	 *  
-	 */
+		Returns the property information for the specified destination
+
+		@param destinationId The id of the desired destination.
+
+		@return XMLList containing the &lt;property&gt; tag information.
+
+		@throws mx.messaging.errors.InvalidDestinationError If the specified destination is not found.
+	**/
 	public static function getProperties(destinationId:String):Array<Xml> {
 		var destinations:Array<Xml> = [];
 		for (destination in xml.elementsNamed("destination")) {
@@ -299,10 +283,9 @@ class ServerConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  This method returns true iff the channelset specified has channels with
-	 *  ids or uris that match those found in the destination specified.
-	 *  
-	 */
+		This method returns true iff the channelset specified has channels with
+		ids or uris that match those found in the destination specified.
+	**/
 	private static function channelSetMatchesDestinationConfig(channelSet:ChannelSet, destination:String):Bool {
 		if (channelSet != null) {
 			if (compareArrays(channelSet.channelIds, getChannelIdList(destination)) == 0)
@@ -349,29 +332,26 @@ class ServerConfig {
 	}
 
 	/**
-	 * @private
-	 * returns if the specified endpoint has been fetched already
-	 */
+		returns if the specified endpoint has been fetched already
+	**/
 	private static function fetchedConfig(endpoint:String):Bool {
 		return _configFetchedChannels != null && Reflect.field(_configFetchedChannels, endpoint) != null;
 	}
 
 	/**
-	 *  @private
-	 *  This method returns a list of the channel ids for the given destination
-	 *  configuration. If no channels exist for the destination, it returns a
-	 *  list of default channel ids for the applcation
-	 */
+		This method returns a list of the channel ids for the given destination
+		configuration. If no channels exist for the destination, it returns a
+		list of default channel ids for the applcation
+	**/
 	private static function getChannelIdList(destination:String):Array<String> {
 		var destinationConfig:Xml = getDestinationConfig(destination);
 		return destinationConfig != null ? getChannelIds(destinationConfig) : getDefaultChannelIds();
 	}
 
 	/**
-	 *  @private
-	 *  Used by the Channels to determine whether the Channel should request
-	 *  dynamic configuration from the server for its MessageAgents.
-	 */
+		Used by the Channels to determine whether the Channel should request
+		dynamic configuration from the server for its MessageAgents.
+	**/
 	private static function needsConfig(channel:Channel):Bool {
 		// Configuration for the endpoint has not been fetched by some other channel.
 		if (_configFetchedChannels == null || Reflect.field(_configFetchedChannels, channel.endpoint) == null) {
@@ -395,10 +375,9 @@ class ServerConfig {
 	}
 
 	/**
-	 *  @private
-	 *  This method updates the xml with serverConfig object returned from the
-	 *  server during initial client connect
-	 */
+		This method updates the xml with serverConfig object returned from the
+		server during initial client connect
+	**/
 	private static function updateServerConfigData(serverConfig:#if flash ConfigMap #else Any #end, endpoint:String = null):Void {
 		if (serverConfig != null) {
 			if (endpoint != null) {
@@ -478,17 +457,16 @@ class ServerConfig {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Helper method that builds a new Channel instance based on the
-	 *  configuration for the specified id.
-	 *
-	 *  @param id The id for the configured Channel to build.
-	 *
-	 *  @return The Channel instance.
-	 *
-	 *  @throws mx.messaging.errors.InvalidChannelError If no configuration data for the specified
-	 *                             id exists.
-	 *  
-	 */
+		Helper method that builds a new Channel instance based on the
+		configuration for the specified id.
+
+		@param id The id for the configured Channel to build.
+
+		@return The Channel instance.
+
+		@throws mx.messaging.errors.InvalidChannelError If no configuration data for the specified
+		id exists.
+	**/
 	private static function createChannel(channelId:String):Channel {
 		var message:String;
 
@@ -529,9 +507,8 @@ class ServerConfig {
 	}
 
 	/**
-	 * Converts the ConfigMap of properties into XML
-	 *  
-	 */
+		Converts the ConfigMap of properties into XML
+	**/
 	private static function convertToXML(config:#if flash ConfigMap #else Any #end, configXML:Xml):Void {
 		for (propertyKey in Reflect.fields(config)) {
 			var propertyValue = Reflect.field(config, propertyKey);
@@ -576,9 +553,8 @@ class ServerConfig {
 	}
 
 	/**
-	 * @private
-	 * This method returns a list of default channel ids for the application
-	 */
+		This method returns a list of default channel ids for the application
+	**/
 	private static function getDefaultChannelIds():Array<String> {
 		var result:Array<String> = [];
 		for (channels in xml.elementsNamed("default-channels")) {
@@ -590,10 +566,9 @@ class ServerConfig {
 	}
 
 	/**
-	 *  Returns the destination XML data specific to the destination and message
-	 *  type specified. Returns null if the destination is not found.
-	 *  
-	 */
+		Returns the destination XML data specific to the destination and message
+		type specified. Returns null if the destination is not found.
+	**/
 	private static function getDestinationConfig(destinationId:String):Xml {
 		for (destination in xml.elementsNamed("destination")) {
 			if (destination.get("id") == destinationId) {
@@ -605,15 +580,14 @@ class ServerConfig {
 	}
 
 	/**
-	 *  Helper method to look up and return a cached ChannelSet (and build and
-	 *  cache an instance if necessary).
-	 *
-	 *  @param destinationConfig The configuration for the target destination.
-	 *  @param destinatonId The id of the target destination.
-	 *
-	 *  @return The ChannelSet.
-	 *  
-	 */
+		Helper method to look up and return a cached ChannelSet (and build and
+		cache an instance if necessary).
+
+		@param destinationConfig The configuration for the target destination.
+		@param destinatonId The id of the target destination.
+
+		@return The ChannelSet.
+	**/
 	private static function internalGetChannelSet(destinationConfig:Xml, destinationId:String):ChannelSet {
 		var channelIds:Array<String>;
 		var clustered:Bool;

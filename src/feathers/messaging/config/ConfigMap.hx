@@ -19,9 +19,9 @@ package feathers.messaging.config;
 
 #if flash
 /**
- *  The ConfigMap class provides a mechanism to store the properties returned 
- *  by the server with the ordering of the properties maintained. 
- */
+	The ConfigMap class provides a mechanism to store the properties returned 
+	by the server with the ordering of the properties maintained. 
+**/
 @:meta(RemoteClass(alias = "flex.messaging.config.ConfigMap"))
 class ConfigMap extends flash.utils.Proxy {
 	//--------------------------------------------------------------------------
@@ -31,10 +31,10 @@ class ConfigMap extends flash.utils.Proxy {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Constructor.
-	 *
-	 * @param item An Object containing name/value pairs.
-	 */
+		Constructor.
+
+		@param item An Object containing name/value pairs.
+	**/
 	public function new(item:Dynamic = null) {
 		super();
 
@@ -52,9 +52,8 @@ class ConfigMap extends flash.utils.Proxy {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Contains a list of all of the property names for the proxied object.
-	 *
-	 */
+		Contains a list of all of the property names for the proxied object.
+	**/
 	private var propertyList:Array<String>;
 
 	//--------------------------------------------------------------------------
@@ -67,8 +66,8 @@ class ConfigMap extends flash.utils.Proxy {
 	//----------------------------------
 
 	/**
-	 *  Storage for the object property.
-	 */
+		Storage for the object property.
+	**/
 	private var _item:Dynamic;
 
 	//--------------------------------------------------------------------------
@@ -78,15 +77,14 @@ class ConfigMap extends flash.utils.Proxy {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Returns the specified property value of the proxied object.
-	 *
-	 *  @param name Typically a string containing the name of the property,
-	 *  or possibly a QName where the property name is found by 
-	 *  inspecting the <code>localName</code> property.
-	 *
-	 *  @return The value of the property.
-	 *
-	 */
+		Returns the specified property value of the proxied object.
+
+		@param name Typically a string containing the name of the property,
+		or possibly a QName where the property name is found by 
+		inspecting the <code>localName</code> property.
+
+		@return The value of the property.
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function getProperty(name:Dynamic):Dynamic {
 		// if we have a data proxy for this then
 		var result:Dynamic = null;
@@ -96,32 +94,30 @@ class ConfigMap extends flash.utils.Proxy {
 
 	#if (haxe_ver >= 4.2)
 	/**
-	 *  Returns the value of the proxied object's method with the specified name.
-	 *
-	 *  @param name The name of the method being invoked.
-	 *
-	 *  @param rest An array specifying the arguments to the
-	 *  called method.
-	 *
-	 *  @return The return value of the called method.
-	 *
-	 */
+		Returns the value of the proxied object's method with the specified name.
+
+		@param name The name of the method being invoked.
+
+		@param rest An array specifying the arguments to the
+		called method.
+
+		@return The return value of the called method.
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function callProperty(name:Dynamic, ...rest:Dynamic):Dynamic {
 		return Reflect.callMethod(_item, Reflect.field(_item, name), rest.toArray());
 	}
 	#end
 
 	/**
-	 *  Deletes the specified property on the proxied object and
-	 *  sends notification of the delete to the handler.
-	 * 
-	 *  @param name Typically a string containing the name of the property,
-	 *  or possibly a QName where the property name is found by 
-	 *  inspecting the <code>localName</code> property.
-	 *
-	 *  @return A Boolean indicating if the property was deleted.
-	 *
-	 */
+		Deletes the specified property on the proxied object and
+		sends notification of the delete to the handler.
+
+		@param name Typically a string containing the name of the property,
+		or possibly a QName where the property name is found by 
+		inspecting the <code>localName</code> property.
+
+		@return A Boolean indicating if the property was deleted.
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function deleteProperty(name:Dynamic):Bool {
 		var oldVal:Dynamic = Reflect.field(_item, name);
 		var deleted:Bool = Reflect.deleteField(_item, name);
@@ -139,50 +135,47 @@ class ConfigMap extends flash.utils.Proxy {
 	}
 
 	/**
-	 *  This is an internal function that must be implemented by 
-	 *  a subclass of flash.utils.Proxy.
-	 *  
-	 *  @param name The property name that should be tested 
-	 *  for existence.
-	 *
-	 *  @return If the property exists, <code>true</code>; 
-	 *  otherwise <code>false</code>.
-	 *
-	 *  @see flash.utils.Proxy#hasProperty()
-	 *
-	 */
+		This is an internal function that must be implemented by 
+		a subclass of flash.utils.Proxy.
+
+		@param name The property name that should be tested 
+		for existence.
+
+		@return If the property exists, <code>true</code>; 
+		otherwise <code>false</code>.
+
+		@see flash.utils.Proxy#hasProperty()
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function hasProperty(name:Dynamic):Bool {
 		return Reflect.hasField(_item, name);
 	}
 
 	/**
-	 *  This is an internal function that must be implemented by 
-	 *  a subclass of flash.utils.Proxy.
-	 *
-	 *  @param index The zero-based index of the object's
-	 *  property.
-	 *
-	 *  @return The property's name.
-	 *
-	 *  @see flash.utils.Proxy#nextName()
-	 *
-	 */
+		This is an internal function that must be implemented by 
+		a subclass of flash.utils.Proxy.
+
+		@param index The zero-based index of the object's
+		property.
+
+		@return The property's name.
+
+		@see flash.utils.Proxy#nextName()
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextName(index:Int):String {
 		return propertyList[index - 1];
 	}
 
 	/**
-	 *  This is an internal function that must be implemented by 
-	 *  a subclass of flash.utils.Proxy.
-	 *
-	 *  @param index The zero-based index of the object's
-	 *  property.
-	 *
-	 *  @return The zero-based index of the next proprety.
-	 *
-	 *  @see flash.utils.Proxy#nextNameIndex()
-	 *
-	 */
+		This is an internal function that must be implemented by 
+		a subclass of flash.utils.Proxy.
+
+		@param index The zero-based index of the object's
+		property.
+
+		@return The zero-based index of the next proprety.
+
+		@see flash.utils.Proxy#nextNameIndex()
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextNameIndex(index:Int):Int {
 		if (index < propertyList.length) {
 			return index + 1;
@@ -192,31 +185,29 @@ class ConfigMap extends flash.utils.Proxy {
 	}
 
 	/**
-	 *  This is an internal function that must be implemented by 
-	 *  a subclass of flash.utils.Proxy.
-	 *
-	 *  @param index The zero-based index value of the object's
-	 *  property.
-	 *
-	 *  @return The property's value.
-	 *
-	 *  @see flash.utils.Proxy#nextValue()
-	 *
-	 */
+		This is an internal function that must be implemented by 
+		a subclass of flash.utils.Proxy.
+
+		@param index The zero-based index value of the object's
+		property.
+
+		@return The property's value.
+
+		@see flash.utils.Proxy#nextValue()
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function nextValue(index:Int):Dynamic {
 		return Reflect.field(_item, propertyList[index - 1]);
 	}
 
 	/**
-	 *  Updates the specified property on the proxied object
-	 *  and sends notification of the update to the handler.
-	 *
-	 *  @param name Object containing the name of the property that
-	 *  should be updated on the proxied object.
-	 *
-	 *  @param value Value that should be set on the proxied object.
-	 *
-	 */
+		Updates the specified property on the proxied object
+		and sends notification of the update to the handler.
+
+		@param name Object containing the name of the property that
+		should be updated on the proxied object.
+
+		@param value Value that should be set on the proxied object.
+	**/
 	@:ns("http://www.adobe.com/2006/actionscript/flash/proxy") override function setProperty(name:Dynamic, value:Dynamic):Void {
 		var oldVal:Dynamic = Reflect.field(_item, name);
 		if (oldVal != value) {

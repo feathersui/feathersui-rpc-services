@@ -27,20 +27,20 @@ import flash.xml.XMLNode;
 #end
 
 /**
- *  You use the HTTPService class to represent an
- *  HTTPService object in ActionScript. When you call the HTTPService object's
- *  <code>send()</code> method, it makes an HTTP request to the
- *  specified URL, and an HTTP response is returned. Optionally, you can pass
- *  parameters to the specified URL. When you do not go through the server-based
- *  proxy service, you can use only HTTP GET or POST methods. However, when you set
- *  the useProxy  property to true and you use the server-based proxy service, you
- *  can also use the HTTP HEAD, OPTIONS, TRACE, and DELETE methods.
- *
- *  **Note:** Due to a software limitation, HTTPService does not generate user-friendly
- *  error messages when using GET.
- * 
- *  @see mx.rpc.http.mxml.HTTPService
- */
+	You use the HTTPService class to represent an
+	HTTPService object in ActionScript. When you call the HTTPService object's
+	<code>send()</code> method, it makes an HTTP request to the
+	specified URL, and an HTTP response is returned. Optionally, you can pass
+	parameters to the specified URL. When you do not go through the server-based
+	proxy service, you can use only HTTP GET or POST methods. However, when you set
+	the useProxy  property to true and you use the server-based proxy service, you
+	can also use the HTTP HEAD, OPTIONS, TRACE, and DELETE methods.
+
+	**Note:** Due to a software limitation, HTTPService does not generate user-friendly
+	error messages when using GET.
+
+	@see mx.rpc.http.mxml.HTTPService
+**/
 @:access(feathers.rpc.http.AbstractOperation)
 class HTTPService extends AbstractInvoker {
 	//--------------------------------------------------------------------------
@@ -50,14 +50,14 @@ class HTTPService extends AbstractInvoker {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Creates a new HTTPService. If you expect the service to send using relative URLs you may
-	 *  wish to specify the <code>rootURL</code> that will be the basis for determining the full URL (one example
-	 *  would be <code>Application.application.url</code>).
-	 *
-	 * @param rootURL The URL the HTTPService should use when computing relative URLS.
-	 *
-	 * @param destination An HTTPService destination name in the service-config.xml file.
-	 */
+		Creates a new HTTPService. If you expect the service to send using relative URLs you may
+		wish to specify the <code>rootURL</code> that will be the basis for determining the full URL (one example
+		would be <code>Application.application.url</code>).
+
+		@param rootURL The URL the HTTPService should use when computing relative URLS.
+
+		@param destination An HTTPService destination name in the service-config.xml file.
+	**/
 	public function new(rootURL:String = null, destination:String = null) {
 		super();
 
@@ -86,100 +86,99 @@ class HTTPService extends AbstractInvoker {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
-	 */
+		The result format "e4x" specifies that the value returned is an XML instance, which can be accessed using ECMAScript for XML (E4X) expressions.
+	**/
 	#if !flash
 	@:deprecated("RESULT_FORMAT_E4X is not available on this target. RESULT_FORMAT_HAXE_XML is recommended instead.")
 	#end
 	public static final RESULT_FORMAT_E4X:String = "e4x";
 
 	/**
-	 *  The result format "flashvars" specifies that the value returned is text containing name=value pairs
-	 *  separated by ampersands, which is parsed into an ActionScript object.
-	 */
+		The result format "flashvars" specifies that the value returned is text containing name=value pairs
+		separated by ampersands, which is parsed into an ActionScript object.
+	**/
 	public static final RESULT_FORMAT_FLASHVARS:String = "flashvars";
 
 	/**
-	 *  The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
-	 */
+		The result format "object" specifies that the value returned is XML but is parsed as a tree of ActionScript objects. This is the default.
+	**/
 	public static final RESULT_FORMAT_OBJECT:String = "object";
 
 	/**
-	 *  The result format "array" is similar to "object" however the value returned is always an Array such
-	 *  that if the result returned from result format "object" is not an Array already the item will be
-	 *  added as the first item to a new Array.
-	 */
+		The result format "array" is similar to "object" however the value returned is always an Array such
+		that if the result returned from result format "object" is not an Array already the item will be
+		added as the first item to a new Array.
+	**/
 	public static final RESULT_FORMAT_ARRAY:String = "array";
 
 	/**
-	 *  The result format "text" specifies that the HTTPService result text should be an unprocessed String.
-	 */
+		The result format "text" specifies that the HTTPService result text should be an unprocessed String.
+	**/
 	public static final RESULT_FORMAT_TEXT:String = "text";
 
 	/**
-	 *  The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
-	 *  the first child of the parent flash.xml.XMLDocument.
-	 */
+		The result format "xml" specifies that results should be returned as an flash.xml.XMLNode instance pointing to
+		the first child of the parent flash.xml.XMLDocument.
+	**/
 	#if !flash
 	@:deprecated("RESULT_FORMAT_XML is not available on this target. RESULT_FORMAT_HAXE_XML is recommended instead.")
 	#end
 	public static final RESULT_FORMAT_XML:String = "xml";
 
 	/**
-	 *  The result format "haxexml" specifies that results should be returned as a Haxe language Xml instance.
-	 *
-	 *  @see https://api.haxe.org/Xml.html
-	 */
+		The result format "haxexml" specifies that results should be returned as a Haxe language Xml instance.
+
+		@see https://api.haxe.org/Xml.html
+	**/
 	public static final RESULT_FORMAT_HAXE_XML:String = "haxexml";
 
 	/**
-	 *  The result format "json" specifies that results should be parsed as JSON.
-	 */
+		The result format "json" specifies that results should be parsed as JSON.
+	**/
 	public static final RESULT_FORMAT_JSON:String = "json";
 
 	/**
-	 *  Indicates that the data being sent by the HTTP service is encoded as application/xml.
-	 */
+		Indicates that the data being sent by the HTTP service is encoded as application/xml.
+	**/
 	public static final CONTENT_TYPE_XML:String = "application/xml";
 
 	/**
-	 *  Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
-	 */
+		Indicates that the data being sent by the HTTP service is encoded as application/x-www-form-urlencoded.
+	**/
 	public static final CONTENT_TYPE_FORM:String = "application/x-www-form-urlencoded";
 
 	/**
-	 *  Indicates that the HTTPService object uses the DefaultHTTP destination.
-	 */
+		Indicates that the HTTPService object uses the DefaultHTTP destination.
+	**/
 	public static final DEFAULT_DESTINATION_HTTP:String = "DefaultHTTP";
 
 	/**
-	 *  Indicates that the HTTPService object uses the DefaultHTTPS destination.
-	 */
+		Indicates that the HTTPService object uses the DefaultHTTPS destination.
+	**/
 	public static final DEFAULT_DESTINATION_HTTPS:String = "DefaultHTTPS";
 
 	// Constants for error codes
 
 	/**
-	 *  Indicates that the useProxy property was set to false but a url was not provided.
-	 */
+		Indicates that the useProxy property was set to false but a url was not provided.
+	**/
 	public static final ERROR_URL_REQUIRED:String = "Client.URLRequired";
 
 	/**
-	 *  Indicates that an XML formatted result could not be parsed into an XML instance
-	 *  or decoded into an Object.
-	 */
+		Indicates that an XML formatted result could not be parsed into an XML instance
+		or decoded into an Object.
+	**/
 	public static final ERROR_DECODING:String = "Client.CouldNotDecode";
 
 	/**
-	 *  Indicates that an input parameter could not be encoded as XML.
-	 */
+		Indicates that an input parameter could not be encoded as XML.
+	**/
 	public static final ERROR_ENCODING:String = "Client.CouldNotEncode";
 
 	/**
-	 * @private
-	 * Propagate event listeners down to the operation since it is firing some of the
-	 * events.
-	 */
+		Propagate event listeners down to the operation since it is firing some of the
+		events.
+	**/
 	override public function addEventListener<T>(type:EventType<T>, listener:T->Void, useCapture:Bool = false, priority:Int = 0,
 			useWeakReference:Bool = false):Void {
 		operation.addEventListener(type, listener, useCapture, priority, useWeakReference);
@@ -187,9 +186,8 @@ class HTTPService extends AbstractInvoker {
 	}
 
 	/**
-	 * @private
-	 * Remove event listener on operation added in the addEventListener override.
-	 */
+		Remove event listener on operation added in the addEventListener override.
+	**/
 	override public function removeEventListener<T>(type:EventType<T>, listener:T->Void, useCapture:Bool = false):Void {
 		operation.removeEventListener(type, listener, useCapture);
 		super.removeEventListener(type, listener, useCapture);
@@ -211,11 +209,11 @@ class HTTPService extends AbstractInvoker {
 	//----------------------------------
 
 	/**
-	 *  Provides access to the ChannelSet used by the service. The
-	 *  ChannelSet can be manually constructed and assigned, or it will be 
-	 *  dynamically created to use the configured Channels for the
-	 *  <code>destination</code> for this service.
-	 */
+		Provides access to the ChannelSet used by the service. The
+		ChannelSet can be manually constructed and assigned, or it will be 
+		dynamically created to use the configured Channels for the
+		<code>destination</code> for this service.
+	**/
 	@:flash.property
 	public var channelSet(get, set):ChannelSet;
 
@@ -223,9 +221,6 @@ class HTTPService extends AbstractInvoker {
 		return asyncRequest.channelSet;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_channelSet(value:ChannelSet):ChannelSet {
 		useProxy = true;
 		asyncRequest.channelSet = value;
@@ -238,11 +233,11 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(enumeration="application/x-www-form-urlencoded,application/xml", defaultValue="application/x-www-form-urlencoded", category="General")]
 
 	/**
-	 *  Type of content for service requests. 
-	 *  The default is <code>application/x-www-form-urlencoded</code> which sends requests
-	 *  like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
-	 *  requests as XML.
-	 */
+		Type of content for service requests. 
+		The default is <code>application/x-www-form-urlencoded</code> which sends requests
+		like a normal HTTP POST with name-value pairs. <code>application/xml</code> send
+		requests as XML.
+	**/
 	@:flash.property
 	public var contentType(get, set):String;
 
@@ -258,17 +253,13 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(enumeration="multiple,single,last", defaultValue="multiple", category="General")]
 
 	/**
-	 * Value that indicates how to handle multiple calls to the same service. The default
-	 * value is <code>multiple</code>. The following values are permitted:
-	 * <ul>
-	 * <li><code>multiple</code> Existing requests are not cancelled, and the developer is
-	 * responsible for ensuring the consistency of returned data by carefully
-	 * managing the event stream. This is the default value.</li>
-	 * <li><code>single</code> Only a single request at a time is allowed on the operation;
-	 * multiple requests generate a fault.</li>
-	 * <li><code>last</code> Making a request cancels any existing request.</li>
-	 * </ul>
-	 */
+		Value that indicates how to handle multiple calls to the same service. The default
+		value is <code>multiple</code>. The following values are permitted:
+
+		- <code>multiple</code> Existing requests are not cancelled, and the developer is responsible for ensuring the consistency of returned data by carefully managing the event stream. This is the default value.
+		- <code>single</code> Only a single request at a time is allowed on the operation; multiple requests generate a fault.
+		- <code>last</code> Making a request cancels any existing request.
+	**/
 	@:flash.property
 	public var concurrency(get, set):String;
 
@@ -287,11 +278,11 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="DefaultHTTP", category="General")]
 
 	/**
-	 *  An HTTPService destination name in the services-config.xml file. When
-	 *  unspecified, Flex uses the <code>DefaultHTTP</code> destination.
-	 *  If you are using the <code>url</code> property, but want requests
-	 *  to reach the proxy over HTTPS, specify <code>DefaultHTTPS</code>.
-	 */
+		An HTTPService destination name in the services-config.xml file. When
+		unspecified, Flex uses the <code>DefaultHTTP</code> destination.
+		If you are using the <code>url</code> property, but want requests
+		to reach the proxy over HTTPS, specify <code>DefaultHTTPS</code>.
+	**/
 	@:flash.property
 	public var destination(get, set):String;
 
@@ -299,9 +290,6 @@ class HTTPService extends AbstractInvoker {
 		return asyncRequest.destination;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_destination(value:String):String {
 		useProxy = true;
 		asyncRequest.destination = value;
@@ -311,8 +299,8 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="true", category="General")]
 
 	/**
-	 * When this value is true, anonymous objects returned are forced to bindable objects.
-	 */
+		When this value is true, anonymous objects returned are forced to bindable objects.
+	**/
 	override public function get_makeObjectsBindable():Bool {
 		return operation.makeObjectsBindable;
 	}
@@ -328,9 +316,9 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
-	 *  be sent with the same name the value should be specified as an Array.
-	 */
+		Custom HTTP headers to be sent to the third party endpoint. If multiple headers need to
+		be sent with the same name the value should be specified as an Array.
+	**/
 	@:flash.property
 	public var headers(get, set):Dynamic;
 
@@ -349,10 +337,10 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(enumeration="GET,get,POST,post,HEAD,head,OPTIONS,options,PUT,put,TRACE,trace,DELETE,delete", defaultValue="GET", category="General")]
 
 	/**
-	 *  HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
-	 *  <code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
-	 *  Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
-	 */
+		HTTP method for sending the request. Permitted values are <code>GET</code>, <code>POST</code>, <code>HEAD</code>,
+		<code>OPTIONS</code>, <code>PUT</code>, <code>TRACE</code> and <code>DELETE</code>.
+		Lowercase letters are converted to uppercase letters. The default value is <code>GET</code>.
+	**/
 	@:flash.property
 	public var method(get, set):String;
 
@@ -371,9 +359,9 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Object of name-value pairs used as parameters to the URL. If
-	 *  the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
-	 */
+		Object of name-value pairs used as parameters to the URL. If
+		the <code>contentType</code> property is set to <code>application/xml</code>, it should be an XML document.
+	**/
 	@:flash.property
 	public var request(get, set):Dynamic;
 
@@ -431,13 +419,13 @@ class HTTPService extends AbstractInvoker {
 	//----------------------------------
 
 	/**
-	 *  The URL that the HTTPService object should use when computing relative URLs.
-	 *  This property is only used when going through the proxy.
-	 *  When the <code>useProxy</code> property is set to <code>false</code>, the relative URL is computed automatically
-	 *  based on the location of the SWF running this application.
-	 *  If not set explicitly <code>rootURL</code> is automatically set to the URL of
-	 *  mx.messaging.config.LoaderConfig.url.
-	 */
+		The URL that the HTTPService object should use when computing relative URLs.
+		This property is only used when going through the proxy.
+		When the <code>useProxy</code> property is set to <code>false</code>, the relative URL is computed automatically
+		based on the location of the SWF running this application.
+		If not set explicitly <code>rootURL</code> is automatically set to the URL of
+		mx.messaging.config.LoaderConfig.url.
+	**/
 	@:flash.property
 	public var rootURL(get, set):String;
 
@@ -456,9 +444,9 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-	 * If <code>true</code>, a busy cursor is displayed while a service is executing. The default
-	 * value is <code>false</code>.
-	 */
+		If <code>true</code>, a busy cursor is displayed while a service is executing. The default
+		value is <code>false</code>.
+	**/
 	@:flash.property
 	public var showBusyCursor(get, set):Bool;
 
@@ -476,12 +464,12 @@ class HTTPService extends AbstractInvoker {
 	//----------------------------------
 
 	/**
-	 * Provides an adapter which controls the process of converting the HTTP response body into 
-	 * ActionScript objects and/or turning the parameters or body into the contentType, URL, and
-	 * and post body of the HTTP request.  This can also be set indirectly by setting the 
-	 * resultFormat by registering a SerializationFilter using the static method:
-	 * SerializationFilter.registerFilterForResultFormat("formatName", filter)
-	 */
+		Provides an adapter which controls the process of converting the HTTP response body into 
+		ActionScript objects and/or turning the parameters or body into the contentType, URL, and
+		and post body of the HTTP request.  This can also be set indirectly by setting the 
+		resultFormat by registering a SerializationFilter using the static method:
+		SerializationFilter.registerFilterForResultFormat("formatName", filter)
+	**/
 	@:flash.property
 	public var serializationFilter(get, set):SerializationFilter;
 
@@ -497,9 +485,9 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="undefined", category="General")]
 
 	/**
-	 *  Location of the service. If you specify the <code>url</code> and a non-default destination,
-	 *  your destination in the services-config.xml file must allow the specified URL.
-	 */
+		Location of the service. If you specify the <code>url</code> and a non-default destination,
+		your destination in the services-config.xml file must allow the specified URL.
+	**/
 	@:flash.property
 	public var url(get, set):String;
 
@@ -515,13 +503,13 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-	 *  Specifies whether to use the Flex proxy service. The default value is <code>false</code>. If you
-	 *  do not specify <code>true</code> to proxy requests though the Flex server, you must ensure that the player 
-	 *  can reach the target URL. You also cannot use destinations defined in the services-config.xml file if the
-	 *  <code>useProxy</code> property is set to <code>false</code>.
-	 *
-	 *  @default false    
-	 */
+		Specifies whether to use the Flex proxy service. The default value is <code>false</code>. If you
+		do not specify <code>true</code> to proxy requests though the Flex server, you must ensure that the player 
+		can reach the target URL. You also cannot use destinations defined in the services-config.xml file if the
+		<code>useProxy</code> property is set to <code>false</code>.
+
+		@default false    
+	**/
 	@:flash.property
 	public var useProxy(get, set):Bool;
 
@@ -641,15 +629,12 @@ class HTTPService extends AbstractInvoker {
 	// [Bindable("resultForBinding")]
 
 	/**
-	 *  The result of the last invocation.
-	 */
+		The result of the last invocation.
+	**/
 	override public function get_lastResult():Dynamic {
 		return operation.lastResult;
 	}
 
-	/**
-	 *  @inheritDoc
-	 */
 	override public function clearResult(fireBindingEvent:Bool = true):Void {
 		operation.clearResult(fireBindingEvent);
 	}
@@ -660,9 +645,9 @@ class HTTPService extends AbstractInvoker {
 	// [Inspectable(category="General")]
 
 	/**
-	 *  Provides access to the request timeout in seconds for sent messages. 
-	 *  A value less than or equal to zero prevents request timeout.
-	 */
+		Provides access to the request timeout in seconds for sent messages. 
+		A value less than or equal to zero prevents request timeout.
+	**/
 	@:flash.property
 	public var requestTimeout(get, set):Int;
 
@@ -670,9 +655,6 @@ class HTTPService extends AbstractInvoker {
 		return asyncRequest.requestTimeout;
 	}
 
-	/**
-	 *  @private
-	 */
 	private function set_requestTimeout(value:Int):Int {
 		if (asyncRequest.requestTimeout != value) {
 			asyncRequest.requestTimeout = value;
@@ -691,31 +673,31 @@ class HTTPService extends AbstractInvoker {
 	//--------------------------------------------------------------------------
 
 	/**
-	 *  Logs the user out of the destination. 
-	 *  Logging out of a destination applies to everything connected using the same channel
-	 *  as specified in the server configuration. For example, if you're connected over the my-rtmp channel
-	 *  and you log out using one of your RPC components, anything that was connected over my-rtmp is logged out.
-	 *
-	 *  **Note:** Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
-	 *  rather than this method.
-	 *
-	 *  @see mx.messaging.ChannelSet#logout()   
-	 */
+		Logs the user out of the destination. 
+		Logging out of a destination applies to everything connected using the same channel
+		as specified in the server configuration. For example, if you're connected over the my-rtmp channel
+		and you log out using one of your RPC components, anything that was connected over my-rtmp is logged out.
+
+		**Note:** Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
+		rather than this method.
+
+		@see mx.messaging.ChannelSet#logout()   
+	**/
 	public function logout():Void {
 		asyncRequest.logout();
 	}
 
 	/**
-	 *  Executes an HTTPService request. The parameters are optional, but if specified should
-	 *  be an Object containing name-value pairs or an XML object depending on the <code>contentType</code>.
-	 *
-	 *  @param parameters An Object containing name-value pairs or an
-	 *  XML object, depending on the content type for service
-	 *  requests.
-	 * 
-	 *  @return An object representing the asynchronous completion token. It is the same object
-	 *  available in the <code>result</code> or <code>fault</code> event's <code>token</code> property.
-	 */
+		Executes an HTTPService request. The parameters are optional, but if specified should
+		be an Object containing name-value pairs or an XML object depending on the <code>contentType</code>.
+
+		@param parameters An Object containing name-value pairs or an
+		XML object, depending on the content type for service
+		requests.
+
+		@return An object representing the asynchronous completion token. It is the same object
+		available in the <code>result</code> or <code>fault</code> event's <code>token</code> property.
+	**/
 	public function send(parameters:Dynamic = null):AsyncToken {
 		if (parameters == null)
 			parameters = request;
@@ -724,60 +706,55 @@ class HTTPService extends AbstractInvoker {
 	}
 
 	/**
-	 *  Disconnects the service's network connection.
-	 *  This method does not wait for outstanding network operations to complete.
-	 */
+		Disconnects the service's network connection.
+		This method does not wait for outstanding network operations to complete.
+	**/
 	public function disconnect():Void {
 		asyncRequest.disconnect();
 	}
 
 	/**
-	 *  Sets the credentials for the destination accessed by the service.
-	 *  The credentials are applied to all services connected over the same ChannelSet.
-	 *  Note that services that use a proxy to a remote destination
-	 *  will need to call the <code>setRemoteCredentials()</code> method instead.
-	 * 
-	 *  @param username the username for the destination.
-	 *  @param password the password for the destination.
-	 *  @param charset The character set encoding to use while encoding the
-	 *  credentials. The default is null, which implies the legacy charset of
-	 *  ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
-	 */
+		Sets the credentials for the destination accessed by the service.
+		The credentials are applied to all services connected over the same ChannelSet.
+		Note that services that use a proxy to a remote destination
+		will need to call the <code>setRemoteCredentials()</code> method instead.
+
+		@param username the username for the destination.
+		@param password the password for the destination.
+		@param charset The character set encoding to use while encoding the
+		credentials. The default is null, which implies the legacy charset of
+		ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+	**/
 	public function setCredentials(username:String, password:String, charset:String = null):Void {
 		asyncRequest.setCredentials(username, password, charset);
 	}
 
 	/**
-	 *  The username and password to authenticate a user when accessing
-	 *  the HTTP URL. These are passed as part of the HTTP Authorization
-	 *  header from the proxy to the endpoint. If the <code>useProxy</code> property
-	 *  is set to is false, this property is ignored.
-	 *     
-	 *  @param remoteUsername the username to pass to the remote endpoint.
-	 *  @param remotePassword the password to pass to the remote endpoint.
-	 *  @param charset The character set encoding to use while encoding the
-	 *  remote credentials. The default is null, which implies the legacy
-	 *  charset of ISO-Latin-1. The only other supported charset is
-	 *  &quot;UTF-8&quot;.
-	 */
+		The username and password to authenticate a user when accessing
+		the HTTP URL. These are passed as part of the HTTP Authorization
+		header from the proxy to the endpoint. If the <code>useProxy</code> property
+		is set to is false, this property is ignored.
+
+		@param remoteUsername the username to pass to the remote endpoint.
+		@param remotePassword the password to pass to the remote endpoint.
+		@param charset The character set encoding to use while encoding the
+		remote credentials. The default is null, which implies the legacy
+		charset of ISO-Latin-1. The only other supported charset is
+		&quot;UTF-8&quot;.
+	**/
 	public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		asyncRequest.setRemoteCredentials(remoteUsername, remotePassword, charset);
 	}
 
-	/**
-	 *  @inheritDoc
-	 */
 	override public function cancel(id:String = null):AsyncToken {
 		return operation.cancel(id);
 	}
 }
 
 /**
- *  @private
- *  
- *  An HTTPService specific override that allow service level event listeners 
- *  to handle RPC events.
- */
+	An HTTPService specific override that allow service level event listeners 
+	to handle RPC events.
+**/
 @:access(feathers.rpc.events.AbstractEvent)
 private class HTTPOperation extends AbstractOperation {
 	public function new(httpService:HTTPService, name:String = null) {
@@ -785,9 +762,6 @@ private class HTTPOperation extends AbstractOperation {
 		this.httpService = httpService;
 	}
 
-	/**
-	 *  @private
-	 */
 	override private function dispatchRpcEvent(event:AbstractEvent):Void {
 		if (hasEventListener(event.type)) {
 			event.callTokenResponders();
@@ -801,8 +775,5 @@ private class HTTPOperation extends AbstractOperation {
 		}
 	}
 
-	/**
-	 *  @private
-	 */
 	private var httpService:HTTPService;
 }

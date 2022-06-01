@@ -42,4 +42,4 @@ After installing the library above, add it to your OpenFL _project.xml_ file:
 
 ## Documentation
 
-- [feathersui-rpc-services API Reference](https://api.feathersui.com/rpc-services/unstable/)
+- [feathersui-rpc-services API Reference](https://api.feathersui.com/rpc-services/)

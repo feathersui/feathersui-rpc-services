@@ -8,7 +8,7 @@
   "classPath": "src",
   "dependencies": {
     "openfl": "",
-    "feathersui-amfio": "git:https://github.com/feathersui/feathersui-amfio.git"
+    "amfio": "git:https://github.com/feathersui/amfio.git"
   },
   "contributors": ["bowlerhat"],
   "releasenote": "Initial release"

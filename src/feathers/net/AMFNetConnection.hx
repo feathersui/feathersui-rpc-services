@@ -152,7 +152,10 @@ class AMFNetConnection {
 		var urlRequest:URLRequest = new URLRequest(url);
 
 		#if (!flash && !html5)
-		if (!urlRequest.manageCookies) {
+		#if !hl
+		if (!urlRequest.manageCookies)
+		#end
+		{
 			// workaround for versions of Lime/OpenFL that don't yet support
 			// cookies on native targets
 			for (name => value in cookies) {

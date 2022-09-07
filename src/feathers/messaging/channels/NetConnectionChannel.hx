@@ -459,7 +459,7 @@ private class NetConnectionMessageResponder extends MessageResponder {
 			var errorMsg = new ErrorMessage();
 			errorMsg.faultCode = "Server.Acknowledge.Failed";
 			errorMsg.faultString = "Didn't receive an acknowledge message";
-			errorMsg.faultDetail = 'Was expecting mx.messaging.messages.AcknowledgeMessage, but received ${msg != null ? Std.string(msg) : "null"}';
+			errorMsg.faultDetail = 'Was expecting feathers.messaging.messages.AcknowledgeMessage, but received ${msg != null ? Std.string(msg) : "null"}';
 			errorMsg.correlationId = message.messageId;
 			agent.fault(errorMsg, message);
 		}
@@ -503,7 +503,7 @@ private class NetConnectionMessageResponder extends MessageResponder {
 			var errorMsg = new ErrorMessage();
 			errorMsg.faultCode = "Server.Acknowledge.Failed";
 			errorMsg.faultString = "Didn't receive an acknowledge message";
-			errorMsg.faultDetail = 'Was expecting mx.messaging.messages.AcknowledgeMessage, but received ${msg != null ? msg.toString() : "null"}';
+			errorMsg.faultDetail = 'Was expecting feathers.messaging.messages.AcknowledgeMessage, but received ${msg != null ? msg.toString() : "null"}';
 			errorMsg.correlationId = message.messageId;
 			agent.fault(errorMsg, message);
 		}

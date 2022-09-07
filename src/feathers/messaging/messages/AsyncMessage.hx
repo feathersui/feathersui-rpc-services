@@ -95,7 +95,7 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 		The <code>correlationId</code> contains the <code>messageId</code> of the
 		previous message that this message refers to.
 
-		@see mx.messaging.messages.AbstractMessage#messageId
+		@see feathers.messaging.messages.AbstractMessage#messageId
 	**/
 	@:flash.property
 	public var correlationId(get, set):String;

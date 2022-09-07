@@ -300,6 +300,11 @@ class AMFNetConnection {
 	}
 
 	private function handleStatus(event:HTTPStatusEvent, call:CallPoolItem):Void {
+		if (call.item == null) {
+			// may have already been handled
+			return;
+		}
+
 		var xhr:URLLoader = call.xhr;
 		var responder:Responder = call.item.responder;
 		var args:Array<Dynamic> = call.item.args;
@@ -331,6 +336,11 @@ class AMFNetConnection {
 	}
 
 	private function handleError(event:ErrorEvent, call:CallPoolItem):Void {
+		if (call.item == null) {
+			// may have already been handled in handleStatus
+			return;
+		}
+
 		var xhr:URLLoader = call.xhr;
 		var responder:Responder = call.item.responder;
 		var args:Array<Dynamic> = call.item.args;

@@ -2,21 +2,38 @@
 
 A port of the RPC service classes from [Apache Flex](https://flex.apache.org/) (formerly Adobe Flex) to [Feathers UI](https://feathersui.com/) for [Haxe](https://haxe.org/) and [OpenFL](https://openfl.org/).
 
-## Overview
+Contains the following service classes:
 
-Please review the notes below for an overview of what currently works, doesn't work, or has changed from the original Flex implementation.
+- `HTTPService`: Load data from a URL as XML, simple string text, URL variables, or JSON.
+- `RemoteObject`: Load typed objects using binary AMF.
 
-- `RemoteObject`: Load data with the same classes used by a remote application server, encoded with Action Message Format (AMF).
-  - Instead of adding `[RemoteClass(alias="com.example.MyClass)]` metadata to your classes, you must call the `openfl.Lib.registerClassAlias()` function.
-- `HTTPService`: Load data from a URL as XML, Text, URL variables, or JSON.
-  - `resultFormat`
-    - The new `RESULT_FORMAT_JSON` is supported on all targets and parses the server response as JSON, returning an [anonymous structure](https://haxe.org/manual/types-anonymous-structure.html).
-    - The new `RESULT_FORMAT_HAXE_XML` is supported on all targets and returns an instance of Haxe's [`Xml`](https://api.haxe.org/Xml.html) class.
-    - `RESULT_FORMAT_E4X` and `RESULT_FORMAT_XML` are available on **flash** and **air** targets only. On all other targets, a compile-time deprecation warning will be presented, and a runtime exception will be thrown. Use of the new `RESULT_FORMAT_HAXE_XML` is recommended for all targets.
-- ~~`HTTPMultiService`~~: Represents a collection of HTTP operations.
-  - Ported to Haxe, but not yet tested.
+## Compatibility Notes
+
+### `RemoteObject`
+
+Instead of adding `[RemoteClass(alias="com.example.MyClass")]` metadata to a class, call the `openfl.Lib.registerClassAlias()` function to register each type when the application initializes.
+
+```hx
+Lib.registerClassAlias("com.example.MyClass", MyClass);
+```
+
+### `HTTPService`
+
+The `resultFormat` property includes two new formats:
+
+- `RESULT_FORMAT_JSON`: Parses the server response as JSON, returning an [anonymous structure](https://haxe.org/manual/types-anonymous-structure.html). Supported on all targets.
+- `RESULT_FORMAT_HAXE_XML`: Returns an instance of Haxe's [`Xml`](https://api.haxe.org/Xml.html) class. Supported on all targets.
+
+The `RESULT_FORMAT_E4X` and `RESULT_FORMAT_XML` values will throw an exception on most targets. These formats are supported on the **flash** and **air** targets only. Using the new `RESULT_FORMAT_HAXE_XML` instead is recommended.
+
+### Unsupported Service Types
+
+The following services have not yet been ported to Haxe and Feathers UI.
+
 - ~~`WebService`~~: Provides access to SOAP-based web services on remote servers.
-  - Not yet ported to Haxe.
+- ~~`HTTPMultiService`~~: Represents a collection of HTTP operations.
+
+If you need either of these service types, please create a [feature request](https://github.com/feathersui/feathersui-rpc-services/issues).
 
 ## Minimum Requirements
 
@@ -26,10 +43,10 @@ Please review the notes below for an overview of what currently works, doesn't w
 
 ## Installation
 
-This library is not yet available on Haxelib, so you'll need to install it from Github.
+Run the following command in a terminal to install [feathersui-rpc-services](https://lib.haxe.org/p/feathersui-rpc-services) from Haxelib.
 
 ```sh
-haxelib git feathersui-rpc-services https://github.com/feathersui/feathersui-rpc-services.git
+haxelib install feathersui-rpc-services
 ```
 
 ## Project Configuration

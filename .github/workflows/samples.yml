@@ -26,7 +26,7 @@ jobs:
           haxelib install lime --quiet
           haxelib install openfl --quiet
           haxelib install feathersui --quiet
-          haxelib git amfio https://github.com/feathersui/amfio.git --quiet
+          haxelib install amfio --quiet
           haxelib dev feathersui-rpc-services ${{ github.workspace }} 
           haxelib run lime config AIR_SDK ${{ env.AIR_HOME }}
       - name: Build samples/amfphp/Pizza

@@ -15,5 +15,7 @@
 	<haxelib name="feathersui" />
 	<haxelib name="feathersui-rpc-services" />
 
+	<haxedef name="feathersui_theme_manage_stage_color"/>
+
 	<icon path="assets/icons/feathersui-icon.svg"/>
 </project>

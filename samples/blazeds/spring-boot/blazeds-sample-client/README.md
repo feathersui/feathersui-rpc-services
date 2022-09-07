@@ -2,7 +2,7 @@
 
 A sample client for a BlazeDS Spring Boot server built with Haxe and running with Feathers UI RPC Services.
 
-Uses the `RemoteObject` service, which is currently supported on the **air** and **flash** targets only.
+Uses the `RemoteObject` service, which transfers data using binary AMF.
 
 ## Server
 

@@ -9,8 +9,10 @@
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
 	<haxelib name="feathersui" />
+	<haxelib name="amfio" />
 
 	<haxeflag name="--macro" value="include('feathers.rpc')"/>
+	<haxeflag name="--macro" value="include('feathers.net')"/>
 	<haxeflag name="--macro" value="include('feathers.messaging')"/>
 
 	<template path="templates" if="flash"/>

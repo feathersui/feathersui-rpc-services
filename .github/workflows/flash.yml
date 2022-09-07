@@ -22,7 +22,7 @@ jobs:
           haxelib install lime --quiet
           haxelib install openfl --quiet
           haxelib install feathersui --quiet
-          haxelib git amfio https://github.com/feathersui/amfio.git --quiet
+          haxelib install amfio --quiet
           haxelib dev feathersui-rpc-services $GITHUB_WORKSPACE
       - name: Build Flash .swc library
         run: haxelib run openfl build flash -debug

@@ -16,6 +16,8 @@
 	<haxelib name="feathersui" />
 	<haxelib name="feathersui-rpc-services" />
 
+	<haxedef name="feathersui_theme_manage_stage_color"/>
+
 	<icon path="assets/icons/feathersui-icon.svg"/>
 	<assets id="header-background-pizza" path="assets/img/header-background-pizza.png"/>
 </project>

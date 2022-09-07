@@ -1,5 +1,5 @@
 # feathersui-rpc-services Change Log
 
-## 1.0.0-alpha.1 (????-??-??)
+## 1.0.0 (2022-09-08)
 
 - Initial release

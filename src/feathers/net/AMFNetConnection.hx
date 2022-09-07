@@ -64,7 +64,7 @@ class AMFNetConnection {
 	/**
 		The class to use to test if success or failure
 	**/
-	public var errorClass:Class<Dynamic>;
+	public var errorClass:Class<Dynamic> = ErrorMessage;
 
 	private var url:String;
 

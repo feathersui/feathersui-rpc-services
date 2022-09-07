@@ -248,10 +248,10 @@ class AMFNetConnection {
 			_relinquishCall(call);
 			var bytes = cast(xhr.data, ByteArray);
 			bytes.endian = BIG_ENDIAN;
-			bytes.objectEncoding = AMF3;
+			bytes.objectEncoding = AMF0;
 			var reader = new AMFReader(bytes);
 			reader.endian = BIG_ENDIAN;
-			reader.objectEncoding = AMF3;
+			reader.objectEncoding = AMF0;
 			try {
 				message = Std.downcast(readMessage(reader), ActionMessage);
 			} catch (e:Dynamic) {
@@ -395,7 +395,6 @@ class AMFNetConnection {
 	private function readMessage(reader:AMFReader):ActionMessage {
 		var message:ActionMessage = new ActionMessage();
 		message.version = reader.readUnsignedShort();
-		reader.objectEncoding = message.version;
 		var headerCount = reader.readUnsignedShort();
 		for (i in 0...headerCount) {
 			message.headers.push(this.readHeader(reader));

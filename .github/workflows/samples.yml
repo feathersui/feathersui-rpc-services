@@ -9,6 +9,47 @@ on:
       - master
 
 jobs:
+  build-misc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.1.5
+      - name: Set up Haxelib dependencies
+        run: |
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install feathersui --quiet
+          haxelib install amfio --quiet
+          haxelib dev feathersui-rpc-services ${{ github.workspace }}
+      - name: Build samples/http-service-result-formats
+        working-directory: samples/http-service-result-formats
+        run: |
+          haxelib run openfl build neko
+          haxelib run openfl build html5
+          haxelib run openfl build flash
+          haxelib run openfl build hl
+      - name: Build samples/amfphp/Pizza
+        working-directory: samples/amfphp/Pizza
+        run: |
+          haxelib run openfl build neko
+          haxelib run openfl build html5
+          haxelib run openfl build flash
+          haxelib run openfl build hl
+      - name: Build samples/amfphp/TypedObjects
+        working-directory: samples/amfphp/TypedObjects
+        run: |
+          haxelib run openfl build air
+      - name: Build samples/blazeds/spring-boot/blazeds-sample-client
+        working-directory: samples/blazeds/spring-boot/blazeds-sample-client
+        run: |
+          haxelib run openfl build neko
+          haxelib run openfl build html5
+          haxelib run openfl build flash
+          haxelib run openfl build hl
+
   build-air:
     runs-on: windows-latest
 
@@ -29,6 +70,10 @@ jobs:
           haxelib install amfio --quiet
           haxelib dev feathersui-rpc-services ${{ github.workspace }} 
           haxelib run lime config AIR_SDK ${{ env.AIR_HOME }}
+      - name: Build samples/http-service-result-formats
+        working-directory: samples/http-service-result-formats
+        run: |
+          haxelib run openfl build air
       - name: Build samples/amfphp/Pizza
         working-directory: samples/amfphp/Pizza
         run: |

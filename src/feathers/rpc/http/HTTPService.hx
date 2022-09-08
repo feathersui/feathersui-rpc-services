@@ -539,14 +539,14 @@ class HTTPService extends AbstractInvoker {
 		an Object. It can return any type of object, but it must return
 		something. Returning `null` or `undefined` causes a fault.
 
-		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlDecode function:
+		The following example shows an `<mx:HTTPService>` tag that specifies an xmlDecode function:
 
 		```xml
-		&lt;mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
-			&lt;mx:request&gt;&lt;source/&gt;
-				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
-			&lt;/mx:request&gt;
-		&lt;/mx:HTTPService&gt;
+		<mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml">
+			<mx:request><source/>
+				<obj>{RequestObject}</obj>
+			</mx:request>
+		</mx:HTTPService>
 		```
 
 		The following example shows an xmlDecoder function:
@@ -592,16 +592,16 @@ class HTTPService extends AbstractInvoker {
 		The `xmlEncode` property takes an Object and should return
 		a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
 		which is a subclass of XMLNode, or the first child of the
-		flash.xml.XML object, which is what you get from an `&lt;mx:XML&gt;` tag.
+		flash.xml.XML object, which is what you get from an `<mx:XML>` tag.
 		Returning the wrong type of object causes a fault.
-		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:
+		The following example shows an `<mx:HTTPService>` tag that specifies an xmlEncode function:
 
 		```xml
-		&lt;mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
-			&lt;mx:request&gt;&lt;source/&gt;
-				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
-			&lt;/mx:request&gt;
-		&lt;/mx:HTTPService&gt;
+		<mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml">
+			<mx:request><source/>
+				<obj>{RequestObject}</obj>
+			</mx:request>
+		</mx:HTTPService>
 		```
 
 		The following example shows an xmlEncoder function:
@@ -723,7 +723,7 @@ class HTTPService extends AbstractInvoker {
 		@param password the password for the destination.
 		@param charset The character set encoding to use while encoding the
 		credentials. The default is null, which implies the legacy charset of
-		ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+		ISO-Latin-1. The only other supported charset is "UTF-8".
 	**/
 	public function setCredentials(username:String, password:String, charset:String = null):Void {
 		asyncRequest.setCredentials(username, password, charset);
@@ -740,7 +740,7 @@ class HTTPService extends AbstractInvoker {
 		@param charset The character set encoding to use while encoding the
 		remote credentials. The default is null, which implies the legacy
 		charset of ISO-Latin-1. The only other supported charset is
-		&quot;UTF-8&quot;.
+		"UTF-8".
 	**/
 	public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		asyncRequest.setRemoteCredentials(remoteUsername, remotePassword, charset);

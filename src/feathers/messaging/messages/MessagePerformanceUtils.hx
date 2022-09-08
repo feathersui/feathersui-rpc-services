@@ -24,8 +24,8 @@ import openfl.errors.Error;
 	the sizing and timing of a message sent from a client to the server and its 
 	response message, as well as pushed messages from the server to the client.  
 	Metrics are gathered when corresponding properties on the channel used are enabled:
-	&lt;record-message-times&gt; denotes capturing of timing information,
-	&lt;record-message-sizes&gt; denotes capturing of sizing information.
+	`<record-message-times>` denotes capturing of timing information,
+	`<record-message-sizes>` denotes capturing of sizing information.
 
 	You can then use methods of this utility class to retrieve various performance information
 	about the message that you have just received.

@@ -533,7 +533,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		This alternate property for an endpoint URL is provided to match the
-		endpoint configuration attribute &quot;url&quot;. This property is
+		endpoint configuration attribute "url". This property is
 		equivalent to the `uri` property.
 	**/
 	@:dox(hide)

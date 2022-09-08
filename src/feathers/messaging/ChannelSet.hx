@@ -885,7 +885,7 @@ class ChannelSet extends EventDispatcher {
 		@param password The password.
 		@param charset The character set encoding to use while encoding the
 		credentials. The default is null, which implies the legacy charset of
-		ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+		ISO-Latin-1. The only other supported charset is "UTF-8".
 
 		@return Returns a token that client code may add a responder to in order to handle
 		success or failure directly.

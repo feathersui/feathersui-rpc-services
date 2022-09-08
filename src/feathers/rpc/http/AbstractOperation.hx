@@ -411,14 +411,14 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		an Object. It can return any type of object, but it must return
 		something. Returning `null` or `undefined` causes a fault.
 
-		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlDecode function:
+		The following example shows an `<mx:HTTPService>` tag that specifies an xmlDecode function:
 
 		```xml
-		&lt;mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
-			&lt;mx:request&gt;&lt;source/&gt;
-				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
-			&lt;/mx:request&gt;
-		&lt;/mx:HTTPService&gt;
+		<mx:HTTPService id="hs" xmlDecode="xmlDecoder" url="myURL" resultFormat="object" contentType="application/xml">
+			<mx:request><source/>
+				<obj>{RequestObject}</obj>
+			</mx:request>
+		</mx:HTTPService>
 		```
 
 		The following example shows an xmlDecoder function:
@@ -452,16 +452,16 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 		The `xmlEncode` property takes an Object and should return
 		a flash.xml.XMLNode object. In this case, the XMLNode object can be a flash.xml.XML object,
 		which is a subclass of XMLNode, or the first child of the
-		flash.xml.XML object, which is what you get from an `&lt;mx:XML&gt;` tag.
+		flash.xml.XML object, which is what you get from an `<mx:XML>` tag.
 		Returning the wrong type of object causes a fault.
-		The following example shows an &lt;mx:HTTPService&gt; tag that specifies an xmlEncode function:
+		The following example shows an `<mx:HTTPService>` tag that specifies an xmlEncode function:
 
 		```xml
-		&lt;mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml"&gt;
-			&lt;mx:request&gt;&lt;source/&gt;
-				&lt;obj&gt;{RequestObject}&lt;/obj&gt;
-			&lt;/mx:request&gt;
-		&lt;/mx:HTTPService&gt;
+		<mx:HTTPService id="hs" xmlEncode="xmlEncoder" url="myURL" resultFormat="object" contentType="application/xml">
+			<mx:request><source/>
+				<obj>{RequestObject}</obj>
+			</mx:request>
+		</mx:HTTPService>
 		```
 
 		The following example shows an xmlEncoder function:

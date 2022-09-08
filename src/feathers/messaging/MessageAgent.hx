@@ -668,7 +668,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		@param password The password.
 		@param charset The character set encoding to use while encoding the
 		credentials. The default is null, which implies the legacy charset of
-		ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+		ISO-Latin-1. The only other supported charset is "UTF-8".
 
 		@throws flash.errors.IllegalOperationError in two situations; if credentials
 		have already been set and an authentication is in progress with the remote
@@ -709,7 +709,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		@param charset The character set encoding to use while encoding the
 		remote credentials. The default is null, which implies the legacy
 		charset of ISO-Latin-1. The only other currently supported option is
-		&quot;UTF-8&quot;.
+		"UTF-8".
 	**/
 	public function setRemoteCredentials(username:String, password:String, charset:String = null):Void {
 		if (username == null && password == null) {

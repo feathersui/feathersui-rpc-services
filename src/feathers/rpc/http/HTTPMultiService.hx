@@ -25,7 +25,7 @@ import feathers.rpc.utils.RPCURLUtil;
 import openfl.errors.ArgumentError;
 
 /**
-	You use the `&lt;mx:HTTPMultiService&gt;` tag to represent a
+	You use the `<mx:HTTPMultiService>` tag to represent a
 	collection of http operations.  Each one has a URL, method, parameters and
 	return type.  
 

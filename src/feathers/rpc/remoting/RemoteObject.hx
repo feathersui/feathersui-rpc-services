@@ -276,7 +276,7 @@ class RemoteObject extends AbstractService {
 		@param remotePassword the password to pass to the remote endpoint
 		@param charset The character set encoding to use while encoding the
 		remote credentials. The default is null, which implies the legacy charset
-		of ISO-Latin-1. The only other supported charset is &quot;UTF-8&quot;.
+		of ISO-Latin-1. The only other supported charset is "UTF-8".
 	**/
 	override public function setRemoteCredentials(remoteUsername:String, remotePassword:String, charset:String = null):Void {
 		super.setRemoteCredentials(remoteUsername, remotePassword, charset);

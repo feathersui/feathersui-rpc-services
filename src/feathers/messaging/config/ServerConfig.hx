@@ -103,7 +103,7 @@ class ServerConfig {
 
 	/**
 		The XML configuration; this value must contain the relevant portions of
-		the &lt;services&gt; tag from the services-config.xml file.
+		the `<services>` tag from the services-config.xml file.
 	**/
 	@:flash.property
 	public static var xml(get, set):Xml;
@@ -248,7 +248,7 @@ class ServerConfig {
 
 		@param destinationId The id of the desired destination.
 
-		@return XMLList containing the &lt;property&gt; tag information.
+		@return XMLList containing the`<property>` tag information.
 
 		@throws mx.messaging.errors.InvalidDestinationError If the specified destination is not found.
 	**/

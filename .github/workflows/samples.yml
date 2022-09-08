@@ -41,7 +41,10 @@ jobs:
       - name: Build samples/amfphp/TypedObjects
         working-directory: samples/amfphp/TypedObjects
         run: |
-          haxelib run openfl build air
+          haxelib run openfl build neko
+          haxelib run openfl build html5
+          haxelib run openfl build flash
+          haxelib run openfl build hl
       - name: Build samples/blazeds/spring-boot/blazeds-sample-client
         working-directory: samples/blazeds/spring-boot/blazeds-sample-client
         run: |

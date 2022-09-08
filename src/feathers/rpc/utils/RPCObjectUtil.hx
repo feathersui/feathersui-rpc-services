@@ -337,6 +337,11 @@ class RPCObjectUtil {
 				properties.appendChild(variable);
 			}
 		}
+		#else
+		var detectedClass = Type.getClass(obj);
+		if (detectedClass == null) {
+			isDynamic = true;
+		}
 		#end
 
 		// If type is not dynamic, check our cache for class info...

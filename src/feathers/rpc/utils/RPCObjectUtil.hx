@@ -564,9 +564,10 @@ class RPCObjectUtil {
 		if (options != null) {
 			for (flag in Reflect.fields(options)) {
 				key += flag;
-				var value:String = Reflect.field(options, flag);
-				if (value != null)
+				var value:Dynamic = Reflect.field(options, flag);
+				if (value != null) {
 					key += Std.string(value);
+				}
 			}
 		}
 		return key;

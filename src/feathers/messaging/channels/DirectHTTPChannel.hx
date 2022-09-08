@@ -169,7 +169,7 @@ class DirectHTTPChannel extends Channel {
 			|| result.contentType == HTTPRequestMessage.CONTENT_TYPE_SOAP_XML;
 
 		var headers:Dynamic = httpMsg.httpHeaders;
-		if (headers) {
+		if (headers != null) {
 			var requestHeaders:Array<URLRequestHeader> = [];
 			var header:URLRequestHeader;
 			for (h in Reflect.fields(headers)) {

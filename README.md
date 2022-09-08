@@ -5,7 +5,7 @@ A port of the RPC service classes from [Apache Flex](https://flex.apache.org/) (
 Contains the following service classes:
 
 - `HTTPService`: Load data from a URL as XML, simple string text, URL variables, or JSON.
-- `RemoteObject`: Load typed objects using binary AMF.
+- `RemoteObject`: Share the same typed objects on server and client using binary AMF.
 
 ## Compatibility Notes
 

@@ -26,8 +26,8 @@ import openfl.events.EventDispatcher;
 	This class provides a place to set additional or token-level data for 
 	asynchronous RPC operations.  It also allows an IResponder to be attached
 	for an individual call.
-	The AsyncToken can be referenced in <code>ResultEvent</code> and 
-	<code>FaultEvent</code> from the <code>token</code> property.
+	The AsyncToken can be referenced in `ResultEvent` and 
+	`FaultEvent` from the `token` property.
 **/
 class AsyncToken extends EventDispatcher {
 	//--------------------------------------------------------------------------
@@ -79,16 +79,16 @@ class AsyncToken extends EventDispatcher {
 		An array of IResponder handlers that will be called when
 		the asynchronous request completes.
 
-		Each responder assigned to the token will have its  <code>result</code>
-		or <code>fault</code> function called passing in the
+		Each responder assigned to the token will have its  `result`
+		or `fault` function called passing in the
 		matching event _before_ the operation or service dispatches the 
 		event itself.
 
 		A developer can prevent the service from subsequently dispatching the 
-		event by calling <code>event.preventDefault()</code>.
+		event by calling `event.preventDefault()`.
 
 		Note that this will not prevent the service or operation's 
-		<code>result</code> property from being assigned.
+		`result` property from being assigned.
 	**/
 	@:flash.property
 	public var responders(get, never):Array<IResponder>;
@@ -126,7 +126,7 @@ class AsyncToken extends EventDispatcher {
 	/**
 		Adds a responder to an Array of responders. 
 		The object assigned to the responder parameter must implement
-		<code>mx.rpc.IResponder</code>.
+		`mx.rpc.IResponder`.
 
 		@param responder A handler which will be called when the asynchronous request completes.
 
@@ -140,7 +140,7 @@ class AsyncToken extends EventDispatcher {
 	}
 
 	/**
-		Determines if this token has at least one <code>mx.rpc.IResponder</code> registered.
+		Determines if this token has at least one `mx.rpc.IResponder` registered.
 
 		@return true if at least one responder has been added to this token. 
 	**/

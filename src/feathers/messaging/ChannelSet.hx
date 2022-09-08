@@ -61,13 +61,13 @@ class ChannelSet extends EventDispatcher {
 
 	/**
 		Constructs a ChannelSet.
-		If the <code>channelIds</code> argument is provided, the ChannelSet will
-		use automatically configured Channels obtained via <code>ServerConfig.getChannel()</code>
+		If the `channelIds` argument is provided, the ChannelSet will
+		use automatically configured Channels obtained via `ServerConfig.getChannel()`
 		to reach a destination.
 		Attempting to manually assign Channels to a ChannelSet that uses configured
 		Channels is not allowed.
 
-		If the <code>channelIds</code> argument is not provided or is null,
+		If the `channelIds` argument is not provided or is null,
 		Channels must be manually created and added to the ChannelSet in order
 		to connect and send messages.
 
@@ -259,11 +259,11 @@ class ChannelSet extends EventDispatcher {
 		Provides access to the Channels in the ChannelSet.
 		This property may be used to assign a set of channels at once or channels
 		may be added directly to the ChannelSet via addChannel() individually.
-		If this ChannelSet is <code>configured</code> automatically the individual
+		If this ChannelSet is `configured` automatically the individual
 		channels are created lazily and added to this property as needed.
 
 		@throws flash.errors.IllegalOperationError If the ChannelSet is
-		<code>configured</code>, assigning to this property is not allowed.
+		`configured`, assigning to this property is not allowed.
 	**/
 	@:flash.property
 	public var channels(get, set):Array<Channel>;
@@ -580,9 +580,9 @@ class ChannelSet extends EventDispatcher {
 		@param channel The Channel to add.
 
 		@throws flash.errors.IllegalOperationError If the ChannelSet is
-		<code>configured</code>, adding a Channel is not supported.
-		This error is also thrown if the ChannelSet's <code>clustered</code> property
-		is <code>true</code> but the Channel has a null id.
+		`configured`, adding a Channel is not supported.
+		This error is also thrown if the ChannelSet's `clustered` property
+		is `true` but the Channel has a null id.
 	**/
 	public function addChannel(channel:Channel):Void {
 		if (channel == null)
@@ -612,7 +612,7 @@ class ChannelSet extends EventDispatcher {
 		@param channel The Channel to remove.
 
 		@throws flash.errors.IllegalOperationError If the ChannelSet is
-		<code>configured</code>, removing a Channel is not supported.
+		`configured`, removing a Channel is not supported.
 	**/
 	public function removeChannel(channel:Channel):Void {
 		if (configured) {
@@ -723,7 +723,7 @@ class ChannelSet extends EventDispatcher {
 	/**
 		Disconnects all associated MessageAgents and disconnects any underlying Channel that
 		is connected.
-		Unlike <code>disconnect(MessageAgent)</code> which is invoked by the disconnect implementations
+		Unlike `disconnect(MessageAgent)` which is invoked by the disconnect implementations
 		of specific service components, this method provides a single, convenient point to shut down
 		connectivity between the client and server.
 	**/
@@ -950,10 +950,10 @@ class ChannelSet extends EventDispatcher {
 		will trigger a connect attempt, and if successful, send a logout command to the server.
 
 		The MessageAgent argument is present to support legacy logout behavior and client code that
-		invokes this method should not pass a MessageAgent reference. Just invoke <code>logout()</code>
+		invokes this method should not pass a MessageAgent reference. Just invoke `logout()`
 		passing no arguments.
 
-		This method is also invoked by service components from their <code>logout()</code>
+		This method is also invoked by service components from their `logout()`
 		methods, and these components pass a MessageAgent reference to this method when they logout.
 		The presence of this argument is the trigger to execute legacy logout behavior that differs
 		from the new behavior described above.

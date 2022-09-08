@@ -266,7 +266,7 @@ class AbstractConsumer extends MessageAgent {
 	// [Bindable(event="propertyChange")]
 
 	/**
-		Indicates whether the Consumer is currently subscribed. The <code>propertyChange</code>
+		Indicates whether the Consumer is currently subscribed. The `propertyChange`
 		event is dispatched when this property changes.
 	**/
 	@:flash.property
@@ -308,11 +308,11 @@ class AbstractConsumer extends MessageAgent {
 	/**
 		Contains the timestamp of the most recent message this Consumer
 		has received.
-		This value is passed to the destination in a <code>receive()</code> call
+		This value is passed to the destination in a `receive()` call
 		to request that it deliver messages for the Consumer from the timestamp
 		forward.
 		All messages with a timestamp value greater than the
-		<code>timestamp</code> value will be returned during a poll operation.
+		`timestamp` value will be returned during a poll operation.
 		Setting this value to -1 will retrieve all cached messages from the
 		destination.
 	**/

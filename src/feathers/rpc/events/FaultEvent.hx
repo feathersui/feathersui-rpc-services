@@ -40,22 +40,22 @@ class FaultEvent extends AbstractEvent {
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>true, calling preventDefault() 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>true, calling preventDefault() 
 		from the associated token's responder.fault method will prevent
 		the service or operation from dispatching this event</td></tr>
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>. </td></tr>
-		<tr><td><code>fault</code></td><td>The Fault object that contains the
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`. </td></tr>
+		<tr><td>`fault`</td><td>The Fault object that contains the
 		details of what caused this event.</td></tr>   
-		<tr><td><code>message</code></td><td>The Message associated with this event.</td></tr>
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		<tr><td>`message`</td><td>The Message associated with this event.</td></tr>
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
-		<tr><td><code>token</code></td><td>The token that represents the call
+		<tr><td>`token`</td><td>The token that represents the call
 		to the method. Used in the asynchronous completion token pattern.</td></tr>   
 		</table>
 	**/

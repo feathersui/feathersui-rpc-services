@@ -70,7 +70,7 @@ class CommandMessage extends AsyncMessage {
 	/**
 		This operation is used to send credentials to the endpoint so that
 		the user can be logged in over the current channel.  
-		The credentials need to be Base64 encoded and stored in the <code>body</code>
+		The credentials need to be Base64 encoded and stored in the `body`
 		of the message.
 	**/
 	public static final LOGIN_OPERATION:UInt = 8;
@@ -121,7 +121,7 @@ class CommandMessage extends AsyncMessage {
 	public static final AUTHENTICATION_MESSAGE_REF_TYPE:String = "flex.messaging.messages.AuthenticationMessage";
 
 	/**
-		Subscribe commands issued by a Consumer pass the Consumer's <code>selector</code>
+		Subscribe commands issued by a Consumer pass the Consumer's `selector`
 		expression in this header.
 	**/
 	public static final SELECTOR_HEADER:String = "DSSelector";
@@ -212,7 +212,7 @@ class CommandMessage extends AsyncMessage {
 
 	/**
 		Constructs an instance of a CommandMessage with an empty body and header
-		and a default <code>operation</code> of <code>UNKNOWN_OPERATION</code>.
+		and a default `operation` of `UNKNOWN_OPERATION`.
 	**/
 	public function new() {
 		super();
@@ -271,7 +271,7 @@ class CommandMessage extends AsyncMessage {
 
 	/**
 		Provides a description of the operation specified.
-		This method is used in <code>toString()</code> operations on this 
+		This method is used in `toString()` operations on this 
 		message.
 
 		@param op One of the CommandMessage operation constants.

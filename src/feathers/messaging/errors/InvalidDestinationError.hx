@@ -23,12 +23,12 @@ package feathers.messaging.errors;
 	This error is thrown by the following methods/properties
 	within the framework:
 
-	- <code>ServerConfig.getChannelSet()</code> if an invalid destination is specified.
-	- <code>ServerConfig.getProperties()</code> if an invalid destination is specified.
-	- <code>Channel.send()</code> if no destination is specified for the message to send.
-	- <code>MessageAgent.destination</code> setter if the destination value is null or zero length.
-	- <code>Producer.send()</code> if no destination is specified for the Producer or message to send.
-	- <code>Consumer.subscribe()</code> if no destination is specified for the Consumer.
+	- `ServerConfig.getChannelSet()` if an invalid destination is specified.
+	- `ServerConfig.getProperties()` if an invalid destination is specified.
+	- `Channel.send()` if no destination is specified for the message to send.
+	- `MessageAgent.destination` setter if the destination value is null or zero length.
+	- `Producer.send()` if no destination is specified for the Producer or message to send.
+	- `Consumer.subscribe()` if no destination is specified for the Consumer.
 **/
 class InvalidDestinationError extends ChannelError {
 	//--------------------------------------------------------------------------

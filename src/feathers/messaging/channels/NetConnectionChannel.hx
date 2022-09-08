@@ -55,10 +55,10 @@ class NetConnectionChannel extends PollingChannel {
 	/**
 		Creates a new NetConnectionChannel instance.
 
-		The underlying NetConnection's <code>objectEncoding</code>
-		is set to <code>ObjectEncoding.AMF3</code> by default. It can be
-		changed manually by accessing the channel's <code>netConnection</code>
-		property. The global <code>NetConnection.defaultObjectEncoding</code>
+		The underlying NetConnection's `objectEncoding`
+		is set to `ObjectEncoding.AMF3` by default. It can be
+		changed manually by accessing the channel's `netConnection`
+		property. The global `NetConnection.defaultObjectEncoding`
 		setting is not honored by this channel.
 
 		@param id The id of this Channel.
@@ -393,8 +393,8 @@ class NetConnectionChannel extends PollingChannel {
 	The NetConnectionChannel creates this handler to manage
 	the results of a pending operation started when a message is sent.
 	The message handler is always associated with a MessageAgent
-	(the object that sent the message) and calls its <code>fault()</code>,
-	<code>acknowledge()</code>, or <code>message()</code> method as appopriate.
+	(the object that sent the message) and calls its `fault()`,
+	`acknowledge()`, or `message()` method as appopriate.
 **/
 private class NetConnectionMessageResponder extends MessageResponder {
 	//--------------------------------------------------------------------------

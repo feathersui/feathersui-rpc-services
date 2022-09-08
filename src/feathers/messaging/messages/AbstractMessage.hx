@@ -27,14 +27,14 @@ import openfl.utils.IDataOutput;
 /**
 	Abstract base class for all messages.
 	Messages have two customizable sections; headers and body.
-	The <code>headers</code> property provides access to specialized meta
+	The `headers` property provides access to specialized meta
 	information for a specific message instance.
-	The <code>headers</code> property is an associative array with the specific
+	The `headers` property is an associative array with the specific
 	header name as the key.
 
 	The body of a message contains the instance specific data that needs to be
 	delivered and processed by the remote destination.
-	The <code>body</code> is an object and is the payload for a message.
+	The `body` is an object and is the payload for a message.
 **/
 class AbstractMessage implements IMessage {
 	//--------------------------------------------------------------------------
@@ -284,11 +284,11 @@ class AbstractMessage implements IMessage {
 	/**
 		The time to live value of a message indicates how long the message
 		should be considered valid and deliverable.
-		This value works in conjunction with the <code>timestamp</code> value.
+		This value works in conjunction with the `timestamp` value.
 		Time to live is the number of milliseconds that this message remains
-		valid starting from the specified <code>timestamp</code> value.
-		For example, if the <code>timestamp</code> value is 04/05/05 1:30:45 PST
-		and the <code>timeToLive</code> value is 5000, then this message will
+		valid starting from the specified `timestamp` value.
+		For example, if the `timestamp` value is 04/05/05 1:30:45 PST
+		and the `timeToLive` value is 5000, then this message will
 		expire at 04/05/05 1:30:50 PST.
 		Once a message expires it will not be delivered to any other clients.
 	**/

@@ -33,30 +33,30 @@ class MessageFaultEvent extends Event {
 	/**
 		The FAULT event type; dispatched for a message fault.
 
-		The value of this constant is <code>"fault"</code>.
+		The value of this constant is `"fault"`.
 
 		The properties of the event object have the following values:
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>false</td></tr>   
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>false</td></tr>   
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>. </td></tr>
-		<tr><td><code>faultCode</code></td><td>Provides destination-specific
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`. </td></tr>
+		<tr><td>`faultCode`</td><td>Provides destination-specific
 		details of the failure.</td></tr>
-		<tr><td><code>faultDetail</code></td><td>Provides access to the
+		<tr><td>`faultDetail`</td><td>Provides access to the
 		destination-specific reason for the failure.</td></tr>
-		<tr><td><code>faultString</code></td><td>Provides access to the underlying
+		<tr><td>`faultString`</td><td>Provides access to the underlying
 		reason for the failure if the channel did not raise the failure itself.</td></tr>
-		<tr><td><code>message</code></td><td>The ErrorMessage for this event.</td></tr>    
-		<tr><td><code>rootCause</code></td><td> Provides access to the underlying reason
+		<tr><td>`message`</td><td>The ErrorMessage for this event.</td></tr>    
+		<tr><td>`rootCause`</td><td> Provides access to the underlying reason
 		for the failure, if one exists.</td></tr>         
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
 		</table>
 	**/

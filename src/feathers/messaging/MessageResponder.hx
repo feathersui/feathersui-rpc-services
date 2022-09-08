@@ -32,12 +32,12 @@ import flash.net.Responder;
 	The MessageResponder class handles a successful result or fault from a message
 	destination. For each message that a Channel sends, the Channel creates a
 	MessageResponder to handle the result. Upon a response, the Channel will
-	invoke either the <code>result()</code> or <code>status()</code> callback
+	invoke either the `result()` or `status()` callback
 	on the MessageResponder. MessageResponder subclasses should override these
 	methods to perform any necessary processing. For every response, whether a 
 	successful result or an error, the MessageResponder should invoke 
-	<code>acknowledge()</code> on its agent. If the response was a fault, the
-	MessageResponder should also invoke <code>fault()</code> on its agent.
+	`acknowledge()` on its agent. If the response was a fault, the
+	MessageResponder should also invoke `fault()` on its agent.
 **/
 class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	//--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 	/**
 		Starts a timer to monitor a request timeout. If the timer hits the
 		specified requestTimeout before a response is returned, 
-		<code>requestTimedOut()</code> is invoked and any subsequent 
+		`requestTimedOut()` is invoked and any subsequent 
 		response is ignored by this responder.
 
 		@param requestTimeout The amount of time in seconds to allow a request
@@ -167,7 +167,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 		Called by the channel that created this MessageResponder when a
 		response returns from the destination.
 		This method performs core result processing and then invokes the
-		<code>resultHandler()</code> method that subclasses may override to
+		`resultHandler()` method that subclasses may override to
 		perform any necessary custom processing.
 
 		@param message The result Message returned by the destination.
@@ -187,7 +187,7 @@ class MessageResponder #if (flash || openfl >= "9.2.0") extends Responder #end {
 		Called by the channel that created this MessageResponder when a fault
 		response returns from the destination.
 		This method performs core result processing and then invokes the
-		<code>statusHandler()</code> method that subclasses may override to
+		`statusHandler()` method that subclasses may override to
 		perform any necessary custom processing.
 
 		@param message The fault Message returned by the destination.

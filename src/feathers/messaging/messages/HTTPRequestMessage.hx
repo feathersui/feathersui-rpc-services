@@ -107,13 +107,13 @@ class HTTPRequestMessage extends AbstractMessage {
 		Indicates what method should be used for the request.
 		The only values allowed are:
 
-		- <code>HTTPRequestMessage.DELETE_METHOD</code>
-		- <code>HTTPRequestMessage.GET_METHOD</code>
-		- <code>HTTPRequestMessage.HEAD_METHOD</code>
-		- <code>HTTPRequestMessage.POST_METHOD</code>
-		- <code>HTTPRequestMessage.OPTIONS_METHOD</code>
-		- <code>HTTPRequestMessage.PUT_METHOD</code>
-		- <code>HTTPRequestMessage.TRACE_METHOD</code>
+		- `HTTPRequestMessage.DELETE_METHOD`
+		- `HTTPRequestMessage.GET_METHOD`
+		- `HTTPRequestMessage.HEAD_METHOD`
+		- `HTTPRequestMessage.POST_METHOD`
+		- `HTTPRequestMessage.OPTIONS_METHOD`
+		- `HTTPRequestMessage.PUT_METHOD`
+		- `HTTPRequestMessage.TRACE_METHOD`
 
 		The following example sets the `method` property:
 

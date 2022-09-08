@@ -24,7 +24,7 @@ import openfl.errors.Error;
 	The AbstractOperation class represents an individual method on a
 	service. An Operation can be called either by invoking the function of the
 	same name on the service or by accessing the Operation as a property on the
-	service and calling the <code>send()</code> method.
+	service and calling the `send()` method.
 
 	@see mx.rpc.AbstractService
 	@see mx.rpc.remoting.RemoteObject
@@ -64,8 +64,8 @@ class AbstractOperation extends AbstractInvoker {
 
 	/**
 		The arguments to pass to the Operation when it is invoked. If you call
-		the <code>send()</code> method with no parameters, an array based on
-		this object is sent. If you call the <code>send()</code> method with
+		the `send()` method with no parameters, an array based on
+		this object is sent. If you call the `send()` method with
 		parameters (or call the function directly on the service) those
 		parameters are used instead of whatever is stored in this property.
 		For RemoteObject Operations the associated argumentNames array determines
@@ -141,8 +141,8 @@ class AbstractOperation extends AbstractInvoker {
 		parameters.
 
 		@return AsyncToken object.
-		The same object is available in the <code>result</code> and
-		<code>fault</code> events from the <code>token</code> property.
+		The same object is available in the `result` and
+		`fault` events from the `token` property.
 	**/
 	/* abstract */
 	public function send(#if (haxe_ver >= 4.2)...args:Dynamic #else p1:Dynamic = null, p2:Dynamic = null, p3:Dynamic = null, p4:Dynamic = null,

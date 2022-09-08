@@ -25,7 +25,7 @@ interface IResponder {
 	/**
 		This method is called by a service when the return value
 		has been received. 
-		While <code>data</code> is typed as Object, it is often
+		While `data` is typed as Object, it is often
 		(but not always) an mx.rpc.events.ResultEvent object.
 
 		@param data Contains the information returned from the request.
@@ -34,7 +34,7 @@ interface IResponder {
 
 	/**
 		This method is called by a service when an error has been received.
-		While <code>info</code> is typed as Object it is often
+		While `info` is typed as Object it is often
 		(but not always) an mx.rpc.events.FaultEvent object.
 
 		@param info Contains the information about the error that occured.

@@ -74,7 +74,7 @@ class AsyncRequest extends Producer {
 
 	/**
 		Delegates to the fault to responder
-		@param    error message. The error codes and information are contained in the <code>headers</code> property
+		@param    error message. The error codes and information are contained in the `headers` property
 		@param    msg Message original message that caused the fault.
 	**/
 	@:dox(hide)
@@ -97,12 +97,12 @@ class AsyncRequest extends Producer {
 	}
 
 	/**
-		Returns <code>true</code> if there are any pending requests for the passed in message.
+		Returns `true` if there are any pending requests for the passed in message.
 
 		@param msg The message for which the existence of pending requests is checked.
 
-		@return Returns <code>true</code> if there are any pending requests for the 
-		passed in message; otherwise, returns <code>false</code>.
+		@return Returns `true` if there are any pending requests for the 
+		passed in message; otherwise, returns `false`.
 	**/
 	override public function hasPendingRequestForMessage(msg:IMessage):Bool {
 		var act:String = msg.messageId;

@@ -19,9 +19,9 @@ package feathers.messaging.messages;
 
 /**
 	RemotingMessages are used to send RPC requests to a remote endpoint.
-	These messages use the <code>operation</code> property to specify which
+	These messages use the `operation` property to specify which
 	method to call on the remote object.
-	The <code>destination</code> property indicates what object/service should be
+	The `destination` property indicates what object/service should be
 	used.
 **/
 @:meta(RemoteClass(alias = "flex.messaging.messages.RemotingMessage"))

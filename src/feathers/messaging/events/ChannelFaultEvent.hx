@@ -34,32 +34,32 @@ class ChannelFaultEvent extends ChannelEvent {
 	/**
 		The FAULT event type; indicates that the Channel faulted.
 
-		The value of this constant is <code>"channelFault"</code>.
+		The value of this constant is `"channelFault"`.
 
 		The properties of the event object have the following values:
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>false</td></tr>
-		<tr><td><code>channel</code></td><td>The Channel that generated this event.</td></tr>   
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>false</td></tr>
+		<tr><td>`channel`</td><td>The Channel that generated this event.</td></tr>   
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>. </td></tr>
-		<tr><td><code>faultCode</code></td><td>Provides destination-specific
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`. </td></tr>
+		<tr><td>`faultCode`</td><td>Provides destination-specific
 		details of the failure.</td></tr>
-		<tr><td><code>faultDetail</code></td><td>Provides access to the
+		<tr><td>`faultDetail`</td><td>Provides access to the
 		destination-specific reason for the failure.</td></tr>
-		<tr><td><code>faultString</code></td><td>Provides access to the underlying
+		<tr><td>`faultString`</td><td>Provides access to the underlying
 		reason for the failure if the channel did not raise the failure itself.</td></tr>
-		<tr><td><code>reconnecting</code></td><td> Indicates whether the channel
+		<tr><td>`reconnecting`</td><td> Indicates whether the channel
 		that generated this event is reconnecting.</td></tr> 
-		<tr><td><code>rootCause</code></td><td> Provides access to the underlying reason
+		<tr><td>`rootCause`</td><td> Provides access to the underlying reason
 		for the failure if the channel did not raise the failure itself.</td></tr>         
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
 		</table>
 	**/
@@ -107,10 +107,10 @@ class ChannelFaultEvent extends ChannelEvent {
 
 	/**
 		Constructs an instance of this event with the specified type.
-		Note that the <code>rejected</code> and <code>connected</code> arguments that correspond to properties
-		defined by the super-class <code>ChannelEvent</code> were not originally included in this method signature and have been 
+		Note that the `rejected` and `connected` arguments that correspond to properties
+		defined by the super-class `ChannelEvent` were not originally included in this method signature and have been 
 		added at the end of the argument list to preserve backward compatibility even though this signature differs from 
-		<code>ChannelEvent</code>'s constructor.
+		`ChannelEvent`'s constructor.
 
 		@param type The type of the event.
 
@@ -152,13 +152,13 @@ class ChannelFaultEvent extends ChannelEvent {
 
 	/**
 		Provides access to the destination-specific failure code. For more 
-		specific details see the <code>faultString</code> and 
-		<code>faultDetails</code> properties.
+		specific details see the `faultString` and 
+		`faultDetails` properties.
 
 		The format of the fault codes are provided by the remote destination, 
-		but will typically have the following form: <code>host.operation.error</code>
-		or <code>Channel.operation.error</code>.
-		For example, <code>"Server.Connect.Failed"</code> and <code>Channel.Connect.Failed</code>.
+		but will typically have the following form: `host.operation.error`
+		or `Channel.operation.error`.
+		For example, `"Server.Connect.Failed"` and `Channel.Connect.Failed`.
 
 		Channel.Connect.Failed is issued by the Channel class and its subclasses
 		(RTMPChannel, AMFChannel, HTTPChannel, and so forth) whenever there is an issue

@@ -44,8 +44,8 @@ import openfl.utils.Timer;
 	Channels are specific protocol-based conduits for messages sent between 
 	MessageAgents and remote destinations.
 	Preconfigured channels are obtained within the framework using the
-	<code>ServerConfig.getChannel()</code> method.
-	You can create a Channel directly using the <code>new</code> operator and
+	`ServerConfig.getChannel()` method.
+	You can create a Channel directly using the `new` operator and
 	add it to a ChannelSet directly.
 
 	Channels represent a physical connection to a remote endpoint.
@@ -130,7 +130,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		The credentials string that is passed via a CommandMessage to the server when the
 		Channel connects. Channels inherit the credentials of connected ChannelSets that
 		inherit their credentials from connected MessageAgents. 
-		<code>MessageAgent.setCredentials(username, password)</code> is generally used
+		`MessageAgent.setCredentials(username, password)` is generally used
 		to set credentials.
 	**/
 	private var credentials:String;
@@ -286,7 +286,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Provides access to the endpoint for this channel.
-		This value is calculated based on the value of the <code>uri</code>
+		This value is calculated based on the value of the `uri`
 		property.
 	**/
 	@:flash.property
@@ -534,7 +534,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		This alternate property for an endpoint URL is provided to match the
 		endpoint configuration attribute &quot;url&quot;. This property is
-		equivalent to the <code>uri</code> property.
+		equivalent to the `uri` property.
 	**/
 	@:dox(hide)
 	@:flash.property
@@ -582,7 +582,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Subclasses should override this method to apply any settings that may be
 		necessary for an individual channel.
-		Make sure to call <code>super.applySettings()</code> to apply common settings for the channel.
+		Make sure to call `super.applySettings()` to apply common settings for the channel.
 
 		This method is used primarily in Channel subclasses.
 
@@ -621,7 +621,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Applies the client load balancing urls if they exists. It randomly picks
 		a url from the set of client load balancing urls and sets it as the channel's
-		main url; then it assigns the rest of the urls as the <code>failoverURIs</code>
+		main url; then it assigns the rest of the urls as the `failoverURIs`
 		of the channel.
 
 		@param props The properties section of the XML fragment of the services-config.xml
@@ -652,8 +652,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Connects the ChannelSet to the Channel. If the Channel has not yet
 		connected to its endpoint, it attempts to do so.
-		Channel subclasses must override the <code>internalConnect()</code> 
-		method, and call the <code>connectSuccess()</code> method once the
+		Channel subclasses must override the `internalConnect()` 
+		method, and call the `connectSuccess()` method once the
 		underlying connection is established.
 
 		@param channelSet The ChannelSet to connect to the Channel.
@@ -718,8 +718,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		internally disconnect.
 
 		Channel subclasses need to override the 
-		<code>internalDisconnect()</code> method, and call the
-		<code>disconnectSuccess()</code> method when the underlying connection
+		`internalDisconnect()` method, and call the
+		`disconnectSuccess()` method when the underlying connection
 		has been terminated.
 
 		@param channelSet The ChannelSet to disconnect from the Channel.
@@ -776,7 +776,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Sends the specified message to its target destination.
-		Subclasses must override the <code>internalSend()</code> method to
+		Subclasses must override the `internalSend()` method to
 		perform the actual send.
 
 		@param agent The MessageAgent that is sending the message.
@@ -862,7 +862,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Internal hook for ChannelSet to assign credentials when it has authenticated
-		successfully via a direct <code>login(...)</code> call to the server.
+		successfully via a direct `login(...)` call to the server.
 	**/
 	private function internalSetCredentials(credentials:String):Void {
 		this.credentials = credentials;
@@ -887,8 +887,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Processes a failed internal connect and dispatches the 
-		<code>FAULT</code> event for the channel.
-		If the Channel has <code>failoverURI</code> values, it will
+		`FAULT` event for the channel.
+		If the Channel has `failoverURI` values, it will
 		attempt to reconnect automatically by trying these URI values in order until 
 		a connection is established or the available values are exhausted.
 
@@ -916,7 +916,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Processes a successful internal connect and dispatches the 
-		<code>CONNECT</code> event for the Channel.
+		`CONNECT` event for the Channel.
 	**/
 	private function connectSuccess():Void {
 		shutdownConnectTimer();
@@ -946,7 +946,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Handles a connect timeout by dispatching a ChannelFaultEvent. 
 		Subtypes may overide this to shutdown the current connect attempt but must 
-		call <code>super.connectTimeoutHandler(event)</code>.
+		call `super.connectTimeoutHandler(event)`.
 
 		@param event The timer event indicating that the connect timeout has been reached.
 	**/
@@ -962,9 +962,9 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Processes a successful internal disconnect and dispatches the 
-		<code>DISCONNECT</code> event for the Channel.
+		`DISCONNECT` event for the Channel.
 		If the disconnect is due to a network failure and the Channel has 
-		<code>failoverURI</code> values, it will attempt to reconnect automatically 
+		`failoverURI` values, it will attempt to reconnect automatically 
 		by trying these URI values in order until a connection is established or the 
 		available values are exhausted.
 
@@ -990,7 +990,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Processes a failed internal disconnect and dispatches the
-		<code>FAULT</code> event for the channel.
+		`FAULT` event for the channel.
 
 		@param event The ChannelFaultEvent for the failed disconnect.
 	**/
@@ -1033,7 +1033,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Returns the appropriate MessageResponder for the Channel's
-		<code>send()</code> method.
+		`send()` method.
 		Must be overridden.
 
 		@param agent The MessageAgent sending the message.
@@ -1099,7 +1099,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/** 
 		This method calculates the endpoint value based on the current
-		<code>uri</code>.
+		`uri`.
 	**/
 	private function calculateEndpoint():Void {
 		if (uri == null) {
@@ -1160,8 +1160,8 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 		Convenience method to test whether the Channel should attempt to
 		failover.
 
-		@return <code>true</code> if the Channel should try to failover;
-		otherwise <code>false</code>.
+		@return `true` if the Channel should try to failover;
+		otherwise `false`.
 	**/
 	private function shouldAttemptFailover():Bool {
 		return (_shouldBeConnected

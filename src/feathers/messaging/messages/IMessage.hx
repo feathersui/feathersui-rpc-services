@@ -106,11 +106,11 @@ interface IMessage {
 	/**
 		The time to live value of a message indicates how long the message
 		should be considered valid and deliverable.
-		This value works in conjunction with the <code>timestamp</code> value.
+		This value works in conjunction with the `timestamp` value.
 		Time to live is the number of milliseconds that this message remains
-		valid starting from the specified <code>timestamp</code> value.
-		For example, if the <code>timestamp</code> value is 04/05/05 1:30:45 PST
-		and the <code>timeToLive</code> value is 5000, then this message will
+		valid starting from the specified `timestamp` value.
+		For example, if the `timestamp` value is 04/05/05 1:30:45 PST
+		and the `timeToLive` value is 5000, then this message will
 		expire at 04/05/05 1:30:50 PST.
 		Once a message expires it will not be delivered to any other clients.
 	**/

@@ -34,26 +34,26 @@ class ChannelEvent extends Event {
 		The CONNECT event type; indicates that the Channel connected to its
 		endpoint.
 
-		The value of this constant is <code>"channelConnect"</code>.
+		The value of this constant is `"channelConnect"`.
 
 		The properties of the event object have the following values:
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>false</td></tr>
-		<tr><td><code>channel</code></td><td>The channel that generated this event.</td></tr>   
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>false</td></tr>
+		<tr><td>`channel`</td><td>The channel that generated this event.</td></tr>   
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>. </td></tr>
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`. </td></tr>
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
-		<tr><td><code>reconnecting</code></td><td> Indicates whether the channel
+		<tr><td>`reconnecting`</td><td> Indicates whether the channel
 		that generated this event is reconnecting.</td></tr>
-		<tr><td><code>rejected</code></td><td> Indicates whether the channel that
+		<tr><td>`rejected`</td><td> Indicates whether the channel that
 		generated this event was rejected. This would be true in the event that
 		the channel has been disconnected due to inactivity and should not attempt to
 		failover or connect on an alternate channel.</td></tr>   
@@ -65,26 +65,26 @@ class ChannelEvent extends Event {
 		The DISCONNECT event type; indicates that the Channel disconnected from its
 		endpoint.
 
-		The value of this constant is <code>"channelDisconnect"</code>.
+		The value of this constant is `"channelDisconnect"`.
 
 		The properties of the event object have the following values:
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>false</td></tr>
-		<tr><td><code>channel</code></td><td>The channel that generated this event.</td></tr>   
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>false</td></tr>
+		<tr><td>`channel`</td><td>The channel that generated this event.</td></tr>   
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>. </td></tr>
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`. </td></tr>
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
-		<tr><td><code>reconnecting</code></td><td> Indicates whether the channel
+		<tr><td>`reconnecting`</td><td> Indicates whether the channel
 		that generated this event is reconnecting.</td></tr>
-		<tr><td><code>rejected</code></td><td> Indicates whether the channel that
+		<tr><td>`rejected`</td><td> Indicates whether the channel that
 		generated this event was rejected. This would be true in the event that
 		the channel has been disconnected due to inactivity and should not attempt to
 		failover or connect on an alternate channel.</td></tr>   

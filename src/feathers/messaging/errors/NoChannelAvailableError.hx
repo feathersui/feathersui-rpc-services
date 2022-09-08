@@ -22,7 +22,7 @@ package feathers.messaging.errors;
 
 	This error is thrown by the following methods within the framework:
 
-	- <code>ChannelSet.send()</code> if the ChannelSet has no channels.
+	- `ChannelSet.send()` if the ChannelSet has no channels.
 **/
 class NoChannelAvailableError extends MessagingError {
 	//--------------------------------------------------------------------------

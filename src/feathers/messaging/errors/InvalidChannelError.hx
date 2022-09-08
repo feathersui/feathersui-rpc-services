@@ -23,7 +23,7 @@ package feathers.messaging.errors;
 	This error is thrown by the following methods/properties
 	within the framework:
 
-	- <code>ServerConfig.getChannel()</code> if the channel
+	- `ServerConfig.getChannel()` if the channel
 		can't be found based on channel id.
 **/
 class InvalidChannelError extends ChannelError {

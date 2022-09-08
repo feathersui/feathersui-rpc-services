@@ -83,12 +83,12 @@ class AbstractProducer extends MessageAgent {
 	// [Bindable(event="propertyChange")]
 
 	/**
-		If <code>true</code> the Producer automatically connects to its destination the
-		first time the <code>send()</code> method is called.
-		If <code>false</code> then the <code>connect()</code> method must be called explicitly to 
+		If `true` the Producer automatically connects to its destination the
+		first time the `send()` method is called.
+		If `false` then the `connect()` method must be called explicitly to 
 		establish a connection to the destination.
-		By default this property is <code>true</code>, but applications that need to operate
-		in an offline mode may set this to <code>false</code> to prevent the <code>send()</code> method
+		By default this property is `true`, but applications that need to operate
+		in an offline mode may set this to `false` to prevent the `send()` method
 		from connecting implicitly.
 	**/
 	@:flash.property
@@ -326,7 +326,7 @@ class AbstractProducer extends MessageAgent {
 	/**
 		Disconnects the Producer from its remote destination.
 		This method does not wait for outstanding network operations to complete.
-		After invoking <code>disconnect()</code>, the Producer will report that it is not
+		After invoking `disconnect()`, the Producer will report that it is not
 		connected and it will not receive any outstanding message acknowledgements or faults.
 		Disconnecting stops automatic reconnect attempts if they are running.
 	**/
@@ -346,9 +346,9 @@ class AbstractProducer extends MessageAgent {
 
 	/**
 		Connects the Producer to its target destination.
-		When a connection is established the <code>connected</code> property will
-		change to <code>true</code> and this property is bindable and generates
-		<code>PropertyChangeEvent</code>s.
+		When a connection is established the `connected` property will
+		change to `true` and this property is bindable and generates
+		`PropertyChangeEvent`s.
 		The internal TRIGGER_CONNECT_OPERATION CommandMessage that is sent will result
 		in an acknowledge or fault event depending upon whether the underlying channel
 		establishes its connection.

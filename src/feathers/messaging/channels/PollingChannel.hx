@@ -270,9 +270,9 @@ class PollingChannel extends Channel {
 
 	/**
 		Sends the specified message to its target destination.
-		Subclasses must override the <code>internalSend()</code> method to
+		Subclasses must override the `internalSend()` method to
 		perform the actual send.
-		<code>PollingChannel</code> will wrap outbound messages in poll requests if a poll
+		`PollingChannel` will wrap outbound messages in poll requests if a poll
 		is not currently outstanding.
 
 		@param agent The MessageAgent that is sending the message.
@@ -376,8 +376,8 @@ class PollingChannel extends Channel {
 	//--------------------------------------------------------------------------
 
 	/**
-		Enables polling based on the number of times <code>enablePolling()</code>
-		and <code>disablePolling()</code> have been invoked. If the net result is to enable
+		Enables polling based on the number of times `enablePolling()`
+		and `disablePolling()` have been invoked. If the net result is to enable
 		polling the channel will poll the server on behalf of connected MessageAgents.
 
 		Invoked automatically based upon subscribing or unsubscribing from a remote
@@ -390,8 +390,8 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-		Disables polling based on the number of times <code>enablePolling()</code>
-		and <code>disablePolling()</code> have been invoked. If the net result is to disable
+		Disables polling based on the number of times `enablePolling()`
+		and `disablePolling()` have been invoked. If the net result is to disable
 		polling the channel stops polling.
 
 		Invoked automatically based upon subscribing or unsubscribing from a remote
@@ -431,7 +431,7 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-		This method is invoked automatically when <code>disablePolling()</code>
+		This method is invoked automatically when `disablePolling()`
 		is called and it results in a net negative number of requests to poll.
 
 		mx_internal to allow the poll responder to shut down polling if a general,
@@ -523,7 +523,7 @@ class PollingChannel extends Channel {
 	}
 
 	/**
-		This method is invoked automatically when <code>enablePolling()</code>
+		This method is invoked automatically when `enablePolling()`
 		is called and it results in net positive number of requests to poll.
 	**/
 	private function startPolling():Void {

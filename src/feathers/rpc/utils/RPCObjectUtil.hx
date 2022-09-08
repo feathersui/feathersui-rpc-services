@@ -76,7 +76,7 @@ class RPCObjectUtil {
 		(mx.messaging.messages::AsyncMessage)#2.</pre>
 
 		This id is used to indicate when a circular reference occurs.
-		Properties of an object that are of the <code>Class</code> type will
+		Properties of an object that are of the `Class` type will
 		appear only as the assigned type.
 		For example a custom definition like the following:
 
@@ -85,7 +85,7 @@ class RPCObjectUtil {
 		public var clazz:Class;
 		}</pre>
 
-		With the <code>clazz</code> property assigned to <code>Date</code>
+		With the `clazz` property assigned to `Date`
 		will display as shown below:
 
 		<pre>
@@ -261,28 +261,28 @@ class RPCObjectUtil {
 
 		@param exclude Array of Strings specifying the property names that should be 
 		excluded from the returned result. For example, you could specify 
-		<code>["currentTarget", "target"]</code> for an Event object since these properties 
+		`["currentTarget", "target"]` for an Event object since these properties 
 		can cause the returned result to become large.
 
 		@param options An Object containing one or more properties 
 		that control the information returned by this method. 
 		The properties include the following:
 
-		- <code>includeReadOnly</code>: If <code>false</code>, 
+		- `includeReadOnly`: If `false`, 
 		exclude Object properties that are read-only. 
-		The default value is <code>true</code>.
-		- <code>includeTransient</code>: If <code>false</code>, 
-		exclude Object properties and variables that have <code>[Transient]</code> metadata.
-		The default value is <code>true</code>.
-		- <code>uris</code>: Array of Strings of all namespaces that should be included in the output.
+		The default value is `true`.
+		- `includeTransient`: If `false`, 
+		exclude Object properties and variables that have `[Transient]` metadata.
+		The default value is `true`.
+		- `uris`: Array of Strings of all namespaces that should be included in the output.
 		It does allow for a wildcard of "~~". 
 		By default, it is null, meaning no namespaces should be included. 
-		For example, you could specify <code>["mx_internal", "mx_object"]</code> 
-		or <code>["~~"]</code>.
+		For example, you could specify `["mx_internal", "mx_object"]` 
+		or `["~~"]`.
 
 		@return An Object containing the following properties:
-		- <code>name</code>: String containing the name of the class;
-		- <code>properties</code>: Sorted list of the property names of the specified object.
+		- `name`: String containing the name of the class;
+		- `properties`: Sorted list of the property names of the specified object.
 	**/
 	public static function getClassInfo(obj:Dynamic, excludes:Array<String> = null, options:Dynamic = null):Dynamic {
 		var length:Int = 0;

@@ -48,7 +48,7 @@ import feathers.messaging.config.ConfigMap;
 	per instance.
 
 	Channels are created within the framework using the
-	<code>ServerConfig.getChannel()</code> method. Channels can be constructed
+	`ServerConfig.getChannel()` method. Channels can be constructed
 	directly and assigned to a ChannelSet if desired.
 
 	Channels represent a physical connection to a remote endpoint.
@@ -57,12 +57,12 @@ import feathers.messaging.config.ConfigMap;
 	the same Channel to communicate with these destinations.
 
 	When used in polling mode, this Channel polls the server for new messages
-	based on the <code>polling-interval-seconds</code> property in the configuration file,
-	and this can be changed by setting the <code>pollingInterval</code> property.
+	based on the `polling-interval-seconds` property in the configuration file,
+	and this can be changed by setting the `pollingInterval` property.
 	The default value is 3 seconds.
-	To enable polling, the channel must be connected and the <code>polling-enabled</code>
-	property in the configuration file must be set to <code>true</code>, or the
-	<code>pollingEnabled</code> property of the Channel must be set to <code>true</code>.
+	To enable polling, the channel must be connected and the `polling-enabled`
+	property in the configuration file must be set to `true`, or the
+	`pollingEnabled` property of the Channel must be set to `true`.
 **/
 @:access(feathers.messaging.config.ServerConfig)
 class AMFChannel extends NetConnectionChannel {

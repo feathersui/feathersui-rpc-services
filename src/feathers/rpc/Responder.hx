@@ -40,7 +40,7 @@ class Responder implements IResponder {
 		received.
 
 		@param data Object containing the information about the error that occured. .
-		While <code>data</code> is typed as Object, it is often (but not always) 
+		While `data` is typed as Object, it is often (but not always) 
 		an mx.rpc.events.ResultEvent.
 	**/
 	public function result(data:Dynamic):Void {
@@ -51,7 +51,7 @@ class Responder implements IResponder {
 		This method is called by a service when an error has been received.
 
 		@param info Object containing the information returned from the request.
-		While <code>info</code> is typed as Object, it is often (but not always) 
+		While `info` is typed as Object, it is often (but not always) 
 		an mx.rpc.events.FaultEvent.
 	**/
 	public function fault(info:Dynamic):Void {

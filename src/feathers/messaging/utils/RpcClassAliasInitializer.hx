@@ -39,7 +39,7 @@ import feathers.data.ArrayCollection;
 class RpcClassAliasInitializer {
 	/**
 		In the event that an application does not use the Flex UI classes which processes
-		the <code>[RemoteClass(alias="")]</code> bootstrap code, this function registers all the
+		the `[RemoteClass(alias="")]` bootstrap code, this function registers all the
 		classes for AMF serialization needed by the Flex RPC library.
 	**/
 	public static function registerClassAliases():Void {

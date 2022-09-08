@@ -61,14 +61,14 @@ class AbstractInvoker extends EventDispatcher {
 	/**
 		Flag indicating whether the operation should keep its last call result for later access.
 
-		If set to true, the last call result will be accessible through <code>lastResult</code> bindable property.
+		If set to true, the last call result will be accessible through `lastResult` bindable property.
 
 		If set to false, the last call result will be cleared after the call,
 		and must be processed in the operation's result handler.
 		This will allow the result object to be garbage collected,
 		which is especially useful if the operation is only called a few times and returns a large result.
 
-		If not set, will use the <code>keepLastResult</code> value of its owning Service, if any, or the default value.
+		If not set, will use the `keepLastResult` value of its owning Service, if any, or the default value.
 
 		@see #lastResult
 		@see mx.rpc.AbstractService#keepLastResult
@@ -159,7 +159,7 @@ class AbstractInvoker extends EventDispatcher {
 	public var resultElementType:Class<Dynamic>;
 
 	/**
-		Event dispatched for binding when the <code>result</code> property
+		Event dispatched for binding when the `result` property
 		changes.
 	**/
 	private static final BINDING_RESULT:String = "resultForBinding";
@@ -188,14 +188,14 @@ class AbstractInvoker extends EventDispatcher {
 	}
 
 	/**
-		Sets the <code>result</code> property of the invoker to <code>null</code>.
+		Sets the `result` property of the invoker to `null`.
 		This is useful when the result is a large object that is no longer being
 		used.
 
-		@param fireBindingEvent Set to <code>true</code> if you want anything
+		@param fireBindingEvent Set to `true` if you want anything
 		bound to the result to update. Otherwise, set to
-		<code>false</code>.
-		The default value is <code>true</code>
+		`false`.
+		The default value is `true`
 	**/
 	public function clearResult(fireBindingEvent:Bool = true):Void {
 		if (fireBindingEvent)

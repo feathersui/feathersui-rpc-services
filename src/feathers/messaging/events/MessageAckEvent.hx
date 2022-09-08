@@ -34,26 +34,26 @@ class MessageAckEvent extends MessageEvent {
 	/**
 		The ACKNOWLEDGE event type; dispatched upon receipt of an acknowledgement.
 
-		The value of this constant is <code>"acknowledge"</code>.
+		The value of this constant is `"acknowledge"`.
 
 		The properties of the event object have the following values:
 
 		<table class="innertable">
 		<tr><th>Property</th><th>Value</th></tr>
-		<tr><td><code>acknowledgeMessage</code></td><td> Utility property to get
+		<tr><td>`acknowledgeMessage`</td><td> Utility property to get
 		the message property from MessageEvent as an AcknowledgeMessage.</td></tr> 
-		<tr><td><code>bubbles</code></td><td>false</td></tr>
-		<tr><td><code>cancelable</code></td><td>false</td></tr>
-		<tr><td><code>currentTarget</code></td><td>The Object that defines the 
+		<tr><td>`bubbles`</td><td>false</td></tr>
+		<tr><td>`cancelable`</td><td>false</td></tr>
+		<tr><td>`currentTarget`</td><td>The Object that defines the 
 		event listener that handles the event. For example, if you use 
-		<code>myButton.addEventListener()</code> to register an event listener, 
-		myButton is the value of the <code>currentTarget</code>.</td></tr>
-		<tr><td><code>correlate</code></td><td> The original Message correlated with
+		`myButton.addEventListener()` to register an event listener, 
+		myButton is the value of the `currentTarget`.</td></tr>
+		<tr><td>`correlate`</td><td> The original Message correlated with
 		this acknowledgement.</td></tr>
-		<tr><td><code>message</code></td><td>The Message associated with this event.</td></tr>
-		<tr><td><code>target</code></td><td>The Object that dispatched the event; 
+		<tr><td>`message`</td><td>The Message associated with this event.</td></tr>
+		<tr><td>`target`</td><td>The Object that dispatched the event; 
 		it is not always the Object listening for the event. 
-		Use the <code>currentTarget</code> property to always access the 
+		Use the `currentTarget` property to always access the 
 		Object listening for the event.</td></tr>
 		</table>
 	**/

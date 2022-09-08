@@ -100,7 +100,7 @@ class RPCURLUtil {
 		from the root URL are prepended.
 		Otherwise, the host, port, and path are prepended.
 
-		@param rootURL URL used to resolve the URL specified by the <code>url</code> parameter, if <code>url</code> is relative.
+		@param rootURL URL used to resolve the URL specified by the `url` parameter, if `url` is relative.
 		@param url URL to convert.
 
 		@return Fully-qualified URL.
@@ -140,7 +140,7 @@ class RPCURLUtil {
 
 		@param url The URL to analyze.
 
-		@return <code>true</code> if the URL starts with "http://", "https://", or "rtmp://".
+		@return `true` if the URL starts with "http://", "https://", or "rtmp://".
 	**/
 	public static function isHttpURL(url:String):Bool {
 		return url != null && (url.indexOf("http://") == 0 || url.indexOf("https://") == 0);
@@ -151,7 +151,7 @@ class RPCURLUtil {
 
 		@param url The URL to analyze.
 
-		@return <code>true</code> if the URL starts with "https://".
+		@return `true` if the URL starts with "https://".
 	**/
 	public static function isHttpsURL(url:String):Bool {
 		return url != null && url.indexOf("https://") == 0;
@@ -263,7 +263,7 @@ class RPCURLUtil {
 		Returns a new String with the port and server tokens replaced with
 		the port and server from the currently running application.
 
-		@param url String containing the <code>SERVER_NAME_TOKEN</code> and/or <code>SERVER_NAME_PORT</code>
+		@param url String containing the `SERVER_NAME_TOKEN` and/or `SERVER_NAME_PORT`
 		which should be replaced by the port and server from the application.
 
 		@return The URI with the port and server replaced.
@@ -313,7 +313,7 @@ class RPCURLUtil {
 
 		@param url A url string. 
 
-		@return <code>true</code> if the url contains server.name and server.port tokens.
+		@return `true` if the url contains server.name and server.port tokens.
 	**/
 	public static function hasTokens(url:String):Bool {
 		if (url == null || url == "")
@@ -326,10 +326,10 @@ class RPCURLUtil {
 	}
 
 	/**
-		If the <code>LoaderConfig.url</code> property is not available, the <code>replaceTokens()</code> method will not 
+		If the `LoaderConfig.url` property is not available, the `replaceTokens()` method will not 
 		replace the server name and port properties properly.
 
-		@return <code>true</code> if the <code>LoaderConfig.url</code> property is not available. Otherwise, <code>false</code>.
+		@return `true` if the `LoaderConfig.url` property is not available. Otherwise, `false`.
 	**/
 	public static function hasUnresolvableTokens():Bool {
 		return LoaderConfig.url != null;
@@ -354,13 +354,13 @@ class RPCURLUtil {
 	}
 
 	/**
-		The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
+		The pattern in the String that is passed to the `replaceTokens()` method that 
 		is replaced by the application's server name.
 	**/
 	public static final SERVER_NAME_TOKEN:String = "{server.name}";
 
 	/**
-		The pattern in the String that is passed to the <code>replaceTokens()</code> method that 
+		The pattern in the String that is passed to the `replaceTokens()` method that 
 		is replaced by the application's port.
 	**/
 	public static final SERVER_PORT_TOKEN:String = "{server.port}";

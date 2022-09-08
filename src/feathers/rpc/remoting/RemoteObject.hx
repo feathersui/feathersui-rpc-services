@@ -153,8 +153,8 @@ class RemoteObject extends AbstractService {
 	// [Inspectable(defaultValue="false", category="General")]
 
 	/**
-		If <code>true</code>, a busy cursor is displayed while a service is executing. The default
-		value is <code>false</code>.
+		If `true`, a busy cursor is displayed while a service is executing. The default
+		value is `false`.
 	**/
 	@:flash.property
 	public var showBusyCursor(get, set):Bool;
@@ -195,9 +195,9 @@ class RemoteObject extends AbstractService {
 		The function takes an array of parameters and returns the potentially altered array.
 
 		The function definition should look like:
-		<code>
+		`
 		function myParametersFunction(parameters:Array):Array
-		</code>
+		`
 	**/
 	public var convertParametersHandler:Function;
 
@@ -206,9 +206,9 @@ class RemoteObject extends AbstractService {
 		a hook to process the results of an operation before notifying the result handlers.
 
 		The function definition should look like:
-		<code>
+		`
 		function myConvertResultsFunction(result:*, operation:AbstractOperation):*
-		</code>
+		`
 
 		It is passed the result just after the makeObjectsBindable conversion has been done
 		but before the result event is created.
@@ -246,12 +246,12 @@ class RemoteObject extends AbstractService {
 
 	/**
 		Returns an Operation of the given name. If the Operation wasn't
-		created beforehand, a new <code>mx.rpc.remoting.Operation</code> is
+		created beforehand, a new `mx.rpc.remoting.Operation` is
 		created during this call. Operations are usually accessible by simply
 		naming them after the service variable
-		(<code>myService.someOperation</code>), but if your Operation name
+		(`myService.someOperation`), but if your Operation name
 		happens to match a defined method on the service
-		(like <code>setCredentials</code>), you can use this method to get the
+		(like `setCredentials`), you can use this method to get the
 		Operation instead.
 
 		@param name Name of the Operation.

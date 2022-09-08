@@ -31,7 +31,7 @@ class ErrorMessage extends AcknowledgeMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-		If a message may not have been delivered, the <code>faultCode</code> will
+		If a message may not have been delivered, the `faultCode` will
 		contain this constant. 
 	**/
 	public static final MESSAGE_DELIVERY_IN_DOUBT:String = "Client.Error.DeliveryInDoubt";

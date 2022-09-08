@@ -19,7 +19,7 @@ package feathers.rpc;
 
 /**
 	Concurrency is set via MXML based access to RPC services to indicate how to handle multiple
-	calls to the same service. The default concurrency value is <code>multiple</code>.
+	calls to the same service. The default concurrency value is `multiple`.
 **/
 final class Concurrency {
 	/**

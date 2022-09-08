@@ -27,7 +27,7 @@ import feathers.rpc.events.FaultEvent;
 	An Operation used specifically by RemoteObjects. An Operation is an individual method on a service.
 	An Operation can be called either by invoking the
 	function of the same name on the service or by accessing the Operation as a property on the service and
-	calling the <code>send()</code> method.
+	calling the `send()` method.
 **/
 @:access(feathers.rpc.remoting.RemoteObject)
 class Operation extends AbstractOperation {

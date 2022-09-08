@@ -75,7 +75,7 @@ class AbstractService implements IEventDispatcher {
 		Provides access to the ChannelSet used by the service. The
 		ChannelSet can be manually constructed and assigned, or it will be 
 		dynamically created to use the configured Channels for the
-		<code>destination</code> for this service.
+		`destination` for this service.
 	**/
 	@:flash.property
 	public var channelSet(get, set):ChannelSet;
@@ -219,9 +219,9 @@ class AbstractService implements IEventDispatcher {
 	/**
 		Flag indicating whether the service's operations should keep their last call result for later access.
 
-		Setting this flag at the service level will set <code>keepLastResult</code> for each operation, unless explicitly  set in the operation.
+		Setting this flag at the service level will set `keepLastResult` for each operation, unless explicitly  set in the operation.
 
-		If set to true or not set, each operation's last call result will be accessible through its <code>lastResult</code> bindable property.
+		If set to true or not set, each operation's last call result will be accessible through its `lastResult` bindable property.
 
 		If set to false, each operation's last call result will be cleared after the call,
 		and must be processed in the operation's result handler.
@@ -350,9 +350,9 @@ class AbstractService implements IEventDispatcher {
 		Returns an Operation of the given name. If the Operation wasn't
 		created beforehand, subclasses are responsible for creating it during
 		this call. Operations are usually accessible by simply naming them after
-		the service variable (<code>myService.someOperation</code>), but if your
+		the service variable (`myService.someOperation`), but if your
 		Operation name happens to match a defined method on the service (like
-		<code>setCredentials</code>), you can use this method to get the
+		`setCredentials`), you can use this method to get the
 		Operation instead.
 		@param name Name of the Operation.
 		@return Operation that executes for this name.

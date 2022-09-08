@@ -81,7 +81,7 @@ class ConfigMap extends flash.utils.Proxy {
 
 		@param name Typically a string containing the name of the property,
 		or possibly a QName where the property name is found by 
-		inspecting the <code>localName</code> property.
+		inspecting the `localName` property.
 
 		@return The value of the property.
 	**/
@@ -114,7 +114,7 @@ class ConfigMap extends flash.utils.Proxy {
 
 		@param name Typically a string containing the name of the property,
 		or possibly a QName where the property name is found by 
-		inspecting the <code>localName</code> property.
+		inspecting the `localName` property.
 
 		@return A Boolean indicating if the property was deleted.
 	**/
@@ -141,8 +141,8 @@ class ConfigMap extends flash.utils.Proxy {
 		@param name The property name that should be tested 
 		for existence.
 
-		@return If the property exists, <code>true</code>; 
-		otherwise <code>false</code>.
+		@return If the property exists, `true`; 
+		otherwise `false`.
 
 		@see flash.utils.Proxy#hasProperty()
 	**/

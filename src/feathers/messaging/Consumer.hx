@@ -84,7 +84,7 @@ class Consumer extends AbstractConsumer {
 		This is an expression that is passed to the destination which uses it
 		to filter the messages delivered to the Consumer.
 
-		Before a call to the <code>subscribe()</code> method, this property 
+		Before a call to the `subscribe()` method, this property 
 		can be set with no side effects. 
 		After the Consumer has subscribed to its destination, changing this 
 		value has the side effect of updating the Consumer's subscription to 

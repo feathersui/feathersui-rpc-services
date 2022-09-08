@@ -34,7 +34,7 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	//--------------------------------------------------------------------------
 
 	/**
-		Messages sent by a MessageAgent with a defined <code>subtopic</code>
+		Messages sent by a MessageAgent with a defined `subtopic`
 		property indicate their target subtopic in this header.
 	**/
 	public static final SUBTOPIC_HEADER:String = "DSSubtopic";
@@ -58,9 +58,9 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 		In addition to this default behavior, the body and the headers for the
 		message may also be passed to the constructor as a convenience.
 		An example of this invocation approach for the body is:
-		<code>var msg:AsyncMessage = new AsyncMessage("Body text");</code>
+		`var msg:AsyncMessage = new AsyncMessage("Body text");`
 		An example that provides both the body and headers is:
-		<code>var msg:AsyncMessage = new AsyncMessage("Body text", {"customerHeader":"customValue"});</code>
+		`var msg:AsyncMessage = new AsyncMessage("Body text", {"customerHeader":"customValue"});`
 
 		@param body The optional body to assign to the message.
 
@@ -92,7 +92,7 @@ class AsyncMessage extends AbstractMessage implements ISmallMessage {
 	/**
 		Provides access to the correlation id of the message.
 		Used for acknowledgement and for segmentation of messages.
-		The <code>correlationId</code> contains the <code>messageId</code> of the
+		The `correlationId` contains the `messageId` of the
 		previous message that this message refers to.
 
 		@see feathers.messaging.messages.AbstractMessage#messageId

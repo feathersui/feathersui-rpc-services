@@ -281,7 +281,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Indicates whether this MessageAgent is currently connected to its
-		destination via its ChannelSet. The <code>propertyChange</code> event is dispatched when
+		destination via its ChannelSet. The `propertyChange` event is dispatched when
 		this property changes.
 	**/
 	@:flash.property
@@ -468,7 +468,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		Invoked by a MessageResponder upon receiving a result for a sent
 		message. Subclasses may override this method if they need to perform
 		custom acknowledgement processing, but must invoke
-		<code>super.acknowledge()</code> as well. This method dispatches a
+		`super.acknowledge()` as well. This method dispatches a
 		MessageAckEvent.
 
 		@param ackMsg The AcknowledgMessage returned.
@@ -534,7 +534,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Invoked by a MessageResponder upon receiving a fault for a sent message.
 		Subclasses may override this method if they need to perform custom fault
-		processing, but must invoke <code>super.fault()</code> as well. This
+		processing, but must invoke `super.fault()` as well. This
 		method dispatchs a MessageFaultEvent.
 
 		@param errMsg The ErrorMessage.
@@ -568,7 +568,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Handles a CONNECT ChannelEvent. Subclasses that need to perform custom
 		processing should override this method, and invoke
-		<code>super.channelConnectHandler()</code>.
+		`super.channelConnectHandler()`.
 
 		@param event The ChannelEvent.
 	**/
@@ -592,7 +592,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Handles a DISCONNECT ChannelEvent. Subclasses that need to perform
 		custom processing should override this method, and invoke
-		<code>super.channelDisconnectHandler()</code>.
+		`super.channelDisconnectHandler()`.
 
 		@param event The ChannelEvent.
 	**/
@@ -610,7 +610,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	/**
 		Handles a ChannelFaultEvent. Subclasses that need to perform custom
 		processing should override this method, and invoke
-		<code>super.channelFaultHandler()</code>.
+		`super.channelFaultHandler()`.
 
 		@param The ChannelFaultEvent
 	**/
@@ -645,7 +645,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		Logs the MessageAgent out from its remote destination.
 		Logging out of a destination applies to everything connected using the same ChannelSet
 		as specified in the server configuration. For example, if several DataService components
-		are connected over an RTMP channel and <code>logout()</code> is invoked on one of them,
+		are connected over an RTMP channel and `logout()` is invoked on one of them,
 		all other client components that are connected using the same ChannelSet are also logged out.
 
 		**Note:** Adobe recommends that you use the mx.messaging.ChannelSet.logout() method
@@ -740,7 +740,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 
 		@param msg The message for which the existence of pending requests is checked.
 
-		@return Returns <code>true</code> if there are any pending requests for the
+		@return Returns `true` if there are any pending requests for the
 		passed in message.
 	**/
 	public function hasPendingRequestForMessage(msg:IMessage):Bool {
@@ -755,7 +755,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 
 	/**
 		Internal hook for ChannelSet to assign credentials when it has authenticated
-		successfully via a direct <code>login(...)</code> call to the server or logged
+		successfully via a direct `login(...)` call to the server or logged
 		out directly.
 	**/
 	private function internalSetCredentials(credentials:String):Void {
@@ -835,7 +835,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 	}
 
 	/**
-		Used to automatically initialize the <code>channelSet</code> property for the
+		Used to automatically initialize the `channelSet` property for the
 		MessageAgent before it connects for the first time.
 		Subtypes may override to perform custom initialization.
 

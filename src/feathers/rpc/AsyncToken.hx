@@ -97,6 +97,9 @@ class AsyncToken extends EventDispatcher {
 		return _responders;
 	}
 
+	private var _resultEvent:ResultEvent;
+	private var _faultEvent:FaultEvent;
+
 	//----------------------------------
 	// result
 	//----------------------------------
@@ -137,6 +140,21 @@ class AsyncToken extends EventDispatcher {
 			_responders = [];
 
 		_responders.push(responder);
+
+		// if a responder is added after the token has applied a result/fault,
+		// we should tell the responder about what already happened.
+		// in Flash, this can't happen because results of async http/file loads
+		// are queued until after all code has run for the current frame.
+		// however, OpenFL doesn't queue anything, and local file loads can
+		// complete while other code is still running. OpenFL should probably
+		// cache the result until the next frame too, but even if that is
+		// eventually changed, we need to deal with how it works today.
+		if (_resultEvent != null) {
+			responder.result(_resultEvent);
+		}
+		if (_faultEvent != null) {
+			responder.fault(_faultEvent);
+		}
 	}
 
 	/**
@@ -149,6 +167,7 @@ class AsyncToken extends EventDispatcher {
 	}
 
 	public function applyFault(event:FaultEvent):Void {
+		_faultEvent = event;
 		if (_responders != null) {
 			for (i in 0..._responders.length) {
 				var responder = _responders[i];
@@ -160,6 +179,7 @@ class AsyncToken extends EventDispatcher {
 	}
 
 	public function applyResult(event:ResultEvent):Void {
+		_resultEvent = event;
 		setResult(event.result);
 
 		if (_responders != null) {

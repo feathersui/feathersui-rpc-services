@@ -4,7 +4,7 @@
   "license": "Apache",
   "tags": ["openfl", "feathersui", "rpc", "remoteobject", "amf"],
   "description": "RPC services for Feathers UI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "classPath": "src",
   "dependencies": {
     "openfl": "",
@@ -12,5 +12,5 @@
     "amfio": ""
   },
   "contributors": ["bowlerhat"],
-  "releasenote": "Initial release"
+  "releasenote": "AsyncToken late responder fix"
 }

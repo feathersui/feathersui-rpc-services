@@ -27,7 +27,7 @@ import feathers.rpc.events.FaultEvent;
 import feathers.rpc.events.InvokeEvent;
 import feathers.rpc.events.ResultEvent;
 import haxe.Constraints.Function;
-import openfl.errors.Error;
+import haxe.Exception;
 import openfl.events.Event;
 import openfl.events.EventDispatcher;
 
@@ -324,9 +324,9 @@ class AbstractInvoker extends EventDispatcher {
 			var errorText:String = 'Couldn\'t establish a connection to \'${asyncRequest.destination}\'';
 			fault = new Fault("InvokeFailed", Std.string(e), errorText);
 			new AsyncDispatcher(dispatchRpcEvent, [FaultEvent.createEvent(fault, token, message)], 10);
-		} catch (e2:Error) {
+		} catch (e:Exception) {
 			// _log.warn(e2.toString());
-			fault = new Fault("InvokeFailed", e2.message);
+			fault = new Fault("InvokeFailed", e.message);
 			new AsyncDispatcher(dispatchRpcEvent, [FaultEvent.createEvent(fault, token, message)], 10);
 		}
 

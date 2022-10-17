@@ -23,6 +23,7 @@ import feathers.messaging.messages.AcknowledgeMessage;
 import feathers.messaging.messages.CommandMessage;
 import feathers.messaging.messages.ErrorMessage;
 import feathers.messaging.messages.IMessage;
+import haxe.Exception;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.events.Event;
@@ -310,7 +311,7 @@ class PollingChannel extends Channel {
 
 			try {
 				internalSend(new PollCommandMessageResponder(null, msg, this, _log));
-			} catch (e:Error) {
+			} catch (e:Exception) {
 				// If there was a problem stop polling.
 				stopPolling();
 				throw e;
@@ -511,7 +512,7 @@ class PollingChannel extends Channel {
 			try {
 				internalSend(new PollCommandMessageResponder(null, poll, this, _log));
 				pollOutstanding = true;
-			} catch (e:Error) {
+			} catch (e:Exception) {
 				// If there was a problem stop polling.
 				stopPolling();
 				throw e;

@@ -21,6 +21,7 @@ import openfl.Lib;
 #if flash
 import flash.utils.QName;
 import flash.errors.Error;
+import haxe.Exception;
 #end
 
 /**
@@ -415,7 +416,7 @@ class RPCObjectUtil {
 						try {
 							Reflect.field(obj, qName.localName); // access the property to ensure it is supported
 							// propertyNames.push();
-						} catch (e:Error) {
+						} catch (e:Exception) {
 							// don't keep property name
 						}
 					} else {
@@ -426,7 +427,7 @@ class RPCObjectUtil {
 								try {
 									Reflect.field(obj, qName.localName);
 									propertyNames.push(qName);
-								} catch (e:Error) {
+								} catch (e:Exception) {
 									// don't keep property name
 								}
 							}
@@ -437,7 +438,7 @@ class RPCObjectUtil {
 					try {
 						Reflect.field(obj, qName.localName);
 						propertyNames.push(qName);
-					} catch (e:Error) {
+					} catch (e:Exception) {
 						// don't keep property name
 					}
 				}
@@ -548,7 +549,7 @@ class RPCObjectUtil {
 					}
 				}
 			}
-		} catch (e:Error) {}
+		} catch (e:Exception) {}
 
 		return result;
 	}

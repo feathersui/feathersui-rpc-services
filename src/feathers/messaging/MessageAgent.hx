@@ -483,7 +483,7 @@ class MessageAgent extends EventDispatcher /*implements IMXMLObject*/ {
 		// 	try {
 		// 		var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(ackMsg);
 		// 		_log.debug(mpiutil.prettyPrint());
-		// 	} catch (e:Error) {
+		// 	} catch (e:Exception) {
 		// 		_log.debug("Could not get message performance information for: " + msg.toString());
 		// 	}
 		// }

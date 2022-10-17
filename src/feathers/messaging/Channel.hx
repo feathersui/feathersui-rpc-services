@@ -1181,7 +1181,7 @@ class Channel extends EventDispatcher /*implements IMXMLObject*/ {
 			// {
 			// 	acs = getDefinitionByName("mx.messaging.AdvancedChannelSet") as Class;
 			// }
-			// catch (ignore:Error) {}
+			// catch (ignore:Exception) {}
 			var duration:Int = -1;
 			// if (acs != null)
 			// {

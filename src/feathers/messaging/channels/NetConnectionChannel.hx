@@ -17,26 +17,27 @@
 
 package feathers.messaging.channels;
 
+import feathers.messaging.events.ChannelEvent;
+import feathers.messaging.events.ChannelFaultEvent;
 import feathers.messaging.events.MessageEvent;
+import feathers.messaging.messages.AcknowledgeMessage;
+import feathers.messaging.messages.AsyncMessage;
+import feathers.messaging.messages.ErrorMessage;
+import feathers.messaging.messages.IMessage;
 import feathers.messaging.messages.ISmallMessage;
 import feathers.messaging.messages.MessagePerformanceInfo;
 import feathers.messaging.messages.MessagePerformanceUtils;
+import haxe.Exception;
 import openfl.errors.Error;
-import openfl.net.ObjectEncoding;
-import feathers.messaging.events.ChannelEvent;
-import feathers.messaging.events.ChannelFaultEvent;
-import openfl.events.ErrorEvent;
 import openfl.events.AsyncErrorEvent;
+import openfl.events.ErrorEvent;
 import openfl.events.IOErrorEvent;
-import openfl.events.SecurityErrorEvent;
-import feathers.messaging.messages.ErrorMessage;
-import feathers.messaging.messages.AcknowledgeMessage;
-import feathers.messaging.messages.AsyncMessage;
-import feathers.messaging.messages.IMessage;
-import openfl.events.TimerEvent;
 import openfl.events.NetStatusEvent;
+import openfl.events.SecurityErrorEvent;
+import openfl.events.TimerEvent;
 #if flash
 import flash.net.NetConnection;
+import openfl.net.ObjectEncoding;
 #elseif (openfl >= "9.2.0")
 import feathers.net.AMFNetConnection;
 #end
@@ -220,6 +221,8 @@ class NetConnectionChannel extends PollingChannel {
 			// a URL problem, so add it all of the time even though this means we'll see it
 			// twice for the sandbox violation.
 			throw new Error(e.message + "  url: '" + url + "'", e.errorID);
+		} catch (e:Exception) {
+			throw new Error(e.message + "  url: '" + url + "'");
 		}
 	}
 
@@ -291,7 +294,7 @@ class NetConnectionChannel extends PollingChannel {
 		// 		try {
 		// 			var mpiutil:MessagePerformanceUtils = new MessagePerformanceUtils(msg);
 		// 			_log.debug(mpiutil.prettyPrint());
-		// 		} catch (e:Error) {
+		// 		} catch (e:Exception) {
 		// 			_log.debug("Could not get message performance information for: " + msg.toString());
 		// 		}
 		// 	}

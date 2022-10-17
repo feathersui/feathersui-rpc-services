@@ -17,7 +17,6 @@
 
 package feathers.rpc.http;
 
-import haxe.Json;
 import feathers.data.ArrayCollection;
 import feathers.messaging.ChannelSet;
 import feathers.messaging.channels.DirectHTTPChannel;
@@ -31,6 +30,8 @@ import feathers.rpc.utils.RPCObjectUtil;
 import feathers.rpc.utils.RPCURLUtil;
 import feathers.rpc.xml.SimpleXMLDecoder;
 import feathers.rpc.xml.SimpleXMLEncoder;
+import haxe.Exception;
+import haxe.Json;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 #if flash
@@ -762,7 +763,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				cast(tmp, XMLDocument).ignoreWhite = true;
 				try {
 					cast(tmp, XMLDocument).parseXML(Std.string(body));
-				} catch (parseError:Error) {
+				} catch (parseError:Exception) {
 					var fault:Fault = new Fault(ERROR_DECODING, parseError.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;
@@ -785,8 +786,8 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 						decoded = xmlDecode(tmp);
 						if (decoded == null) {
 							msg = "xmlDecode returned null";
-							var fault1:Fault = new Fault(ERROR_DECODING, msg);
-							dispatchRpcEvent(FaultEvent.createEvent(fault1, token, message));
+							var fault:Fault = new Fault(ERROR_DECODING, msg);
+							dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 						}
 						#else
 						throw new Error("xmlDecode is not available on this target");
@@ -798,8 +799,8 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 
 						if (decoded == null) {
 							msg = "Default decoder could not decode result";
-							var fault2:Fault = new Fault(ERROR_DECODING, msg);
-							dispatchRpcEvent(FaultEvent.createEvent(fault2, token, message));
+							var fault:Fault = new Fault(ERROR_DECODING, msg);
+							dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 						}
 					}
 
@@ -832,9 +833,9 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				#if flash
 				try {
 					_result = new flash.xml.XML(Std.string(body));
-				} catch (error:Error) {
-					var fault3:Fault = new Fault(ERROR_DECODING, error.message);
-					dispatchRpcEvent(FaultEvent.createEvent(fault3, token, message));
+				} catch (error:Exception) {
+					var fault:Fault = new Fault(ERROR_DECODING, error.message);
+					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;
 				}
 				#else
@@ -843,17 +844,17 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 			} else if (resultFormat == RESULT_FORMAT_HAXE_XML) {
 				try {
 					_result = Xml.parse(Std.string(body));
-				} catch (error:Error) {
-					var fault4:Fault = new Fault(ERROR_DECODING, error.message);
-					dispatchRpcEvent(FaultEvent.createEvent(fault4, token, message));
+				} catch (error:Exception) {
+					var fault:Fault = new Fault(ERROR_DECODING, error.message);
+					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;
 				}
 			} else if (resultFormat == RESULT_FORMAT_JSON) {
 				try {
 					_result = Json.parse(Std.string(body));
-				} catch (error:Error) {
-					var fault5:Fault = new Fault(ERROR_DECODING, error.message);
-					dispatchRpcEvent(FaultEvent.createEvent(fault5, token, message));
+				} catch (error:Dynamic) {
+					var fault:Fault = new Fault(ERROR_DECODING, error.message);
+					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;
 				}
 			} else if (resultFormat == RESULT_FORMAT_FLASHVARS) {

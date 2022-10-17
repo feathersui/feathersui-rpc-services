@@ -4,7 +4,7 @@
   "license": "Apache",
   "tags": ["openfl", "feathersui", "rpc", "remoteobject", "amf"],
   "description": "RPC services for Feathers UI",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "classPath": "src",
   "dependencies": {
     "openfl": "",

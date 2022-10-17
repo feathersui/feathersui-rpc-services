@@ -12,5 +12,5 @@
     "amfio": ""
   },
   "contributors": ["bowlerhat"],
-  "releasenote": "AsyncToken late responder fix"
+  "releasenote": "Catch haxe.Exception instead of openfl.errors.Error fix"
 }

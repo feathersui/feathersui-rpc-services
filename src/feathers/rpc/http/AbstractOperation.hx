@@ -762,7 +762,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				var tmp:Dynamic = new XMLDocument();
 				cast(tmp, XMLDocument).ignoreWhite = true;
 				try {
-					cast(tmp, XMLDocument).parseXML(Std.string(body));
+					cast(tmp, XMLDocument).parseXML((body : String));
 				} catch (parseError:Exception) {
 					var fault:Fault = new Fault(ERROR_DECODING, parseError.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
@@ -771,7 +771,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				#else
 				var tmp:Xml = null;
 				try {
-					tmp = Xml.parse(Std.string(body));
+					tmp = Xml.parse((body : String));
 				} catch (parseError:Dynamic) {
 					var fault:Fault = new Fault(ERROR_DECODING, parseError.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
@@ -832,7 +832,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 			} else if (resultFormat == RESULT_FORMAT_E4X) {
 				#if flash
 				try {
-					_result = new flash.xml.XML(Std.string(body));
+					_result = new flash.xml.XML((body : String));
 				} catch (error:Exception) {
 					var fault:Fault = new Fault(ERROR_DECODING, error.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
@@ -843,7 +843,7 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				#end
 			} else if (resultFormat == RESULT_FORMAT_HAXE_XML) {
 				try {
-					_result = Xml.parse(Std.string(body));
+					_result = Xml.parse((body : String));
 				} catch (error:Exception) {
 					var fault:Fault = new Fault(ERROR_DECODING, error.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
@@ -851,14 +851,14 @@ class AbstractOperation extends feathers.rpc.AbstractOperation {
 				}
 			} else if (resultFormat == RESULT_FORMAT_JSON) {
 				try {
-					_result = Json.parse(Std.string(body));
+					_result = Json.parse((body : String));
 				} catch (error:Dynamic) {
 					var fault:Fault = new Fault(ERROR_DECODING, error.message);
 					dispatchRpcEvent(FaultEvent.createEvent(fault, token, message));
 					return false;
 				}
 			} else if (resultFormat == RESULT_FORMAT_FLASHVARS) {
-				_result = decodeParameterString(Std.string(body));
+				_result = decodeParameterString((body : String));
 			} else // if only we could assert(theService.resultFormat == "text")
 			{
 				_result = body;

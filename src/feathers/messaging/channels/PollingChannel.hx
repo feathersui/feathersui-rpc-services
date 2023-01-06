@@ -311,7 +311,7 @@ class PollingChannel extends Channel {
 
 			try {
 				internalSend(new PollCommandMessageResponder(null, msg, this, _log));
-			} catch (e:Exception) {
+			} catch (e:Dynamic) {
 				// If there was a problem stop polling.
 				stopPolling();
 				throw e;
@@ -512,7 +512,7 @@ class PollingChannel extends Channel {
 			try {
 				internalSend(new PollCommandMessageResponder(null, poll, this, _log));
 				pollOutstanding = true;
-			} catch (e:Exception) {
+			} catch (e:Dynamic) {
 				// If there was a problem stop polling.
 				stopPolling();
 				throw e;

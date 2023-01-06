@@ -328,6 +328,9 @@ class AbstractInvoker extends EventDispatcher {
 			// _log.warn(e2.toString());
 			fault = new Fault("InvokeFailed", e.message);
 			new AsyncDispatcher(dispatchRpcEvent, [FaultEvent.createEvent(fault, token, message)], 10);
+		} catch (e:Dynamic) {
+			fault = new Fault("InvokeFailed", Std.string(e));
+			new AsyncDispatcher(dispatchRpcEvent, [FaultEvent.createEvent(fault, token, message)], 10);
 		}
 
 		return token;

@@ -416,7 +416,7 @@ class RPCObjectUtil {
 						try {
 							Reflect.field(obj, qName.localName); // access the property to ensure it is supported
 							// propertyNames.push();
-						} catch (e:Exception) {
+						} catch (e:Dynamic) {
 							// don't keep property name
 						}
 					} else {
@@ -427,7 +427,7 @@ class RPCObjectUtil {
 								try {
 									Reflect.field(obj, qName.localName);
 									propertyNames.push(qName);
-								} catch (e:Exception) {
+								} catch (e:Dynamic) {
 									// don't keep property name
 								}
 							}
@@ -438,7 +438,7 @@ class RPCObjectUtil {
 					try {
 						Reflect.field(obj, qName.localName);
 						propertyNames.push(qName);
-					} catch (e:Exception) {
+					} catch (e:Dynamic) {
 						// don't keep property name
 					}
 				}
@@ -549,7 +549,7 @@ class RPCObjectUtil {
 					}
 				}
 			}
-		} catch (e:Exception) {}
+		} catch (e:Dynamic) {}
 
 		return result;
 	}

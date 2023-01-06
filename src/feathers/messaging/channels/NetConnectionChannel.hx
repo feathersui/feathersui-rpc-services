@@ -223,6 +223,8 @@ class NetConnectionChannel extends PollingChannel {
 			throw new Error(e.message + "  url: '" + url + "'", e.errorID);
 		} catch (e:Exception) {
 			throw new Error(e.message + "  url: '" + url + "'");
+		} catch (e:Dynamic) {
+			throw new Error(Std.string(e) + "  url: '" + url + "'");
 		}
 	}
 

@@ -96,13 +96,13 @@ class ResultEvent extends AbstractEvent {
 		provide further context.
 	**/
 	@:flash.property
-	public var headers(get, set):Any;
+	public var headers(get, set):Dynamic;
 
-	private function get_headers():Any {
+	private function get_headers():Dynamic {
 		return _headers;
 	}
 
-	private function set_headers(value:Any):Any {
+	private function set_headers(value:Dynamic):Dynamic {
 		_headers = value;
 		return _headers;
 	}

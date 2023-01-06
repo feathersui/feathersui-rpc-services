@@ -142,13 +142,13 @@ class AbstractMessage implements IMessage {
 		delivered to the remote destination.
 	**/
 	@:flash.property
-	public var body(get, set):Any;
+	public var body(get, set):Dynamic;
 
-	private function get_body():Any {
+	private function get_body():Dynamic {
 		return _body;
 	}
 
-	private function set_body(value:Any):Any {
+	private function set_body(value:Dynamic):Dynamic {
 		_body = value;
 		return _body;
 	}
@@ -210,16 +210,16 @@ class AbstractMessage implements IMessage {
 		with a unique prefix to avoid name collisions.
 	**/
 	@:flash.property
-	public var headers(get, set):Any;
+	public var headers(get, set):Dynamic;
 
-	private function get_headers():Any {
+	private function get_headers():Dynamic {
 		if (_headers == null)
 			_headers = {};
 
 		return _headers;
 	}
 
-	private function set_headers(value:Any):Any {
+	private function set_headers(value:Dynamic):Dynamic {
 		_headers = value;
 		return _headers;
 	}

@@ -35,7 +35,7 @@ interface IMessage {
 		delivered to the remote destination.
 	**/
 	@:flash.property
-	var body(get, set):Any;
+	var body(get, set):Dynamic;
 
 	//----------------------------------
 	//  clientId
@@ -69,7 +69,7 @@ interface IMessage {
 		specific message instance.
 	**/
 	@:flash.property
-	var headers(get, set):Any;
+	var headers(get, set):Dynamic;
 
 	//----------------------------------
 	//  messageId

@@ -17,6 +17,7 @@
 
 package feathers.messaging;
 
+import feathers.messaging.utils.RpcClassAliasInitializer;
 import feathers.messaging.messages.AsyncMessage;
 import feathers.messaging.messages.CommandMessage;
 import feathers.messaging.messages.IMessage;
@@ -64,6 +65,7 @@ class Consumer extends AbstractConsumer {
 	**/
 	public function new(messageType:String = "flex.messaging.messages.AsyncMessage") {
 		super();
+		RpcClassAliasInitializer.registerClassAliases();
 	}
 
 	//--------------------------------------------------------------------------

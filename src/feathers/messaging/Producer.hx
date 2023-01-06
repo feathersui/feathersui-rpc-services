@@ -17,6 +17,7 @@
 
 package feathers.messaging;
 
+import feathers.messaging.utils.RpcClassAliasInitializer;
 import feathers.messaging.messages.AbstractMessage;
 import feathers.messaging.messages.AsyncMessage;
 import feathers.messaging.messages.IMessage;
@@ -62,6 +63,7 @@ class Producer extends AbstractProducer {
 	**/
 	public function new() {
 		super();
+		RpcClassAliasInitializer.registerClassAliases();
 		// _log = Log.getLogger("mx.messaging.Producer");
 		_agentType = "producer";
 	}

@@ -65,14 +65,14 @@ class DirectHTTPChannel extends Channel {
 	/**
 		Indicates if this channel is connected.
 	**/
-	override public function get_connected():Bool {
+	override private function get_connected():Bool {
 		return true;
 	}
 
 	/**
 		Indicates the protocol used by this channel.
 	**/
-	override public function get_protocol():String {
+	override private function get_protocol():String {
 		return "http";
 	}
 

@@ -49,7 +49,7 @@ class CommandMessageExt extends CommandMessage implements IExternalizable {
 	/**
 		The unique id for the message.
 	**/
-	override public function get_messageId():String {
+	override private function get_messageId():String {
 		/* If we are wrapping another message, use its messageId */
 		if (_message != null)
 			return _message.messageId;

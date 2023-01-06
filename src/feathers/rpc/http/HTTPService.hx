@@ -301,11 +301,11 @@ class HTTPService extends AbstractInvoker {
 	/**
 		When this value is true, anonymous objects returned are forced to bindable objects.
 	**/
-	override public function get_makeObjectsBindable():Bool {
+	override private function get_makeObjectsBindable():Bool {
 		return operation.makeObjectsBindable;
 	}
 
-	override public function set_makeObjectsBindable(b:Bool):Bool {
+	override private function set_makeObjectsBindable(b:Bool):Bool {
 		operation.makeObjectsBindable = b;
 		return operation.makeObjectsBindable;
 	}
@@ -631,7 +631,7 @@ class HTTPService extends AbstractInvoker {
 	/**
 		The result of the last invocation.
 	**/
-	override public function get_lastResult():Dynamic {
+	override private function get_lastResult():Dynamic {
 		return operation.lastResult;
 	}
 

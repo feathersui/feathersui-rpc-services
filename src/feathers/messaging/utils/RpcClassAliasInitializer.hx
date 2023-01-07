@@ -37,12 +37,20 @@ import feathers.data.ArrayCollection;
 	classes for AMF serialization needed by the Flex RPC library.
 **/
 class RpcClassAliasInitializer {
+	@:noCompletion private static var __registered:Bool = false;
+
 	/**
 		In the event that an application does not use the Flex UI classes which processes
 		the `[RemoteClass(alias="")]` bootstrap code, this function registers all the
 		classes for AMF serialization needed by the Flex RPC library.
 	**/
 	public static function registerClassAliases():Void {
+		if (__registered) {
+			// no need to register more than once
+			return;
+		}
+		__registered = true;
+
 		#if (openfl >= "9.2.0")
 		#if !flash
 		openfl.Lib.registerClassAlias("flex.messaging.io.amf.MessageHeader", MessageHeader);

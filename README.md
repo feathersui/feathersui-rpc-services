@@ -7,6 +7,11 @@ Contains the following service classes:
 - `HTTPService`: Load data from a URL as XML, simple string text, URL variables, or JSON.
 - `RemoteObject`: Share the same typed objects on server and client using binary AMF.
 
+Contains the following low-level messaging classes:
+
+- `Producer`: Send messages to a destination.
+- `Consumer`: Subscribe to messages from a destination.
+
 ## Compatibility Notes
 
 ### `RemoteObject`

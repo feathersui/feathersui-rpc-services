@@ -4,7 +4,7 @@
   "license": "Apache",
   "tags": ["openfl", "feathersui", "rpc", "remoteobject", "amf"],
   "description": "RPC services for Feathers UI",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "classPath": "src",
   "dependencies": {
     "openfl": "",
@@ -12,5 +12,5 @@
     "amfio": ""
   },
   "contributors": ["bowlerhat"],
-  "releasenote": "Catch haxe.Exception instead of openfl.errors.Error fix"
+  "releasenote": "Producer and Consumer fixes"
 }

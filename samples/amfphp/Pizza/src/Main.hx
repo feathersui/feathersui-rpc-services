@@ -5,6 +5,7 @@ import feathers.controls.Button;
 import feathers.controls.Label;
 import feathers.events.TriggerEvent;
 import feathers.layout.VerticalLayout;
+import feathers.messaging.config.LoaderConfig;
 import feathers.rpc.events.FaultEvent;
 import feathers.rpc.events.ResultEvent;
 import feathers.rpc.remoting.RemoteObject;
@@ -22,9 +23,15 @@ class Main extends Application {
 	override private function initialize():Void {
 		super.initialize();
 
+		LoaderConfig.init(this);
+
 		this._myConnection = new RemoteObject();
 		this._myConnection.destination = "amfphpExamplesGateway";
-		this._myConnection.endpoint = "http://localhost:8080/";
+		#if (html5 && !electron)
+		this._myConnection.endpoint = "../../../../../Php";
+		#else
+		this._myConnection.endpoint = "http://localhost:8080/Examples/Php";
+		#end
 		this._myConnection.source = "PizzaService";
 		this._myConnection.addEventListener(ResultEvent.RESULT, handleResult);
 		this._myConnection.addEventListener(FaultEvent.FAULT, handleFault);

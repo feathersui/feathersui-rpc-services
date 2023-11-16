@@ -22,6 +22,11 @@
 		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.messaging')"/>
 		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.net')"/>
 		<haxeflag name="--macro" value="AddFlashPropertyMeta.find('feathers.rpc')"/>
+		<!--
+			don't remove dead code because other libraries that depend on
+			this one, and need to build .swc files too, might need it
+		 -->
+		<haxeflag name="-dce" value="no"/>
 	</section>
 
 	<section if="find_missing_docs">

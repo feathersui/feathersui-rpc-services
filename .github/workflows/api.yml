@@ -22,7 +22,7 @@ jobs:
           haxelib install feathersui --quiet
           haxelib install dox --quiet
           haxelib install amfio --quiet
-          haxelib dev feathersui-rpc-services $GITHUB_WORKSPACE
+          haxelib dev feathersui-rpc-services ${{ github.workspace }}
       - name: Build API reference
         working-directory: docs
         run: haxe docs.hxml
